@@ -93,3 +93,43 @@ def report(exp_dir: Path) -> str:
         md += f"\n\n{len(failed)} failed runs (see error.txt): " + ", ".join(failed[:10])
     (exp_dir / "summary.md").write_text(md + "\n")
     return md
+
+
+WEB_TOOLS = ("search_web", "read_url_content", "browser", "fetch", "web_search", "webfetch")
+_LEAK = ("github.com", "/pull/", "/issues/", "pull request", " pr ", "upstream", "commit")
+
+
+def audit_web(exp_dir: Path) -> str:
+    """Which agents used web tools (agy logs), and which queries look like a hunt for the upstream fix.
+
+    Web access can leak the real implementation of a CooperBench task (they come from public PRs), so runs
+    with web calls are flagged as possibly contaminated. Reads the raw logs, so it works for finished and
+    unfinished runs.
+    """
+    import glob
+    import json
+
+    rows = []
+    for run in sorted(glob.glob(str(exp_dir / "*/"))):
+        calls, leaky = 0, []
+        for f in glob.glob(run.rstrip("/") + "/agents/*/attempt*.stdout.jsonl"):
+            for line in open(f, errors="replace"):
+                if not line.startswith("{"):
+                    continue
+                try:
+                    e = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                su = e.get("step_update") or {}
+                name = su.get("tool_name") or ""
+                if e.get("event") == "step_update" and su.get("state") == "ACTIVE" and any(w in name for w in WEB_TOOLS):
+                    calls += 1
+                    q = json.dumps((su.get("tool_info") or {}).get("parameters", {}))
+                    if any(k in q.lower() for k in _LEAK):
+                        leaky.append(q[:110])
+        if calls:
+            rows.append((Path(run).name, calls, leaky))
+    out = ["| run | web calls | queries that look like looking up the upstream change |", "|---|---|---|"]
+    for name, calls, leaky in rows:
+        out.append(f"| {name} | {calls} | {len(leaky)}{(': ' + leaky[0]) if leaky else ''} |")
+    return "\n".join(out) if rows else "no web tool use found"

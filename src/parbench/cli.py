@@ -131,6 +131,12 @@ def cmd_probe(args):
     print(f"logs: {log_dir}")
 
 
+def cmd_audit_web(args):
+    from .report import audit_web
+
+    print(audit_web(Path(args.exp_dir)))
+
+
 def cmd_cleanup(args):
     from .sandbox import cleanup_all
 
@@ -171,6 +177,9 @@ def main(argv=None):
     p.add_argument("--max-turns", type=int, default=30); p.add_argument("--timeout", type=int, default=900)
     p.add_argument("--max-nudges", type=int, default=1); p.add_argument("--host", action="store_true", help="run without Docker (opencode, agy)"); p.add_argument("--copy-auth", action="store_true")
     p.add_argument("--suffix", default="parbench-agent"); p.set_defaults(f=cmd_probe)
+
+    p = sub.add_parser("audit-web", help="flag runs where the agent used web search (possible answer leakage)")
+    p.add_argument("exp_dir"); p.set_defaults(f=cmd_audit_web)
 
     p = sub.add_parser("cleanup", help="remove all parbench containers"); p.set_defaults(f=cmd_cleanup)
 

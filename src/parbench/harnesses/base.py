@@ -36,6 +36,8 @@ class ToolCall:
     def kind(self) -> str:
         """Coarse category used for 'repeated reading' / edit metrics."""
         n = self.name.lower()
+        if any(s in n for s in ("web", "url", "fetch", "browser")):
+            return "web"
         if any(s in n for s in ("read", "view", "cat", "grep", "glob", "search", "list", "ls", "find")):
             return "read"
         if any(s in n for s in ("edit", "write", "patch", "replace", "create", "apply")):

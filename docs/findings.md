@@ -20,6 +20,9 @@ Things we learned by running, not by reading docs. Dated and sourced so they can
 | Host mode isolates OpenCode: its config, data and cache go under a temp dir (`XDG_*`), and `~/.local/share/opencode` was untouched. Requests reached Ollama from localhost. Speed vs Docker is **not measured yet**. | probe + Ollama log |
 | Building the agent image with four CLIs (opencode, pi, claude, codex) took about **16 minutes**, so build only the harness you use. | `parbench build-images` |
 
+| **`agy` web search leaks the task source.** `search_web` completes headless, is not blockable via `permissions.deny` (`"search_web"` and `"search_web(*)"` both tested), and agents used it: Gemini searched `site:github.com/pallets/click/pull/2800` (the very PR) and `"cooperbench"`. `parbench audit-web <exp>` lists affected runs. First audit (7 runs so far): 2 Gemini runs had leak-looking queries (24 and 9), GPT-OSS used web search 1 to 23 times with none looking like a lookup of the upstream change, and the finished dspy S0 Gemini run used none. | stream-json logs |
+| **GPT-OSS 120B via `agy` hits Google capacity limits:** `503 UNAVAILABLE: No capacity available for model gpt-oss-120b-medium` (retryable) with 10 sessions in parallel. | stream-json logs |
+
 ## 2. Measurements (toy pool `textkit`, tiny tasks)
 
 | Setup | Strategy | Wall time | Input / output tokens | Result |

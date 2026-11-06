@@ -100,6 +100,8 @@ Partly validated (details and numbers in `docs/findings.md`): the toy pool runs 
 
 ## Known pitfalls
 
+- **Web search can leak the answer.** `agy` has a `search_web` tool that works headless and **cannot be switched off** with deny rules (tested). In `core_agy`, Gemini searched for the upstream PR (`site:github.com/pallets/click/pull/2800`) and even for `"cooperbench"`. CooperBench tasks come from public PRs, so runs with web calls are possibly contaminated. Run `parbench audit-web results/<exp>` and report web-using runs separately. A clean fix is a custom `agy` agent without `search_web` (needs a file in `~/.gemini/config/agents/`, not yet done: ask the user). Containerised harnesses without web tools (OpenCode here) are unaffected.
+- `agy` + GPT-OSS 120B returns `503 No capacity available for model gpt-oss-120b-medium` (Google-side, retryable) under load; the nudge loop resumes the agent but spends a nudge each time.
 - Never delete `parbench-host-*` temp directories (under `$TMPDIR`) while a host-mode job runs: they are live repo clones (this crashed a probe once). `parbench cleanup` only removes containers.
 - Don't run extra probes against the model server while an experiment is running: Ollama serves one request at a time, so they slow the experiment and skew its timings.
 - Docker Desktop defaults to little RAM (3.8 GB here); raise it to 10 GB or more before real pools.
