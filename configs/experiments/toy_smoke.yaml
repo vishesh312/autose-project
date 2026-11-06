@@ -4,7 +4,7 @@ name: toy_smoke
 dataset: smoke/dataset
 pools: [toy_task/task1]
 k: [2, 3]
-bundles_per_pool: 2
+bundles_per_pool: 1
 seed: 0
 strategies: [S0, S1, S2]            # add S4 for harnesses with subagents (opencode, claude, codex, agy)
 harnesses: [opencode]

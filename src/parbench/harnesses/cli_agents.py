@@ -179,24 +179,34 @@ class OpenCodeHarness(Harness):
                       {"action": "execute", "resource": "*", "effect": "deny"}]
         steps = {"steps": opts.max_turns} if opts.max_turns else {}
         cfg = {
-            "model": f"{self._prov(model)}/{model.model}",
+            "model": f"{self._prov(model)}/{self._key(model)}",
             "snapshots": False,
             "permissions": rules,  # UNVERIFIED location; also repeated under agents.build per docs/harnesses.md
             "agents": {"build": {"permissions": rules, **steps}},
         }
         if model.provider == "openai_compat":
-            cfg["providers"] = {"local": {"package": "@opencode/ai/providers/openai-compatible",
-                                          "settings": {"baseURL": model.base_url, "apiKey": "local"}}}
+            cfg["providers"] = {"local": {
+                "name": "Local", "package": "@opencode/ai/providers/openai-compatible",
+                "settings": {"baseURL": model.base_url, "apiKey": "local"},
+                "models": {self._key(model): {"modelID": model.model,
+                                              "limit": {"context": model.context, "output": model.max_output},
+                                              **({"options": {"reasoningEffort": model.reasoning_effort}}
+                                                 if model.reasoning_effort else {})}}}}
         c.put_file(f"{WORK}/opencode.json", json.dumps(cfg, indent=2))
         return {"OPENCODE_CONFIG_CONTENT": json.dumps(cfg), "OPENCODE_DISABLE_PROJECT_CONFIG": "1",
                 "PWD": "/workspace/repo"}
+
+    @staticmethod
+    def _key(model):
+        """Config key for the model: only generic providers need one (docs/harnesses.md, OpenCode section 7)."""
+        return model.id if model.provider == "openai_compat" else model.model
 
     @staticmethod
     def _prov(model):
         return {"openai_compat": "local"}.get(model.provider, model.provider)
 
     def command(self, prompt_file, model, opts, resume_session):
-        a = f"opencode run --standalone --auto --format json -m {self.q(self._prov(model) + '/' + model.model)}"
+        a = f"opencode run --standalone --auto --format json -m {self.q(self._prov(model) + '/' + self._key(model))}"
         if resume_session:
             a += f" -s {resume_session}"
         return f"{a} {self.prompt_arg(prompt_file)} </dev/null"

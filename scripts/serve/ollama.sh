@@ -45,7 +45,8 @@ if ! "$OLLAMA" show "$MODEL" >/dev/null 2>&1; then
 fi
 
 echo "[ollama.sh] warming $MODEL (num_ctx=$CTX, keep_alive=$KEEP_ALIVE)"
-curl -sf -m 600 "$URL/api/generate" -d "{\"model\":\"$MODEL\",\"keep_alive\":\"$KEEP_ALIVE\",\"options\":{\"num_ctx\":$CTX}}" >/dev/null
+KA_JSON="$KEEP_ALIVE"; case "$KA_JSON" in -1|0|[0-9]*) ;; *) KA_JSON="\"$KA_JSON\"";; esac  # number or duration string
+curl -sf -m 600 "$URL/api/generate" -d "{\"model\":\"$MODEL\",\"keep_alive\":$KA_JSON,\"options\":{\"num_ctx\":$CTX}}" >/dev/null
 "$OLLAMA" ps
 LOADED_CTX=$(curl -s "$URL/api/ps" | python3 -c "import json,sys;m=[x for x in json.load(sys.stdin)['models'] if x['name']=='$MODEL'];print(m[0].get('context_length','?') if m else '?')")
 echo "[ollama.sh] loaded context_length=$LOADED_CTX (wanted $CTX)"

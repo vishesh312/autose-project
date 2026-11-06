@@ -9,8 +9,8 @@ models:
   qwen3.5-2b-ollama:
     model: "qwen3.5:2b"
     provider: openai_compat
-    base_url: http://host.docker.internal:11434/v1
-    anthropic_base_url: http://host.docker.internal:11434      # lets Claude Code use it
+    base_url: http://host.docker.internal:11435/v1
+    anthropic_base_url: http://host.docker.internal:11435      # lets Claude Code use it
     responses_api: true
     context: 32768
     reasoning_effort: none            # Ollama only honours reasoning_effort=none for turning thinking off
@@ -19,10 +19,11 @@ models:
   qwen3.5-9b-ollama:
     model: "qwen3.5:9b"
     provider: openai_compat
-    base_url: http://host.docker.internal:11434/v1
-    anthropic_base_url: http://host.docker.internal:11434
+    base_url: http://host.docker.internal:11435/v1
+    anthropic_base_url: http://host.docker.internal:11435
     responses_api: true
     context: 65536
+    reasoning_effort: none            # thinking ON took 5+ min per call on the M5 (5k+ thinking tokens); TODO(decision): keep off for baselines?
     price: {input: 0.0, output: 0.0}
     notes: "start server with OLLAMA_CONTEXT_LENGTH>=65536; see docs/serving_models.md"
 
