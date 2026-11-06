@@ -1,0 +1,174 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm_sm",
+    "bundle": "llama_index_task/task17244/k2/f5-f6",
+    "pool": "llama_index_task/task17244",
+    "k": 2,
+    "features": [
+      5,
+      6
+    ],
+    "strategy": "S1+small_model",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793977647.8526144
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "5": false,
+      "6": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 1153594,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 20488,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 58
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0607529,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 1121.1709434986115,
+    "agent_busy_s": 1119.1737945079803,
+    "effective_parallelism": 0.9982186935879742,
+    "container_setup_s": 6.419100284576416,
+    "grading_s": 137.04460406303406,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        5,
+        6
+      ],
+      "started": 1793977654.2724192,
+      "ended": 1793978774.4247246,
+      "busy_s": 1119.1737945079803,
+      "usage": {
+        "input": 1153594,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 20488,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 58
+      },
+      "cost_list": 0.0607529,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 3,
+        "edit": 47,
+        "other": 6
+      },
+      "files_read": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "files_edited": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 45,
+      "patch_files": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793977654.2728972,
+          "ended": 1793978773.4466918,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 1153594,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 20488,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 58
+          },
+          "num_turns": 58,
+          "session_id": "ses_e4e995ed8ffeRlRiN7zXIEpB2E",
+          "nudge_reason": null,
+          "final_text_tail": "Great! The `get_image_mimetype` method and the updates to the `image_to_base64` method have been applied successfully.\n\nNext steps:\n1. Verify that the changes do not break existing functionality.\n2. Run the relevant tests to ensure everything is working as expected.\n\nIf you need any further assistance, feel free to ask!",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 9,
+        "tests_failed": 4,
+        "duration_s": 125.2473497390747,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/own_solo.f5.log"
+      },
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 9,
+        "tests_failed": 5,
+        "duration_s": 5.652059316635132,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/own_solo.f6.log"
+      }
+    },
+    "final": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 9,
+        "tests_failed": 4,
+        "duration_s": 5.096360445022583,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/final.f5.log"
+      },
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 9,
+        "tests_failed": 5,
+        "duration_s": 5.8305723667144775,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/final.f6.log"
+      }
+    }
+  }
+}

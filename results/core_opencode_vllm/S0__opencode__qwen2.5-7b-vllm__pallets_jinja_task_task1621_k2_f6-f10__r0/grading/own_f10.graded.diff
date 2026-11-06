@@ -1,0 +1,60 @@
+diff --git a/src/jinja2/loaders/__init__.py b/src/jinja2/loaders/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_base_loader.py b/src/jinja2/loaders/asyncio_base_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_bytecode_loader.py b/src/jinja2/loaders/asyncio_bytecode_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_bytes_loader.py b/src/jinja2/loaders/asyncio_bytes_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_dict_loader.py b/src/jinja2/loaders/asyncio_dict_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_file_loader.py b/src/jinja2/loaders/asyncio_file_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_loader.py b/src/jinja2/loaders/asyncio_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_package_loader.py b/src/jinja2/loaders/asyncio_package_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_searchpath_loader.py b/src/jinja2/loaders/asyncio_searchpath_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_uri_loader.py b/src/jinja2/loaders/asyncio_uri_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/asyncio_zip_loader.py b/src/jinja2/loaders/asyncio_zip_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/base_loader.py b/src/jinja2/loaders/base_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_loader.py b/src/jinja2/loaders/bytecode_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytes_loader.py b/src/jinja2/loaders/bytes_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/dict_loader.py b/src/jinja2/loaders/dict_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/file_loader.py b/src/jinja2/loaders/file_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/package_loader.py b/src/jinja2/loaders/package_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/searchpath_loader.py b/src/jinja2/loaders/searchpath_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/uri_loader.py b/src/jinja2/loaders/uri_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/zip_loader.py b/src/jinja2/loaders/zip_loader.py
+new file mode 100644
+index 0000000..e69de29

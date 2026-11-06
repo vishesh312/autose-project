@@ -1,0 +1,28 @@
+{
+  "mode": "llm",
+  "lost": [
+    5
+  ],
+  "steps": [
+    {
+      "branch": "f8",
+      "feature_ids": [
+        8
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    },
+    {
+      "branch": "f5",
+      "feature_ids": [
+        5
+      ],
+      "conflicted": true,
+      "conflict_files": [
+        "src/jinja2/ext.py"
+      ],
+      "outcome": "resolve_failed"
+    }
+  ]
+}

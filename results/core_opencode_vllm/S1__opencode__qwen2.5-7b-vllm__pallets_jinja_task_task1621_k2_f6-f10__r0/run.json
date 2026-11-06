@@ -1,0 +1,172 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "pallets_jinja_task/task1621/k2/f6-f10",
+    "pool": "pallets_jinja_task/task1621",
+    "k": 2,
+    "features": [
+      6,
+      10
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793978413.17731
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "6": false,
+      "10": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 27781,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 4131,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 2
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0020087000000000004,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 255.38418054580688,
+    "agent_busy_s": 255.29455041885376,
+    "effective_parallelism": 0.9996490380619443,
+    "container_setup_s": 0.5797445774078369,
+    "grading_s": 1.4112858772277832,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        6,
+        10
+      ],
+      "started": 1793978413.759082,
+      "ended": 1793978669.0910664,
+      "busy_s": 255.29455041885376,
+      "usage": {
+        "input": 27781,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 4131,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 2
+      },
+      "cost_list": 0.0020087000000000004,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 103
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [
+        "src/j",
+        "src/jinja2/loaders/__init__.py",
+        "src/jinja2/loaders/loaders.py",
+        "src/jinja2/loaders/loaders_test.py",
+        "src/jinja2/loaders/loaders_test.sh"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793978413.7600405,
+          "ended": 1793978669.054591,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 27781,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 4131,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4e8dc704ffeDBrt40gmkAoz8O",
+          "nudge_reason": null,
+          "final_text_tail": "Created directories and files for Task 1 and Task 2. Next, I'll start implementing the template path transformation support in `src/jinja2/loaders.py`.",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.591275691986084,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/own_solo.f6.log"
+      },
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.6102921962738037,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/own_solo.f10.log"
+      }
+    },
+    "final": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.618112325668335,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/final.f6.log"
+      },
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.5228457450866699,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/final.f10.log"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "mode": "naive",
+  "lost": [],
+  "steps": [
+    {
+      "branch": "f4",
+      "feature_ids": [
+        4
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "empty"
+    },
+    {
+      "branch": "f1",
+      "feature_ids": [
+        1
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    }
+  ]
+}

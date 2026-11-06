@@ -1,0 +1,70 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf23..a3798c428 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -49,6 +49,41 @@ class TextBlock(BaseModel):
+ 
+ 
+ class ImageBlock(BaseModel):
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
++    _image_mimetype: str | None = None
+     block_type: Literal["image"] = "image"
+     image: bytes | None = None
+     path: FilePath | None = None
+@@ -57,6 +92,7 @@ class ImageBlock(BaseModel):
+     detail: str | None = None
+ 
+     @field_validator("url", mode="after")
++    @property
+     @classmethod
+     def urlstr_to_anyurl(cls, url: str | AnyUrl) -> AnyUrl:
+         """Store the url as Anyurl."""
+@@ -65,7 +101,14 @@ class ImageBlock(BaseModel):
+         return AnyUrl(url=url)
+ 
+     @model_validator(mode="after")
+-    def image_to_base64(self) -> Self:
++    def get_image_mimetype(self) -> str | None:
++        if self._image_mimetype:
++            return self._image_mimetype
++        if self.image:
++            guess = filetype.guess(self.image)
++            self._image_mimetype = guess.mime if guess else None
++            return self._image_mimetype
++        return None
+         """Store the image as base64 and guess the mimetype when possible.
+ 
+         In case the model was built passing image data but without a mimetype,

@@ -1,82 +1,49 @@
 {"name": "bash", "kind": "shell", "args": {"command": "mkdir -p src/jinja2/ext && touch src/jinja2/ext.py", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "touch tests/test_jinja2_extension.py", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "touch README.md", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "touch .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo '*.pyc' > .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'build/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'dist/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'venv/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'node_modules/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'coverage/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'htmlcov/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'build/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'dist/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'docs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'data/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'logs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tmp/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'venv/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pytest_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'mypy_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'flake8_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'black_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'isort_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pre-commit/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tox/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'coverage/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'htmlcov/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'dist/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'build/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'docs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'data/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'logs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tmp/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'venv/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pytest_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'mypy_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'flake8_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'black_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'isort_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pre-commit/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tox/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'coverage/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'htmlcov/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'dist/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'build/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'docs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'data/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'logs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tmp/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'venv/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pytest_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'mypy_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'flake8_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'black_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'isort_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pre-commit/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tox/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'coverage/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'htmlcov/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'dist/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'build/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'docs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'data/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'logs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tmp/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'venv/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pytest_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'mypy_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'flake8_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'black_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'isort_cache/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'pre-commit/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'tox/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'coverage/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'htmlcov/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'dist/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'build/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'docs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'data/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "bash", "kind": "shell", "args": {"command": "echo 'logs/' >> .gitignore", "timeout": 120000}, "ok": true, "ts": null}
-{"name": "invalid", "kind": "other", "args": {"tool": "bash", "error": "Invalid input for tool bash: JSON parsing failed: Text: {\"command\": \"echo '__pycache__/.\nError message: JSON Parse error: Unterminated string"}, "ok": true, "ts": null}
-{"name": "invalid", "kind": "other", "args": {"tool": "bash", "error": "Invalid input for tool bash: JSON parsing failed: Text: {\"command\": \"echo 'tests/__pycache__/.\nError message: JSON Parse error: Unterminated string"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'from jinja2.ext import Extension\\n\\nclass ConditionalI18nExtension(Extension):\\n    tags = {\"ctrans\"}\\n\\n    def parse(self, parser):\\n        condition = parser.parse_expression()\\n        variables = parser.parse_variable_declarations()\\n        trimmed = parser.stream.current.value == \"trimmed\"\\n        parser.stream.skip()\\n        if trimmed:\\n            parser.stream.skip()\\n        trans_block = self._parse_block(parser)\\n        plural_block = None\\n        fallback_block = None\\n        if parser.stream.current.type == \"name\" and parser.stream.current.value == \"pluralize\":\\n            parser.stream.next()\\n            plural_var = parser.parse_variable_declarations()[0]\\n            plural_block = self._parse_block(parser)\\n        if parser.stream.current.type != \"block_end\":\\n            parser.fail(\"expected 'fallback' block\", parser.stream.current.lineno)\\n        fallback_block = self._parse_block(parser)\\n        return self._make_conditional_node(condition, variables, trans_block, plural_block, fallback_block)\\n\\n    def _parse_block(self, parser):\\n        block = []\\n        while parser.stream.current.type != \"block_end\":\\n            block.append(parser.parse_statements([\"endctrans\"], drop_needle=True))\\n        return block\\n\\n    def _trim_whitespace(self, text):\\n        return text.strip()\\n\\n    def _make_conditional_node(self, condition, variables, trans_block, plural_block, fallback_block):\\n        if condition:\\n            if plural_block:\\n                return self.environment.handle_exception(self.environment.call_block(plural_block[0], dict(variables)))\\n            return self.environment.handle_exception(self.environment.call_block(trans_block[0], dict(variables)))\\n        else:\\n            if plural_block:\\n                return self.environment.call_block(plural_block[0], dict(variables))\\n            return self.environment.call_block(fallback_block[0], dict(variables))' > src/jinja2/ext.py", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'conditional_i18n = ConditionalI18nExtension' >> src/jinja2/ext.py", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans condition [variables] [trimmed|notrimmed] %...{% pluralize [variable] %...{% fallback %...{% endctrans %}' > tests/templates/test_ctrans.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_content.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count trimmed %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_trimmed.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count notrimmed %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_notrimmed.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_no_fallback.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_missing_condition.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_duplicate_variable.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_unclosed_block.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_invalid_syntax.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests/templates/test_ctrans_mixed_blocks.html", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "invalid", "kind": "other", "args": {"tool": "bash", "error": "Invalid input for tool bash: JSON parsing failed: Text: {\"command\": \"echo '{% ctrans use_i18n, count %Hello, {{ name }!{% pluralize count %}{% fallback %Fallback message{% endctrans %}' > tests{\"command\": \"echo '{% ctrans use_i18n, count %}Hello, {{ name }}!{% pluralize count %}{% fallback %}Fallback message{% endctrans %}' > tests/templates\"}.\nError message: JSON Parse error: Expected '}'"}, "ok": true, "ts": null}

@@ -1,0 +1,6 @@
+{"name": "glob", "kind": "read", "args": {"pattern": "*.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "from click import make_context", "path": "/tmp/parbench-host-4yl77dcl/repo/src/click/core.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "from click import make_context", "path": "/tmp/parbench-host-4yl77dcl/repo/src/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-4yl77dcl/repo/src/click/shell_completion.py", "offset": 1}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "make_context", "path": "/tmp/parbench-host-4yl77dcl/repo/src/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-4yl77dcl/repo/src/click/core.py", "offset": 881}, "ok": true, "ts": null}

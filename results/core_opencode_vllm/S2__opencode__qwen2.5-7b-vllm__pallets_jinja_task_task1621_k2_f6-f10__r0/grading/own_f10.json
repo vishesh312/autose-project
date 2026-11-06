@@ -1,0 +1,11 @@
+{
+  "10": {
+    "fid": 10,
+    "passed": false,
+    "exit_code": 4,
+    "tests_passed": 0,
+    "tests_failed": 0,
+    "duration_s": 0.49424028396606445,
+    "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/own_f10.f10.log"
+  }
+}

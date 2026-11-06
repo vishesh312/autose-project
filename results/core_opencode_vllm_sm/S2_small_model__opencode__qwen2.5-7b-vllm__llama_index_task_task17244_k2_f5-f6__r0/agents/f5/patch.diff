@@ -1,0 +1,18 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf23..1cba8bdc0 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -49,6 +49,13 @@ class TextBlock(BaseModel):
+ 
+ 
+ class ImageBlock(BaseModel):
++    @property
++def get_image_mimetype(self) -> str | None:
++        if self.image_mimetype is not None:
++            return self.image_mimetype
++        guess = filetype.guess(self.image)
++        self.image_mimetype = guess.mime if guess else None
++        return self.image_mimetype
+     block_type: Literal["image"] = "image"
+     image: bytes | None = None
+     path: FilePath | None = None

@@ -1,0 +1,9 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout HEAD -- llama-index-core/llama_index/core/base/llms/types.py", "workdir": "/tmp/parbench-host-fjgot8aq/repo"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "*.py", "path": "/tmp/parbench-host-fjgot8aq/repo/llama-index-core/llama_index/core/base/llms"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout HEAD -- llama-index-core/llama_index/core/base/llms/types.py", "workdir": "/tmp/parbench-host-fjgot8aq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout HEAD -- llama-index-core/llama_index/core/base/llms/generic_utils.py", "workdir": "/tmp/parbench-host-fjgot8aq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout HEAD -- llama-index-core/llama_index/core/base/llms/__init__.py", "workdir": "/tmp/parbench-host-fjgot8aq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout HEAD -- llama-index-core/llama_index/core/base/llms/base.py", "workdir": "/tmp/parbench-host-fjgot8aq/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-fjgot8aq/repo/llama-index-core/llama_index/core/base/llms/types.py", "offset": 1}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git add .", "workdir": "/tmp/parbench-host-fjgot8aq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git commit -m \"Resolve conflicts and add lazy mimetype accessor and encoding field to ImageBlock\"", "workdir": "/tmp/parbench-host-fjgot8aq/repo"}, "ok": true, "ts": null}

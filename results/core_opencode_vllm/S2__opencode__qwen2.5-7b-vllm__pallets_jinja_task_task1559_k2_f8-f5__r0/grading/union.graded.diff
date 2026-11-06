@@ -1,0 +1,21 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..d790fdd 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -1,3 +1,5 @@
++from jinja2.ext import Extension\n\nclass ConditionalI18nExtension(Extension):\n    tags = {"ctrans"}\n\n    def parse(self, parser):\n        condition = parser.parse_expression()\n        variables = parser.parse_variable_declarations()\n        trimmed = parser.stream.current.value == "trimmed"\n        parser.stream.skip()\n        if trimmed:\n            parser.stream.skip()\n        trans_block = self._parse_block(parser)\n        plural_block = None\n        fallback_block = None\n        if parser.stream.current.type == "name" and parser.stream.current.value == "pluralize":\n            parser.stream.next()\n            plural_var = parser.parse_variable_declarations()[0]\n            plural_block = self._parse_block(parser)\n        if parser.stream.current.type != "block_end":\n            parser.fail("expected fallback block", parser.stream.current.lineno)\n        fallback_block = self._parse_block(parser)\n        return self._make_conditional_node(condition, variables, trans_block, plural_block, fallback_block)\n\n    def _parse_block(self, parser):\n        block = []\n        while parser.stream.current.type != "block_end":\n            block.append(parser.parse_statements(["endctrans"], drop_needle=True))\n        return block\n\n    def _trim_whitespace(self, text):\n        return text.strip()\n\n    def _make_conditional_node(self, condition, variables, trans_block, plural_block, fallback_block):\n        if condition:\n            if plural_block:\n                return self.environment.handle_exception(self.environment.call_block(plural_block[0], dict(variables)))\n            return self.environment.handle_exception(self.environment.call_block(trans_block[0], dict(variables)))\n        else:\n            if plural_block:\n                return self.environment.call_block(plural_block[0], dict(variables))\n            return self.environment.call_block(fallback_block[0], dict(variables))
++conditional_i18n = ConditionalI18nExtension
+ """Extension API for adding custom tags and behavior."""
+ import pprint
+ import re
+@@ -243,6 +245,10 @@ def _make_new_npgettext(
+ 
+ 
+ class InternationalizationExtension(Extension):
++    def _validate_trans_variables(self, variables, parser, lineno):
++        pass
++    def _validate_trans_expression(self, name, expr, parser, lineno):
++        pass
+     """This extension adds gettext support to Jinja."""
+ 
+     tags = {"trans"}
