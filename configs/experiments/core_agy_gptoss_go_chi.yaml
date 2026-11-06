@@ -1,0 +1,19 @@
+# Same as core_agy_go_chi.yaml but with GPT-OSS 120B (separate agy quota pool).
+# be carried into a container): the repo is cloned out of the pool image into a temp dir, so the agent CANNOT run
+# the repo's tests (dependencies live in the image). Results are therefore not directly comparable with the
+# containerised OpenCode runs. Grading is in Docker. Stage B (heavier pools) is core_agy_b.yaml.
+name: core_agy
+dataset: external/CooperBench/dataset
+subset: core
+pools: [go_chi_task/task27]
+k: [2]
+seed: 0
+strategies: [S0, S1, S2, S4]        # agy cannot disable subagents, so S0/S1/S2 may use them; subagent_calls is logged
+harnesses: [agy]
+models: [gpt-oss-120b-agy]
+repeats: 1
+agent_timeout_s: 1800
+max_nudges: 2
+max_parallel_runs: 1                # keep quota use low; S2 runs 2 agents at once
+grade_parallel: 1
+merge: {modes: [naive, union, llm]}

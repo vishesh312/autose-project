@@ -80,6 +80,10 @@ models:
     model: "gemini-3.8-flash-low"       # `agy models` lists the exact ids
     provider: antigravity
     price: {}
+  gpt-oss-120b-agy:
+    model: "gpt-oss-120b-medium"        # `agy models` id; separate quota pool from Gemini ("Claude and GPT" pool)
+    provider: antigravity               # NOTE: listed as removed from Antigravity on 2026-11-18 (docs/agy_quota.md)
+    price: {}
   gemini-flash-cli:
     model: "gemini-3.8-flash"
     provider: google
