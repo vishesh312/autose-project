@@ -25,12 +25,14 @@ Metrics are defined in `docs/research/Task4_Metrics.md`, strategies in `docs/res
 
 1. **The research docs in `docs/research/` are guidance, not a spec.** The user said so explicitly. Deviate when there is a reason, and say why.
 2. **Ask the user before making real design decisions** (models, compute, strategies, metric definitions, anything that costs money). Don't pick silently. Use the question tool or leave a clearly marked `TODO(decision)`.
-3. **Agents run only inside Docker containers.** The permission-bypass flags used by the adapters (`--dangerously-skip-permissions`, `bypassPermissions`, `--approval-mode yolo`, `-s danger-full-access`) are acceptable *only* in the throwaway containers that `src/parbench/sandbox.py` starts. Never run an agent CLI with those flags on the host. For host-side probing use `agy` with `--sandbox`, in a scratch directory.
+3. **Agents run in Docker containers by default.** Host mode (no Docker) exists only for OpenCode and `agy`: set `host_harnesses: [opencode]` in an experiment config or pass `--host` to `probe`; `agy` always runs on the host because its login cannot be carried into a container. On the host the agent is NOT isolated by Docker; use it for toy runs, never with a permission-bypass flag.
+   Container rule: The permission-bypass flags used by the adapters (`--dangerously-skip-permissions`, `bypassPermissions`, `--approval-mode yolo`, `-s danger-full-access`) are acceptable *only* in the throwaway containers that `src/parbench/sandbox.py` starts. Never run an agent CLI with those flags on the host. For host-side probing use `agy` with `--sandbox`, in a scratch directory.
 4. **Never commit secrets or results.** API keys go in `.env` (git-ignored), never in configs. `results/` is git-ignored.
 5. **Don't edit `external/CooperBench/`.** It is a pinned submodule. Copy code out (keeping the MIT attribution comment) instead. Port notes are in `docs/cooperbench_guide.md`.
 6. **Mark what you did not verify.** If a fact about a CLI, model or dataset comes from docs and not from a run, say `UNVERIFIED`. Report failing tests or skipped steps plainly.
-7. **Commit messages: a single line** that states the intention and what changed. No `Co-Authored-By` trailer and no AI attribution lines (user preference, see `~/.claude/CLAUDE.md`).
-8. **Prefer small, readable changes.** No new dependencies without a reason: the package currently needs only `pyyaml`, and `scripts/check_endpoint.py` is stdlib-only on purpose.
+7. **`agy` (Antigravity) terms of service.** Google's FAQ allows `agy -p` for scripting, but says wrapping it in third-party tools is unsupported on consumer plans and can lead to suspension. The user was told (`docs/agy_quota.md`) and chose to keep using it on their own account at low concurrency. Don't add account rotation, and don't raise concurrency without asking.
+8. **Commit messages: a single line** that states the intention and what changed. No `Co-Authored-By` trailer and no AI attribution lines (user preference, see `~/.claude/CLAUDE.md`).
+9. **Prefer small, readable changes.** No new dependencies without a reason: the package currently needs only `pyyaml`, and `scripts/check_endpoint.py` is stdlib-only on purpose.
 
 ## Repo map
 
@@ -45,7 +47,7 @@ docker/                    agent image = CooperBench pool image + agent CLIs
 smoke/                     toy dataset + smoke tests (see smoke/AGENTS.md)
 scripts/serve/             start Ollama / vLLM / llama.cpp / SLURM vLLM
 scripts/check_endpoint.py  verify an endpoint (chat, tools, Anthropic, Responses, parallel)
-docs/                      proposal + guides (see docs/AGENTS.md)
+docs/                      proposal, guides, findings.md with measured numbers (see docs/AGENTS.md)
 external/CooperBench/      pinned submodule with the dataset and gold patches
 results/                   run outputs (git-ignored)
 ```
@@ -86,7 +88,7 @@ Set `PARBENCH_KEEP_CONTAINERS=1` to keep containers for debugging.
 
 ## Current status (update this when it changes)
 
-Written but **not yet validated end to end**: nothing has been run against real CooperBench images, and the adapters' event parsing for every CLI except agy is based on docs (`docs/harnesses.md`), not live output.
+Partly validated (details and numbers in `docs/findings.md`): the toy pool runs end to end with OpenCode + a local 9B and with `agy`; grading is verified on go_chi task26 (real CooperBench, arm64). **No agent has run on a real CooperBench pool yet.** Parsing for OpenCode and `agy` is checked against live output; Pi, Claude Code, Codex and Gemini CLI parsing is still based on docs (`docs/harnesses.md`).
 
 - [x] Dataset loading, bundling, k-feature grader, merge modes, strategies S0/S1/S2/S4, metrics, report
 - [x] Adapters for OpenCode, Pi, Claude Code, Codex, agy, Gemini CLI (UNVERIFIED parsing except agy)
@@ -98,6 +100,9 @@ Written but **not yet validated end to end**: nothing has been run against real 
 
 ## Known pitfalls
 
+- Never delete `parbench-host-*` temp directories (under `$TMPDIR`) while a host-mode job runs: they are live repo clones (this crashed a probe once). `parbench cleanup` only removes containers.
+- Don't run extra probes against the model server while an experiment is running: Ollama serves one request at a time, so they slow the experiment and skew its timings.
+- Docker Desktop defaults to little RAM (3.8 GB here); raise it to 10 GB or more before real pools.
 - Local server defaults silently ruin runs: Ollama's default context is small (set `OLLAMA_CONTEXT_LENGTH`), thinking models can burn the whole token budget, and a wrong tool-call parser fails silently. Run `scripts/check_endpoint.py` first. See `docs/serving_models.md`.
 - Ollama on Apple Silicon serves parallel requests one at a time here, so S2 timing on a Mac measures the queue, not the strategy. Use `max_parallel_runs: 1` and read time metrics with that in mind.
 - Don't compare architectures: CooperBench's arm64 and amd64 images can differ in dependencies. Keep a comparison on one architecture.

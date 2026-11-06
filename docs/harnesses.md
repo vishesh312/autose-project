@@ -558,3 +558,9 @@ Gemini API only: `GEMINI_API_KEY` + `GOOGLE_GEMINI_BASE_URL` (passed by `@google
 ### 9. Files / context
 - Context file `GEMINI.md`, configurable via `context.fileName` (string|array); loaded from `~/.gemini/`, cwd and parents, subdirs (`context.discoveryMaxDirs`). Disable: point `fileName` at a nonexistent name e.g. `"__none__.md"` (unofficial; UNVERIFIED). `["AGENTS.md"]` reads AGENTS.md instead. `GEMINI_SYSTEM_MD` overrides the system prompt.
 - State: `$GEMINI_CLI_HOME/.gemini/tmp/<hash>/chats`, `.gemini/history`. Repo writes: none found (project `.gemini/settings.json` only read; UNVERIFIED) -> exclude `.gemini/`. Skills auto-discovered from `~/.gemini/skills` (14 on this Mac) -> use a clean `GEMINI_CLI_HOME`.
+
+---
+
+## Live findings (2026-11-06)
+
+Facts above marked UNVERIFIED that we have since checked by running are collected, with dates and measurements, in [findings.md](findings.md). Highlights: OpenCode's custom-model `models` map is required; `agy` cannot log in inside a container and has no subagent off-switch; `agy -p` must have its prompt attached to the flag.

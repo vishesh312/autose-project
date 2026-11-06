@@ -8,8 +8,8 @@ Read the root `AGENTS.md` first. This file covers the code.
 |---|---|
 | `cli.py` | argparse entry point: `list-pools`, `bundles`, `build-toy`, `build-images`, `check-gold`, `run`, `report`, `probe`, `cleanup` |
 | `config.py` | `Usage` (token accounting), `ModelSpec` (+ list-price cost), `ExperimentConfig`, `.env` loader |
-| `dataset.py` | `Pool`, `Feature`, `Bundle`; loads the CooperBench layout (also used by the toy dataset); seeded k-subset sampling; gold conflict report |
-| `sandbox.py` | `Container` over the `docker` CLI: exec with in-container timeout, `docker cp` for files (no argv size limits), history scrub, `diff_against` |
+| `dataset.py` | `Pool`, `Feature`, `Bundle`; loads the CooperBench layout (also used by the toy dataset); seeded k-subset sampling; `bundles_from_subset` (config `subset: core`, k>2 extends each curated pair from the same pool); gold conflict report |
+| `sandbox.py` | `Container` over the `docker` CLI: exec with in-container timeout, `docker cp` for files (no argv size limits), history scrub, `diff_against`. `HostWorkspace` is the same interface on the host (temp clone of the repo from the pool image; git isolated from your global config); used by `agy` and by harnesses listed in `host_harnesses` |
 | `harnesses/base.py` | `Harness` interface, `ToolCall`, `ParsedRun`, question detection |
 | `harnesses/cli_agents.py` | one adapter per CLI: config files + env, headless command, JSON parser |
 | `agent_runner.py` | runs one agent: command, nudge loop, timing, usage, tool-call logs, `record.json` |
@@ -39,6 +39,8 @@ Read the root `AGENTS.md` first. This file covers the code.
 
 ## Gotchas
 
+- **Paths are per workspace.** Use `c.repo` (repo dir) and `c.work` (scratch dir) everywhere, never the constants `/workspace/repo` or `/parbench`; they differ in host mode. Prompt templates take `${repo}`. A harness is host-capable only if it sets `host_capable = True` and uses those attributes (OpenCode and agy do; Pi, Claude, Codex, Gemini CLI do not yet).
+- Adapters for `agy` cannot disable subagents (no switch); the count is logged in `subagent_calls`.
 - `merge.merge_mode` writes `.git/info/attributes` for the union driver and removes it afterwards. Keep that cleanup if you edit it.
 - S2's merge order is the bundle order (seeded), so results depend on `seed`.
 - `grader.grade` splits features across `grade_parallel` containers. With `grade_parallel > 1` on an old Docker Desktop VM with little RAM, typst or HF-datasets images may be killed; lower it.
