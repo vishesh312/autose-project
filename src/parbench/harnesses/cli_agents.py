@@ -418,7 +418,7 @@ class AgyHarness(Harness):
                 if r.get("status") == "WAITING":
                     run.asked_question = True
                 if r.get("status") not in ("SUCCESS", "WAITING"):
-                    run.error = str(r.get("status"))
+                    run.error = f'{r.get("status")}: {str(r.get("error", ""))[:300]}'
                 if r.get("denied_actions"):
                     run.error = (run.error or "") + f" denied_actions={r['denied_actions']}"
         run.usage = u

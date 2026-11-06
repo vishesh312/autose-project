@@ -182,6 +182,7 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
             "harness": harness.name, "model": model.id, "repeat": repeat,
             "host": platform.node(), "arch": platform.machine(), "started": t0,
         },
+        "valid": not any(a.infra_failed for a in agents),  # False: an agent ended on a quota/capacity error
         "correctness": {"primary": primary, "by_final": finals, "own_pass": own_pass},
         "cost": {
             "usage": usage.to_json(),

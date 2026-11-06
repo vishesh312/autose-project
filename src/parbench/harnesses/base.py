@@ -44,7 +44,7 @@ class ToolCall:
             return "edit"
         if any(s in n for s in ("bash", "shell", "command", "exec", "terminal")):
             return "shell"
-        if any(s in n for s in ("task", "agent", "subagent", "delegate", "spawn")):
+        if n in ("task", "agent") or any(s in n for s in ("subagent", "delegate", "spawn")):
             return "subagent"
         return "other"
 

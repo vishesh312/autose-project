@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -41,6 +42,9 @@ class AgentRecord:
     usage: Usage = field(default_factory=Usage)
     cost_list: float | None = None
     nudges: int = 0
+    infra_retries: int = 0  # waits for quota/capacity errors (not nudges)
+    infra_wait_s: float = 0.0
+    infra_failed: bool = False  # ended on a service error after all retries: the run is not a valid measurement
     timed_out: bool = False
     returncode: int | None = None
     tool_calls: dict[str, int] = field(default_factory=dict)  # by kind
@@ -56,6 +60,22 @@ class AgentRecord:
         d = asdict(self)
         d["usage"] = self.usage.to_json()
         return d
+
+
+MAX_INFRA_RETRIES = 8
+_INFRA = re.compile(
+    r"RESOURCE_EXHAUSTED|UNAVAILABLE|quota reached|No capacity|high traffic|overloaded|rate.?limit|\b(?:429|503)\b", re.I)
+
+
+def infra_wait_s(error: str | None, retry_no: int) -> int | None:
+    """Seconds to wait if `error` is a retryable service problem (quota, capacity, rate limit), else None."""
+    if not error or not _INFRA.search(error):
+        return None
+    m = re.search(r"[Rr]esets? in (?:(\d+)h)?\s*(?:(\d+)m)?\s*(?:(\d+)s)?", error)
+    if m and any(m.groups()):
+        h, mi, se = (int(x or 0) for x in m.groups())
+        return min(h * 3600 + mi * 60 + se + 30, 7200)
+    return min(60 * retry_no, 300)
 
 
 def run_agent(
@@ -84,7 +104,8 @@ def run_agent(
     all_calls = []
     prev_cum = Usage()
     deadline = rec.started + opts.timeout_s
-    for i in range(max_nudges + 1):
+    i, nudges_used, infra_retries = 0, 0, 0
+    while True:
         prompt_file = f"{c.work}/{agent_id}.prompt{i}.md"
         c.put_file(prompt_file, current_prompt)
         remaining = max(60, int(deadline - time.time()))
@@ -116,8 +137,26 @@ def run_agent(
         rec.subagent_calls += parsed.subagent_calls
         all_calls += parsed.tool_calls
 
+        # Retryable service problem (quota / capacity): wait, then resume. Does not use up a nudge, and the
+        # waiting time does not count against the agent's own time limit.
+        wait = None if r.timed_out else infra_wait_s(parsed.error, infra_retries + 1)
+        if wait is not None and infra_retries < MAX_INFRA_RETRIES:
+            infra_retries += 1
+            rec.infra_retries += 1
+            rec.attempts.append(
+                Attempt(i, r.started, r.ended, r.returncode, r.timed_out, parsed.usage.to_json(), parsed.num_turns,
+                        parsed.session_id, f"infra_retry_in_{wait}s", parsed.final_text[-1500:], parsed.error)
+            )
+            rec.infra_wait_s += wait
+            time.sleep(wait)
+            deadline += wait
+            current_prompt = (render("nudge", reason="a temporary service error interrupted you", repo=c.repo)
+                              if session else prompt)
+            i += 1
+            continue
+
         reason = None
-        if not r.timed_out and i < max_nudges and time.time() < deadline - 60:
+        if not r.timed_out and nudges_used < max_nudges and time.time() < deadline - 60:
             reason = _nudge_reason(c, parsed, base_sha)
             if reason and not session:
                 reason = f"{reason} (no session id; cannot resume)"
@@ -127,10 +166,13 @@ def run_agent(
         )
         if parsed.error and not rec.error:
             rec.error = parsed.error
+        rec.infra_failed = infra_wait_s(parsed.error, 1) is not None  # still a service error after all retries
         if not reason or not session:
             break
+        nudges_used += 1
         rec.nudges += 1
         current_prompt = render("nudge", reason=reason, repo=c.repo)
+        i += 1
 
     rec.ended = time.time()
     rec.cost_list = model.list_cost(rec.usage)

@@ -45,9 +45,13 @@ def wilson(p_hat: float, n: int, z: float = 1.96) -> tuple[float, float]:
 
 
 def report(exp_dir: Path) -> str:
-    rows = []
+    rows, invalid = [], []
     for p in sorted(exp_dir.glob("*/run.json")):
-        rows.append(flatten(json.loads(p.read_text())))
+        rec = json.loads(p.read_text())
+        if rec.get("valid", True):
+            rows.append(flatten(rec))
+        else:
+            invalid.append(p.parent.name)
     failed = sorted(p.parent.name for p in exp_dir.glob("*/error.txt") if not (p.parent / "run.json").exists())
     if not rows:
         return f"no finished runs in {exp_dir} ({len(failed)} failed)"
@@ -89,6 +93,8 @@ def report(exp_dir: Path) -> str:
             f"{statistics.median(r['parallelism'] for r in rs):.2f} | {sum(r['nudges'] for r in rs)} |"
         )
     md = "\n".join(lines)
+    if invalid:
+        md += f"\n\n{len(invalid)} runs excluded as invalid (an agent ended on a quota/capacity error): " + ", ".join(invalid[:12])
     if failed:
         md += f"\n\n{len(failed)} failed runs (see error.txt): " + ", ".join(failed[:10])
     (exp_dir / "summary.md").write_text(md + "\n")
