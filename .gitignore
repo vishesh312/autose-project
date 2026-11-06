@@ -222,3 +222,12 @@ __marimo__/
 # --- parbench ---
 .env
 *.secret
+
+# LaTeX build files
+report/*.aux
+report/*.log
+report/*.fls
+report/*.fdb_latexmk
+report/*.out
+report/*.bbl
+report/*.blg
