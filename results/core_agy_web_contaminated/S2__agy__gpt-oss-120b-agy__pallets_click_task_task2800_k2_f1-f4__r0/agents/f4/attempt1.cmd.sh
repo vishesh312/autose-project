@@ -1,0 +1,1 @@
+agy --output-format stream-json --sandbox --mode accept-edits --settings '{"permissions": {"allow": ["command(*)"]}}' --model gpt-oss-120b-medium --print-timeout 29m --conversation 77b510cb-6a6f-47a1-b070-958859bf97bd -p "$(cat /var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-higt846i/work/f4.prompt1.md)"

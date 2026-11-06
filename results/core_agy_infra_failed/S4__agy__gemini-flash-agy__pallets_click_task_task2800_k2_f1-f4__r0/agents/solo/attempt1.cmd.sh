@@ -1,0 +1,1 @@
+agy --output-format stream-json --sandbox --mode accept-edits --settings '{"permissions": {"allow": ["command(*)"]}}' --agent parbench-clean-sub --model gemini-3.8-flash-low --print-timeout 29m --conversation 5489bcb0-6545-4dba-bebc-321b597b8e7f -p "$(cat /var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-fmsuc217/work/solo.prompt1.md)"

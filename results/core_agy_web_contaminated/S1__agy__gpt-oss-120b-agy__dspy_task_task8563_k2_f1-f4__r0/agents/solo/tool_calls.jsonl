@@ -1,0 +1,10 @@
+{"name": "read_file", "kind": "read", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-kv91jqsz/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "validate_input"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"def validate_input\" -n ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"def validate_input\" -n ."}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "ToolCalls.validate_input"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-kv91jqsz/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 340, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-kv91jqsz/repo/dspy/adapters/types/tool.py", "StartLine": 250}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "_canonicalize"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-kv91jqsz/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-kv91jqsz/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}

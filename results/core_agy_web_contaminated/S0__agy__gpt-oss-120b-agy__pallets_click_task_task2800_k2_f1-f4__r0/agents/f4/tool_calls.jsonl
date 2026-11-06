@@ -1,0 +1,41 @@
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "class Context close"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "def close"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 600, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 400}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "def close"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "def close"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 800, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 600}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/shell_completion.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 620, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 600}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 630, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 610}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 622, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 610}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 630, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 610}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 622, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 614}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 626, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 608}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 290, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 260}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 622, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 614}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 630, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 610}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 420}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 640, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 610}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 622, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 614}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 630, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 605}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python -m pytest -q"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/pyproject.toml", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 626, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 608}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 660, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 620}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 20, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-y5uznvwr/repo/src/click/core.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "Context("}, "ok": null, "ts": null}

@@ -1,0 +1,74 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 560, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 460}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 660, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 560}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["conditional i18n jinja"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 10, "queries": ["ctrans"]}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 520, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 240}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 320}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 420, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 290}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 360}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 340}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 350, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 300}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 420, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 420, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 380}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 388}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 420, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 380}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 1050, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 1000}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/requirements/dev.txt", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python -m pip install -r requirements/dev.txt"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pip install -r requirements/dev.txt"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "6758a7dd-7674-4da9-8498-077f3d381c5f/task-147"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "6758a7dd-7674-4da9-8498-077f3d381c5f/task-147"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/setup.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pip install MarkupSafe==2.0.1"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pip install pytest==6.2.5"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pip install -e ."}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 330}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -W ignore::DeprecationWarning -m pytest -q"}, "ok": null, "ts": null}
+{"name": "write_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/sitecustomize.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pip install -U pytest"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 380}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 10, "queries": ["InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 620, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 440}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 20, "queries": ["InternationalizationExtension"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 540, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_ntgng97/repo/src/jinja2/ext.py", "StartLine": 240}, "ok": null, "ts": null}

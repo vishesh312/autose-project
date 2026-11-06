@@ -1,0 +1,55 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-363r292z/repo/src/click/shell_completion.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-363r292z/repo/src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-363r292z/repo/src/click/core.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python - <<'PY'\nimport sys, subprocess, json, os; print('test')\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 - <<'PY'\nprint('hello')\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pip install pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 - <<'PY'\nimport pytest, sys, json, os; print('pytest version', pytest.__version__)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PATH=$HOME/Library/Python/3.9/bin:$PATH /usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["click Context close"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Context close"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["Context close method"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def __enter__ Context click"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PATH=$HOME/Library/Python/3.9/bin:$PATH /usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "$HOME/Library/Python/3.9/bin/pytest -q"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close self Context click"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self, Context"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-363r292z/repo/pyproject.toml", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self): Context click"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Context:", "def close"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["__enter__ Context click"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 - <<'PY'\nimport site, sys, json; print(site.getusersitepackages())\nprint(sys.path)\nPY"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self) Context"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 250, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-363r292z/repo/src/click/core.py", "StartLine": 150}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self, Context)"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self):"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=$(pwd)/src /usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 - <<'PY'\nimport sys; print(sys.version)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "$HOME/Library/Python/3.9/bin/pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=$(pwd)/src /usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 - <<'PY'\nimport pytest, sys; print('pytest version', pytest.__version__)\nPY"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["__enter__ Context click"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pip install -e ."}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self, Context)"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pip list"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self) Context click"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Context", "__enter__"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self): Context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["__enter__ Context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Context", "close"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self):"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 - <<'PY'\nimport pytest, sys; print('pytest imported, version', pytest.__version__)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pip install ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pip list"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pip install pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 - <<'PY'\nimport sys, pprint\npprint.pprint(sys.path)\nimport pytest, sys\nprint('pytest version', pytest.__version__)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/usr/bin/python3 -m pip install pytest"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /usr/bin/python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["def close(self):"]}, "ok": null, "ts": null}

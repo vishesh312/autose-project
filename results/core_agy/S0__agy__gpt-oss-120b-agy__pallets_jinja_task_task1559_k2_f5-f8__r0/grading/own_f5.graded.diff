@@ -1,0 +1,109 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..169ade3 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -2,6 +2,7 @@
+ import pprint
+ import re
+ import typing as t
++import keyword
+ 
+ from markupsafe import Markup
+ 
+@@ -247,6 +248,57 @@ class InternationalizationExtension(Extension):
+ 
+     tags = {"trans"}
+ 
++    # Reserved translation function names that cannot be used as variable names
++    _reserved_names = set(GETTEXT_FUNCTIONS)
++
++    def _validate_trans_expression(self, name: str, expr: nodes.Expr, parser: "Parser", lineno: int) -> None:
++        """Validate a single expression used in a trans block.
++
++        Allowed expression types are literals, variable references, simple
++        function calls, attribute access, filter expressions, and test
++        expressions.  Any other node type results in a template syntax error.
++        """
++        allowed = (
++            nodes.Const,
++            nodes.Name,
++            nodes.Call,
++            nodes.Getattr,
++            nodes.Filter,
++            nodes.Test,
++        )
++        if not isinstance(expr, allowed):
++            parser.fail(
++                f"Invalid expression for variable '{name}': {type(expr).__name__} is not allowed in translation contexts.",
++                lineno,
++                exc=TemplateSyntaxError,
++            )
++
++    def _validate_trans_variables(self, variables: t.Dict[str, nodes.Expr], parser: "Parser", lineno: int) -> None:
++        """Validate variable names and expressions for translation blocks.
++
++        - Variable names must be valid Python identifiers and not reserved
++          translation function names.
++        - Each expression is validated for allowed node types.
++        """
++        for name, expr in variables.items():
++            # Identifier validation
++            if not name.isidentifier() or keyword.iskeyword(name):
++                parser.fail(
++                    f"Invalid variable name '{name}': must be a valid Python identifier.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            # Reserved name conflict
++            if name in self._reserved_names:
++                parser.fail(
++                    f"Variable name '{name}' conflicts with translation function names.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            # Expression validation
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++
+     # TODO: the i18n extension is currently reevaluating values in a few
+     # situations.  Take this example:
+     #   {% trans count=something() %}{{ count }} foo{% pluralize
+@@ -452,6 +504,9 @@ class InternationalizationExtension(Extension):
+             if plural:
+                 plural = self._trim_whitespace(plural)
+ 
++        # Validate variables for translation blocks
++        self._validate_trans_variables(variables, parser, lineno)
++
+         node = self._make_node(
+             singular,
+             plural,
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..b98baf4 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -371,10 +371,20 @@ class PackageLoader(BaseLoader):
+                 )
+         else:
+             if not hasattr(self._loader, "_files"):
+-                raise TypeError(
+-                    "This zip import does not have the required"
+-                    " metadata to list templates."
+-                )
++                # Fallback for zipimporter without _files attribute
++                try:
++                    import zipfile
++                    archive_path = self._loader.archive
++                    with zipfile.ZipFile(archive_path) as zf:
++                        for name in zf.namelist():
++                            if name.startswith(prefix) and not name.endswith('/'):
++                                results.append(name[len(prefix):].replace(os.path.sep, "/"))
++                except Exception as e:
++                    raise TypeError(
++                        "This zip import does not have the required metadata to list templates."
++                    ) from e
++                
++
+ 
+             # Package is a zip file.
+             prefix = (

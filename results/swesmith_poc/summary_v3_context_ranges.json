@@ -1,0 +1,972 @@
+{
+ "repo": "swesmith/oauthlib__oauthlib.1fd52536",
+ "base_sha": "614b1348ef893b4fa90e76f56df44ee64f5d0222",
+ "k": 4,
+ "seed": 0,
+ "summary": [
+  {
+   "level": "L0 different files",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 0.0,
+   "same_func": 0.0,
+   "near": 0.0,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L1 same file, different functions",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 1.0,
+   "same_func": 0.0,
+   "near": 0.027777777777777776,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L2a two bugs in one function",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 0.16666666666666666,
+   "same_func": 0.16666666666666666,
+   "near": 0.041666666666666664,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L2b all k bugs in one function",
+   "bundles": 12,
+   "valid": 7,
+   "same_file": 1.0,
+   "same_func": 1.0,
+   "near": 0.023809523809523808,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L3 two bugs on adjacent lines",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 0.16666666666666666,
+   "same_func": 0.16666666666666666,
+   "near": 0.16666666666666666,
+   "conflict": 0.0,
+   "restored": 1.0
+  }
+ ],
+ "bundles": {
+  "L0 different files": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__mkhdiigz",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__u0bjva5n",
+     "oauthlib__oauthlib.1fd52536.func_basic__np3hmysy",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__ul3pse4t"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__sraq2j21",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__pzqusrn8",
+     "oauthlib__oauthlib.1fd52536.func_basic__gl2spze6",
+     "oauthlib__oauthlib.1fd52536.func_basic__rpjigbqi"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__15p7x87y",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_invert_if__xogbcln6",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__ijzf68qh",
+     "oauthlib__oauthlib.1fd52536.func_basic__gw5g6ot4"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__o8xzkevh",
+     "oauthlib__oauthlib.1fd52536.func_basic__x8nggz93",
+     "oauthlib__oauthlib.1fd52536.func_basic__kxiyequq",
+     "oauthlib__oauthlib.1fd52536.func_basic__y6mwgxxl"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__ggiqghd4",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__kcczzyle",
+     "oauthlib__oauthlib.1fd52536.func_basic__mrux3wgq",
+     "oauthlib__oauthlib.1fd52536.func_basic__r5zihvvz"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__xo0tq6gf",
+     "oauthlib__oauthlib.1fd52536.func_pm_remove_cond__7vp0kp5i",
+     "oauthlib__oauthlib.1fd52536.func_basic__0435un3p",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__52uqxs9w"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__2nmqdrrp",
+     "oauthlib__oauthlib.1fd52536.func_basic__3u07y5z0",
+     "oauthlib__oauthlib.1fd52536.func_basic__o8xzkevh",
+     "oauthlib__oauthlib.1fd52536.func_basic__ql8z45kn"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__3u07y5z0",
+     "oauthlib__oauthlib.1fd52536.func_basic__ktl2ecvh",
+     "oauthlib__oauthlib.1fd52536.func_basic__oy6wamlr",
+     "oauthlib__oauthlib.1fd52536.func_basic__y6se9162"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__n1tdsvkt",
+     "oauthlib__oauthlib.1fd52536.func_basic__d0sehhu9",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__4st59pwm",
+     "oauthlib__oauthlib.1fd52536.func_pm_op_change__iy58t1k6"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__r08ui6za",
+     "oauthlib__oauthlib.1fd52536.func_basic__3qevp4zl",
+     "oauthlib__oauthlib.1fd52536.func_basic__gsmd9bzy",
+     "oauthlib__oauthlib.1fd52536.func_basic__da0whhe7"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__gsmd9bzy",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__mkhdiigz",
+     "oauthlib__oauthlib.1fd52536.func_basic__q553vi4s",
+     "oauthlib__oauthlib.1fd52536.func_basic__mgijvgdw"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__vntyqoq3",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__gw5g6ot4",
+     "oauthlib__oauthlib.1fd52536.func_basic__krd2labd"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   }
+  ],
+  "L1 same file, different functions": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__r312jol7",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__vbflyd3r"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__oekqjlqj",
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09",
+     "oauthlib__oauthlib.1fd52536.func_basic__6mh0epk4",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__jfzqihyy",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__1d8ggnod",
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09",
+     "oauthlib__oauthlib.1fd52536.func_basic__6mh0epk4",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__iqssznhe",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__jfzqihyy",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09",
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__y590gk8c",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__0qiticq3",
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__n2ftj40w",
+     "oauthlib__oauthlib.1fd52536.func_basic__mt18x8bw",
+     "oauthlib__oauthlib.1fd52536.func_basic__uxtn3k09",
+     "oauthlib__oauthlib.1fd52536.func_basic__y590gk8c"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   }
+  ],
+  "L2a two bugs in one function": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.func_basic__0435un3p",
+     "oauthlib__oauthlib.1fd52536.func_basic__e4jwir3q",
+     "oauthlib__oauthlib.1fd52536.func_basic__p8c1q3k0"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__wu7rhd9m",
+     "oauthlib__oauthlib.1fd52536.func_basic__ia25lgiw",
+     "oauthlib__oauthlib.1fd52536.func_basic__shpqdti0",
+     "oauthlib__oauthlib.1fd52536.func_basic__r5zihvvz"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__1zoa1aes",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__3vwi6kpm",
+     "oauthlib__oauthlib.1fd52536.func_basic__r5zihvvz",
+     "oauthlib__oauthlib.1fd52536.func_pm_remove_cond__bqhzby8v"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.func_basic__d0q5vq6p",
+     "oauthlib__oauthlib.1fd52536.func_basic__krd2labd",
+     "oauthlib__oauthlib.1fd52536.func_basic__lpglyr7k"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.func_basic__cpja086t",
+     "oauthlib__oauthlib.1fd52536.func_basic__d7lup8bl",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__obtxhenv"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__d0q5vq6p",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__o49achoj",
+     "oauthlib__oauthlib.1fd52536.func_basic__f11gwu5g"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__d0q5vq6p",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__ymz6voe4",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_invert_if__t92w6dv6",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__dihq9s13"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.func_basic__0435un3p",
+     "oauthlib__oauthlib.1fd52536.func_basic__2gh1nrkd",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__3tnvmwpe"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.func_basic__5z91zy22",
+     "oauthlib__oauthlib.1fd52536.func_pm_remove_cond__wllpz46m",
+     "oauthlib__oauthlib.1fd52536.func_basic__r08ui6za"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__1zoa1aes",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__wu7rhd9m",
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.func_basic__o09bli90"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.func_basic__occocmuh",
+     "oauthlib__oauthlib.1fd52536.func_basic__jvieyr1j",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_invert_if__duneo9ba"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__rxkupk6s",
+     "oauthlib__oauthlib.1fd52536.func_basic__50tgnt0s",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__qs5qapuw",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__m5iwd9vk"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   }
+  ],
+  "L2b all k bugs in one function": [
+   {
+    "valid": false,
+    "reason": "bug patches do not apply together"
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__wu7rhd9m",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__ymz6voe4",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__z9f2hnxx",
+     "oauthlib__oauthlib.1fd52536.func_basic__d0q5vq6p"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__84tuobey",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__tkftmboq",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__3vwi6kpm",
+     "oauthlib__oauthlib.1fd52536.func_basic__4lxy3wmb"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": false,
+    "reason": "bug patches do not apply together"
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__d0q5vq6p",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__3vwi6kpm",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__z9f2hnxx",
+     "oauthlib__oauthlib.1fd52536.func_basic__cpja086t"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": false,
+    "reason": "bug patches do not apply together"
+   },
+   {
+    "valid": false,
+    "reason": "bug patches do not apply together"
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__1zoa1aes",
+     "oauthlib__oauthlib.1fd52536.func_basic__4lxy3wmb",
+     "oauthlib__oauthlib.1fd52536.func_basic__84tuobey",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__ymz6voe4"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": false,
+    "reason": "bug patches do not apply together"
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__agu0mt37",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.func_basic__5z91zy22",
+     "oauthlib__oauthlib.1fd52536.func_basic__4lxy3wmb"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__nong5iwt",
+     "oauthlib__oauthlib.1fd52536.func_basic__50tgnt0s",
+     "oauthlib__oauthlib.1fd52536.func_basic__5sfxti61",
+     "oauthlib__oauthlib.1fd52536.func_basic__g9ujzq8i"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q",
+     "oauthlib__oauthlib.1fd52536.func_basic__45phn4gb",
+     "oauthlib__oauthlib.1fd52536.func_basic__uqy2evrq",
+     "oauthlib__oauthlib.1fd52536.func_basic__bke1xmqr"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   }
+  ],
+  "L3 two bugs on adjacent lines": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__6mh0epk4",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__b8ad8e68",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__rgyq0svf",
+     "oauthlib__oauthlib.1fd52536.func_basic__oncmrz94"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__d75uz1yg",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__nn437coj",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__rl67toka",
+     "oauthlib__oauthlib.1fd52536.func_pm_remove_loop__2w3h5owq"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__8yrjq1xk",
+     "oauthlib__oauthlib.1fd52536.func_basic__xybavrjw",
+     "oauthlib__oauthlib.1fd52536.func_pm_remove_assign__jrvq5b4j",
+     "oauthlib__oauthlib.1fd52536.func_basic__b2fcua7t"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__jvieyr1j",
+     "oauthlib__oauthlib.1fd52536.func_basic__qqe0jk8x",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_invert_if__t92w6dv6",
+     "oauthlib__oauthlib.1fd52536.func_basic__b8l3o9fr"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__oekqjlqj",
+     "oauthlib__oauthlib.1fd52536.func_basic__vbflyd3r",
+     "oauthlib__oauthlib.1fd52536.func_basic__q553vi4s",
+     "oauthlib__oauthlib.1fd52536.func_basic__gl2spze6"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__r1ldhn4f",
+     "oauthlib__oauthlib.1fd52536.func_basic__rqvov4kh",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__oer23bqe",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__dihq9s13"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__ik2hn66w",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__ogbxfx3x",
+     "oauthlib__oauthlib.1fd52536.func_basic__66l82m5l",
+     "oauthlib__oauthlib.1fd52536.func_basic__crwy90bd"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__0h4jqq2w",
+     "oauthlib__oauthlib.1fd52536.func_basic__hdrh4fu6",
+     "oauthlib__oauthlib.1fd52536.func_basic__yw3qv1if",
+     "oauthlib__oauthlib.1fd52536.func_basic__axkbspsm"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__crwy90bd",
+     "oauthlib__oauthlib.1fd52536.func_basic__uz49nlti",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__1zoa1aes",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__8lswf04b"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__7pb6maja",
+     "oauthlib__oauthlib.1fd52536.func_basic__jelc3z1g",
+     "oauthlib__oauthlib.1fd52536.func_basic__pzjwtuyc",
+     "oauthlib__oauthlib.1fd52536.func_pm_remove_loop__7yfqstw5"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__y8j5kml4",
+     "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__qtz12l7o",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__dihq9s13",
+     "oauthlib__oauthlib.1fd52536.func_basic__tqm0hr1d"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__cxy8txx3",
+     "oauthlib__oauthlib.1fd52536.func_basic__yo2gq8ul",
+     "oauthlib__oauthlib.1fd52536.func_basic__mo0a7vc9",
+     "oauthlib__oauthlib.1fd52536.func_basic__m9eebe5b"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true
+   }
+  ]
+ },
+ "n_indexed": 558,
+ "n_single": 460
+}

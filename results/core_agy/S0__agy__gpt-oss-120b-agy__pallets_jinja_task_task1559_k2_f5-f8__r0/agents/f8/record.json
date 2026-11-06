@@ -1,0 +1,83 @@
+{
+  "agent_id": "f8",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    8
+  ],
+  "started": 1793982906.80718,
+  "ended": 1793983328.5320551,
+  "busy_s": 361.6485221385956,
+  "usage": {
+    "input": 2012644,
+    "cached_input": 1886272,
+    "cache_write": 0,
+    "output": 32840,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 3
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "infra_retries": 1,
+  "infra_wait_s": 60.0,
+  "infra_failed": false,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 10,
+    "read": 13,
+    "edit": 6
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793982906.807424,
+      "ended": 1793983012.9191291,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 480745,
+        "cached_input": 436288,
+        "cache_write": 0,
+        "output": 5565,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "147cb3ae-ce2b-4970-9b68-2ab43dafcc67",
+      "nudge_reason": "infra_retry_in_60s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 1,
+      "started": 1793983072.932566,
+      "ended": 1793983328.469383,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 1531899,
+        "cached_input": 1449984,
+        "cache_write": 0,
+        "output": 27275,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "147cb3ae-ce2b-4970-9b68-2ab43dafcc67",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": " denied_actions=[{'action': 'write_file', 'display_name': 'WriteFile'}]"
+    }
+  ],
+  "error": " denied_actions=[{'action': 'write_file', 'display_name': 'WriteFile'}]"
+}

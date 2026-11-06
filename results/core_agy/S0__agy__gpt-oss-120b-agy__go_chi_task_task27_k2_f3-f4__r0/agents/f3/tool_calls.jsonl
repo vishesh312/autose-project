@@ -1,0 +1,38 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' chi.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"EnableDebugLogging\" -n .. || true"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' middleware/logger.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '200,400p' chi.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"Handle\" -n *.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "tree.go", "StartLine": 120}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' mux.go"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["debug logging"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' middleware/logger_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debug\" -n *.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"log\" -n *.go | head"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["logging"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"EnableDebugLogging\" -n . || true"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debug\" -n ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"func (mx \\*Mux) handle\" -R"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"log\" -n | head"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debug\" -n *.go | grep -v test | head"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "mux.go", "StartLine": 380}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debugLogging\" -n . || true"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"log\" -n *.go | grep -i \"debug\" | head"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debug\" -n | wc -l"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debugLogging\" -n .. || true"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"log\\.\" -n *.go | head"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '380,460p' mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debug\" -n middleware | head"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-mbld6l8o/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-mbld6l8o/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-mbld6l8o/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n -A3 -B2 \"HandleFunc\" -n mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 170, "Path": "mux.go", "StartLine": 130}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 150, "Path": "mux.go", "StartLine": 80}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-mbld6l8o/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-mbld6l8o/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}

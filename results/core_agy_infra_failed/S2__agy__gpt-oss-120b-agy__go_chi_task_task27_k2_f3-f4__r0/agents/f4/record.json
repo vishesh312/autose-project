@@ -1,0 +1,59 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    4
+  ],
+  "started": 1793979752.2241879,
+  "ended": 1793979949.1774368,
+  "busy_s": 196.8985137939453,
+  "usage": {
+    "input": 676622,
+    "cached_input": 625536,
+    "cache_write": 0,
+    "output": 12456,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {
+    "shell": 12,
+    "edit": 2,
+    "read": 2
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793979752.2245371,
+      "ended": 1793979949.123051,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 676622,
+        "cached_input": 625536,
+        "cache_write": 0,
+        "output": 12456,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "c3985822-3f88-49fb-b334-4bc134a75200",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": "ERROR"
+}

@@ -1,0 +1,234 @@
+diff --git a/mux.go b/mux.go
+index 56fa4d2..b9c6322 100644
+--- a/mux.go
++++ b/mux.go
+@@ -3,11 +3,30 @@ package chi
+ import (
+ 	"context"
+ 	"fmt"
++	"log"
+ 	"net/http"
+ 	"strings"
+ 	"sync"
++	"sync/atomic"
+ )
+ 
++var debugLogging uint32
++
++// EnableDebugLogging turns on debug-level logging; off by default.
++func EnableDebugLogging() {
++	atomic.StoreUint32(&debugLogging, 1)
++}
++
++func isDebugLoggingEnabled() bool {
++	return atomic.LoadUint32(&debugLogging) == 1
++}
++
++func debugLog(format string, args ...interface{}) {
++	if isDebugLoggingEnabled() {
++		log.Printf(format, args...)
++	}
++}
++
+ var _ Router = &Mux{}
+ 
+ // Mux is a simple HTTP route multiplexer that parses a request path,
+@@ -104,9 +123,7 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ 	mx.middlewares = append(mx.middlewares, middlewares...)
+ }
+ 
+-// Handle adds the route `pattern` that matches any http method to
+-// execute the `handler` http.Handler.
+-func (mx *Mux) Handle(pattern string, handler http.Handler) {
++func parsePattern(pattern string) (methodTyp, string) {
+ 	parts := strings.SplitN(pattern, " ", 2)
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])
+@@ -117,17 +134,26 @@ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ 			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
+ 		}
+ 
+-		mx.handle(method, path, handler)
+-		return
++		debugLog("chi: parsed route pattern %q with method %s and path %s", pattern, methodStr, path)
++		return method, path
+ 	}
+ 
+-	mx.handle(mALL, pattern, handler)
++	debugLog("chi: parsed route pattern %q with all methods and path %s", pattern, pattern)
++	return mALL, pattern
++}
++
++// Handle adds the route `pattern` that matches any http method to
++// execute the `handler` http.Handler.
++func (mx *Mux) Handle(pattern string, handler http.Handler) {
++	method, path := parsePattern(pattern)
++	mx.handle(method, path, handler)
+ }
+ 
+ // HandleFunc adds the route `pattern` that matches any http method to
+ // execute the `handlerFn` http.HandlerFunc.
+ func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
+-	mx.handle(mALL, pattern, handlerFn)
++	method, path := parsePattern(pattern)
++	mx.handle(method, path, handlerFn)
+ }
+ 
+ // Method adds the route `pattern` that matches `method` http method to
+diff --git a/mux_test.go b/mux_test.go
+index 9190cb5..d9203d2 100644
+--- a/mux_test.go
++++ b/mux_test.go
+@@ -6,9 +6,11 @@ import (
+ 	"fmt"
+ 	"io"
+ 	"io/ioutil"
++	"log"
+ 	"net"
+ 	"net/http"
+ 	"net/http/httptest"
++	"strings"
+ 	"sync"
+ 	"testing"
+ 	"time"
+@@ -669,6 +671,15 @@ func TestMuxHandlePatternValidation(t *testing.T) {
+ 			expectedBody:   "with-prefix POST",
+ 			expectedStatus: http.StatusOK,
+ 		},
++		{
++			name:           "Valid pattern with HTTP GET prefix wildcard",
++			pattern:        "GET /api/v1/*",
++			shouldPanic:    false,
++			method:         "GET",
++			path:           "/api/v1/users/list",
++			expectedBody:   "with-prefix GET wildcard",
++			expectedStatus: http.StatusOK,
++		},
+ 		// Invalid patterns
+ 		{
+ 			name:        "Invalid pattern with no method",
+@@ -715,6 +726,124 @@ func TestMuxHandlePatternValidation(t *testing.T) {
+ 	}
+ }
+ 
++func TestMuxHandleFuncPatternValidation(t *testing.T) {
++	testCases := []struct {
++		name           string
++		pattern        string
++		shouldPanic    bool
++		method         string
++		path           string
++		expectedBody   string
++		expectedStatus int
++	}{
++		{
++			name:           "Valid pattern without HTTP GET",
++			pattern:        "/user/{id}",
++			shouldPanic:    false,
++			method:         "GET",
++			path:           "/user/123",
++			expectedBody:   "without-prefix GET",
++			expectedStatus: http.StatusOK,
++		},
++		{
++			name:           "Valid pattern with HTTP POST",
++			pattern:        "POST /products/{id}",
++			shouldPanic:    false,
++			method:         "POST",
++			path:           "/products/456",
++			expectedBody:   "with-prefix POST",
++			expectedStatus: http.StatusOK,
++		},
++		{
++			name:           "Valid pattern with HTTP GET prefix wildcard",
++			pattern:        "GET /api/v1/*",
++			shouldPanic:    false,
++			method:         "GET",
++			path:           "/api/v1/users/list",
++			expectedBody:   "with-prefix GET wildcard",
++			expectedStatus: http.StatusOK,
++		},
++		{
++			name:        "Invalid pattern with no method",
++			pattern:     "INVALID/user/{id}",
++			shouldPanic: true,
++		},
++		{
++			name:        "Invalid pattern with supported method",
++			pattern:     "GET/user/{id}",
++			shouldPanic: true,
++		},
++		{
++			name:        "Invalid pattern with unsupported method",
++			pattern:     "UNSUPPORTED /unsupported-method",
++			shouldPanic: true,
++		},
++	}
++
++	for _, tc := range testCases {
++		t.Run(tc.name, func(t *testing.T) {
++			defer func() {
++				if r := recover(); r != nil && !tc.shouldPanic {
++					t.Errorf("Unexpected panic for pattern %s", tc.pattern)
++				}
++			}()
++
++			r := NewRouter()
++			r.HandleFunc(tc.pattern, func(w http.ResponseWriter, r *http.Request) {
++				w.Write([]byte(tc.expectedBody))
++			})
++
++			if !tc.shouldPanic {
++				ts := httptest.NewServer(r)
++				defer ts.Close()
++
++				resp, body := testRequest(t, ts, tc.method, tc.path, nil)
++				if body != tc.expectedBody || resp.StatusCode != tc.expectedStatus {
++					t.Errorf("Expected status %d and body %s; got status %d and body %s for pattern %s",
++						tc.expectedStatus, tc.expectedBody, resp.StatusCode, body, tc.pattern)
++				}
++			}
++		})
++	}
++}
++
++func TestEnableDebugLogging(t *testing.T) {
++	var buf bytes.Buffer
++	origOutput := log.Writer()
++	origFlags := log.Flags()
++	defer func() {
++		log.SetOutput(origOutput)
++		log.SetFlags(origFlags)
++	}()
++
++	log.SetOutput(&buf)
++	log.SetFlags(0)
++
++	EnableDebugLogging()
++
++	r := NewRouter()
++	r.Handle("GET /test/handle/*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++		w.Write([]byte("ok"))
++	}))
++	r.HandleFunc("POST /test/handlefunc/*", func(w http.ResponseWriter, r *http.Request) {
++		w.Write([]byte("ok"))
++	})
++	r.HandleFunc("/test/all", func(w http.ResponseWriter, r *http.Request) {
++		w.Write([]byte("ok"))
++	})
++
++	output := buf.String()
++	if !strings.Contains(output, "GET") || !strings.Contains(output, "/test/handle/*") {
++		t.Errorf("expected debug log to contain GET and /test/handle/*, got: %s", output)
++	}
++	if !strings.Contains(output, "POST") || !strings.Contains(output, "/test/handlefunc/*") {
++		t.Errorf("expected debug log to contain POST and /test/handlefunc/*, got: %s", output)
++	}
++	if !strings.Contains(output, "/test/all") {
++		t.Errorf("expected debug log to contain /test/all, got: %s", output)
++	}
++}
++
+ func TestRouterFromMuxWith(t *testing.T) {
+ 	t.Parallel()
+ 

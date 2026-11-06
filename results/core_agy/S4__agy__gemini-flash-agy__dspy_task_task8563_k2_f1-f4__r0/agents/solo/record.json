@@ -1,0 +1,61 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    1,
+    4
+  ],
+  "started": 1793980364.474667,
+  "ended": 1793980703.5108328,
+  "busy_s": 338.9233937263489,
+  "usage": {
+    "input": 3348247,
+    "cached_input": 3077940,
+    "cache_write": 0,
+    "output": 14165,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 51,
+    "read": 20,
+    "subagent": 1,
+    "edit": 4
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793980364.4749491,
+      "ended": 1793980703.3983428,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 3348247,
+        "cached_input": 3077940,
+        "cache_write": 0,
+        "output": 14165,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "e5455709-9357-47a1-bc67-cc8478ee0ff6",
+      "nudge_reason": null,
+      "final_text_tail": "apping them into `{\"tool_calls\": [dict]}`.\n   - Handles bare lists of tool-call dicts by wrapping them into `{\"tool_calls\": [...]}`.\n   - Preserves existing canonical formats with an outer `\"tool_calls\"` key.\n   - Handles JSON strings by parsing them and delegating normalization; unparseable strings are returned unchanged.\n\n2. **Task 2: Deterministic Parse Fingerprinting for `ToolCalls`**\n   - Implemented `_canonicalize_tool_args` to recursively sort dict keys, convert tuples to lists, trim string whitespace, and preserve boolean and numeric types.\n   - Implemented `_compute_tool_call_fingerprint` to serialize `{\"name\": name, \"args\": canonical_args}` using `json.dumps(..., sort_keys=True, separators=(\",\", \":\"))` and hash with SHA-256.\n   - Added `fingerprint: str` (64-hex char SHA-256) and `id: str` (first 8 hex chars) fields to [`ToolCalls.ToolCall`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-41jzuog_/repo/dspy/adapters/types/tool.py#L279-L297).\n   - Fingerprint and id are computed at initialization time and enforced as read-only attributes.\n\n3. **Tests**\n   - Added unit tests to [`tests/adapters/test_tool.py`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-41jzuog_/repo/tests/adapters/test_tool.py#L462-L547) verifying normalization of all input variations (dict, list, canonical dict, JSON string, unparseable string) and deterministic fingerprinting / read-only attributes.\n   - All adapter test suites passed.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

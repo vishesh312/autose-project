@@ -1,0 +1,60 @@
+{
+  "agent_id": "resolver_f10",
+  "role": "resolver",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    10
+  ],
+  "started": 1793981627.4577549,
+  "ended": 1793981812.9029188,
+  "busy_s": 185.44346284866333,
+  "usage": {
+    "input": 1341448,
+    "cached_input": 1162770,
+    "cache_write": 0,
+    "output": 4802,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {
+    "shell": 23,
+    "subagent": 1,
+    "read": 10,
+    "edit": 9
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793981627.457994,
+      "ended": 1793981812.9014568,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1341448,
+        "cached_input": 1162770,
+        "cache_write": 0,
+        "output": 4802,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "32849b32-2a7c-47b6-a06a-09131cd7bb69",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": "ERROR"
+}

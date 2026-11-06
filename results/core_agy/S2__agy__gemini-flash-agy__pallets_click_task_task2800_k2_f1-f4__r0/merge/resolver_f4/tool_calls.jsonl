@@ -1,0 +1,35 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 2 HEAD f4 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff f4^! src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff HEAD^! src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show --stat HEAD"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff 23a7b06^! src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"ByteOffset": 0, "EndLine": 600, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-43i18r4h/repo/src/click/shell_completion.py", "StartLine": 535}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"ByteOffset": 0, "EndLine": 645, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-43i18r4h/repo/src/click/shell_completion.py", "StartLine": 595}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff --cached tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 1 23a7b06"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 23a7b06 --stat"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 1560c01 --stat"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff --cached src/click/core.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff 23a7b06"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"ByteOffset": 0, "EndLine": 580, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-43i18r4h/repo/src/click/shell_completion.py", "StartLine": 535}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"ByteOffset": 0, "EndLine": 635, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-43i18r4h/repo/src/click/shell_completion.py", "StartLine": 570}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 23a7b06:src/click/shell_completion.py | sed -n '540,600p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 1560c01:src/click/shell_completion.py | sed -n '540,600p'"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-43i18r4h/repo/src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep '<<<<<<<'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "which python; which python3; find / -name pytest 2>/dev/null"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "other", "args": {"Action": "kill", "TaskId": "4a2810b1-935e-40b5-bbaf-b4664b158bf4/task-50"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_context.py tests/test_shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest -W ignore tests/test_context.py tests/test_shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest -W ignore tests/test_context.py tests/test_shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest -W ignore"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git add src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n '<<<<<<<' src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "finish", "kind": "other", "args": {}, "ok": null, "ts": null}

@@ -1,0 +1,29 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["i18n"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["ConditionalI18nExtension"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -V"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/requirements/dev.txt", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 200}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 800, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 400}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 520, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 460}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 590, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 560}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 660, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 580}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 680, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 650}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 760, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 680}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pip install pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m ensurepip --upgrade"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 - <<'PY'\nimport jinja2, sys\nprint('Jinja version', jinja2.__version__)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 - <<'PY'\nimport sys, os\nsys.path.insert(0, 'src')\nimport jinja2\nprint('Loaded jinja2 version', jinja2.__version__)\nPY"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/tests/test_ext.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 720, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py", "StartLine": 690}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-rw0yf6yd/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 - <<'PY'\nimport sys, subprocess, os\n# Run pytest via -m if available\ntry:\n    import pytest\n    print('pytest import success')\nexcept Exception as e:\n    print('pytest import fail', e)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "write_file", "kind": "edit", "args": {"Path": "/tmp/run_tests.py"}, "ok": null, "ts": null}

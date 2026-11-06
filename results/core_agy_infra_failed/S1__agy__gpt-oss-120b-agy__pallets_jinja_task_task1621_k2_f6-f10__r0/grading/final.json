@@ -1,0 +1,20 @@
+{
+  "6": {
+    "fid": 6,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 40,
+    "tests_failed": 9,
+    "duration_s": 5.731041193008423,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/final.f6.log"
+  },
+  "10": {
+    "fid": 10,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 40,
+    "tests_failed": 15,
+    "duration_s": 1.2038121223449707,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/final.f10.log"
+  }
+}

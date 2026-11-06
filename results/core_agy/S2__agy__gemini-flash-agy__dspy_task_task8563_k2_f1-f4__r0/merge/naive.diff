@@ -1,0 +1,149 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..9e221a68 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,9 +1,12 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import pydantic
+ from jsonschema import ValidationError, validate
+-from pydantic import BaseModel, TypeAdapter, create_model
++from pydantic import BaseModel, Field, TypeAdapter, create_model
+ 
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+@@ -254,13 +257,71 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_tool_args(obj: Any) -> Any:
++    """Canonicalize tool arguments recursively.
++
++    - Sort keys in dictionaries recursively.
++    - Convert tuples to lists.
++    - Trim leading/trailing whitespace from string values.
++    - Preserve numeric, boolean, None, and other types unchanged.
++    """
++    if isinstance(obj, dict):
++        return {k: _canonicalize_tool_args(obj[k]) for k in sorted(obj.keys())}
++    elif isinstance(obj, (list, tuple)):
++        return [_canonicalize_tool_args(item) for item in obj]
++    elif isinstance(obj, str):
++        return obj.strip()
++    return obj
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = Field(default="", frozen=True)
++        id: str = Field(default="", frozen=True)
++
++        def __init__(self, **data: Any):
++            super().__init__(**data)
++            if not self.fingerprint:
++                canonical_args = _canonicalize_tool_args(self.args)
++                canonical_obj = {
++                    "name": self.name,
++                    "args": canonical_args,
++                }
++                serialized = json.dumps(canonical_obj, sort_keys=True, separators=(",", ":"))
++                fp = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++                object.__setattr__(self, "fingerprint", fp)
++                object.__setattr__(self, "id", fp[:8])
+ 
+     tool_calls: list[ToolCall]
+ 
++    @pydantic.model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                data = json.loads(data)
++            except Exception:
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            if all(isinstance(item, dict) and "name" in item and "args" in item for item in data):
++                return {"tool_calls": data}
++            return data
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.
+diff --git a/tests/adapters/test_tool.py b/tests/adapters/test_tool.py
+index 18571453..14fc2a50 100644
+--- a/tests/adapters/test_tool.py
++++ b/tests/adapters/test_tool.py
+@@ -457,3 +457,54 @@ def test_tool_calls_format_from_dict_list():
+     assert len(result[0]["tool_calls"]) == 2
+     assert result[0]["tool_calls"][0]["function"]["name"] == "search"
+     assert result[0]["tool_calls"][1]["function"]["name"] == "translate"
++
++
++def test_tool_call_fingerprint():
++    """Test deterministic fingerprinting for ToolCall."""
++    # Key order and string trimming should produce identical fingerprints
++    call1 = ToolCalls.ToolCall(name="search", args={"query": "hello", "limit": 10})
++    call2 = ToolCalls.ToolCall(name="search", args={"limit": 10, "query": "  hello  "})
++
++    assert call1.fingerprint == call2.fingerprint
++    assert call1.id == call2.id
++    assert len(call1.fingerprint) == 64
++    assert len(call1.id) == 8
++    assert call1.id == call1.fingerprint[:8]
++
++    # Tuple to list conversion
++    call_tuple = ToolCalls.ToolCall(name="filter", args={"tags": ("a", "b")})
++    call_list = ToolCalls.ToolCall(name="filter", args={"tags": ["a", "b"]})
++    assert call_tuple.fingerprint == call_list.fingerprint
++
++    # Preserves boolean and numeric types (no string coercion)
++    call_bool = ToolCalls.ToolCall(name="check", args={"flag": True, "count": 1})
++    call_str = ToolCalls.ToolCall(name="check", args={"flag": "True", "count": "1"})
++    assert call_bool.fingerprint != call_str.fingerprint
++
++    # Tool name differences produce different fingerprints
++    call_other_name = ToolCalls.ToolCall(name="lookup", args={"query": "hello", "limit": 10})
++    assert call1.fingerprint != call_other_name.fingerprint
++
++    # ToolCall from from_dict_list
++    calls = ToolCalls.from_dict_list([{"name": "search", "args": {"query": "hello", "limit": 10}}])
++    assert calls.tool_calls[0].fingerprint == call1.fingerprint
++    assert calls.tool_calls[0].id == call1.id
++
++    # Nested structures
++    call_nested1 = ToolCalls.ToolCall(
++        name="nested",
++        args={"outer": {"b": 2, "a": " test "}, "items": [{"k": "v"}, (1, 2)]},
++    )
++    call_nested2 = ToolCalls.ToolCall(
++        name="nested",
++        args={"items": [{"k": "v"}, [1, 2]], "outer": {"a": "test", "b": 2}},
++    )
++    assert call_nested1.fingerprint == call_nested2.fingerprint
++
++    # Read-only attributes
++    with pytest.raises(Exception):
++        call1.fingerprint = "new_fingerprint"
++
++    with pytest.raises(Exception):
++        call1.id = "new_id"
++

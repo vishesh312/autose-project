@@ -1,0 +1,63 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..bd97bfa 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -71,6 +71,50 @@ class BaseLoader:
+     #: .. versionadded:: 2.4
+     has_source_access = True
+ 
++    def __init__(self, path_transform: t.Optional[t.Callable[[str], str]] = None) -> None:
++        """Initialize the loader.
++
++        Args:
++            path_transform: Optional callable that receives a template name
++                and returns a transformed name. It is applied before any
++                alias resolution or loading logic. ``None`` disables the
++                transformation.
++        """
++        self.path_transform = path_transform
++        self._aliases: t.Dict[str, str] = {}
++
++    # Alias management
++    def add_alias(self, alias: str, target: str) -> None:
++        """Add an alias for a template name.
++
++        The alias will be resolved to ``target`` before loading. Overwrites
++        existing alias if present.
++        """
++        self._aliases[alias] = target
++
++    def remove_alias(self, alias: str) -> None:
++        """Remove an alias if it exists. No error if missing."""
++        self._aliases.pop(alias, None)
++
++    # Helper utilities
++    def _resolve_alias(self, name: str) -> str:
++        """Resolve a single‑level alias without recursion."""
++        return self._aliases.get(name, name)
++
++    def _apply_path_transform(self, name: str) -> str:
++        """Apply the optional ``path_transform`` callable."""
++        if self.path_transform is None:
++            return name
++        return self.path_transform(name)
++
++    def _preprocess_name(self, name: str) -> str:
++        """Apply alias resolution then path transformation.
++
++        The order follows the specification: resolve aliases first, then
++        apply the transformation function.
++        """
++        return self._apply_path_transform(self._resolve_alias(name))
++
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+@@ -213,6 +257,7 @@ class FileSystemLoader(BaseLoader):
+             return contents, filename, uptodate
+         raise TemplateNotFound(template)
+ 
++
+     def list_templates(self) -> t.List[str]:
+         found = set()
+         for searchpath in self.searchpath:

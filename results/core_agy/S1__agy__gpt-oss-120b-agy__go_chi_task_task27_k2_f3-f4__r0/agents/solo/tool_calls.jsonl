@@ -1,0 +1,39 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "plugin", "limit": 5, "queries": ["logging"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' chi.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '200,400p' chi.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"pattern\" -n *.go middleware *.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '90,150p' mux.go"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "plugin", "limit": 5, "queries": ["logger"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' middleware/logger.go"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "plugin", "limit": 5, "queries": ["debug"]}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"EnableDebugLogging\" -n . || true"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run TestMethodPatternPrefix"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debug\" -n *.go middleware/*.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"Method pattern\" -n . || true"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"METHOD\" -n mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"log\" -n *.go | head"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"debug\" -n *.go | wc -l"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-cte382_g/repo/debug_logging.go"}, "ok": null, "ts": null}
+{"name": "write_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-cte382_g/repo/debug_logging.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"\\*\" -n mux_test.go | head"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run TestMethodPatternPrefix"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '600,800p' mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run TestMuxHandlePatternValidation"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run TestMuxHandlePatternValidation"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '380,460p' mux.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-cte382_g/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,30p' mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run TestMuxHandlePatternValidation"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-cte382_g/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-cte382_g/repo/mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "tail -n 30 mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1800,2000p' mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"TestMuxHandlePatternValidation\" -n mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '2100,2200p' mux_test.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-cte382_g/repo/mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run TestMuxMethodPatternPrefix"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run TestMuxMethodPatternPrefix"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}

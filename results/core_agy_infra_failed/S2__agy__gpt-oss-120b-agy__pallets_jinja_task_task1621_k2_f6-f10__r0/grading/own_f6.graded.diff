@@ -1,0 +1,113 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..9bef630 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -161,6 +161,76 @@ class FileSystemLoader(BaseLoader):
+     A list of paths can be given. The directories will be searched in
+     order, stopping at the first matching template.
+ 
++    .. code-block:: python
++
++        loader = FileSystemLoader(["/override/templates", "/default/templates"])
++
++    :param searchpath: A path, or list of paths, to the directory that
++        contains the templates.
++    :param encoding: Use this encoding to read the text from template
++        files.
++    :param followlinks: Follow symbolic links in the path.
++    :param path_transform: Optional callable that transforms the template
++        path before resolution.
++
++    .. versionchanged:: 2.8
++        Added the ``followlinks`` parameter.
++    """
++
++    def __init__(
++        self,
++        searchpath: t.Union[str, os.PathLike, t.Sequence[t.Union[str, os.PathLike]]],
++        encoding: str = "utf-8",
++        followlinks: bool = False,
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
++    ) -> None:
++        if not isinstance(searchpath, abc.Iterable) or isinstance(searchpath, str):
++            searchpath = [searchpath]
++
++        self.searchpath = [os.fspath(p) for p in searchpath]
++        self.encoding = encoding
++        self.followlinks = followlinks
++        self.path_transform = path_transform
++
++    def get_source(
++        self, environment: "Environment", template: str
++    ) -> t.Tuple[str, str, t.Callable[[], bool]]:
++        # Apply optional path transformation
++        if self.path_transform is not None:
++            template = self.path_transform(template)
++        pieces = split_template_path(template)
++        for searchpath in self.searchpath:
++            filename = os.path.join(searchpath, *pieces)
++            f = open_if_exists(filename)
++            if f is None:
++                continue
++            try:
++                contents = f.read().decode(self.encoding)
++            finally:
++                f.close()
++
++            mtime = os.path.getmtime(filename)
++
++            def uptodate() -> bool:
++                try:
++                    return os.path.getmtime(filename) == mtime
++                except OSError:
++                    return False
++
++            return contents, filename, uptodate
++        raise TemplateNotFound(template)
++    """Load templates from a directory in the file system.
++
++    The path can be relative or absolute. Relative paths are relative to
++    the current working directory.
++
++    .. code-block:: python
++
++        loader = FileSystemLoader("templates")
++
++    A list of paths can be given. The directories will be searched in
++    order, stopping at the first matching template.
++
+     .. code-block:: python
+ 
+         loader = FileSystemLoader(["/override/templates", "/default/templates"])
+@@ -269,6 +339,31 @@ class PackageLoader(BaseLoader):
+         package_name: str,
+         package_path: "str" = "templates",
+         encoding: str = "utf-8",
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
++    ) -> None:
++        package_path = os.path.normpath(package_path).rstrip(os.path.sep)
++
++        # normpath preserves ".", which isn't valid in zip paths.
++        if package_path == os.path.curdir:
++            package_path = ""
++        elif package_path[:2] == os.path.curdir + os.path.sep:
++            package_path = package_path[2:]
++
++        self.package_path = package_path
++        self.package_name = package_name
++        self.encoding = encoding
++        self.path_transform = path_transform
++
++        # Make sure the package exists. This also makes namespace
++        # packages work, otherwise get_loader returns None.
++        import_module(package_name)
++        spec = importlib.util.find_spec(package_name)
++        assert spec is not None, "An import spec was not found for the package."
++        loader = spec.loader
++        assert loader is not None, "A loader was not found for the package."
++        self._loader = loader
++        self._archive = None
++        template_root = None
+     ) -> None:
+         package_path = os.path.normpath(package_path).rstrip(os.path.sep)
+ 

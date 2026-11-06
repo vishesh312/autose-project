@@ -1,0 +1,9 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R ."}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "src/jinja2/ext.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ecmfsmq5/repo/src/jinja2/ext.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 800, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ecmfsmq5/repo/src/jinja2/ext.py", "StartLine": 400}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ecmfsmq5/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 470, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ecmfsmq5/repo/src/jinja2/ext.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ecmfsmq5/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ecmfsmq5/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 560, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0c...", "StartLine": 350}, "ok": null, "ts": null}

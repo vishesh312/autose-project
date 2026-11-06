@@ -1,0 +1,22 @@
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-enmwjasf/repo/src/click/core.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-enmwjasf/repo/src/click/shell_completion.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-enmwjasf/repo/src/click/shell_completion.py", "StartLine": 190}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["_resolve_context"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 800, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-enmwjasf/repo/src/click/shell_completion.py", "StartLine": 400}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["class Context", "close"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["def close"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["class Context", "def __init__"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["class Context", "close("]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["class Context"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-enmwjasf/repo/src/click/core.py", "StartLine": 150}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["def close"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["class Context", "__enter__"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["def close(self)", "class Context", "close("]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["def close(self)"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 800, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-enmwjasf/repo/src/click/core.py", "StartLine": 800}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["close(self)"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["__enter__", "Context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["__enter__", "Context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["def close"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 3200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-enmwjasf/repo/src/click/core.py", "StartLine": 3000}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "skill", "limit": 5, "queries": ["close(self)"]}, "ok": null, "ts": null}

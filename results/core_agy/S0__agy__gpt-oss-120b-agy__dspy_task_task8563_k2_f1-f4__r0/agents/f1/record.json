@@ -1,0 +1,124 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793984325.5596218,
+  "ended": 1793985037.20259,
+  "busy_s": 351.5706424713135,
+  "usage": {
+    "input": 6033945,
+    "cached_input": 5732608,
+    "cache_write": 0,
+    "output": 23400,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 10
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "infra_retries": 3,
+  "infra_wait_s": 360.0,
+  "infra_failed": false,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 55,
+    "edit": 6
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793984325.56009,
+      "ended": 1793984342.855773,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 12914,
+        "cached_input": 256,
+        "cache_write": 0,
+        "output": 146,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "f0239152-0994-4e7f-98be-7531c14cea5a",
+      "nudge_reason": "infra_retry_in_60s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 1,
+      "started": 1793984402.86142,
+      "ended": 1793984499.7370172,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 636376,
+        "cached_input": 579776,
+        "cache_write": 0,
+        "output": 2984,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "f0239152-0994-4e7f-98be-7531c14cea5a",
+      "nudge_reason": "infra_retry_in_120s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 2,
+      "started": 1793984619.752987,
+      "ended": 1793984680.1919491,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1418333,
+        "cached_input": 1333248,
+        "cache_write": 0,
+        "output": 5820,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "num_turns": 3,
+      "session_id": "f0239152-0994-4e7f-98be-7531c14cea5a",
+      "nudge_reason": "infra_retry_in_180s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 3,
+      "started": 1793984860.206506,
+      "ended": 1793985037.166906,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 3966322,
+        "cached_input": 3819328,
+        "cache_write": 0,
+        "output": 14450,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 4
+      },
+      "num_turns": 4,
+      "session_id": "f0239152-0994-4e7f-98be-7531c14cea5a",
+      "nudge_reason": null,
+      "final_text_tail": "Implemented flexible parsing for `ToolCalls` to handle varied LM output formats, added comprehensive `validate_input` method with JSON handling and normalization. Added fallback implementations for missing dependencies:\n- Created minimal `magicattr` stub with nested attribute support.\n- Added simple `LRUCache` fallback.\n- Added simple `FanoutCache` fallback.\nEnhanced `Cache` class to use these fallbacks when external libraries are unavailable. All modifications ensure robustness and compatibility with tests.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,7 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-phnsvbrx/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-phnsvbrx/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-phnsvbrx/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "plugin", "limit": 5, "queries": [""]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 570, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-phnsvbrx/repo/mux.go", "StartLine": 400}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-phnsvbrx/repo/mux.go", "StartLine": 110}, "ok": null, "ts": null}

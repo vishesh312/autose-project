@@ -1,0 +1,105 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..56488bc 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -363,6 +363,7 @@ class InternationalizationExtension(Extension):
+         plural_expr_assignment: t.Optional[nodes.Assign] = None
+         variables: t.Dict[str, nodes.Expr] = {}
+         trimmed = None
++        original_var_exprs: t.Dict[str, nodes.Expr] = {}
+         while parser.stream.current.type != "block_end":
+             if variables:
+                 parser.stream.expect("comma")
+@@ -389,6 +390,7 @@ class InternationalizationExtension(Extension):
+             else:
+                 variables[token.value] = var = nodes.Name(token.value, "load")
+ 
++            original_var_exprs[token.value] = var
+             if plural_expr is None:
+                 if isinstance(var, nodes.Call):
+                     plural_expr = nodes.Name("_trans", "load")
+@@ -440,6 +442,11 @@ class InternationalizationExtension(Extension):
+             if name not in variables:
+                 variables[name] = nodes.Name(name, "load")
+ 
++        # validate variables using their original expressions where available
++        validation_vars = dict(variables)
++        validation_vars.update(original_var_exprs)
++        self._validate_trans_variables(validation_vars, parser, lineno)
++
+         if not have_plural:
+             plural_expr = None
+         elif plural_expr is None:
+@@ -469,6 +476,72 @@ class InternationalizationExtension(Extension):
+     def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
+         return _ws_re.sub(" ", string.strip())
+ 
++    def _validate_trans_variables(
++        self,
++        variables: t.Dict[str, nodes.Expr],
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate all variables in a translation block."""
++        reserved_names = {"gettext", "ngettext", "pgettext", "npgettext", "_"}
++
++        for name, expr in variables.items():
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r}: must follow Python identifiers rules.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++
++            if name in reserved_names:
++                parser.fail(
++                    f"Variable name {name!r} conflicts with translation function names.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self,
++        name: str,
++        expr: nodes.Expr,
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate an individual expression used in a translation block."""
++        if isinstance(expr, nodes.TemplateData):
++            parser.fail(
++                f"Variable {name!r} contains template data which cannot be used in translation contexts.",
++                lineno,
++                exc=TemplateSyntaxError,
++            )
++
++        if isinstance(expr, nodes.Output):
++            parser.fail(
++                f"Variable {name!r} contains output node which cannot be used in translation contexts.",
++                lineno,
++                exc=TemplateSyntaxError,
++            )
++
++        if isinstance(expr, (nodes.Const, nodes.Name, nodes.Getattr, nodes.Filter, nodes.Test)):
++            return
++
++        if isinstance(expr, nodes.Call):
++            if isinstance(expr.node, nodes.Name):
++                return
++            parser.fail(
++                f"Variable {name!r} contains complex nested expressions that cannot be used in translation contexts.",
++                lineno,
++                exc=TemplateSyntaxError,
++            )
++
++        parser.fail(
++            f"Variable {name!r} contains an invalid expression ({type(expr).__name__}) that cannot be used in translation contexts.",
++            lineno,
++            exc=TemplateSyntaxError,
++        )
++
+     def _parse_block(
+         self, parser: "Parser", allow_pluralize: bool
+     ) -> t.Tuple[t.List[str], str]:

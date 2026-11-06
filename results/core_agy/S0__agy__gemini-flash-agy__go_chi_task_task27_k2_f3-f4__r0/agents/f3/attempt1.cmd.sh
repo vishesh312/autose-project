@@ -1,0 +1,1 @@
+agy --output-format stream-json --sandbox --mode accept-edits --settings '{"permissions": {"allow": ["command(*)"]}}' --agent parbench-clean --model gemini-3.8-flash-low --print-timeout 25m --conversation c740a0a4-a743-4ffd-926f-b9319d61b1ae -p "$(cat /var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-irvkioz9/work/f3.prompt1.md)"

@@ -1,0 +1,95 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..433330e 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -361,6 +361,7 @@ class InternationalizationExtension(Extension):
+         # a later state.
+         plural_expr: t.Optional[nodes.Expr] = None
+         plural_expr_assignment: t.Optional[nodes.Assign] = None
++        plural_expr_assignment_var: t.Optional[str] = None
+         variables: t.Dict[str, nodes.Expr] = {}
+         trimmed = None
+         while parser.stream.current.type != "block_end":
+@@ -396,6 +397,7 @@ class InternationalizationExtension(Extension):
+                     plural_expr_assignment = nodes.Assign(
+                         nodes.Name("_trans", "store"), var
+                     )
++                    plural_expr_assignment_var = token.value
+                 else:
+                     plural_expr = var
+                 num_called_num = token.value == "num"
+@@ -440,6 +442,16 @@ class InternationalizationExtension(Extension):
+             if name not in variables:
+                 variables[name] = nodes.Name(name, "load")
+ 
++        if plural_expr_assignment is not None and plural_expr_assignment_var is not None:
++            self._validate_trans_expression(
++                plural_expr_assignment_var,
++                plural_expr_assignment.node,
++                parser,
++                lineno,
++            )
++
++        self._validate_trans_variables(variables, parser, lineno)
++
+         if not have_plural:
+             plural_expr = None
+         elif plural_expr is None:
+@@ -466,6 +478,57 @@ class InternationalizationExtension(Extension):
+         else:
+             return node
+ 
++    def _validate_trans_variables(
++        self,
++        variables: t.Dict[str, nodes.Expr],
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate variables used in translation blocks."""
++        reserved_names = {"gettext", "ngettext", "pgettext", "npgettext", "_"}
++        for name, expr in variables.items():
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r}. Variable names must be valid Python identifiers.",
++                    lineno,
++                )
++            if name in reserved_names:
++                parser.fail(
++                    f"Variable name {name!r} conflicts with translation function names.",
++                    lineno,
++                )
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self,
++        name: str,
++        expr: nodes.Expr,
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate individual translation variable expression."""
++        if isinstance(expr, (nodes.TemplateData, nodes.Output)):
++            parser.fail(
++                f"Variable {name!r} contains template data or output nodes which cannot be used in translation contexts.",
++                lineno,
++            )
++
++        if isinstance(expr, (nodes.Const, nodes.Name, nodes.Getattr, nodes.Filter, nodes.Test)):
++            return
++
++        if isinstance(expr, nodes.Call):
++            if isinstance(expr.node, nodes.Name):
++                return
++            parser.fail(
++                f"Variable {name!r} uses an invalid call expression. Only simple function calls are supported in translation contexts.",
++                lineno,
++            )
++
++        parser.fail(
++            f"Variable {name!r} has expression of type {type(expr).__name__!r} which cannot be used in translation contexts.",
++            lineno,
++        )
++
+     def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
+         return _ws_re.sub(" ", string.strip())
+ 

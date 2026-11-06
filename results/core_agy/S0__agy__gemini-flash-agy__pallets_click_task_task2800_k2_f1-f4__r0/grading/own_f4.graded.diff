@@ -1,0 +1,111 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..0b12317 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -6,6 +6,7 @@ import errno
+ import inspect
+ import os
+ import sys
++import threading
+ import typing as t
+ from collections import abc
+ from collections import Counter
+@@ -228,6 +229,13 @@ class Context:
+         value is not set, it defaults to the value from the parent
+         context. ``Command.show_default`` overrides this default for the
+         specific command.
++    :param cleanup_timeout: A maximum time limit (in seconds) for close()
++        operations. If specified, must be a positive float (> 0). If the
++        timeout is exceeded during cleanup, cleanup operations are forcibly
++        terminated. Defaults to None (no timeout).
++
++    .. versionchanged:: 8.2
++        Added the ``cleanup_timeout`` parameter.
+ 
+     .. versionchanged:: 8.2
+         The ``protected_args`` attribute is deprecated and will be removed in
+@@ -280,6 +288,7 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+@@ -427,6 +436,19 @@ class Context:
+         #: Show option default values when formatting help text.
+         self.show_default: bool | None = show_default
+ 
++        if cleanup_timeout is None and parent is not None:
++            cleanup_timeout = parent.cleanup_timeout
++
++        if cleanup_timeout is not None:
++            if not isinstance(cleanup_timeout, (int, float)) or isinstance(cleanup_timeout, bool) or cleanup_timeout <= 0:
++                raise ValueError(
++                    f"'cleanup_timeout' must be a positive float (> 0), got {cleanup_timeout!r}."
++                )
++            cleanup_timeout = float(cleanup_timeout)
++
++        #: Maximum duration (in seconds) allowed for close() cleanup operations.
++        self.cleanup_timeout: float | None = cleanup_timeout
++
+         self._close_callbacks: list[t.Callable[[], t.Any]] = []
+         self._depth = 0
+         self._parameter_source: dict[str, ParameterSource] = {}
+@@ -607,10 +629,37 @@ class Context:
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
+         """
+-        self._exit_stack.close()
++        stack = self._exit_stack
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 
++        if self.cleanup_timeout is None:
++            stack.close()
++            return
++
++        cleanup_error: BaseException | None = None
++
++        def cleanup_worker() -> None:
++            nonlocal cleanup_error
++            try:
++                stack.close()
++            except BaseException as e:
++                cleanup_error = e
++
++        cleanup_thread = threading.Thread(target=cleanup_worker, daemon=True)
++        cleanup_thread.start()
++        cleanup_thread.join(timeout=self.cleanup_timeout)
++
++        if cleanup_thread.is_alive():
++            import logging
++
++            logger = logging.getLogger("click")
++            logger.warning(
++                f"Context cleanup timed out after {self.cleanup_timeout} seconds."
++            )
++        elif cleanup_error is not None:
++            raise cleanup_error
++
+     @property
+     def command_path(self) -> str:
+         """The computed command path.  This is used for the ``usage``
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..054029a 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -271,8 +271,11 @@ class ShellComplete:
+         :param incomplete: Value being completed. May be empty.
+         """
+         ctx = _resolve_context(self.cli, self.ctx_args, self.prog_name, args)
+-        obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
+-        return obj.shell_complete(ctx, incomplete)
++        try:
++            obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
++            return obj.shell_complete(ctx, incomplete)
++        finally:
++            ctx.close()
+ 
+     def format_completion(self, item: CompletionItem) -> str:
+         """Format a completion item into the form recognized by the

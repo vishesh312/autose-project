@@ -1,0 +1,153 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..a0435c5a 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,4 +1,8 @@
+ import asyncio
++import json
++import hashlib
++from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
++
+ import inspect
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+@@ -224,6 +228,10 @@ class Tool(Type):
+ 
+         ```python
+         import asyncio
++import json
++import hashlib
++from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
++
+         import dspy
+         from langchain.tools import tool as lc_tool
+ 
+@@ -254,7 +262,127 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
+-class ToolCalls(Type):
++def _canonicalize_args(obj: Any) -> Any:
++    """Recursively canonicalize arguments for fingerprinting.
++
++    - Sort dict keys recursively.
++    - Convert tuples to lists.
++    - Strip leading/trailing whitespace from string values.
++    - Preserve numeric and boolean types.
++    """
++    if isinstance(obj, dict):
++        # Process each key-value pair, sort keys later
++        return {k: _canonicalize_args(v) for k, v in sorted(obj.items())}
++    if isinstance(obj, (list, tuple)):
++        # Convert tuple to list, process elements
++        return [_canonicalize_args(item) for item in list(obj)]
++    if isinstance(obj, str):
++        return obj.strip()
++    # For other primitive types, return as is
++    return obj
++
++    class ToolCall(BaseModel):
++        name: str
++        args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        def __init__(self, **data):
++            super().__init__(**data)
++            # Compute fingerprint based on canonicalized args and name
++            canonical_args = _canonicalize_args(self.args)
++            payload = {"name": self.name, "args": canonical_args}
++            json_str = json.dumps(payload, sort_keys=True, separators=(",", ":"))
++            fp = hashlib.sha256(json_str.encode()).hexdigest()
++            object.__setattr__(self, "fingerprint", fp)
++            object.__setattr__(self, "id", fp[:8])
++
++    tool_calls: list[ToolCall]
++
++    @classmethod
++    def validate_input(cls, data: Any):
++        """Normalize various LM tool call output formats.
++
++        Acceptable formats:
++        - {'tool_calls': [{...}, ...]}
++        - {'name': ..., 'args': ...}
++        - [{...}, ...]
++        - JSON string representing any of the above.
++        Returns the normalized structure (dict with 'tool_calls' key, single dict, or original string).
++        """
++        import json
++        # If it's a string, try to parse as JSON
++        if isinstance(data, str):
++            try:
++                parsed = json.loads(data)
++            except json.JSONDecodeError:
++                return data
++            return cls.validate_input(parsed)
++
++        # If it's a dict
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                # single object, return as is (will be wrapped later where needed)
++                return data
++            # fallback: return as is
++            return data
++
++        # If it's a list, wrap in dict with tool_calls key
++        if isinstance(data, list):
++            return {"tool_calls": data}
++
++        # Otherwise, return unchanged
++        return data
++
++    @classmethod
++    def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
++        """Convert a list of dictionaries to a ToolCalls instance.
++
++        Args:
++            dict_list: A list of dictionaries, where each dictionary should have 'name' and 'args' keys.
++
++        Returns:
++            A ToolCalls instance.
++
++        Example:
++
++            ```python
++            tool_calls_dict = [
++                {"name": "search", "args": {"query": "hello"}},
++                {"name": "translate", "args": {"text": "world"}}
++            ]
++            tool_calls = ToolCalls.from_dict_list(tool_calls_dict)
++            ```
++        """
++        tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
++        return cls(tool_calls=tool_calls)
++
++    @classmethod
++    def description(cls) -> str:
++        return (
++            "Tool calls information, including the name of the tools and the arguments to be passed to it. "
++            "Arguments must be provided in JSON format."
++        )
++
++    def format(self) -> list[dict[str, Any]]:
++        # The tool_call field is compatible with OpenAI's tool calls schema.
++        return [
++            {
++                "type": "tool_calls",
++                "tool_calls": [
++                    {
++                        "type": "function",
++                        "function": {
++                            "name": tool_call.name,
++                            "arguments": tool_call.args,
++                        },
++                    }
++                    for tool_call in self.tool_calls
++                ],
++            }
++        ]
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]

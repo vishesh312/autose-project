@@ -1,0 +1,59 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..fcbc76c 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -280,6 +280,7 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+@@ -415,6 +416,14 @@ class Context:
+ 
+         self.auto_envvar_prefix: str | None = auto_envvar_prefix
+ 
++        # Validate cleanup_timeout parameter
++        if cleanup_timeout is not None:
++            if not isinstance(cleanup_timeout, (int, float)):
++                raise TypeError("cleanup_timeout must be a number")
++            if cleanup_timeout <= 0:
++                raise ValueError("cleanup_timeout must be a positive number")
++        self.cleanup_timeout: float | None = cleanup_timeout
++
+         if color is None and parent is not None:
+             color = parent.color
+ 
+@@ -606,8 +615,30 @@ class Context:
+         """Invoke all close callbacks registered with
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
++
++        If a ``cleanup_timeout`` was specified, the cleanup is performed
++        with that timeout. If the timeout is exceeded, the cleanup is
++        aborted and a warning is emitted.
+         """
+-        self._exit_stack.close()
++        if getattr(self, "cleanup_timeout", None) is not None:
++            import signal
++            def _handle_timeout(signum, frame):  # pragma: no cover
++                raise TimeoutError("Context cleanup timed out")
++            previous_handler = signal.getsignal(signal.SIGALRM)
++            signal.signal(signal.SIGALRM, _handle_timeout)
++            # Convert timeout to integer seconds for alarm (minimum 1 sec)
++            timeout_seconds = int(self.cleanup_timeout) if self.cleanup_timeout > 0 else 0
++            signal.alarm(timeout_seconds)
++            try:
++                self._exit_stack.close()
++            except TimeoutError:
++                from .utils import echo
++                echo("Warning: context cleanup timed out after %s seconds" % self.cleanup_timeout, err=True)
++            finally:
++                signal.alarm(0)
++                signal.signal(signal.SIGALRM, previous_handler)
++        else:
++            self._exit_stack.close()
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 

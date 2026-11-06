@@ -1,0 +1,369 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "pallets_jinja_task/task1621/k2/f6-f10",
+    "pool": "pallets_jinja_task/task1621",
+    "k": 2,
+    "features": [
+      6,
+      10
+    ],
+    "strategy": "S2",
+    "strategy_id": "S2",
+    "harness": "agy",
+    "model": "gpt-oss-120b-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793979534.5881011
+  },
+  "correctness": {
+    "primary": "llm",
+    "by_final": {
+      "naive": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "union": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "llm": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "6": false,
+      "10": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 834207,
+      "cached_input": 735168,
+      "cache_write": 0,
+      "output": 14580,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 2
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 102.65978121757507,
+    "agent_busy_s": 200.7784080505371,
+    "effective_parallelism": 1.9557650101066493,
+    "container_setup_s": 1.168393850326538,
+    "grading_s": 14.375496864318848,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": {
+    "pairwise": [
+      {
+        "a": "f6",
+        "b": "f10",
+        "conflict": false,
+        "files": []
+      }
+    ],
+    "conflict_rate": 0.0,
+    "overlap_lines": 0,
+    "modes": {
+      "naive": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f6",
+            "feature_ids": [
+              6
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f10",
+            "feature_ids": [
+              10
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "union": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f6",
+            "feature_ids": [
+              6
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f10",
+            "feature_ids": [
+              10
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "llm": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f6",
+            "feature_ids": [
+              6
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f10",
+            "feature_ids": [
+              10
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      }
+    }
+  },
+  "agents": [
+    {
+      "agent_id": "f6",
+      "role": "worker",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        6
+      ],
+      "started": 1793979535.758209,
+      "ended": 1793979635.79129,
+      "busy_s": 99.99273896217346,
+      "usage": {
+        "input": 416777,
+        "cached_input": 371584,
+        "cache_write": 0,
+        "output": 7533,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 1,
+        "read": 9,
+        "edit": 5
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 95,
+      "patch_files": [
+        "src/jinja2/loaders.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793979535.7585611,
+          "ended": 1793979635.7513,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 416777,
+            "cached_input": 371584,
+            "cache_write": 0,
+            "output": 7533,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "bb4472c1-3523-4e81-9e57-d47b9fd27273",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+        }
+      ],
+      "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+    },
+    {
+      "agent_id": "f10",
+      "role": "worker",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        10
+      ],
+      "started": 1793979535.758225,
+      "ended": 1793979636.584176,
+      "busy_s": 100.78566908836365,
+      "usage": {
+        "input": 417430,
+        "cached_input": 363584,
+        "cache_write": 0,
+        "output": 7047,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 12,
+        "read": 4,
+        "edit": 2
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 120,
+      "patch_files": [
+        "src/jinja2/loaders.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793979535.759398,
+          "ended": 1793979636.545067,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 417430,
+            "cached_input": 363584,
+            "cache_write": 0,
+            "output": 7047,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "4e38e281-38f7-4f16-a26a-7d45e756ed06",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    }
+  ],
+  "grades": {
+    "own_f6": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 1.931182622909546,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/own_f6.f6.log"
+      }
+    },
+    "own_f10": {
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 40,
+        "tests_failed": 15,
+        "duration_s": 1.9874768257141113,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/own_f10.f10.log"
+      }
+    },
+    "naive": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.24784517288208,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/naive.f6.log"
+      },
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.8854191303253174,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/naive.f10.log"
+      }
+    },
+    "union": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 1.9107372760772705,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/union.f6.log"
+      },
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.8924143314361572,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/union.f10.log"
+      }
+    },
+    "llm": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 1.9196622371673584,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/llm.f6.log"
+      },
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.9082620143890381,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__pallets_jinja_task_task1621_k2_f6-f10__r0/grading/llm.f10.log"
+      }
+    }
+  }
+}

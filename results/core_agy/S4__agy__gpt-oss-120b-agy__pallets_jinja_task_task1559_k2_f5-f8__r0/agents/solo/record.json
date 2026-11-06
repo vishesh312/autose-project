@@ -1,0 +1,60 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    5,
+    8
+  ],
+  "started": 1793980655.924012,
+  "ended": 1793980790.5670521,
+  "busy_s": 134.57820510864258,
+  "usage": {
+    "input": 369843,
+    "cached_input": 310016,
+    "cache_write": 0,
+    "output": 12593,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 3,
+    "read": 7,
+    "edit": 4
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793980655.924305,
+      "ended": 1793980790.50251,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 369843,
+        "cached_input": 310016,
+        "cache_write": 0,
+        "output": 12593,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "d8a9a690-790b-4e46-894f-14aa956774af",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": " denied_actions=[{'action': 'write_file', 'display_name': 'WriteFile'}]"
+    }
+  ],
+  "error": " denied_actions=[{'action': 'write_file', 'display_name': 'WriteFile'}]"
+}

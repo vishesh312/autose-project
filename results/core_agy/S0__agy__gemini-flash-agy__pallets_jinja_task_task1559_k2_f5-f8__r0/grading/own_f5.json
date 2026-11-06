@@ -1,0 +1,11 @@
+{
+  "5": {
+    "fid": 5,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 57,
+    "tests_failed": 0,
+    "duration_s": 2.049053192138672,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S0__agy__gemini-flash-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/own_f5.f5.log"
+  }
+}

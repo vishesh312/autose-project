@@ -1,0 +1,157 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "which python; which python3; find / -name pytest 2>/dev/null"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "kill", "TaskId": "39cf0422-30ec-49ae-987c-d2665c716ca3/task-8"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m pytest tests/test_basic.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "which virtualenv; find / -name \"pytest\" 2>/dev/null | grep -v \"/Library/Frameworks\""}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "kill", "TaskId": "39cf0422-30ec-49ae-987c-d2665c716ca3/task-17"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_basic.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close(\" src/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 620, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 300}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 300, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 195}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 100, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"ctx\" src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 300, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 260}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 589, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 530}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"cleanup\" src/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"timeout\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"close\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"cleanup\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git reflog -n 10"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git branch -a; git tag"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status --ignored"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logging\" src/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"log\" src/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger\" src/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"warning\" src/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 585, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 540}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 80, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_shell_completion.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close()\" tests/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 100, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_context.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" tests/test_context.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 270, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_context.py", "StartLine": 215}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"cleanup_timeout\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --grep=\"cleanup_timeout\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --format=\"%s\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 2680"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 1 --grep=\"Fix closing of callbacks on CLI exit\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show c326df95e9e3da0425360e030413f6a3ee25fdee"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 580, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_context.py", "StartLine": 500}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 585, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 555}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" src/click/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"_resolve_context\" src/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 285, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 265}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" tests/test_shell_completion.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 587, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 555}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --format=\"%h %s\" -- src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 8981a95"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5 -p src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"get_completions\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"shell_complete\" src/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 589, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 550}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"signal\" src/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"threading\" src/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"Thread\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"signal\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"threading\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"concurrent\" src/ tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger.warning\" src/ tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --grep=\"cleanup\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status; git branch -a"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 1"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show d8763b93021c416549b5f8b4b5497234619410db"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 1 --stat"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"signal\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"threading\""}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_imports.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 75, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_imports.py", "StartLine": 50}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logging\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"timeout\" src/ tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"test_no_state_leaks\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 1 --stat c326df95e9e3da0425360e030413f6a3ee25fdee"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"2680\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_imports.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 585, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 532}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" src/click/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 589, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 540}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" src/click/core.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"make_context\" src/click/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 1825, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 1790}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 1150, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 1120}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 1170, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 1145}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 587, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 555}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" src/click/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" tests/test_shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff HEAD~1 src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import inspect; from click.shell_completion import ShellComplete; print(inspect.getsource(ShellComplete.get_completions))\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"import inspect; from click.shell_completion import ShellComplete; print(inspect.getsource(ShellComplete.get_completions))\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5 -p -S \"shell_complete\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --grep=\"cleanup\" --stat"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_imports.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"\nimport builtins, sys\nfound_imports = set()\nreal_import = builtins.__import__\ndef tracking_import(module, locals=None, globals=None, fromlist=None, level=0):\n    rv = real_import(module, locals, globals, fromlist, level)\n    if globals and globals['__name__'].startswith('click') and level == 0:\n        found_imports.add(module)\n    return rv\nbuiltins.__import__ = tracking_import\n\nimport click\nprint(sorted(found_imports))\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger = logging\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger = logging.getLogger\" src/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"echo(\" src/click/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"log\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"\nimport click\nprint('click imported')\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_imports.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"\nimport builtins\nfound_imports = set()\nreal_import = builtins.__import__\ndef tracking_import(module, locals=None, globals=None, fromlist=None, level=0):\n    rv = real_import(module, locals, globals, fromlist, level)\n    if globals and globals['__name__'].startswith('click') and level == 0:\n        found_imports.add(module)\n    return rv\nbuiltins.__import__ = tracking_import\n\nimport click\nimport logging\nprint(found_imports)\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"signal\" src/click/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import ctypes; print(hasattr(ctypes.pythonapi, 'PyThreadState_SetAsyncExc'))\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"signal\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import concurrent.futures; print(concurrent.futures)\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"\nimport builtins, sys\nfound_imports = set()\nreal_import = builtins.__import__\ndef tracking_import(module, locals=None, globals=None, fromlist=None, level=0):\n    rv = real_import(module, locals, globals, fromlist, level)\n    if globals and globals['__name__'].startswith('click') and level == 0:\n        found_imports.add(module)\n    return rv\nbuiltins.__import__ = tracking_import\n\nimport click\nctx = click.Context(click.Command(\u2026"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_imports.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 587, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 555}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 15}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 297, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 265}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" src/click/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 587, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 545}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"call_on_close\" tests/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 140, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_context.py", "StartLine": 110}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" tests/test_context.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 210, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_context.py", "StartLine": 180}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 285, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 265}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 440, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 420}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 620, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 600}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"\nimport click\nprint([c for c in dir(click) if 'close' in c.lower()])\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"\nimport concurrent.futures, time\ndef f():\n    time.sleep(2)\nwith concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:\n    future = pool.submit(f)\n    try:\n        future.result(timeout=0.1)\n    except TimeoutError:\n        print('timeout!')\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"\nimport threading, time\ndef f():\n    time.sleep(2)\nt = threading.Thread(target=f, daemon=True)\nt.start()\nt.join(timeout=0.1)\nprint(t.is_alive())\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"\nimport threading, ctypes, time\n\ndef raise_in_thread(tid, exctype):\n    res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_ulong(tid), ctypes.py_object(exctype))\n    return res\n\ndef worker():\n    try:\n        while True:\n            time.sleep(0.01)\n    except Exception as e:\n        print('Caught in thread:', type(e))\n\nt = threading.Thread(target=worker, daemon=True)\nt.start()\ntime.sleep(0.05)\nres = raise_in_thread(t.ident, SystemExit)\nt.join(timeout=0.5)\nprint('Alive:', t.is_alive())\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"signal.signal\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import platform; print(platform.system())\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"\nimport threading, ctypes, time\n\ndef raise_async(tid, exc_type):\n    ctypes.pythonapi.PyThreadState_SetAsyncExc(\n        ctypes.c_ulong(tid), ctypes.py_object(exc_type)\n    )\n\ndef slow_cleanup():\n    try:\n        time.sleep(2)\n    except SystemExit:\n        pass\n\nt = threading.Thread(target=slow_cleanup, daemon=True)\nt.start()\nt.join(timeout=0.1)\nif t.is_alive():\n    raise_async(t.ident, SystemExit)\n    t.join(timeout=0.1)\nprint('Alive?', t.is_alive())\n\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_imports.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"\nimport builtins\nfound_imports = set()\nreal_import = builtins.__import__\ndef tracking_import(module, locals=None, globals=None, fromlist=None, level=0):\n    rv = real_import(module, locals, globals, fromlist, level)\n    if globals and globals['__name__'].startswith('click') and level == 0:\n        found_imports.add(module)\n    return rv\nbuiltins.__import__ = tracking_import\n\nimport click.core\nimport click.shell_completion\nprin\u2026"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import logging; logger = logging.getLogger('click'); print(logger)\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger = logging.getLogger\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import logging; print(logging.getLogger('click.core'))\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"logger\" docs/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import logging; logging.warning('test')\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import logging; logger = logging.getLogger('click.core'); logger.warning('test')\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import logging; logger = logging.getLogger(__name__); logger.warning('test')\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"clean up\" docs/ src/ tests/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 1340, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 1320}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 587, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 555}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"shell_complete(\" src/ tests/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"complete(\" src/ tests/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 345, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/tests/test_shell_completion.py", "StartLine": 315}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"_main_shell_completion\" src/"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 1410, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/core.py", "StartLine": 1370}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 587, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 555}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" src/click/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"_main_shell_completion\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"shell_complete\" src/click/shell_completion.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 60, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 15}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 587, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-9yxs2413/repo/src/click/shell_completion.py", "StartLine": 555}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_shell_completion.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"close\" tests/test_shell_completion.py"}, "ok": null, "ts": null}

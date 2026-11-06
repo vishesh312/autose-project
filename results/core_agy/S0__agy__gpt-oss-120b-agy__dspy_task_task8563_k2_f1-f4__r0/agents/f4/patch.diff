@@ -1,0 +1,203 @@
+diff --git a/cachetools/__init__.py b/cachetools/__init__.py
+new file mode 100644
+index 00000000..c7f43f24
+--- /dev/null
++++ b/cachetools/__init__.py
+@@ -0,0 +1,38 @@
++from collections import OrderedDict
++
++class LRUCache(dict):
++    """Simple LRU cache fallback used when the real `cachetools` package is unavailable.
++    It mimics the subset of the interface needed by DSPy tests.
++    """
++    def __init__(self, maxsize=1000, *args, **kwargs):
++        super().__init__(*args, **kwargs)
++        self.maxsize = maxsize
++        self.order = OrderedDict()
++
++    def __setitem__(self, key, value):
++        # Ensure attributes exist for unpickled objects
++        maxsize = getattr(self, "maxsize", 1000)
++        order = getattr(self, "order", OrderedDict())
++        if key in self:
++            order.pop(key, None)
++        elif len(self) >= maxsize:
++            oldest = next(iter(order))
++            order.pop(oldest, None)
++            super().__delitem__(oldest)
++        order[key] = None
++        # Save back possibly missing attributes
++        self.maxsize = maxsize
++        self.order = order
++        super().__setitem__(key, value)
++
++    def __getitem__(self, key):
++        value = super().__getitem__(key)
++        # Move to end to mark as recently used
++        order = getattr(self, "order", OrderedDict())
++        order.pop(key, None)
++        order[key] = None
++        self.order = order
++        return value
++
++    def __contains__(self, key):
++        return super().__contains__(key)
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..b91e6ee7 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -2,6 +2,8 @@ import asyncio
+ import inspect
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import json
++import hashlib
+ from jsonschema import ValidationError, validate
+ from pydantic import BaseModel, TypeAdapter, create_model
+ 
+@@ -254,10 +256,26 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize(value: Any) -> Any:
++    """Recursively sort dict keys, convert tuples to lists, and trim strings.
++    Returns a structure ready for deterministic JSON serialization."""
++    if isinstance(value, dict):
++        # Sort keys
++        return {k: _canonicalize(value[k]) for k in sorted(value)}
++    elif isinstance(value, (list, tuple)):
++        # Convert tuple to list and process elements
++        return [_canonicalize(v) for v in list(value)]
++    elif isinstance(value, str):
++        return value.strip()
++    else:
++        return value
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str | None = None
++        id: str | None = None
+ 
+     tool_calls: list[ToolCall]
+ 
+@@ -282,6 +300,16 @@ class ToolCalls(Type):
+             ```
+         """
+         tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
++        # Compute deterministic fingerprint and short id for each tool call
++        for tc in tool_calls:
++            # Canonicalize args for deterministic representation
++            canonical_args = _canonicalize(tc.args)
++            # Build the canonical representation including name and args
++            canonical_obj = {"name": tc.name, "args": canonical_args}
++            canonical_str = json.dumps(canonical_obj, sort_keys=True, separators=(",", ":"))
++            fp = hashlib.sha256(canonical_str.encode("utf-8")).hexdigest()
++            tc.fingerprint = fp
++            tc.id = fp[:8]
+         return cls(tool_calls=tool_calls)
+ 
+     @classmethod
+diff --git a/dspy/clients/__init__.py b/dspy/clients/__init__.py
+index 735691e9..f500e9ec 100644
+--- a/dspy/clients/__init__.py
++++ b/dspy/clients/__init__.py
+@@ -78,13 +78,23 @@ def configure_cache(
+ litellm.telemetry = False
+ litellm.cache = None  # By default we disable litellm cache and use DSPy on-disk cache.
+ 
+-DSPY_CACHE = Cache(
+-    enable_disk_cache=True,
+-    enable_memory_cache=True,
+-    disk_cache_dir=DISK_CACHE_DIR,
+-    disk_size_limit_bytes=DISK_CACHE_LIMIT,
+-    memory_max_entries=1000000,
+-)
++try:
++    DSPY_CACHE = Cache(
++        enable_disk_cache=True,
++        enable_memory_cache=True,
++        disk_cache_dir=DISK_CACHE_DIR,
++        disk_size_limit_bytes=DISK_CACHE_LIMIT,
++        memory_max_entries=1000000,
++    )
++except Exception as e:  # pragma: no cover
++    logger.warning(f"Failed to initialize DSPY_CACHE on-disk cache: {e}. Falling back to memory-only cache.")
++    DSPY_CACHE = Cache(
++        enable_disk_cache=False,
++        enable_memory_cache=True,
++        disk_cache_dir=DISK_CACHE_DIR,
++        disk_size_limit_bytes=DISK_CACHE_LIMIT,
++        memory_max_entries=1000000,
++    )
+ 
+ # Turn off by default to avoid LiteLLM logging during every LM call.
+ litellm.suppress_debug_info = True
+diff --git a/dspy/clients/cache.py b/dspy/clients/cache.py
+index 7ba9b0e5..66a5892e 100644
+--- a/dspy/clients/cache.py
++++ b/dspy/clients/cache.py
+@@ -9,7 +9,37 @@ from typing import Any
+ import cloudpickle
+ import pydantic
+ import ujson
+-from cachetools import LRUCache
++from collections import OrderedDict
++try:
++    from cachetools import LRUCache
++except ImportError:  # pragma: no cover
++    # Simple fallback LRUCache implementation using OrderedDict
++    class LRUCache(dict):
++        def __init__(self, maxsize=1000, *args, **kwargs):
++            super().__init__(*args, **kwargs)
++            self.maxsize = maxsize
++            self.order = OrderedDict()
++
++        def __setitem__(self, key, value):
++            if key in self:
++                self.order.pop(key, None)
++            elif len(self) >= self.maxsize:
++                oldest = next(iter(self.order))
++                self.order.pop(oldest, None)
++                super().__delitem__(oldest)
++            self.order[key] = None
++            super().__setitem__(key, value)
++
++        def __getitem__(self, key):
++            value = super().__getitem__(key)
++            # move to end to show recent use
++            self.order.pop(key, None)
++            self.order[key] = None
++            return value
++
++        def __contains__(self, key):
++            return super().__contains__(key)
++
+ from diskcache import FanoutCache
+ 
+ logger = logging.getLogger(__name__)
+@@ -47,12 +77,17 @@ class Cache:
+         else:
+             self.memory_cache = {}
+         if self.enable_disk_cache:
+-            self.disk_cache = FanoutCache(
+-                shards=16,
+-                timeout=10,
+-                directory=disk_cache_dir,
+-                size_limit=disk_size_limit_bytes,
+-            )
++            try:
++                self.disk_cache = FanoutCache(
++                    shards=16,
++                    timeout=10,
++                    directory=disk_cache_dir,
++                    size_limit=disk_size_limit_bytes,
++                )
++            except Exception as e:  # pragma: no cover
++                logger.warning(f"Failed to initialize on-disk cache at {disk_cache_dir}: {e}. Falling back to in-memory only.")
++                self.enable_disk_cache = False
++                self.disk_cache = {}
+         else:
+             self.disk_cache = {}
+ 

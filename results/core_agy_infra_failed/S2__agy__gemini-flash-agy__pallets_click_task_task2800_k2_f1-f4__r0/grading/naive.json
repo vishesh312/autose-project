@@ -1,0 +1,20 @@
+{
+  "1": {
+    "fid": 1,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 67,
+    "tests_failed": 1,
+    "duration_s": 1.2391870021820068,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/naive.f1.log"
+  },
+  "4": {
+    "fid": 4,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 68,
+    "tests_failed": 9,
+    "duration_s": 1.799684762954712,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/naive.f4.log"
+  }
+}

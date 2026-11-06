@@ -1,0 +1,28 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' chi.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"EnableDebug\" -n . || true"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -R \"pattern\" -n *.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 160, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go", "StartLine": 90}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "EnableDebugLogging chi logger"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/middleware/logger.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "debug logging chi pattern handling"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "EnableDebugLogging"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "chi debug logging pattern"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "debug logging chi pattern"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "EnableDebugLogging chi"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "EnableDebugLogging()"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go", "StartLine": 380}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "debug logging chi handle"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "DefaultLogger"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "debug logging chi pattern handling EnableDebugLogging"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "log pattern chi"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "logger"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 160, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go", "StartLine": 100}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/middleware/logger.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 30, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 12, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go", "StartLine": 3}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-999y4ny1/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./... -run Test"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}

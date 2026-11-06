@@ -1,0 +1,208 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "pallets_click_task/task2800/k2/f1-f4",
+    "pool": "pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S4",
+    "strategy_id": "S4",
+    "harness": "agy",
+    "model": "gpt-oss-120b-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793980428.094017
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 4266925,
+      "cached_input": 4110912,
+      "cache_write": 0,
+      "output": 58113,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 6
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 332.4933891296387,
+    "agent_busy_s": 332.31841707229614,
+    "effective_parallelism": 0.9994737577856795,
+    "container_setup_s": 0.9155960083007812,
+    "grading_s": 6.479135990142822,
+    "nudges": 2,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        1,
+        4
+      ],
+      "started": 1793980429.011368,
+      "ended": 1793980761.426854,
+      "busy_s": 332.31841707229614,
+      "usage": {
+        "input": 4266925,
+        "cached_input": 4110912,
+        "cache_write": 0,
+        "output": 58113,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 6
+      },
+      "cost_list": null,
+      "nudges": 2,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "read": 22
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793980429.0116348,
+          "ended": 1793980660.326889,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 1157537,
+            "cached_input": 1107776,
+            "cache_write": 0,
+            "output": 17581,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "009b5814-8e94-4790-ad2d-330f7f52c68f",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "There is no find_file tool, but we can read more lines further down to locate _resolve_context.There is no find_file tool, but we can read more lines further down to locate _resolve_context.\n",
+          "error": "ERROR"
+        },
+        {
+          "index": 1,
+          "started": 1793980660.390239,
+          "ended": 1793980671.561801,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 1181841,
+            "cached_input": 1131776,
+            "cache_write": 0,
+            "output": 17743,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "009b5814-8e94-4790-ad2d-330f7f52c68f",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": "ERROR"
+        },
+        {
+          "index": 2,
+          "started": 1793980671.594282,
+          "ended": 1793980761.4258828,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 1927547,
+            "cached_input": 1871360,
+            "cache_write": 0,
+            "output": 22789,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "009b5814-8e94-4790-ad2d-330f7f52c68f",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 1.0993542671203613,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 1.763305902481079,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 1.0631511211395264,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/final.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 1.7506859302520752,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/final.f4.log"
+      }
+    }
+  }
+}

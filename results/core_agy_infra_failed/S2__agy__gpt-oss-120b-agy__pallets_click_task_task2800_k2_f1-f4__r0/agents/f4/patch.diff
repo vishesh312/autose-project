@@ -1,0 +1,54 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..f4e180c 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -280,6 +280,7 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+@@ -297,7 +298,14 @@ class Context:
+         #: must be never propagated to another arguments.  This is used
+         #: to implement nested parsing.
+         self._protected_args: list[str] = []
+-        #: the collected prefixes of the command's options.
++        # Validate cleanup_timeout
++        if cleanup_timeout is not None:
++            if not isinstance(cleanup_timeout, (int, float)):
++                raise TypeError("cleanup_timeout must be a number")
++            if cleanup_timeout <= 0:
++                raise ValueError("cleanup_timeout must be a positive number")
++        self.cleanup_timeout = cleanup_timeout
++
+         self._opt_prefixes: set[str] = set(parent._opt_prefixes) if parent else set()
+ 
+         if obj is None and parent is not None:
+@@ -607,7 +615,24 @@ class Context:
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
+         """
+-        self._exit_stack.close()
++        # If a cleanup timeout is configured, enforce it using signal alarm.
++        if getattr(self, "cleanup_timeout", None) is not None:
++            import signal, math
++            # Define a handler that raises TimeoutError.
++            def _handler(signum, frame):
++                raise TimeoutError("Context cleanup timed out after {} seconds".format(self.cleanup_timeout))
++            previous_handler = signal.getsignal(signal.SIGALRM)
++            signal.signal(signal.SIGALRM, _handler)
++            # Set alarm using ceiling of timeout.
++            seconds = math.ceil(self.cleanup_timeout)
++            try:
++                signal.alarm(seconds)
++                self._exit_stack.close()
++            finally:
++                signal.alarm(0)
++                signal.signal(signal.SIGALRM, previous_handler)
++        else:
++            self._exit_stack.close()
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 

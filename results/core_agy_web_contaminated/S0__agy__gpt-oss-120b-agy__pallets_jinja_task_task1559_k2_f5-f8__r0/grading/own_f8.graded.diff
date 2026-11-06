@@ -1,0 +1,15 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..d7f3ab7 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -243,6 +243,10 @@ def _make_new_npgettext(
+ 
+ 
+ class InternationalizationExtension(Extension):
++    """This extension adds gettext support to Jinja."""
++    tags = {"trans"}
++    # existing implementation unchanged
++
+     """This extension adds gettext support to Jinja."""
+ 
+     tags = {"trans"}

@@ -1,0 +1,61 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..fd10d9a 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -6,6 +6,7 @@ import errno
+ import inspect
+ import os
+ import sys
++import threading
+ import typing as t
+ from collections import abc
+ from collections import Counter
+@@ -280,6 +281,7 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+@@ -429,6 +431,13 @@ class Context:
+ 
+         self._close_callbacks: list[t.Callable[[], t.Any]] = []
+         self._depth = 0
++        # Timeout (in seconds) for cleanup operations during close().
++        if cleanup_timeout is not None:
++            if not isinstance(cleanup_timeout, (int, float)) or cleanup_timeout <= 0:
++                raise ValueError('cleanup_timeout must be a positive number')
++            self.cleanup_timeout: float | None = float(cleanup_timeout)
++        else:
++            self.cleanup_timeout = None
+         self._parameter_source: dict[str, ParameterSource] = {}
+         self._exit_stack = ExitStack()
+ 
+@@ -607,9 +616,23 @@ class Context:
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
+         """
+-        self._exit_stack.close()
+-        # In case the context is reused, create a new exit stack.
+-        self._exit_stack = ExitStack()
++        if getattr(self, "cleanup_timeout", None) is not None:
++            timeout = self.cleanup_timeout
++            def _do_close():
++                self._exit_stack.close()
++            thread = threading.Thread(target=_do_close, daemon=True)
++            thread.start()
++            thread.join(timeout)
++            if thread.is_alive():
++                try:
++                    echo(_(f"Warning: cleanup timed out after {timeout}s"), err=True)
++                except Exception:
++                    pass
++                # cannot forcibly kill thread
++            self._exit_stack = ExitStack()
++        else:
++            self._exit_stack.close()
++            self._exit_stack = ExitStack()
+ 
+     @property
+     def command_path(self) -> str:

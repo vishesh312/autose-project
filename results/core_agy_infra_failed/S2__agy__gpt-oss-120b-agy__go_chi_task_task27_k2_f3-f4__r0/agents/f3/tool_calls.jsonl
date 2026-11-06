@@ -1,0 +1,27 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' chi.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '200,400p' chi.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' logger.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls middleware"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' middleware/logger.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 40, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 150, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 110}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 40, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 180, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 140}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 167, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 148}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 168, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 148}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 150, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 115}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 150}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 175, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 145}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 170, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 140}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 170, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 148}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 190, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-2ump4y7s/repo/mux.go", "StartLine": 140}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}

@@ -1,0 +1,14 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..99e4814 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -400,6 +400,9 @@ class InternationalizationExtension(Extension):
+                     plural_expr = var
+                 num_called_num = token.value == "num"
+ 
++        # Validate variables before proceeding
++        self._validate_trans_variables(variables, parser, lineno)
++
+         parser.stream.expect("block_end")
+ 
+         plural = None

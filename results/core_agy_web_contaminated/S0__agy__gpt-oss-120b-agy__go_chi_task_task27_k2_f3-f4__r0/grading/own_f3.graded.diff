@@ -1,0 +1,57 @@
+diff --git a/mux.go b/mux.go
+index 56fa4d2..17ff7e3 100644
+--- a/mux.go
++++ b/mux.go
+@@ -1,6 +1,7 @@
+ package chi
+ 
+ import (
++	"log"
+ 	"context"
+ 	"fmt"
+ 	"net/http"
+@@ -8,6 +9,15 @@ import (
+ 	"sync"
+ )
+ 
++var (
++	debugLoggingEnabled bool
++)
++
++// EnableDebugLogging turns on debug-level logging; off by default.
++func EnableDebugLogging() {
++	debugLoggingEnabled = true
++}
++
+ var _ Router = &Mux{}
+ 
+ // Mux is a simple HTTP route multiplexer that parses a request path,
+@@ -107,11 +117,18 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ // Handle adds the route `pattern` that matches any http method to
+ // execute the `handler` http.Handler.
+ func (mx *Mux) Handle(pattern string, handler http.Handler) {
++	if debugLoggingEnabled {
++		log.Printf("[chi debug] Handle called with pattern: %s", pattern)
++	}
+ 	parts := strings.SplitN(pattern, " ", 2)
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])
+ 		path := parts[1]
+ 
++		if debugLoggingEnabled {
++			log.Printf("[chi debug] Detected method prefix: %s, remaining path: %s", methodStr, path)
++		}
++
+ 		method, ok := methodMap[methodStr]
+ 		if !ok {
+ 			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
+@@ -127,6 +144,9 @@ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ // HandleFunc adds the route `pattern` that matches any http method to
+ // execute the `handlerFn` http.HandlerFunc.
+ func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
++	if debugLoggingEnabled {
++		log.Printf("[chi debug] HandleFunc called with pattern: %s", pattern)
++	}
+ 	mx.handle(mALL, pattern, handlerFn)
+ }
+ 

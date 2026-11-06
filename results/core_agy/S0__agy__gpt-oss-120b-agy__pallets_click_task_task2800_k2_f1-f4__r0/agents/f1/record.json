@@ -1,0 +1,83 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793982044.5542989,
+  "ended": 1793982735.224386,
+  "busy_s": 630.6073319911957,
+  "usage": {
+    "input": 5049715,
+    "cached_input": 4865984,
+    "cache_write": 0,
+    "output": 59799,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 3
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "infra_retries": 1,
+  "infra_wait_s": 60.0,
+  "infra_failed": false,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 7,
+    "read": 37,
+    "edit": 16
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793982044.554506,
+      "ended": 1793982274.518193,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1080909,
+        "cached_input": 1022016,
+        "cache_write": 0,
+        "output": 12868,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "7494c9ad-b5b4-4d2e-828a-7e2a75d082b8",
+      "nudge_reason": "infra_retry_in_60s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 1,
+      "started": 1793982334.523198,
+      "ended": 1793982735.166843,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 3968806,
+        "cached_input": 3843968,
+        "cache_write": 0,
+        "output": 46931,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "7494c9ad-b5b4-4d2e-828a-7e2a75d082b8",
+      "nudge_reason": null,
+      "final_text_tail": "Implemented the requested resource leak fix:\n\n- Added `contextmanager` import.\n- Refactored `_resolve_context` to be a proper context manager, ensuring all created contexts are closed.\n- Updated `ShellComplete.get_completions` to use the new context manager version of `_resolve_context`.\n- Cleaned up duplicate/incorrect imports and redundant code sections.\n\nThese changes close file handles properly during shell completion, eliminating `ResourceWarning` messages.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

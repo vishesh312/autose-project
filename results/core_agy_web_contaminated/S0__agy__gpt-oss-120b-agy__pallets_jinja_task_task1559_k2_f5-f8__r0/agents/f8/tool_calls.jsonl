@@ -1,0 +1,12 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 560, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py", "StartLine": 460}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "class TemplateData jinja2 nodes"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 800, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py", "StartLine": 560}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "class ConditionalI18nExtension jinja2"}, "ok": null, "ts": null}
+{"name": "search_web", "kind": "read", "args": {"query": "ctrans jinja2"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 860, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py", "StartLine": 800}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 340, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-akbaiufh/repo/src/jinja2/ext.py", "StartLine": 240}, "ok": null, "ts": null}

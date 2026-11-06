@@ -1,0 +1,102 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..91e0ba0 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -71,6 +71,57 @@ class BaseLoader:
+     #: .. versionadded:: 2.4
+     has_source_access = True
+ 
++    def __init_subclass__(cls, **kwargs: t.Any) -> None:
++        super().__init_subclass__(**kwargs)
++        if "get_source" in cls.__dict__:
++            orig_get_source = cls.__dict__["get_source"]
++
++            def get_source(
++                self: "BaseLoader", environment: "Environment", template: str
++            ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
++                resolved = self.resolve_alias(template)
++                rv = orig_get_source(self, environment, resolved)
++                if template != resolved:
++                    source, filename, uptodate = rv
++
++                    def alias_uptodate() -> bool:
++                        if self.resolve_alias(template) != resolved:
++                            return False
++                        if uptodate is not None:
++                            return uptodate()
++                        return True
++
++                    return source, filename, alias_uptodate
++                return rv
++
++            get_source.__doc__ = orig_get_source.__doc__
++            get_source.__name__ = orig_get_source.__name__
++            cls.get_source = get_source  # type: ignore[assignment]
++
++    def add_alias(self, alias: str, target: str) -> None:
++        """Add an alias for a template name.
++
++        :param alias: The alias name.
++        :param target: The actual template name the alias maps to.
++        """
++        if not hasattr(self, "_aliases"):
++            self._aliases: t.Dict[str, str] = {}
++        self._aliases[alias] = target
++
++    def remove_alias(self, alias: str) -> None:
++        """Remove an alias if it exists.
++
++        :param alias: The alias name to remove.
++        """
++        if hasattr(self, "_aliases"):
++            self._aliases.pop(alias, None)
++
++    def resolve_alias(self, name: str) -> str:
++        """Resolve an alias to its target name. Does not resolve recursively."""
++        if hasattr(self, "_aliases") and name in self._aliases:
++            return self._aliases[name]
++        return name
++
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+@@ -508,13 +559,13 @@ class PrefixLoader(BaseLoader):
+         name: str,
+         globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+     ) -> "Template":
+-        loader, local_name = self.get_loader(name)
++        loader, local_name = self.get_loader(self.resolve_alias(name))
+         try:
+             return loader.load(environment, local_name, globals)
+         except TemplateNotFound as e:
+             # re-raise the exception with the correct filename here.
+             # (the one that includes the prefix)
+-            raise TemplateNotFound(name) from e
++            raise TemplateNotFound(self.resolve_alias(name)) from e
+ 
+     def list_templates(self) -> t.List[str]:
+         result = []
+@@ -558,12 +609,13 @@ class ChoiceLoader(BaseLoader):
+         name: str,
+         globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+     ) -> "Template":
++        target = self.resolve_alias(name)
+         for loader in self.loaders:
+             try:
+-                return loader.load(environment, name, globals)
++                return loader.load(environment, target, globals)
+             except TemplateNotFound:
+                 pass
+-        raise TemplateNotFound(name)
++        raise TemplateNotFound(target)
+ 
+     def list_templates(self) -> t.List[str]:
+         found = set()
+@@ -630,6 +682,7 @@ class ModuleLoader(BaseLoader):
+         name: str,
+         globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+     ) -> "Template":
++        name = self.resolve_alias(name)
+         key = self.get_template_key(name)
+         module = f"{self.package_name}.{key}"
+         mod = getattr(self.module, module, None)

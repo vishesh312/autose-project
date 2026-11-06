@@ -1,0 +1,60 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793979184.854626,
+  "ended": 1793979848.9734771,
+  "busy_s": 664.0645387172699,
+  "usage": {
+    "input": 9433654,
+    "cached_input": 8902849,
+    "cache_write": 0,
+    "output": 12724,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 126,
+    "read": 19,
+    "subagent": 1,
+    "edit": 2
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793979184.8548381,
+      "ended": 1793979848.9193769,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 9433654,
+        "cached_input": 8902849,
+        "cache_write": 0,
+        "output": 12724,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "5eef7186-37ab-4c60-9d61-74819cefe202",
+      "nudge_reason": null,
+      "final_text_tail": "{}\n### Summary of Changes\n\n1. **Fixed Resource Leak in Shell Completion**:\n   - In [`src/click/shell_completion.py`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-xp7_6_do/repo/src/click/shell_completion.py#L532-L588): Wrapped all context creations in [`_resolve_context`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-xp7_6_do/repo/src/click/shell_completion.py#L532) with proper `with` statements:\n     - Main context creation: `with cli.make_context(...) as ctx:`\n     - Sub-context creation for non-chained groups: `with cmd.make_context(...) as sub_ctx:`\n     - Sub-context creation for chained groups: `with cmd.make_context(...) as sub_sub_ctx:`\n   - This ensures contexts (and resources managed by them like `click.File()` file handles) are properly closed via `__exit__`.\n\n2. **Added Unit Test**:\n   - In [`tests/test_shell_completion.py`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-xp7_6_do/repo/tests/test_shell_completion.py#L418-L440): Added `test_file_resource_leak` to verify that completion using `click.File` does not emit unclosed file `ResourceWarning`s.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

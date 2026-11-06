@@ -1,0 +1,62 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    1,
+    4
+  ],
+  "started": 1793979106.50855,
+  "ended": 1793979559.880047,
+  "busy_s": 453.26796793937683,
+  "usage": {
+    "input": 3775130,
+    "cached_input": 3424879,
+    "cache_write": 0,
+    "output": 13089,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 63,
+    "read": 15,
+    "subagent": 3,
+    "edit": 3,
+    "other": 1
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793979106.508804,
+      "ended": 1793979559.776772,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 3775130,
+        "cached_input": 3424879,
+        "cache_write": 0,
+        "output": 13089,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "553b6023-af49-4dfa-a802-d09c9a5e399f",
+      "nudge_reason": null,
+      "final_text_tail": "s canonical dicts with the `tool_calls` key.\n   - Parses valid JSON strings before normalization, and preserves invalid / non-JSON strings as-is.\n\n2. **Task 2: Deterministic Parse Fingerprinting for `ToolCalls`**\n   - Added `canonicalize_args` to recursively sort dict keys, convert tuples to lists, and strip leading/trailing whitespace on string values without coercing numeric or boolean types.\n   - Added `compute_tool_call_fingerprint` to serialize `{\"name\": name, \"args\": canonical_args}` with `json.dumps(..., sort_keys=True, separators=(\",\", \":\"))` and hash it using SHA-256.\n   - Added `fingerprint: str` (64-char hex) and `id: str` (first 8 hex chars) fields to [`ToolCalls.ToolCall`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yw83omu2/repo/dspy/adapters/types/tool.py#L283), computed once at creation time in `__init__` and enforced as read-only.\n   - Works seamlessly when creating `ToolCalls` via [`ToolCalls.from_dict_list`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yw83omu2/repo/dspy/adapters/types/tool.py#L318) or direct validation.\n\n3. **Testing**\n   - Added unit tests covering all flexible parsing scenarios, input validation returns, stable fingerprinting, whitespace trimming, tuple normalization, and read-only attribute constraints in [tests/adapters/test_tool.py](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yw83omu2/repo/tests/adapters/test_tool.py). All tests pass.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

@@ -107,7 +107,7 @@ Used for & OpenCode runs on the \texttt{core} Python pools; a Qwen3.8-27B (INT4)
 \textbf{Toy pool, OpenCode + Qwen3.5-9B (local).} All strategies pass all tasks: S0 $k{=}2$ (938\,s), S1 (536\,s), S2 (592\,s, all three merge modes), S0 $k{=}3$ (1312\,s). The bundle used had no conflicting pair, so the conflict path of the resolver was not exercised. These runs show the pipeline works end to end; they are not results.
 
 \begin{table}[t]
-\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of \asof; runs still in progress). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run.}
+\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of \asof; the Gemini set is complete, GPT-OSS was stopped with runs unfinished). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run.}
 \label{tab:agy}
 \small
 \input{tables}
@@ -141,7 +141,7 @@ $n$ is tiny and each configuration has one repeat; confidence intervals are wide
 
 
 \section{Milestones and Changes to the Proposal}
-\textbf{Achieved so far.} An end-to-end pipeline from bundle sampling to graded, logged runs; a $k$-task grader checked on 41 real CooperBench tasks and a toy pool; four strategies (S0, S1, S2 with three merge modes, S4) and prompt variants; six harness adapters, two verified on real output; a Docker sandbox and two no-Docker routes; first measurements with three harness/model setups; and tooling the proposal did not foresee: a web-use audit, a run-validity flag, automatic retry through quota errors, and raw-log redaction.
+\textbf{Achieved so far.} An end-to-end pipeline from bundle sampling to graded, logged runs; a $k$-task grader checked on 41 real CooperBench tasks and a toy pool; four strategies (S0, S1, S2 with three merge modes, S4) and prompt variants; six harness adapters, two verified on real output; a Docker sandbox and two no-Docker routes; first measurements with three harness/model setups; a proof of concept for SWE-smith bundles; and tooling the proposal did not foresee: a web-use audit, a run-validity flag, automatic retry through quota errors, and raw-log redaction.
 
 \textbf{Changes.} (1) \emph{Models}: the course encourages local models, so the main OpenCode runs use open models served with vLLM, while hosted Gemini and GPT-OSS through Antigravity act as a stronger reference. (2) \emph{Scale}: the full benchmark is not feasible (Section~6), so we evaluate the curated \texttt{core} subset first, with $k{=}2$, and move to $k$ up to 6 afterwards. (3) \emph{Optional items}: bundling SWE-smith bugs to add an adjustable conflict-density dial remains ``if time permits''. (4) \emph{Risk}: access to hosted models (quota, capacity, terms of use) turned out to be a schedule risk; we plan the final experiments around local models.
 
@@ -149,6 +149,15 @@ $n$ is tiny and each configuration has one repeat; confidence intervals are wide
 SWE-smith~\cite{swesmith} is an MIT-licensed toolkit that builds an execution environment for a repository and then synthesises task instances in it. Each instance is a bug patch that breaks previously passing tests and carries its FAIL\_TO\_PASS and PASS\_TO\_PASS test lists, a generated problem statement and the repository's shared Docker image. The authors report about 50k instances from 128 Python repositories, created by procedural code edits, LM modification or rewriting of functions, reverted pull requests, and combinations of validated bugs from the same file or module. Because all instances of one repository are patches on a single pinned commit, many tasks can be placed on one snapshot. This is what our benchmark needs and what CooperBench's 30 pools cannot provide at scale; it is also the ``adjustable conflict density'' option named in our proposal.
 
 \textbf{Plan.} (1) Take validated single-function bugs from repositories SWE-smith supports, preferring ones CooperBench also uses (jinja, click, dspy) so the two sources can be compared. (2) Index each bug's file, function and line range by parsing its patch, since instances do not store them separately. (3) Group $k$ bugs by overlap: different files, the same file in different functions, or the same function; the share of overlapping task pairs becomes the conflict-density dial. (4) Apply all $k$ patches to the clean commit, confirm that each task's failing tests still fail, and reject bundles whose patches do not apply or whose tests interfere. (5) Run every harness and strategy on the bundle and grade each task on its own FAIL\_TO\_PASS tests on the final tree with our existing grader. Step-by-step details with sources are in \texttt{docs/swesmith\_guide.md}.
+
+\begin{table}[t]
+\caption{SWE-smith proof of concept (oauthlib, $k{=}4$). Same fn: share of task pairs in one function; Near: pairs within 3 lines; Conflict: share of task pairs whose fixes conflict under \texttt{git merge}; Restored: bundles whose merged fixes restore the clean code.}
+\label{tab:swesmith}
+\scriptsize
+\input{tables_swesmith}
+\end{table}
+
+\textbf{Proof of concept.} We ran steps (1)--(4) on the oauthlib instances of the SWE-smith dataset (one repository, one pinned commit): 558 of the fetched instances apply to the repository mirror, and 308 of them touch exactly one file and one function in git's minimal diff. We built 4-task bundles at five overlap levels (10--12 each), applied all four bug patches to the clean commit, and, for every task, built the patch that undoes only that bug, which is what a correct agent fix amounts to. Table~\ref{tab:swesmith} shows that the dial controls overlap exactly (the share of task pairs in the same function rises from 0 to 1.00), that every bundle is valid (its patches apply together), and that merging all per-task fixes restores the original code in every case. It also shows a negative result: \textbf{no textual merge conflict arose at any level}, including ten bundles with two bugs on touching lines. The dial therefore does not yet give conflicting tasks. SWE-smith bugs rarely change the same lines, and two bugs on the same line cannot be placed in one snapshot, so we expect conflicts to come mostly from semantic interaction between agents' fixes. Testing that needs agent runs with SWE-smith's test environments, which we have not done, and we have not yet explained why the touching pairs merged cleanly. The script is \texttt{scripts/swesmith\_poc.py}.
 
 \textbf{Open questions.} SWE-smith's failing tests are visible to the agent, so we must decide whether to hide them at solve time; its combine step works only at file or module level, so same-function bundles need independently generated bugs; and we have not yet verified that its pinned commits match our pools, or that bundled bugs keep their individual test sets.
 
@@ -159,7 +168,7 @@ SWE-smith~\cite{swesmith} is an MIT-licensed toolkit that builds an execution en
 \item $k=3,4,6$ bundles and an analysis by conflict density, using CooperBench's gold conflict report now and SWE-smith bundles with a controlled overlap next.
 \item Validate the Pi, Claude Code and Codex adapters on real output; cache S0 results across bundles.
 \item Our own contribution: a predict-then-schedule strategy (S3) that predicts each task's files, runs conflicting tasks one after another and the rest in parallel, evaluated with file-prediction recall and the cost saved.
-\item Report cost and resource use (tokens, GPU-hours) as in the proposal, and the final ACM-format report.
+\item Run agents on SWE-smith bundles with their test environments to see whether semantic conflicts appear where textual ones do not, and complete the GPT-OSS runs.\item Report cost and resource use (tokens, GPU-hours) as in the proposal, and the final ACM-format report.
 \end{itemize}
 
 \section{Use of AI Tools}

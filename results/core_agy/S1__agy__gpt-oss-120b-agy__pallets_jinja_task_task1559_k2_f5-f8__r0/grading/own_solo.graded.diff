@@ -1,0 +1,93 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..347a6a5 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -402,6 +402,9 @@ class InternationalizationExtension(Extension):
+ 
+         parser.stream.expect("block_end")
+ 
++        # Validate variables for proper naming and conflicts
++        self._validate_trans_variables(variables, parser, lineno)
++
+         plural = None
+         have_plural = False
+         referenced = set()
+@@ -429,6 +432,9 @@ class InternationalizationExtension(Extension):
+                 plural_expr = variables[token.value]
+                 num_called_num = token.value == "num"
+             parser.stream.expect("block_end")
++
++        # Validate variables for proper naming and conflicts
++        self._validate_trans_variables(variables, parser, lineno)
+             plural_names, plural = self._parse_block(parser, False)
+             next(parser.stream)
+             referenced.update(plural_names)
+@@ -452,14 +458,61 @@ class InternationalizationExtension(Extension):
+             if plural:
+                 plural = self._trim_whitespace(plural)
+ 
+-        node = self._make_node(
+-            singular,
+-            plural,
+-            variables,
+-            plural_expr,
+-            bool(referenced),
+-            num_called_num and have_plural,
++
++    def _validate_trans_variables(self, variables: t.Dict[str, nodes.Expr], parser: "Parser", lineno: int) -> None:
++        """Validate variable names and expressions used in a trans block.
++
++        - Variable names must be valid Python identifiers.
++        - Variable names must not conflict with core gettext function names.
++        - Each expression is validated for allowed node types.
++        """
++        for name, expr in variables.items():
++            # Validate name identifier
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r}: must be a valid Python identifier.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            # Reserved function names conflict
++            if name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Variable name {name!r} conflicts with translation function names.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            # Validate expression type
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(self, name: str, expr: nodes.Expr, parser: "Parser", lineno: int) -> None:
++        """Validate a single expression used for a trans variable.
++
++        Allowed node types: Const, Name, Call (with Name callee), Getattr,
++        Filter, Test. Disallowed: TemplateData, Output, etc.
++        """
++        allowed = (
++            nodes.Const,
++            nodes.Name,
++            nodes.Call,
++            nodes.Getattr,
++            nodes.Filter,
++            nodes.Test,
+         )
++        if isinstance(expr, nodes.Call):
++            # Ensure the function being called is a simple name
++            if not isinstance(expr.node, nodes.Name):
++                parser.fail(
++                    f"Invalid expression for variable {name!r}: call target must be a name.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++        if not isinstance(expr, allowed):
++            parser.fail(
++                f"Invalid expression for variable {name!r}: incompatible with translation contexts.",
++                lineno,
++                exc=TemplateSyntaxError,
++            )
++
+         node.set_lineno(lineno)
+         if plural_expr_assignment is not None:
+             return [plural_expr_assignment, node]

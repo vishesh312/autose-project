@@ -1,0 +1,50 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..964d2f7 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -71,6 +71,29 @@ class BaseLoader:
+     #: .. versionadded:: 2.4
+     has_source_access = True
+ 
++    def __init__(self, path_transform: t.Optional[t.Callable[[str], str]] = None) -> None:
++        """Initialize loader with optional path transformation function."""
++        self._path_transform = path_transform
++        self._aliases: t.Dict[str, str] = {}
++
++    def _resolve_template(self, template: str) -> str:
++        """Apply alias mapping and optional path transformation.
++        Alias resolution does not chain.
++        """
++        if template in self._aliases:
++            template = self._aliases[template]
++        if self._path_transform is not None:
++            template = self._path_transform(template)
++        return template
++
++    def add_alias(self, alias: str, target: str) -> None:
++        """Add or update an alias mapping."""
++        self._aliases[alias] = target
++
++    def remove_alias(self, alias: str) -> None:
++        """Remove an alias if it exists."""
++        self._aliases.pop(alias, None)
++
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+@@ -180,7 +203,15 @@ class FileSystemLoader(BaseLoader):
+         searchpath: t.Union[str, os.PathLike, t.Sequence[t.Union[str, os.PathLike]]],
+         encoding: str = "utf-8",
+         followlinks: bool = False,
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
+     ) -> None:
++        super().__init__(path_transform=path_transform)
++        if not isinstance(searchpath, abc.Iterable) or isinstance(searchpath, str):
++            searchpath = [searchpath]
++
++        self.searchpath = [os.fspath(p) for p in searchpath]
++        self.encoding = encoding
++        self.followlinks = followlinks
+         if not isinstance(searchpath, abc.Iterable) or isinstance(searchpath, str):
+             searchpath = [searchpath]
+ 

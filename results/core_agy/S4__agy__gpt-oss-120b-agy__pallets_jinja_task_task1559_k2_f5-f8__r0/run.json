@@ -1,0 +1,170 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "pallets_jinja_task/task1559/k2/f5-f8",
+    "pool": "pallets_jinja_task/task1559",
+    "k": 2,
+    "features": [
+      5,
+      8
+    ],
+    "strategy": "S4",
+    "strategy_id": "S4",
+    "harness": "agy",
+    "model": "gpt-oss-120b-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793980654.9199538
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "5": false,
+      "8": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 369843,
+      "cached_input": 310016,
+      "cache_write": 0,
+      "output": 12593,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 1
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 134.68335103988647,
+    "agent_busy_s": 134.57820510864258,
+    "effective_parallelism": 0.9992193101045372,
+    "container_setup_s": 1.001927137374878,
+    "grading_s": 9.341409921646118,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        5,
+        8
+      ],
+      "started": 1793980655.924012,
+      "ended": 1793980790.5670521,
+      "busy_s": 134.57820510864258,
+      "usage": {
+        "input": 369843,
+        "cached_input": 310016,
+        "cache_write": 0,
+        "output": 12593,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 3,
+        "read": 7,
+        "edit": 4
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 3,
+      "patch_files": [
+        "src/jinja2/ext.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793980655.924305,
+          "ended": 1793980790.50251,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 369843,
+            "cached_input": 310016,
+            "cache_write": 0,
+            "output": 12593,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "d8a9a690-790b-4e46-894f-14aa956774af",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": " denied_actions=[{'action': 'write_file', 'display_name': 'WriteFile'}]"
+        }
+      ],
+      "error": " denied_actions=[{'action': 'write_file', 'display_name': 'WriteFile'}]"
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 28,
+        "tests_failed": 29,
+        "duration_s": 2.744115114212036,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/own_solo.f5.log"
+      },
+      "8": {
+        "fid": 8,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 27,
+        "tests_failed": 28,
+        "duration_s": 1.5525362491607666,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/own_solo.f8.log"
+      }
+    },
+    "final": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 28,
+        "tests_failed": 29,
+        "duration_s": 2.7383060455322266,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/final.f5.log"
+      },
+      "8": {
+        "fid": 8,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 27,
+        "tests_failed": 28,
+        "duration_s": 1.5393307209014893,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gpt-oss-120b-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/final.f8.log"
+      }
+    }
+  }
+}

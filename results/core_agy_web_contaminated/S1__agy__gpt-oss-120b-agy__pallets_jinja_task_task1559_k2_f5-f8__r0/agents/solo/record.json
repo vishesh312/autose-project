@@ -1,0 +1,60 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    5,
+    8
+  ],
+  "started": 1793978826.767614,
+  "ended": 1793979054.626013,
+  "busy_s": 227.79450702667236,
+  "usage": {
+    "input": 1574739,
+    "cached_input": 1485440,
+    "cache_write": 0,
+    "output": 17118,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {
+    "read": 11,
+    "edit": 4,
+    "shell": 14
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793978826.7680728,
+      "ended": 1793979054.5625799,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1574739,
+        "cached_input": 1485440,
+        "cache_write": 0,
+        "output": 17118,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "e747c0f4-ca6c-49dd-a0ce-505630f3cfd0",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": "ERROR"
+}

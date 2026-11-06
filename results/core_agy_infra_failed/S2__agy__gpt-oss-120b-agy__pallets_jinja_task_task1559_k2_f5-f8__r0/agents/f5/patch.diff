@@ -1,0 +1,72 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..5589971 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -452,6 +452,8 @@ class InternationalizationExtension(Extension):
+             if plural:
+                 plural = self._trim_whitespace(plural)
+ 
++        # Validate variable names and expressions for translation blocks
++        self._validate_trans_variables(variables, parser, lineno)
+         node = self._make_node(
+             singular,
+             plural,
+@@ -506,6 +508,58 @@ class InternationalizationExtension(Extension):
+ 
+         return referenced, concat(buf)
+ 
++    def _validate_trans_expression(self, name: str, expr: nodes.Expr, parser, lineno: int) -> None:
++        """Validate an individual expression used in a trans block.
++
++        Allowed expression types are:
++        - nodes.Const (literal values)
++        - nodes.Name (variable references)
++        - nodes.Call (function calls with a Name node as the callee)
++        - nodes.Getattr (attribute access)
++        - nodes.Filter (filter expressions)
++        - nodes.Test (test expressions)
++        """
++        allowed = (
++            nodes.Const,
++            nodes.Name,
++            nodes.Getattr,
++            nodes.Filter,
++            nodes.Test,
++        )
++        if isinstance(expr, allowed):
++            return
++        if isinstance(expr, nodes.Call) and isinstance(expr.node, nodes.Name):
++            return
++        parser.fail(
++            f"invalid expression for variable {name!r} in translation block",
++            lineno,
++            exc=TemplateAssertionError,
++        )
++
++    def _validate_trans_variables(self, variables: t.Dict[str, nodes.Expr], parser, lineno: int) -> None:
++        """Validate variable names and expressions used in a trans block.
++
++        Checks performed:
++        * Variable name must be a valid Python identifier.
++        * Variable name must not conflict with reserved gettext function names.
++        * Each expression must be of an allowed type.
++        """
++        for var_name, expr in variables.items():
++            if not var_name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {var_name!r} in translation block; must be a valid Python identifier",
++                    lineno,
++                    exc=TemplateAssertionError,
++                )
++            if var_name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Variable name {var_name!r} conflicts with translation function names",
++                    lineno,
++                    exc=TemplateAssertionError,
++                )
++            self._validate_trans_expression(var_name, expr, parser, lineno)
++
++
+     def _make_node(
+         self,
+         singular: str,

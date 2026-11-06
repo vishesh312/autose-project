@@ -1,0 +1,105 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    1,
+    4
+  ],
+  "started": 1793983420.3073778,
+  "ended": 1793983771.322416,
+  "busy_s": 290.8800849914551,
+  "usage": {
+    "input": 4056964,
+    "cached_input": 3903680,
+    "cache_write": 0,
+    "output": 27522,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 6
+  },
+  "cost_list": null,
+  "nudges": 1,
+  "infra_retries": 1,
+  "infra_wait_s": 60.0,
+  "infra_failed": false,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 3,
+    "read": 25,
+    "edit": 4
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793983420.307623,
+      "ended": 1793983502.611677,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 507589,
+        "cached_input": 468096,
+        "cache_write": 0,
+        "output": 2937,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "f60f8525-9e84-42b8-8735-4b0db2b75ace",
+      "nudge_reason": "infra_retry_in_60s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 1,
+      "started": 1793983562.622262,
+      "ended": 1793983650.983283,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 1339681,
+        "cached_input": 1289280,
+        "cache_write": 0,
+        "output": 7350,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "f60f8525-9e84-42b8-8735-4b0db2b75ace",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "We don't have find tool. Let's search manually by reading later lines.We don't have find tool. Let's search manually by reading later lines.\n",
+      "error": null
+    },
+    {
+      "index": 2,
+      "started": 1793983651.0524192,
+      "ended": 1793983771.267429,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 2209694,
+        "cached_input": 2146304,
+        "cache_write": 0,
+        "output": 17235,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "num_turns": 3,
+      "session_id": "f60f8525-9e84-42b8-8735-4b0db2b75ace",
+      "nudge_reason": null,
+      "final_text_tail": "Search lines for \"def __enter__\".Search lines for \"def __enter__\".\n",
+      "error": " denied_actions=[{'action': 'write_file', 'display_name': 'EditFile'}]"
+    }
+  ],
+  "error": " denied_actions=[{'action': 'write_file', 'display_name': 'EditFile'}]"
+}

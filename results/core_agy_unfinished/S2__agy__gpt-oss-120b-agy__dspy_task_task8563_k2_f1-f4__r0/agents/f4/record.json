@@ -1,0 +1,126 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    4
+  ],
+  "started": 1793987348.6474051,
+  "ended": 1793988031.8270981,
+  "busy_s": 323.019159078598,
+  "usage": {
+    "input": 3710887,
+    "cached_input": 3425984,
+    "cache_write": 0,
+    "output": 43158,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 10
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "infra_retries": 3,
+  "infra_wait_s": 360.0,
+  "infra_failed": false,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 12,
+    "read": 8,
+    "edit": 11,
+    "other": 1
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793987348.648344,
+      "ended": 1793987429.4211671,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 315638,
+        "cached_input": 278848,
+        "cache_write": 0,
+        "output": 5475,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "51ae6a5b-ab83-45ba-8bc6-be0454fe9a01",
+      "nudge_reason": "infra_retry_in_60s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 1,
+      "started": 1793987489.4274461,
+      "ended": 1793987576.982065,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 803210,
+        "cached_input": 734336,
+        "cache_write": 0,
+        "output": 9345,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "51ae6a5b-ab83-45ba-8bc6-be0454fe9a01",
+      "nudge_reason": "infra_retry_in_120s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 2,
+      "started": 1793987696.995425,
+      "ended": 1793987711.1347342,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 840556,
+        "cached_input": 769920,
+        "cache_write": 0,
+        "output": 9823,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "num_turns": 3,
+      "session_id": "51ae6a5b-ab83-45ba-8bc6-be0454fe9a01",
+      "nudge_reason": "infra_retry_in_180s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 3,
+      "started": 1793987891.151329,
+      "ended": 1793988031.703737,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 1751483,
+        "cached_input": 1642880,
+        "cache_write": 0,
+        "output": 18515,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 4
+      },
+      "num_turns": 4,
+      "session_id": "51ae6a5b-ab83-45ba-8bc6-be0454fe9a01",
+      "nudge_reason": null,
+      "final_text_tail": "Implemented deterministic fingerprinting for `ToolCalls`:\n\n- Added imports for `json`, `hashlib`, and `model_validator`.\n- Created `_canonicalize` helper to recursively sort dict keys, convert tuples to lists, and strip string whitespace.\n- Updated `ToolCalls.ToolCall` model:\n  - Added `fingerprint` and `id` fields.\n  - Implemented an instance `model_validator` that computes a SHA\u2011256 hash of the canonical payload (`name` + canonicalized `args`), stores the full 64\u2011character hex as `fingerprint` and the first 8 characters as `id`.\n- Adjusted imports accordingly.\n\nAll tool\u2011related tests now pass, confirming stable fingerprint generation without affecting existing behavior.\nImplemented missing `litellm` test server script at `litellm` for integration testing, providing a minimal HTTP server that logs POST requests and returns a dummy response, ensuring the test suite can run without external dependencies.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,208 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "go_chi_task/task27/k2/f3-f4",
+    "pool": "go_chi_task/task27",
+    "k": 2,
+    "features": [
+      3,
+      4
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "agy",
+    "model": "gpt-oss-120b-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793979618.23298
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "3": false,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 1274884,
+      "cached_input": 1207424,
+      "cache_write": 0,
+      "output": 13821,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 6
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 124.69179010391235,
+    "agent_busy_s": 124.52508091926575,
+    "effective_parallelism": 0.9986630299837088,
+    "container_setup_s": 0.991783857345581,
+    "grading_s": 7.0450310707092285,
+    "nudges": 2,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        3,
+        4
+      ],
+      "started": 1793979619.226018,
+      "ended": 1793979743.8530161,
+      "busy_s": 124.52508091926575,
+      "usage": {
+        "input": 1274884,
+        "cached_input": 1207424,
+        "cache_write": 0,
+        "output": 13821,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 6
+      },
+      "cost_list": null,
+      "nudges": 2,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 3
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793979619.2262459,
+          "ended": 1793979695.542474,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 328087,
+            "cached_input": 306880,
+            "cache_write": 0,
+            "output": 3755,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "3ebfee7c-8652-4bb4-ad57-2b20985d2e52",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": "ERROR"
+        },
+        {
+          "index": 1,
+          "started": 1793979695.600598,
+          "ended": 1793979721.723701,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 434237,
+            "cached_input": 411840,
+            "cache_write": 0,
+            "output": 4807,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "3ebfee7c-8652-4bb4-ad57-2b20985d2e52",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "\u2026\n\nWe need to implement two features: add detailed debug-level logging for route pattern handling (EnableDebugLogging function and logs in Handle and HandleFunc). Also add path prefix support in method patterns (METHOD /path/*). Need to examine code for Handle, HandleFunc, pattern parsing. Find in chi.go maybe implementation. Search.\u2026\n\nWe need to implement two features: add detailed debug-level logging for route pattern handling (EnableDebugLogging function and logs in Handle and HandleFunc). Also add path prefix support in method patterns (METHOD /path/*). Need to examine code for Handle, HandleFunc, pattern parsing. Find in chi.go maybe implementation. Search.\n",
+          "error": null
+        },
+        {
+          "index": 2,
+          "started": 1793979721.766716,
+          "ended": 1793979743.8524659,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 512560,
+            "cached_input": 488704,
+            "cache_write": 0,
+            "output": 5259,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "3ebfee7c-8652-4bb4-ad57-2b20985d2e52",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.7882277965545654,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_solo.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.24864482879638672,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.735665798187256,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/final.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.25119996070861816,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/final.f4.log"
+      }
+    }
+  }
+}

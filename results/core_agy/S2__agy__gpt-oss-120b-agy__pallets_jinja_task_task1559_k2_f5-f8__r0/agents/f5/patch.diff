@@ -1,0 +1,120 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..bc6aa73 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -399,8 +399,12 @@ class InternationalizationExtension(Extension):
+                 else:
+                     plural_expr = var
+                 num_called_num = token.value == "num"
++                # Validate variables for translation block
++                self._validate_trans_variables(variables, parser, lineno)
++                parser.stream.expect("block_end")
++
++
+ 
+-        parser.stream.expect("block_end")
+ 
+         plural = None
+         have_plural = False
+@@ -428,7 +432,10 @@ class InternationalizationExtension(Extension):
+                     )
+                 plural_expr = variables[token.value]
+                 num_called_num = token.value == "num"
+-            parser.stream.expect("block_end")
++                # Validate variables for translation block
++                self._validate_trans_variables(variables, parser, lineno)
++                parser.stream.expect("block_end")
++    
+             plural_names, plural = self._parse_block(parser, False)
+             next(parser.stream)
+             referenced.update(plural_names)
+@@ -506,18 +513,57 @@ class InternationalizationExtension(Extension):
+ 
+         return referenced, concat(buf)
+ 
+-    def _make_node(
+-        self,
+-        singular: str,
+-        plural: t.Optional[str],
+-        variables: t.Dict[str, nodes.Expr],
+-        plural_expr: t.Optional[nodes.Expr],
+-        vars_referenced: bool,
+-        num_called_num: bool,
+-    ) -> nodes.Output:
+-        """Generates a useful node from the data provided."""
+-        newstyle = self.environment.newstyle_gettext  # type: ignore
+-        node: nodes.Expr
++    def _validate_trans_variables(
++        self, variables: t.Dict[str, nodes.Expr], parser: "Parser", lineno: int
++    ) -> None:
++        """Validate all variables used in a trans block.
++
++        Checks that variable names are valid Python identifiers, do not clash
++        with built‑in gettext function names, and that their expression types are
++        appropriate for translation contexts.
++        """
++        for name, expr in variables.items():
++            # Name must be a valid identifier
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r} in trans block; variable names must be valid Python identifiers.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            # Reserved gettext function names
++            if name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Variable name {name!r} conflicts with translation function names.",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            # Validate the expression
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self, name: str, expr: nodes.Expr, parser: "Parser", lineno: int
++    ) -> None:
++        """Validate a single variable expression.
++
++        Allowed expression node types are limited to those that can be safely
++        serialized for gettext/ngettext calls: ``Const``, ``Name``, ``Call``
++        (where the callee is a simple name or attribute), ``Getattr``, ``Filter``
++        and ``Test``.  Anything else – especially ``TemplateData`` or ``Output`` –
++        is rejected with a clear error message.
++        """
++        # Directly acceptable node types
++        if isinstance(expr, (nodes.Const, nodes.Name, nodes.Getattr, nodes.Filter, nodes.Test)):
++            return
++        if isinstance(expr, nodes.Call):
++            # The function being called must be a Name or Getattr
++            if isinstance(expr.node, (nodes.Name, nodes.Getattr)):
++                return
++        # Anything else is invalid
++        parser.fail(
++            f"Invalid expression for variable {name!r} in trans block; expression type {type(expr).__name__} is not allowed.",
++            lineno,
++            exc=TemplateSyntaxError,
++        )
+ 
+         # no variables referenced?  no need to escape for old style
+         # gettext invocations only if there are vars.
+diff --git a/src/jinja2/runtime.py b/src/jinja2/runtime.py
+index 985842b..8d120f3 100644
+--- a/src/jinja2/runtime.py
++++ b/src/jinja2/runtime.py
+@@ -801,12 +801,9 @@ class Undefined:
+     jinja2.exceptions.UndefinedError: 'foo' is undefined
+     """
+ 
+-    __slots__ = (
+-        "_undefined_hint",
+-        "_undefined_obj",
+-        "_undefined_name",
+-        "_undefined_exception",
+-    )
++del Undefined.__slots__
++
++
+ 
+     def __init__(
+         self,

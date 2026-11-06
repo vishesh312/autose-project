@@ -1,0 +1,57 @@
+diff --git a/mux.go b/mux.go
+index 56fa4d2..d90e0b3 100644
+--- a/mux.go
++++ b/mux.go
+@@ -1,5 +1,22 @@
+ package chi
+ 
++import (
++	"context"
++	"fmt"
++	"log"
++	"net/http"
++	"strings"
++	"sync"
++)
++
++// debugLogging enables detailed debug output for route pattern handling.
++var debugLogging bool
++
++// EnableDebugLogging turns on debug-level logging; off by default.
++func EnableDebugLogging() {
++	debugLogging = true
++}
++
+ import (
+ 	"context"
+ 	"fmt"
+@@ -107,6 +124,29 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ // Handle adds the route `pattern` that matches any http method to
+ // execute the `handler` http.Handler.
+ func (mx *Mux) Handle(pattern string, handler http.Handler) {
++	if debugLogging {
++		log.Printf("Handle called with pattern: %s", pattern)
++	}
++	parts := strings.SplitN(pattern, " ", 2)
++	if len(parts) == 2 {
++		methodStr := strings.ToUpper(parts[0])
++		path := parts[1]
++
++		if debugLogging {
++			log.Printf("Detected method prefix: %s, path: %s", methodStr, path)
++		}
++
++		method, ok := methodMap[methodStr]
++		if !ok {
++			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
++		}
++
++		mx.handle(method, path, handler)
++		return
++	}
++
++	mx.handle(mALL, pattern, handler)
++}
+ 	parts := strings.SplitN(pattern, " ", 2)
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])

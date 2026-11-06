@@ -1,0 +1,113 @@
+diff --git a/mux.go b/mux.go
+index 56fa4d2..3258bac 100644
+--- a/mux.go
++++ b/mux.go
+@@ -107,6 +107,18 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ // Handle adds the route `pattern` that matches any http method to
+ // execute the `handler` http.Handler.
+ func (mx *Mux) Handle(pattern string, handler http.Handler) {
++	method, path := mx.parsePattern(pattern)
++	mx.handle(method, path, handler)
++}
++
++// HandleFunc adds the route `pattern` that matches any http method to
++// execute the `handlerFn` http.HandlerFunc.
++func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
++	method, path := mx.parsePattern(pattern)
++	mx.handle(method, path, handlerFn)
++}
++
++func (mx *Mux) parsePattern(pattern string) (methodTyp, string) {
+ 	parts := strings.SplitN(pattern, " ", 2)
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])
+@@ -117,17 +129,10 @@ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ 			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
+ 		}
+ 
+-		mx.handle(method, path, handler)
+-		return
++		return method, path
+ 	}
+ 
+-	mx.handle(mALL, pattern, handler)
+-}
+-
+-// HandleFunc adds the route `pattern` that matches any http method to
+-// execute the `handlerFn` http.HandlerFunc.
+-func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
+-	mx.handle(mALL, pattern, handlerFn)
++	return mALL, pattern
+ }
+ 
+ // Method adds the route `pattern` that matches `method` http method to
+diff --git a/mux_test.go b/mux_test.go
+index 9190cb5..f5858a9 100644
+--- a/mux_test.go
++++ b/mux_test.go
+@@ -669,6 +669,24 @@ func TestMuxHandlePatternValidation(t *testing.T) {
+ 			expectedBody:   "with-prefix POST",
+ 			expectedStatus: http.StatusOK,
+ 		},
++		{
++			name:           "Valid pattern with prefix GET",
++			pattern:        "GET /api/v1/*",
++			shouldPanic:    false,
++			method:         "GET",
++			path:           "/api/v1/nested/resource",
++			expectedBody:   "prefix GET",
++			expectedStatus: http.StatusOK,
++		},
++		{
++			name:           "Valid pattern with prefix POST",
++			pattern:        "POST /api/v1/*",
++			shouldPanic:    false,
++			method:         "POST",
++			path:           "/api/v1/nested/resource",
++			expectedBody:   "prefix POST",
++			expectedStatus: http.StatusOK,
++		},
+ 		// Invalid patterns
+ 		{
+ 			name:        "Invalid pattern with no method",
+@@ -688,7 +706,7 @@ func TestMuxHandlePatternValidation(t *testing.T) {
+ 	}
+ 
+ 	for _, tc := range testCases {
+-		t.Run(tc.name, func(t *testing.T) {
++		t.Run("Handle/"+tc.name, func(t *testing.T) {
+ 			defer func() {
+ 				if r := recover(); r != nil && !tc.shouldPanic {
+ 					t.Errorf("Unexpected panic for pattern %s", tc.pattern)
+@@ -712,6 +730,31 @@ func TestMuxHandlePatternValidation(t *testing.T) {
+ 				}
+ 			}
+ 		})
++
++		t.Run("HandleFunc/"+tc.name, func(t *testing.T) {
++			defer func() {
++				if r := recover(); r != nil && !tc.shouldPanic {
++					t.Errorf("Unexpected panic for pattern %s", tc.pattern)
++				}
++			}()
++
++			r := NewRouter()
++			r.HandleFunc(tc.pattern, func(w http.ResponseWriter, r *http.Request) {
++				w.Write([]byte(tc.expectedBody))
++			})
++
++			if !tc.shouldPanic {
++				// Use testRequest for valid patterns
++				ts := httptest.NewServer(r)
++				defer ts.Close()
++
++				resp, body := testRequest(t, ts, tc.method, tc.path, nil)
++				if body != tc.expectedBody || resp.StatusCode != tc.expectedStatus {
++					t.Errorf("Expected status %d and body %s; got status %d and body %s for pattern %s",
++						tc.expectedStatus, tc.expectedBody, resp.StatusCode, body, tc.pattern)
++				}
++			}
++		})
+ 	}
+ }
+ 

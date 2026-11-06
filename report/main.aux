@@ -7,18 +7,29 @@
 \@writefile{toc}{\contentsline {section}{Abstract}{1}{section*.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {1}Problem and Motivation}{1}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2}System and Architecture}{1}{section.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The \texttt  {parbench} pipeline. Every agent starts from a clean copy of the pool image with later upstream history removed.}}{1}{figure.caption.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The \texttt  {parbench} pipeline. Agents start from a clean copy of the pool image.}}{1}{figure.caption.3}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:pipe}{{1}{1}{The \texttt {parbench} pipeline. Every agent starts from a clean copy of the pool image with later upstream history removed}{figure.caption.3}{}}
+\newlabel{fig:pipe}{{1}{1}{The \texttt {parbench} pipeline. Agents start from a clean copy of the pool image}{figure.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Machines and software used for the reported runs.}}{2}{table.caption.4}\protected@file@percent }
+\newlabel{tab:hw}{{1}{2}{Machines and software used for the reported runs}{table.caption.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Decisions Made}{2}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Experimental Setup}{2}{section.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \texttt  {agy} on CooperBench \texttt  {core} (5 pools, $k{=}2$, valid runs only, as of 6 Nov, 23:38 IST; the Gemini set is complete, GPT-OSS was stopped with runs unfinished). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run.}}{2}{table.caption.5}\protected@file@percent }
+\newlabel{tab:agy}{{2}{2}{\texttt {agy} on CooperBench \texttt {core} (5 pools, $k{=}2$, valid runs only, as of \asof ; the Gemini set is complete, GPT-OSS was stopped with runs unfinished). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run}{table.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Task pass fraction per pool (valid runs; 1.0 = both tasks pass, -- = no valid run yet).}}{2}{table.caption.6}\protected@file@percent }
+\newlabel{tab:pool}{{3}{2}{Task pass fraction per pool (valid runs; 1.0 = both tasks pass, -- = no valid run yet)}{table.caption.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Results (Preliminary)}{2}{section.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \texttt  {agy} on CooperBench \texttt  {core} (5 pools, $k{=}2$, valid runs only, as of 6 Nov, 22:30 IST; runs still in progress). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run.}}{2}{table.caption.4}\protected@file@percent }
-\newlabel{tab:agy}{{1}{2}{\texttt {agy} on CooperBench \texttt {core} (5 pools, $k{=}2$, valid runs only, as of 6 Nov, 22:30 IST; runs still in progress). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run}{table.caption.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Task pass fraction per pool (valid runs; 1.0 = both tasks pass, -- = no valid run yet).}}{2}{table.caption.5}\protected@file@percent }
-\newlabel{tab:pool}{{2}{2}{Task pass fraction per pool (valid runs; 1.0 = both tasks pass, -- = no valid run yet)}{table.caption.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Problems Faced}{2}{section.6}\protected@file@percent }
+\citation{swesmith}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces OpenCode + Qwen2.5-7B-Instruct on the \texttt  {core} Python pools ($k{=}2$, GPU machine; partial). Wall and tokens are medians per run.}}{3}{table.caption.7}\protected@file@percent }
+\newlabel{tab:qwen}{{4}{3}{OpenCode + Qwen2.5-7B-Instruct on the \texttt {core} Python pools ($k{=}2$, GPU machine; partial). Wall and tokens are medians per run}{table.caption.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Problems Faced}{3}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Limitations}{3}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Milestones and Changes to the Proposal}{3}{section.8}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces SWE-smith proof of concept (oauthlib, $k{=}4$). Same fn: share of task pairs in one function; Near: pairs within 3 lines; Conflict: share of task pairs whose fixes conflict under \texttt  {git merge}; Restored: bundles whose merged fixes restore the clean code.}}{3}{table.caption.8}\protected@file@percent }
+\newlabel{tab:swesmith}{{5}{3}{SWE-smith proof of concept (oauthlib, $k{=}4$). Same fn: share of task pairs in one function; Near: pairs within 3 lines; Conflict: share of task pairs whose fixes conflict under \texttt {git merge}; Restored: bundles whose merged fixes restore the clean code}{table.caption.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Planned Task Generation with SWE-smith}{3}{section.9}\protected@file@percent }
 \bibcite{cooperbench}{{1}{}{{}}{{}}}
+\bibcite{swesmith}{{2}{}{{}}{{}}}
 \newlabel{tocindent-1}{0pt}
 \newlabel{tocindent0}{0pt}
 \newlabel{tocindent1}{8.37pt}
@@ -27,10 +38,10 @@
 \newlabel{tocindent4}{0pt}
 \newlabel{tocindent5}{0pt}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\@writefile{toc}{\contentsline {section}{\numberline {7}Limitations}{3}{section.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8}Milestones and Changes to the Proposal}{3}{section.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Remaining Work (to 30 November)}{3}{section.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10}Use of AI Tools}{3}{section.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{3}{section*.8}\protected@file@percent }
-\newlabel{TotPages}{{3}{3}{}{page.3}{}}
-\gdef \@abspage@last{3}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Remaining Work (to 30 November)}{4}{section.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}Use of AI Tools}{4}{section.11}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Key files the team reviewed (all under \texttt  {src/parbench/} unless noted).}}{4}{table.caption.9}\protected@file@percent }
+\newlabel{tab:files}{{6}{4}{Key files the team reviewed (all under \texttt {src/parbench/} unless noted)}{table.caption.9}{}}
+\@writefile{toc}{\contentsline {section}{References}{4}{section*.12}\protected@file@percent }
+\newlabel{TotPages}{{4}{4}{}{page.4}{}}
+\gdef \@abspage@last{4}

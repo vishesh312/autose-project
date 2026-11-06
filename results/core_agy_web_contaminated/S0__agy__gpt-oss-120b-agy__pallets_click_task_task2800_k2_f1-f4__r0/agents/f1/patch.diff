@@ -1,0 +1,73 @@
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..4802f46 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -544,20 +544,55 @@ def _resolve_context(
+     :param args: List of complete args before the incomplete value.
+     """
+     ctx_args["resilient_parsing"] = True
+-    ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
+-    args = ctx._protected_args + ctx.args
+-
+-    while args:
+-        command = ctx.command
+-
+-        if isinstance(command, Group):
+-            if not command.chain:
+-                name, cmd, args = command.resolve_command(ctx, args)
+-
+-                if cmd is None:
+-                    return ctx
++    # Use a context manager for the top‑level Click context to guarantee cleanup.
++    with cli.make_context(prog_name, args.copy(), **ctx_args) as ctx:
++        # Start with any protected arguments that Click has already parsed.
++        args = ctx._protected_args + ctx.args
++
++        # Iteratively resolve subcommands and groups, handling both normal and chained groups.
++        while args:
++            command = ctx.command
++
++            if isinstance(command, Group):
++                if not command.chain:
++                    # Resolve a single subcommand for a non‑chained group.
++                    name, cmd, args = command.resolve_command(ctx, args)
++                    if cmd is None:
++                        break
++                    # Enter the subcommand's context, ensuring it is closed afterwards.
++                    with cmd.make_context(
++                        name,
++                        args,
++                        parent=ctx,
++                        resilient_parsing=True,
++                    ) as sub_ctx:
++                        ctx = sub_ctx
++                        args = ctx._protected_args + ctx.args
++                else:
++                    # For chained groups we may have multiple subcommands.
++                    sub_ctx = ctx
++                    while args:
++                        name, cmd, args = command.resolve_command(sub_ctx, args)
++                        if cmd is None:
++                            break
++                        # Each step creates a new context that must be cleaned up.
++                        with cmd.make_context(
++                            name,
++                            args,
++                            parent=sub_ctx,
++                            allow_extra_args=True,
++                            allow_interspersed_args=False,
++                            resilient_parsing=True,
++                        ) as new_ctx:
++                            sub_ctx = new_ctx
++                            args = sub_ctx._protected_args + sub_ctx.args
++                    ctx = sub_ctx
++            else:
++                # Not a group – no further resolution possible.
++                break
+ 
+-                ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
++        # Return the deepest context (it will be closed when exiting the outer `with`).
++        return ctx
+                 args = ctx._protected_args + ctx.args
+             else:
+                 sub_ctx = ctx

@@ -1,0 +1,98 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    6,
+    10
+  ],
+  "started": 1793981829.7691278,
+  "ended": 1793981851.299525,
+  "busy_s": 21.449692964553833,
+  "usage": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 6
+  },
+  "cost_list": null,
+  "nudges": 2,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {},
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793981829.769412,
+      "ended": 1793981836.871572,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "939113a9-5bf4-44a8-baed-f93385d7a49c",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": "ERROR"
+    },
+    {
+      "index": 1,
+      "started": 1793981836.929873,
+      "ended": 1793981843.6359649,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "939113a9-5bf4-44a8-baed-f93385d7a49c",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": "ERROR"
+    },
+    {
+      "index": 2,
+      "started": 1793981843.657847,
+      "ended": 1793981851.299288,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "num_turns": 3,
+      "session_id": "939113a9-5bf4-44a8-baed-f93385d7a49c",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": "ERROR"
+}

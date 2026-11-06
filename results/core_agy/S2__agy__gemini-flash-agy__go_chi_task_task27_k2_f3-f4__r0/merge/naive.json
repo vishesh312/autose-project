@@ -1,0 +1,28 @@
+{
+  "mode": "naive",
+  "lost": [
+    4
+  ],
+  "steps": [
+    {
+      "branch": "f3",
+      "feature_ids": [
+        3
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    },
+    {
+      "branch": "f4",
+      "feature_ids": [
+        4
+      ],
+      "conflicted": true,
+      "conflict_files": [
+        "mux.go"
+      ],
+      "outcome": "skipped"
+    }
+  ]
+}

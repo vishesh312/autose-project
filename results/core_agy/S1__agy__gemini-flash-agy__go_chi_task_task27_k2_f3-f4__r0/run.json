@@ -1,0 +1,175 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "go_chi_task/task27/k2/f3-f4",
+    "pool": "go_chi_task/task27",
+    "k": 2,
+    "features": [
+      3,
+      4
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "agy",
+    "model": "gemini-flash-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793980202.745378
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          4
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "3": false,
+      "4": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 8129437,
+      "cached_input": 7666331,
+      "cache_write": 0,
+      "output": 10971,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 1
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 604.7122569084167,
+    "agent_busy_s": 604.626543045044,
+    "effective_parallelism": 0.9998582567785032,
+    "container_setup_s": 1.03751802444458,
+    "grading_s": 6.28496789932251,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gemini-flash-agy",
+      "feature_ids": [
+        3,
+        4
+      ],
+      "started": 1793980203.785152,
+      "ended": 1793980808.4523652,
+      "busy_s": 604.626543045044,
+      "usage": {
+        "input": 8129437,
+        "cached_input": 7666331,
+        "cache_write": 0,
+        "output": 10971,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 90,
+        "subagent": 7,
+        "other": 5,
+        "read": 22,
+        "edit": 4
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 169,
+      "patch_files": [
+        "mux.go",
+        "mux_test.go"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793980203.785397,
+          "ended": 1793980808.41194,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 8129437,
+            "cached_input": 7666331,
+            "cache_write": 0,
+            "output": 10971,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "25d5141e-1573-4ced-89ef-e3f061839393",
+          "nudge_reason": null,
+          "final_text_tail": ". Waiting for results.\nWaiting for tests to finish.\nRunning the full test suite to ensure all tests pass. Waiting for results.\nWaiting for full test run to complete.\n{}\nI have completed both requested tasks:\n\n1. **Detailed Logging for Route Pattern Handling**:\n   - Added public `EnableDebugLogging()` API in [mux.go](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go#L15-L18) that enables debug logging across pattern handling.\n   - Integrated debug-level logging with the standard logger (`log.Printf`) when parsing patterns and detecting HTTP methods.\n   - Added test coverage in [mux_test.go](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go#L806-L846) via `TestEnableDebugLogging`.\n\n2. **Path Prefix Support in HTTP Method Patterns**:\n   - Refactored pattern parsing logic into `parsePattern` in [mux.go](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go#L126-L143) used uniformly by both `Handle` and `HandleFunc`.\n   - Enabled support for patterns like `METHOD /path/*` for wildcard prefix matching in both `Handle` and `HandleFunc`.\n   - Added test cases covering prefix wildcard patterns and method validation for both `Handle` and `HandleFunc` in [mux_test.go](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go#L643-L804).\n   - Validated that the complete test suite passes cleanly.\n",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.509161949157715,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_solo.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 4,
+        "tests_failed": 0,
+        "duration_s": 0.24469995498657227,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.4643521308898926,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/final.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 4,
+        "tests_failed": 0,
+        "duration_s": 0.2347409725189209,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/final.f4.log"
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+diff --git a/mux.go b/mux.go
+index 56fa4d2..3258bac 100644
+--- a/mux.go
++++ b/mux.go
+@@ -107,6 +107,18 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ // Handle adds the route `pattern` that matches any http method to
+ // execute the `handler` http.Handler.
+ func (mx *Mux) Handle(pattern string, handler http.Handler) {
++	method, path := mx.parsePattern(pattern)
++	mx.handle(method, path, handler)
++}
++
++// HandleFunc adds the route `pattern` that matches any http method to
++// execute the `handlerFn` http.HandlerFunc.
++func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
++	method, path := mx.parsePattern(pattern)
++	mx.handle(method, path, handlerFn)
++}
++
++func (mx *Mux) parsePattern(pattern string) (methodTyp, string) {
+ 	parts := strings.SplitN(pattern, " ", 2)
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])
+@@ -117,17 +129,10 @@ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ 			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
+ 		}
+ 
+-		mx.handle(method, path, handler)
+-		return
++		return method, path
+ 	}
+ 
+-	mx.handle(mALL, pattern, handler)
+-}
+-
+-// HandleFunc adds the route `pattern` that matches any http method to
+-// execute the `handlerFn` http.HandlerFunc.
+-func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
+-	mx.handle(mALL, pattern, handlerFn)
++	return mALL, pattern
+ }
+ 
+ // Method adds the route `pattern` that matches `method` http method to

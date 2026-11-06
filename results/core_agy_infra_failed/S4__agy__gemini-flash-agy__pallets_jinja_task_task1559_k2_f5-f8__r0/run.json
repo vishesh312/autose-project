@@ -1,0 +1,210 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "pallets_jinja_task/task1559/k2/f5-f8",
+    "pool": "pallets_jinja_task/task1559",
+    "k": 2,
+    "features": [
+      5,
+      8
+    ],
+    "strategy": "S4",
+    "strategy_id": "S4",
+    "harness": "agy",
+    "model": "gemini-flash-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793981717.556149
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "5": false,
+      "8": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 1561374,
+      "cached_input": 1085589,
+      "cache_write": 0,
+      "output": 6510,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 6
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 109.99155902862549,
+    "agent_busy_s": 109.85358786582947,
+    "effective_parallelism": 0.9987456204456552,
+    "container_setup_s": 0.7402570247650146,
+    "grading_s": 7.300830125808716,
+    "nudges": 2,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gemini-flash-agy",
+      "feature_ids": [
+        5,
+        8
+      ],
+      "started": 1793981718.298031,
+      "ended": 1793981828.23263,
+      "busy_s": 109.85358786582947,
+      "usage": {
+        "input": 1561374,
+        "cached_input": 1085589,
+        "cache_write": 0,
+        "output": 6510,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 6
+      },
+      "cost_list": null,
+      "nudges": 2,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 14,
+        "subagent": 1,
+        "read": 8
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793981718.298291,
+          "ended": 1793981813.299018,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 520458,
+            "cached_input": 361863,
+            "cache_write": 0,
+            "output": 2170,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "0e2cfc97-8ee9-465d-b1c6-27fcf392efcc",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": "ERROR"
+        },
+        {
+          "index": 1,
+          "started": 1793981813.340822,
+          "ended": 1793981820.8603258,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 520458,
+            "cached_input": 361863,
+            "cache_write": 0,
+            "output": 2170,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "0e2cfc97-8ee9-465d-b1c6-27fcf392efcc",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": "ERROR"
+        },
+        {
+          "index": 2,
+          "started": 1793981820.8990998,
+          "ended": 1793981828.232457,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 520458,
+            "cached_input": 361863,
+            "cache_write": 0,
+            "output": 2170,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "0e2cfc97-8ee9-465d-b1c6-27fcf392efcc",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 54,
+        "tests_failed": 3,
+        "duration_s": 2.1995389461517334,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/own_solo.f5.log"
+      },
+      "8": {
+        "fid": 8,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 47,
+        "tests_failed": 8,
+        "duration_s": 1.0903420448303223,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/own_solo.f8.log"
+      }
+    },
+    "final": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 54,
+        "tests_failed": 3,
+        "duration_s": 2.084963083267212,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/final.f5.log"
+      },
+      "8": {
+        "fid": 8,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 47,
+        "tests_failed": 8,
+        "duration_s": 1.083425760269165,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/final.f8.log"
+      }
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "go_chi_task/task27/k2/f3-f4",
+    "pool": "go_chi_task/task27",
+    "k": 2,
+    "features": [
+      3,
+      4
+    ],
+    "strategy": "S4",
+    "strategy_id": "S4",
+    "harness": "agy",
+    "model": "gemini-flash-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793981350.087989
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "3": false,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 12233283,
+      "cached_input": 11117562,
+      "cache_write": 0,
+      "output": 13290,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 6
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 476.9962990283966,
+    "agent_busy_s": 476.8837115764618,
+    "effective_parallelism": 0.9997639657746524,
+    "container_setup_s": 0.769644021987915,
+    "grading_s": 7.285600900650024,
+    "nudges": 2,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gemini-flash-agy",
+      "feature_ids": [
+        3,
+        4
+      ],
+      "started": 1793981350.8595579,
+      "ended": 1793981827.817494,
+      "busy_s": 476.8837115764618,
+      "usage": {
+        "input": 12233283,
+        "cached_input": 11117562,
+        "cache_write": 0,
+        "output": 13290,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 6
+      },
+      "cost_list": null,
+      "nudges": 2,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 65,
+        "read": 14,
+        "subagent": 2
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793981350.85978,
+          "ended": 1793981812.288359,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 4077761,
+            "cached_input": 3705854,
+            "cache_write": 0,
+            "output": 4430,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "b706708f-5c28-449b-8eb6-12b0822db889",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "I have started running the full test suite outside the sandbox and will inspect the codebase while it finishes.\n",
+          "error": "ERROR"
+        },
+        {
+          "index": 1,
+          "started": 1793981812.3345401,
+          "ended": 1793981820.078806,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 4077761,
+            "cached_input": 3705854,
+            "cache_write": 0,
+            "output": 4430,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "b706708f-5c28-449b-8eb6-12b0822db889",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": "ERROR"
+        },
+        {
+          "index": 2,
+          "started": 1793981820.106529,
+          "ended": 1793981827.817396,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 4077761,
+            "cached_input": 3705854,
+            "cache_write": 0,
+            "output": 4430,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "b706708f-5c28-449b-8eb6-12b0822db889",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 3.1380960941314697,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_solo.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.26683878898620605,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.7879579067230225,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/final.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.26979780197143555,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S4__agy__gemini-flash-agy__go_chi_task_task27_k2_f3-f4__r0/grading/final.f4.log"
+      }
+    }
+  }
+}

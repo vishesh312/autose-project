@@ -1,0 +1,30 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["ToolCalls.validate_input"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["ToolCalls"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["validate_input"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 10, "queries": ["validate_input"]}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 250}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["json"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 500, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 400}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 420, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 340}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 250}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 20, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 460, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 370}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 440, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 360}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 425, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 371}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 20, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 15, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 440, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 360}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 426, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 368}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 440, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host/3c2w9okj/repo/dspy/adapters/types/tool.py", "StartLine": 368}, "ok": null, "ts": null}

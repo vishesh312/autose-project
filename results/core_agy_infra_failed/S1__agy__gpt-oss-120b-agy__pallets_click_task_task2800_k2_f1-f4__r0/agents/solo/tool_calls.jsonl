@@ -1,0 +1,14 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "src/click/core.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yteu2khn/repo/src/click/core.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yteu2khn/repo/src/click/shell_completion.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 20, "path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yteu2khn/repo", "queries": ["_resolve_context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["_resolve_context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 10, "queries": ["_resolve_context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 20, "queries": ["def _resolve_context"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 800, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yteu2khn/repo/src/click/shell_completion.py", "StartLine": 400}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 20, "queries": ["class Context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Context"]}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 20, "queries": ["class Context"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 250, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yteu2khn/repo/src/click/core.py", "StartLine": 150}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Context"]}, "ok": null, "ts": null}

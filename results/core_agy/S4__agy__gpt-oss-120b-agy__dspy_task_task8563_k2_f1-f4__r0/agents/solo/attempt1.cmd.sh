@@ -1,0 +1,1 @@
+agy --output-format stream-json --sandbox --mode accept-edits --settings '{"permissions": {"allow": ["command(*)"]}}' --agent parbench-clean-sub --model gpt-oss-120b-medium --print-timeout 29m --conversation 1cfeea3f-af29-4d00-84e8-5d2069d1c3f5 -p "$(cat /var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-3c2w9okj/work/solo.prompt1.md)"

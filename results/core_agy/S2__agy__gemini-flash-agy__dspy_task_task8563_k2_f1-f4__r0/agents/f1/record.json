@@ -1,0 +1,60 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793979607.305335,
+  "ended": 1793980246.204984,
+  "busy_s": 638.8443379402161,
+  "usage": {
+    "input": 6649172,
+    "cached_input": 6291827,
+    "cache_write": 0,
+    "output": 14096,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 93,
+    "read": 16,
+    "subagent": 5,
+    "edit": 2
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793979607.305644,
+      "ended": 1793980246.149982,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 6649172,
+        "cached_input": 6291827,
+        "cache_write": 0,
+        "output": 14096,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "2111ad00-b1e8-4f09-a34c-1b68679aa760",
+      "nudge_reason": null,
+      "final_text_tail": "{}\n### Summary of Changes\n\nIn [`dspy/adapters/types/tool.py`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-p3ij5gy_/repo/dspy/adapters/types/tool.py), added flexible input validation and normalization to [`ToolCalls`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-p3ij5gy_/repo/dspy/adapters/types/tool.py#L261) using `@pydantic.model_validator(mode=\"before\")` on `ToolCalls.validate_input`:\n\n1. **Single-object normalization**: If the data is a dictionary containing `name` and `args` (and not already containing `tool_calls`), it wraps the item into `{\"tool_calls\": [data]}`.\n2. **List normalization**: If the data is a list of dictionaries where each item has `name` and `args`, it wraps them into `{\"tool_calls\": data}`.\n3. **Existing behavior preserved**: If `tool_calls` is already present in a dictionary, it is returned as-is. Instances of `ToolCalls` are also returned as-is.\n4. **String handling**: If given a JSON string, it parses the JSON first before normalizing or returning the parsed object; if the string is non-JSON or cannot be parsed, it returns the original string unchanged.\n5. All adapter unit tests passed.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,128 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -la"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "25d5141e-1573-4ced-89ef-e3f061839393/task-8"}, "ok": null, "ts": null}
+{"name": "schedule", "kind": "other", "args": {"DurationSeconds": 5, "Prompt": "Check test status"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "25d5141e-1573-4ced-89ef-e3f061839393/task-8"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 100, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 250, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 100}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"log\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 7446950"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 20 --grep=\"prefix\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 20 --grep=\"debug\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"log\\.\""}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 100, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/chi.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"log\" --oneline"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/middleware/logger.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -p -n 1 7446950"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"HandleFunc\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"pattern\" --oneline"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 300, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 240}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 370, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 300}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 450, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 371}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all -n 20 --grep=\"debug\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git branch -a"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git reflog"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --grep=\"prefix\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"TestMuxHandlePatternValidation\""}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 720, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go", "StartLine": 640}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --grep=\"897\" -p"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git tag -l"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 1"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --graph --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status --ignored"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go version"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/go.mod", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"findPattern\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"\\/\\*\""}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 140, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 105}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -p -n 1 7446950"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"debug\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"log\" middleware/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"Enable\" -n 10 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"Debug\" -n 10 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5 -p 7446950"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --oneline -n 20 7446950"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 7446950"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"89\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"wildcard\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"pattern.*invalid\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -i \"invalid\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -run TestMuxBasic -v ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -run TestMuxHandlePatternValidation -v ."}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/tree.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"HandleFunc(\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"parsePattern\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"Enable\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"Enable\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"DefaultLogger\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -v -run TestMuxHandlePatternValidation ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -p --grep=\"chi: routing pattern must begin with\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"handle(\" mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"log\\.\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"log.\" -n 10 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 5ccae9b"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"Logger\" -n 20 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show d806569"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"log\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go doc log"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -run TestMuxHandlePatternValidation -v"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 720, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go", "StartLine": 640}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 140, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 105}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"log\\.\" ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"fmt\\.Print\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"log\\.\" _examples/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "find . -type f"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 140, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 100}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 720, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go", "StartLine": 640}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"r\\.Get(\\\"/\\*\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep -n \"\\/\\*\" mux_test.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 140, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go doc log.Printf"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -S \"log\" -n 20 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 49e7138 | head -n 40"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -G \"log\\.\" -n 10 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 99ad97f"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 50 --grep=\"panic\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"chi: invalid\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"chi: \""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --grep=\"prefix\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --grep=\"wildcard\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log --all --grep=\"method\" --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go doc github.com/go-chi/chi/v5.RegisterMethod"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git grep \"Route(\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test ./..."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -count=1 ./..."}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "25d5141e-1573-4ced-89ef-e3f061839393/task-209"}, "ok": null, "ts": null}
+{"name": "schedule", "kind": "other", "args": {"DurationSeconds": 5, "Prompt": "Check task-209 status"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "25d5141e-1573-4ced-89ef-e3f061839393/task-209"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 140, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 105}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 25, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 165, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go", "StartLine": 120}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -run TestMuxHandlePatternValidation -v ."}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 725, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go", "StartLine": 640}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -run \"TestMuxHandle.*|TestEnableDebugLogging\" -v ."}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 30, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-r1sgyiw2/repo/mux_test.go"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -run \"TestMuxHandle.*|TestEnableDebugLogging\" -v ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -v -run TestMux ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "go test -count=1 ./..."}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "25d5141e-1573-4ced-89ef-e3f061839393/task-248"}, "ok": null, "ts": null}
+{"name": "schedule", "kind": "other", "args": {"DurationSeconds": 5, "Prompt": "Check test task-248"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "status", "TaskId": "25d5141e-1573-4ced-89ef-e3f061839393/task-248"}, "ok": null, "ts": null}
+{"name": "schedule", "kind": "other", "args": {"DurationSeconds": 10, "Prompt": "Check test task-248 again"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "subagent", "args": {"Action": "kill", "TaskId": "25d5141e-1573-4ced-89ef-e3f061839393/task-258"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "finish", "kind": "other", "args": {}, "ok": null, "ts": null}

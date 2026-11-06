@@ -1,0 +1,269 @@
+diff --git a/dspy/adapters/base.py b/dspy/adapters/base.py
+index eaea7956..e8ca6b4a 100644
+--- a/dspy/adapters/base.py
++++ b/dspy/adapters/base.py
+@@ -85,6 +85,27 @@ class Adapter:
+                 output_logprobs = output.get("logprobs")
+                 tool_calls = output.get("tool_calls")
+ 
++                if tool_calls:
++                    # OpenAI format list of tool calls.
++                    tool_calls_parsed = [
++                        {
++                            "name": v["function"]["name"],
++                            "args": json_repair.loads(v["function"]["arguments"]),
++                        }
++                        for v in tool_calls
++                    ]
++                    value[tool_call_output_field_name] = ToolCalls.from_dict_list(tool_calls_parsed)
++                else:
++                    # Try alternative LM output formats using ToolCalls.validate_input.
++                    normalized = ToolCalls.validate_input(output)
++                    if isinstance(normalized, dict) and "tool_calls" in normalized:
++                        alt_calls = normalized["tool_calls"]
++                        alt_parsed = [
++                            {"name": c["name"], "args": c.get("args", {})}
++                            for c in alt_calls
++                        ]
++                        value[tool_call_output_field_name] = ToolCalls.from_dict_list(alt_parsed)
++
+             if text:
+                 value = self.parse(processed_signature, text)
+                 for field_name in original_signature.output_fields.keys():
+@@ -96,15 +117,8 @@ class Adapter:
+                 for field_name in original_signature.output_fields.keys():
+                     value[field_name] = None
+ 
+-            if tool_calls and tool_call_output_field_name:
+-                tool_calls = [
+-                    {
+-                        "name": v["function"]["name"],
+-                        "args": json_repair.loads(v["function"]["arguments"]),
+-                    }
+-                    for v in tool_calls
+-                ]
+-                value[tool_call_output_field_name] = ToolCalls.from_dict_list(tool_calls)
++            # tool_calls already processed above if present.
++            pass
+ 
+             if output_logprobs:
+                 value["logprobs"] = output_logprobs
+diff --git a/dspy/adapters/two_step_adapter.py b/dspy/adapters/two_step_adapter.py
+index 9e3f7bbb..22a94955 100644
+--- a/dspy/adapters/two_step_adapter.py
++++ b/dspy/adapters/two_step_adapter.py
+@@ -130,6 +130,28 @@ class TwoStepAdapter(Adapter):
+                 output_logprobs = output.get("logprobs")
+                 tool_calls = output.get("tool_calls")
+ 
++                if tool_calls:
++                    # OpenAI format list of tool calls.
++                    tool_calls = [
++                        {
++                            "name": v["function"]["name"],
++                            "args": json_repair.loads(v["function"]["arguments"]),
++                        }
++                        for v in tool_calls
++                    ]
++                    value[tool_call_output_field_name] = ToolCalls.from_dict_list(tool_calls)
++                else:
++                    # Try alternative formats via validate_input.
++                    normalized = ToolCalls.validate_input(output)
++                    if isinstance(normalized, dict) and "tool_calls" in normalized:
++                        alt_calls = normalized["tool_calls"]
++                        alt_parsed = [
++                            {"name": c["name"], "args": c.get("args", {})}
++                            for c in alt_calls
++                        ]
++                        value[tool_call_output_field_name] = ToolCalls.from_dict_list(alt_parsed)
++
++
+             try:
+                 # Call the smaller LM to extract structured data from the raw completion text with ChatAdapter
+                 value = await ChatAdapter().acall(
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..18d22b68 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,4 +1,35 @@
+-import asyncio
++import json
++import hashlib
++from typing import Any
++
++
++def _canonicalize(value: Any) -> Any:
++    """Recursively sort dict keys, convert tuples to lists, and trim string whitespace.
++
++    This function returns a new structure suitable for stable JSON serialisation.
++    """
++    if isinstance(value, dict):
++        # Sort keys and recursively canonicalize values.
++        return {k: _canonicalize(v) for k, v in sorted(value.items())}
++    if isinstance(value, (list, tuple)):
++        # Convert tuples to list and canonicalize each element.
++        return [_canonicalize(v) for v in list(value)]
++    if isinstance(value, str):
++        return value.strip()
++    # For other builtin types (int, float, bool, None) return as is.
++    return value
++
++def _compute_fingerprint(name: str, args: dict[str, Any]) -> str:
++    """Compute a deterministic SHA‑256 fingerprint for a tool call.
++
++    The fingerprint is based on the tool ``name`` and a canonicalised JSON
++    representation of ``args``. The result is a 64‑character hex string.
++    """
++    canonical_args = _canonicalize(args)
++    payload = {"name": name, "args": canonical_args}
++    json_str = json.dumps(payload, sort_keys=True, separators=(",", ":"))
++    return hashlib.sha256(json_str.encode("utf-8")).hexdigest()
++
+ import inspect
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+@@ -223,7 +254,38 @@ class Tool(Type):
+         Example:
+ 
+         ```python
+-        import asyncio
++        import json
++import hashlib
++from typing import Any
++
++
++def _canonicalize(value: Any) -> Any:
++    """Recursively sort dict keys, convert tuples to lists, and trim string whitespace.
++
++    This function returns a new structure suitable for stable JSON serialisation.
++    """
++    if isinstance(value, dict):
++        # Sort keys and recursively canonicalize values.
++        return {k: _canonicalize(v) for k, v in sorted(value.items())}
++    if isinstance(value, (list, tuple)):
++        # Convert tuples to list and canonicalize each element.
++        return [_canonicalize(v) for v in list(value)]
++    if isinstance(value, str):
++        return value.strip()
++    # For other builtin types (int, float, bool, None) return as is.
++    return value
++
++def _compute_fingerprint(name: str, args: dict[str, Any]) -> str:
++    """Compute a deterministic SHA‑256 fingerprint for a tool call.
++
++    The fingerprint is based on the tool ``name`` and a canonicalised JSON
++    representation of ``args``. The result is a 64‑character hex string.
++    """
++    canonical_args = _canonicalize(args)
++    payload = {"name": name, "args": canonical_args}
++    json_str = json.dumps(payload, sort_keys=True, separators=(",", ":"))
++    return hashlib.sha256(json_str.encode("utf-8")).hexdigest()
++
+         import dspy
+         from langchain.tools import tool as lc_tool
+ 
+@@ -255,6 +317,104 @@ class Tool(Type):
+ 
+ 
+ class ToolCalls(Type):
++    """ToolCalls type representing a collection of tool calls.
++
++    The class now includes a ``validate_input`` method that normalizes various
++    possible LM output formats into a canonical Python structure.
++    """
++
++    class ToolCall(BaseModel):
++        """Represents a single tool call.
++
++        A deterministic ``fingerprint`` is computed from the tool ``name`` and
++        a canonical representation of ``args``. The first eight characters of the
++        SHA‑256 hash are exposed as ``id`` for convenient logging.
++        """
++
++        name: str
++        args: dict[str, Any]
++        # The fingerprint and short id are computed at construction time and are
++        # read‑only attributes.
++        fingerprint: str = ""
++        id: str = ""
++
++        def __init__(self, **data: Any):  # type: ignore[override]
++            super().__init__(**data)
++            # Compute a deterministic fingerprint based on name and canonical args.
++            fp = _compute_fingerprint(self.name, self.args)
++            object.__setattr__(self, "fingerprint", fp)
++            object.__setattr__(self, "id", fp[:8])
++
++    tool_calls: list[ToolCall]
++
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Normalize various LM output formats for ``ToolCalls``.
++
++        Supported input variations:
++        1. ``{"tool_calls": [{"name": ..., "args": {...}}, ...]}``
++        2. A single object ``{"name": ..., "args": {...}}``
++        3. A bare list ``[{"name": ..., "args": {...}}, ...]``
++        4. JSON strings representing any of the above structures.
++        Non‑JSON strings are returned unchanged.
++        """
++        # If already a dict with the canonical key, return as‑is.
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++            # Unexpected dict – return unchanged.
++            return data
++        # A list of call dicts.
++        if isinstance(data, list):
++            return {"tool_calls": data}
++        # If a string, attempt to parse JSON.
++        if isinstance(data, str):
++            try:
++                parsed = json.loads(data)
++            except Exception:
++                return data
++            # Re‑apply normalization to the parsed value.
++            return cls.validate_input(parsed)
++        # Fallback – return the original value.
++        return data
++
++    @classmethod
++    def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
++        """Convert a list of dictionaries to a ToolCalls instance.
++
++        Each dictionary should contain ``name`` and ``args`` keys. The method now
++        ensures that each ``ToolCall`` has a deterministic fingerprint.
++        """
++        tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
++        return cls(tool_calls=tool_calls)
++
++    @classmethod
++    def description(cls) -> str:
++        return (
++            "Tool calls information, including the name of the tools and the arguments to be passed to it. "
++            "Arguments must be provided in JSON format."
++        )
++
++    def format(self) -> list[dict[str, Any]]:
++        # The tool_call field is compatible with OpenAI's tool calls schema.
++        return [
++            {
++                "type": "tool_calls",
++                "tool_calls": [
++                    {
++                        "type": "function",
++                        "function": {
++                            "name": tool_call.name,
++                            "arguments": tool_call.args,
++                        },
++                    }
++                    for tool_call in self.tool_calls
++                ],
++            }
++        ]
++
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]

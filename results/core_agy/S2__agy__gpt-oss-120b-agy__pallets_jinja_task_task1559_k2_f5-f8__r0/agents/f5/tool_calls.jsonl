@@ -1,0 +1,77 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '1,200p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"class InternationalizationExtension\" -R src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '200,350p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '350,560p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '500,620p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '340,420p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"class Call\" -R src/jinja2/nodes.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '350,440p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '380,440p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"def _validate_trans_variables\" -R src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '430,470p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '410,460p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '380,460p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '340,380p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '340,460p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"parser.stream.expect(\\\"block_end\\\")\" -R src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"stream.expect(\\\"block_end\\\")\" -R src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/ext.py | sed -n '340,420p'"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/ext.py | sed -n '360,420p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '398,406p' src/jinja2/ext.py | cat -A"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '398,406p' src/jinja2/ext.py | sed -e 's/$/[EOL]/'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/ext.py | sed -n '390,420p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '398,410p' src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '398,406p' src/jinja2/ext.py | cat -A"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '398,406p' src/jinja2/ext.py | sed -e 's/^/>>/'"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '395,410p' src/jinja2/ext.py | sed -e 's/^/>> /'"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/ext.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/ext.py | sed -n '416,460p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python - <<'PY'\nimport sys, pkgutil, importlib\nprint('Python version', sys.version)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 - <<'PY'\nprint('hello')\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 - <<'PY'\nimport pytest, sys, traceback\nfrom jinja2 import Environment, Undefined, DebugUndefined, StrictUndefined, ChainableUndefined, UndefinedError\n\nenv = Environment(undefined=Undefined)\ntry:\n    env.from_string('{{ missing.attribute }}').render()\n    print('no error')\nexcept Exception as e:\n    print('error type', type(e))\n    traceback.print_exc()\nPY"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 380, "Path": "tests/test_api.py", "StartLine": 300}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '300,380p' tests/test_api.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 - <<'PY'\nfrom jinja2 import Undefined, ChainableUndefined, DebugUndefined, StrictUndefined\nimport pytest, sys\n\ndef check(cls):\n    try:\n        getattr(cls, '__slots__')\n        print(cls.__name__, 'no error')\n    except Exception as e:\n        print(cls.__name__, 'error', type(e))\n\ncheck(Undefined)\ncheck(ChainableUndefined)\ncheck(DebugUndefined)\ncheck(StrictUndefined)\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"class Undefined\" -R src/jinja2"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 860, "Path": "src/jinja2/runtime.py", "StartLine": 750}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '750,860p' src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"__slots__\" -R src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '800,860p' src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/ext.py | sed -n '380,440p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '860,980p' src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 420, "Path": "src/jinja2/ext.py", "StartLine": 380}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "grep -n \"class ChainableUndefined\" -R src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/runtime.py | sed -n '790,820p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/runtime.py | grep -n \"del Undefined\" -n"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 - <<'PY'\nimport importlib, sys, os\nsys.path.insert(0, 'src')\nimport jinja2.runtime as rt\nprint('has slots?', hasattr(rt.Undefined, '__slots__'))\nprint('dir', [a for a in dir(rt.Undefined) if a=='__slots__'])\nPY"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/runtime.py | sed -n '790,830p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '800,810p' src/jinja2/runtime.py | cat -A"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '800,820p' src/jinja2/runtime.py | sed -e 's/\\t/[TAB]/g'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/runtime.py | sed -n '796,815p'"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "sed -n '800,830p' src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "nl -ba src/jinja2/runtime.py | sed -n '790,830p'"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/runtime.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 860, "Path": "src/jinja2/runtime.py", "StartLine": 750}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 860, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/runtime.py", "StartLine": 750}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 355, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/tests/test_api.py", "StartLine": 315}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 950, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/runtime.py", "StartLine": 860}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["__slots__ Undefined"]}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 820, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-ltf5z2x6/repo/src/jinja2/runtime.py", "StartLine": 788}, "ok": null, "ts": null}
+{"name": "search_marketplace", "kind": "read", "args": {"kind": "all", "limit": 5, "queries": ["class Undefined"]}, "ok": null, "ts": null}

@@ -1,0 +1,81 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    6,
+    10
+  ],
+  "started": 1793979653.863609,
+  "ended": 1793980007.875306,
+  "busy_s": 353.9146192073822,
+  "usage": {
+    "input": 1642140,
+    "cached_input": 1537536,
+    "cache_write": 0,
+    "output": 31891,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 3
+  },
+  "cost_list": null,
+  "nudges": 1,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {
+    "read": 16,
+    "edit": 4,
+    "shell": 5
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793979653.863982,
+      "ended": 1793979696.549458,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 62208,
+        "cached_input": 35520,
+        "cache_write": 0,
+        "output": 3480,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "060bc1f7-1d6e-4d1b-9184-909717baf422",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": "ERROR"
+    },
+    {
+      "index": 1,
+      "started": 1793979696.5947678,
+      "ended": 1793980007.823911,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1579932,
+        "cached_input": 1502016,
+        "cache_write": 0,
+        "output": 28411,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "060bc1f7-1d6e-4d1b-9184-909717baf422",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": "ERROR"
+}

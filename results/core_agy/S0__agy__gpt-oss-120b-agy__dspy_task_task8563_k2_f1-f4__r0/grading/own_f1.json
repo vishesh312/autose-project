@@ -1,0 +1,11 @@
+{
+  "1": {
+    "fid": 1,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 43,
+    "tests_failed": 7,
+    "duration_s": 41.55505895614624,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S0__agy__gpt-oss-120b-agy__dspy_task_task8563_k2_f1-f4__r0/grading/own_f1.f1.log"
+  }
+}

@@ -1,0 +1,105 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..9750715 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -280,7 +280,14 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
++        # Validate cleanup_timeout if provided
++        if cleanup_timeout is not None:
++            if not isinstance(cleanup_timeout, (int, float)) or cleanup_timeout <= 0:
++                raise ValueError("cleanup_timeout must be a positive float when specified")
++        self.cleanup_timeout = cleanup_timeout
++
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+         #: the :class:`Command` for this context.
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..19830c5 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -270,9 +270,9 @@ class ShellComplete:
+         :param args: List of complete args before the incomplete value.
+         :param incomplete: Value being completed. May be empty.
+         """
+-        ctx = _resolve_context(self.cli, self.ctx_args, self.prog_name, args)
+-        obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
+-        return obj.shell_complete(ctx, incomplete)
++        with _resolve_context(self.cli, self.ctx_args, self.prog_name, args) as ctx:
++            obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
++            return obj.shell_complete(ctx, incomplete)
+ 
+     def format_completion(self, item: CompletionItem) -> str:
+         """Format a completion item into the form recognized by the
+@@ -529,6 +529,9 @@ def _is_incomplete_option(ctx: Context, args: list[str], param: Parameter) -> bo
+     return last_option is not None and last_option in param.opts
+ 
+ 
++from contextlib import contextmanager
++
++@contextmanager
+ def _resolve_context(
+     cli: Command,
+     ctx_args: cabc.MutableMapping[str, t.Any],
+@@ -539,6 +542,58 @@ def _resolve_context(
+     traversing the complete arguments. This only follows the commands,
+     it doesn't trigger input prompts or callbacks.
+ 
++    This function is now a context manager to ensure that any contexts
++    created during shell completion are properly closed, preventing
++    resource leaks such as unclosed file handles.
++    """
++    ctx_args["resilient_parsing"] = True
++    with cli.make_context(prog_name, args.copy(), **ctx_args) as ctx:
++        args = ctx._protected_args + ctx.args
++
++        while args:
++            command = ctx.command
++
++            if isinstance(command, Group):
++                if not command.chain:
++                    name, cmd, args = command.resolve_command(ctx, args)
++
++                    if cmd is None:
++                        yield ctx
++                        return
++
++                    with cmd.make_context(name, args, parent=ctx, resilient_parsing=True) as sub_ctx:
++                        ctx = sub_ctx
++                        args = ctx._protected_args + ctx.args
++                else:
++                    sub_ctx = ctx
++
++                    while args:
++                        name, cmd, args = command.resolve_command(ctx, args)
++
++                        if cmd is None:
++                            yield ctx
++                            return
++
++                        with cmd.make_context(
++                            name,
++                            args,
++                            parent=ctx,
++                            allow_extra_args=True,
++                            allow_interspersed_args=False,
++                            resilient_parsing=True,
++                        ) as inner_ctx:
++                            sub_ctx = inner_ctx
++                        # Continue loop with updated args
++                    ctx = sub_ctx
++                    args = [*sub_ctx._protected_args, *sub_ctx.args]
++            else:
++                break
++        yield ctx
++
++    """Produce the context hierarchy starting with the command and
++    traversing the complete arguments. This only follows the commands,
++    it doesn't trigger input prompts or callbacks.
++
+     :param cli: Command being called.
+     :param prog_name: Name of the executable in the shell.
+     :param args: List of complete args before the incomplete value.

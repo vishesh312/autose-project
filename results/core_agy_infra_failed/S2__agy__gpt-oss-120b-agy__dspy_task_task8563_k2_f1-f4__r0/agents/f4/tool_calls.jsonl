@@ -1,0 +1,12 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 280, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py", "StartLine": 250}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 300, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py", "StartLine": 260}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 270, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py", "StartLine": 254}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 10, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 340, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py", "StartLine": 250}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-tsao5gqd/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}

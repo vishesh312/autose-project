@@ -1,0 +1,15 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 2 --stat --oneline HEAD f10"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show HEAD:src/jinja2/loaders.py > /tmp/loaders_head.py; git show f10:src/jinja2/loaders.py > /tmp/loaders_f10.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff $(git merge-base HEAD f10) HEAD src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff $(git merge-base HEAD f10) f10 src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff $(git merge-base HEAD f10) HEAD tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff $(git merge-base HEAD f10) f10 tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "which python; which python3; find / -name pytest 2>/dev/null"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "other", "args": {"Action": "kill", "TaskId": "14095994-c933-430c-ac54-bffce8ff0e0b/task-22"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest --version"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest -k \"not test_loader\""}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"ByteOffset": 0, "EndLine": 160, "Path": "/tmp/loaders_head.py", "StartLine": 65}, "ok": null, "ts": null}

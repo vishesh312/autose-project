@@ -1,0 +1,104 @@
+{
+  "agent_id": "f5",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    5
+  ],
+  "started": 1793984382.4541051,
+  "ended": 1793985128.238524,
+  "busy_s": 565.7377228736877,
+  "usage": {
+    "input": 10034652,
+    "cached_input": 9687488,
+    "cache_write": 0,
+    "output": 107671,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 6
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "infra_retries": 2,
+  "infra_wait_s": 180.0,
+  "infra_failed": false,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 54,
+    "edit": 13,
+    "read": 10
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793984382.455255,
+      "ended": 1793984763.950243,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 2652794,
+        "cached_input": 2550208,
+        "cache_write": 0,
+        "output": 28348,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "39b049dd-6ee5-4342-8c04-e35e39a45d91",
+      "nudge_reason": "infra_retry_in_60s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 1,
+      "started": 1793984823.9592671,
+      "ended": 1793984935.849471,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 3550771,
+        "cached_input": 3438976,
+        "cache_write": 0,
+        "output": 37081,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "39b049dd-6ee5-4342-8c04-e35e39a45d91",
+      "nudge_reason": "infra_retry_in_120s",
+      "final_text_tail": "",
+      "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+    },
+    {
+      "index": 2,
+      "started": 1793985055.8596559,
+      "ended": 1793985128.2121868,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 3831087,
+        "cached_input": 3698304,
+        "cache_write": 0,
+        "output": 42242,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "num_turns": 3,
+      "session_id": "39b049dd-6ee5-4342-8c04-e35e39a45d91",
+      "nudge_reason": null,
+      "final_text_tail": "We don't have find tool, only read_file. Let's search manually maybe lines around.We don't have find tool, only read_file. Let's search manually maybe lines around.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

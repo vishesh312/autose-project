@@ -1,0 +1,61 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "which python; which python3; find / -name pytest 2>/dev/null"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "other", "args": {"Action": "kill", "TaskId": "c6cb20eb-88a2-410a-b4d8-2671f6f58941/task-6"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "which python3.11 || which python3.10 || which python3.12"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/opt/homebrew/bin/python3.12 -m pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 100, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 250, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 100}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 450, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 250}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 652, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 450}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 100, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/tests/test_loader.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 100, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/environment.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 950, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/environment.py", "StartLine": 900}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 990, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/environment.py", "StartLine": 945}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 575, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 520}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/__init__.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 403, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/tests/test_loader.py", "StartLine": 350}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 585, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 565}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 645, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 595}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 700, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py", "StartLine": 640}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 70, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/tests/test_loader.py", "StartLine": 20}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 403, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/tests/test_loader.py", "StartLine": 380}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"import jinja2; print(jinja2.__file__)\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m pip install -e ."}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=$(pwd)/src /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -c \"import jinja2; print(jinja2.__file__)\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=$(pwd)/src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 50, "Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/tests/conftest.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-frqntom7/repo/tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=$(pwd)/src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py -k \"TestPathTransform\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=$(pwd)/src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py -k \"test_package_zip_list\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import sys; print(sys.version_info)\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "diff -u /Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/jinja2/loaders.py src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5 --oneline"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 1 --stat"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import jinja2; print(jinja2.__version__)\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git show 44b74a2 src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git log -n 5 src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git checkout tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -ld .git"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "cat setup.cfg"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "/Library/Frameworks/Python.framework/Versions/3.13/bin/pytest -o pythonpath=src tests/test_loader.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -c \"import zipimport; print(dir(zipimport.zipimporter))\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff -- src/jinja2/loaders.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "PYTHONPATH=$(pwd)/src /Library/Frameworks/Python.framework/Versions/3.13/bin/pytest tests/test_loader.py -k \"not test_package_zip_list\""}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m mypy src/jinja2"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "find / -name mypy 2>/dev/null"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "other", "args": {"Action": "kill", "TaskId": "c6cb20eb-88a2-410a-b4d8-2671f6f58941/task-115"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls /Library/Frameworks/Python.framework/Versions/3.13/bin/"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git status"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "git diff"}, "ok": null, "ts": null}

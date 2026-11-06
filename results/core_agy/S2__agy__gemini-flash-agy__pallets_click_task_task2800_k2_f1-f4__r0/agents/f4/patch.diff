@@ -1,0 +1,229 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..d1e7f7a 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -6,6 +6,7 @@ import errno
+ import inspect
+ import os
+ import sys
++import threading
+ import typing as t
+ from collections import abc
+ from collections import Counter
+@@ -28,6 +29,7 @@ from .exceptions import NoArgsIsHelpError
+ from .exceptions import UsageError
+ from .formatting import HelpFormatter
+ from .formatting import join_options
++from .globals import _local
+ from .globals import pop_context
+ from .globals import push_context
+ from .parser import _flag_needs_value
+@@ -228,6 +230,13 @@ class Context:
+         value is not set, it defaults to the value from the parent
+         context. ``Command.show_default`` overrides this default for the
+         specific command.
++    :param cleanup_timeout: An optional maximum time limit in seconds for
++        the :meth:`close` operation. If exceeded, cleanup operations are
++        terminated to prevent hanging processes. Defaults to ``None``
++        (no timeout). Must be a positive float (> 0) if specified.
++
++    .. versionchanged:: 8.2
++        Added the ``cleanup_timeout`` parameter.
+ 
+     .. versionchanged:: 8.2
+         The ``protected_args`` attribute is deprecated and will be removed in
+@@ -280,6 +289,7 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+@@ -427,6 +437,17 @@ class Context:
+         #: Show option default values when formatting help text.
+         self.show_default: bool | None = show_default
+ 
++        if cleanup_timeout is None and parent is not None:
++            cleanup_timeout = parent.cleanup_timeout
++
++        if cleanup_timeout is not None:
++            if not isinstance(cleanup_timeout, (int, float)) or isinstance(cleanup_timeout, bool) or cleanup_timeout <= 0:
++                raise ValueError("cleanup_timeout must be a positive float (> 0)")
++            cleanup_timeout = float(cleanup_timeout)
++
++        #: Maximum duration in seconds for close operations.
++        self.cleanup_timeout: float | None = cleanup_timeout
++
+         self._close_callbacks: list[t.Callable[[], t.Any]] = []
+         self._depth = 0
+         self._parameter_source: dict[str, ParameterSource] = {}
+@@ -607,10 +628,43 @@ class Context:
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
+         """
+-        self._exit_stack.close()
++        stack = self._exit_stack
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 
++        if self.cleanup_timeout is None:
++            stack.close()
++            return
++
++        exception: BaseException | None = None
++
++        def _do_close(current_stack: list[Context] | None) -> None:
++            nonlocal exception
++            if current_stack is not None:
++                _local.stack = list(current_stack)
++            try:
++                stack.close()
++            except BaseException as e:
++                exception = e
++
++        current_stack = getattr(_local, "stack", None)
++        thread = threading.Thread(
++            target=_do_close,
++            args=(current_stack,),
++            daemon=True,
++        )
++        thread.start()
++        thread.join(self.cleanup_timeout)
++
++        if thread.is_alive():
++            import logging
++
++            logging.getLogger("click").warning(
++                f"Context cleanup timed out after {self.cleanup_timeout} seconds."
++            )
++        elif exception is not None:
++            raise exception
++
+     @property
+     def command_path(self) -> str:
+         """The computed command path.  This is used for the ``usage``
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..bdd3242 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -557,7 +557,13 @@ def _resolve_context(
+                 if cmd is None:
+                     return ctx
+ 
+-                ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
++                ctx = cmd.make_context(
++                    name,
++                    args,
++                    parent=ctx,
++                    resilient_parsing=True,
++                    cleanup_timeout=ctx.cleanup_timeout,
++                )
+                 args = ctx._protected_args + ctx.args
+             else:
+                 sub_ctx = ctx
+@@ -575,6 +581,7 @@ def _resolve_context(
+                         allow_extra_args=True,
+                         allow_interspersed_args=False,
+                         resilient_parsing=True,
++                        cleanup_timeout=ctx.cleanup_timeout,
+                     )
+                     args = sub_ctx.args
+ 
+diff --git a/tests/test_context.py b/tests/test_context.py
+index 5bd618b..854ae2d 100644
+--- a/tests/test_context.py
++++ b/tests/test_context.py
+@@ -543,3 +543,69 @@ def test_propagate_opt_prefixes():
+     ctx = click.Context(click.Command("test2"), parent=parent)
+ 
+     assert ctx._opt_prefixes == {"-", "--", "!"}
++
++
++@pytest.mark.parametrize("value", [0, -1, -0.5, False, True, "5"])
++def test_cleanup_timeout_invalid(value):
++    with pytest.raises(ValueError, match="cleanup_timeout must be a positive float"):
++        click.Context(click.Command("test"), cleanup_timeout=value)
++
++
++def test_cleanup_timeout_valid():
++    ctx = click.Context(click.Command("test"), cleanup_timeout=5.0)
++    assert ctx.cleanup_timeout == 5.0
++
++    ctx_int = click.Context(click.Command("test"), cleanup_timeout=2)
++    assert ctx_int.cleanup_timeout == 2.0
++    assert isinstance(ctx_int.cleanup_timeout, float)
++
++    ctx_none = click.Context(click.Command("test"))
++    assert ctx_none.cleanup_timeout is None
++
++
++def test_cleanup_timeout_inheritance():
++    parent = click.Context(click.Command("test"), cleanup_timeout=3.0)
++    child = click.Context(click.Command("test2"), parent=parent)
++    assert child.cleanup_timeout == 3.0
++
++    override = click.Context(click.Command("test3"), parent=parent, cleanup_timeout=1.0)
++    assert override.cleanup_timeout == 1.0
++
++
++def test_cleanup_timeout_normal_completion():
++    called = []
++    ctx = click.Context(click.Command("test"), cleanup_timeout=1.0)
++
++    @ctx.call_on_close
++    def cleanup():
++        called.append(True)
++
++    ctx.close()
++    assert called == [True]
++
++
++def test_cleanup_timeout_exceeded(caplog):
++    import time
++
++    ctx = click.Context(click.Command("test"), cleanup_timeout=0.05)
++
++    @ctx.call_on_close
++    def slow_cleanup():
++        time.sleep(1)
++
++    with caplog.at_level(logging.WARNING, logger="click"):
++        ctx.close()
++
++    assert any("cleanup timed out" in record.message.lower() for record in caplog.records)
++
++
++def test_cleanup_timeout_exception_propagation():
++    ctx = click.Context(click.Command("test"), cleanup_timeout=1.0)
++
++    @ctx.call_on_close
++    def failing_cleanup():
++        raise RuntimeError("teardown error")
++
++    with pytest.raises(RuntimeError, match="teardown error"):
++        ctx.close()
++
+diff --git a/tests/test_shell_completion.py b/tests/test_shell_completion.py
+index 3e7a2bd..d294065 100644
+--- a/tests/test_shell_completion.py
++++ b/tests/test_shell_completion.py
+@@ -414,3 +414,18 @@ def test_add_completion_class_decorator():
+     # Using `add_completion_class` as a decorator adds the new shell immediately
+     assert "mysh" in click.shell_completion._available_shells
+     assert click.shell_completion._available_shells["mysh"] is MyshComplete
++
++
++def test_shell_completion_cleanup_timeout():
++    @click.group(context_settings={"cleanup_timeout": 2.5})
++    def cli():
++        pass
++
++    @cli.group()
++    def sub():
++        pass
++
++    ctx = click.shell_completion._resolve_context(cli, {}, "cli", ["sub"])
++    assert ctx.cleanup_timeout == 2.5
++    assert ctx.parent.cleanup_timeout == 2.5
++

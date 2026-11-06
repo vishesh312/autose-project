@@ -1,0 +1,59 @@
+{
+  "agent_id": "f6",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    6
+  ],
+  "started": 1793979535.758209,
+  "ended": 1793979635.79129,
+  "busy_s": 99.99273896217346,
+  "usage": {
+    "input": 416777,
+    "cached_input": 371584,
+    "cache_write": 0,
+    "output": 7533,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 1,
+    "read": 9,
+    "edit": 5
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793979535.7585611,
+      "ended": 1793979635.7513,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 416777,
+        "cached_input": 371584,
+        "cache_write": 0,
+        "output": 7533,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "bb4472c1-3523-4e81-9e57-d47b9fd27273",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+    }
+  ],
+  "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+}

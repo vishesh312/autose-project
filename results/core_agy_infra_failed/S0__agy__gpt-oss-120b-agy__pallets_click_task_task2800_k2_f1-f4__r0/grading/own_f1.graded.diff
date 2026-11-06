@@ -1,0 +1,132 @@
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..d3c1da9 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -3,6 +3,7 @@ from __future__ import annotations
+ import collections.abc as cabc
+ import os
+ import re
++from contextlib import contextmanager, ExitStack
+ import typing as t
+ from gettext import gettext as _
+ 
+@@ -270,9 +271,9 @@ class ShellComplete:
+         :param args: List of complete args before the incomplete value.
+         :param incomplete: Value being completed. May be empty.
+         """
+-        ctx = _resolve_context(self.cli, self.ctx_args, self.prog_name, args)
+-        obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
+-        return obj.shell_complete(ctx, incomplete)
++        with _resolve_context(self.cli, self.ctx_args, self.prog_name, args) as ctx:
++            obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
++            return obj.shell_complete(ctx, incomplete)
+ 
+     def format_completion(self, item: CompletionItem) -> str:
+         """Format a completion item into the form recognized by the
+@@ -529,6 +530,9 @@ def _is_incomplete_option(ctx: Context, args: list[str], param: Parameter) -> bo
+     return last_option is not None and last_option in param.opts
+ 
+ 
++from contextlib import contextmanager, ExitStack
++
++@contextmanager
+ def _resolve_context(
+     cli: Command,
+     ctx_args: cabc.MutableMapping[str, t.Any],
+@@ -539,51 +543,64 @@ def _resolve_context(
+     traversing the complete arguments. This only follows the commands,
+     it doesn't trigger input prompts or callbacks.
+ 
++    This function is now a context manager that ensures any Contexts
++    created during shell completion are properly closed, preventing
++    resource leaks from file handles opened by :class:`click.File`.
++
+     :param cli: Command being called.
+     :param prog_name: Name of the executable in the shell.
+     :param args: List of complete args before the incomplete value.
+     """
+     ctx_args["resilient_parsing"] = True
+-    ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
+-    args = ctx._protected_args + ctx.args
+-
+-    while args:
+-        command = ctx.command
+-
+-        if isinstance(command, Group):
+-            if not command.chain:
+-                name, cmd, args = command.resolve_command(ctx, args)
+-
+-                if cmd is None:
+-                    return ctx
++    with ExitStack() as stack:
++        # Create the initial context and register it for cleanup.
++        ctx = stack.enter_context(cli.make_context(prog_name, args.copy(), **ctx_args))
++        args = ctx._protected_args + ctx.args
+ 
+-                ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
+-                args = ctx._protected_args + ctx.args
+-            else:
+-                sub_ctx = ctx
++        while args:
++            command = ctx.command
+ 
+-                while args:
++            if isinstance(command, Group):
++                if not command.chain:
+                     name, cmd, args = command.resolve_command(ctx, args)
+ 
+                     if cmd is None:
+-                        return ctx
+-
+-                    sub_ctx = cmd.make_context(
+-                        name,
+-                        args,
+-                        parent=ctx,
+-                        allow_extra_args=True,
+-                        allow_interspersed_args=False,
+-                        resilient_parsing=True,
++                        break
++
++                    # Enter sub‑command context and track it for cleanup.
++                    ctx = stack.enter_context(
++                        cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
+                     )
+-                    args = sub_ctx.args
++                    args = ctx._protected_args + ctx.args
++                else:
++                    # For chained groups, walk through each sub‑command.
++                    sub_ctx = ctx
++                    while args:
++                        name, cmd, args = command.resolve_command(ctx, args)
++
++                        if cmd is None:
++                            break
++
++                        sub_ctx = stack.enter_context(
++                            cmd.make_context(
++                                name,
++                                args,
++                                parent=ctx,
++                                allow_extra_args=True,
++                                allow_interspersed_args=False,
++                                resilient_parsing=True,
++                            )
++                        )
++                        args = sub_ctx.args
++
++                    ctx = sub_ctx
++                    args = [*sub_ctx._protected_args, *sub_ctx.args]
++            else:
++                break
+ 
+-                ctx = sub_ctx
+-                args = [*sub_ctx._protected_args, *sub_ctx.args]
+-        else:
+-            break
++        # Yield the final context for use by the caller.
++        yield ctx
+ 
+-    return ctx
+ 
+ 
+ def _resolve_incomplete(

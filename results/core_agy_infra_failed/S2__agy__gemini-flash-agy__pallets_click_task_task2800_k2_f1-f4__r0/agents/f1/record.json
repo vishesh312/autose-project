@@ -1,0 +1,80 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793981123.364222,
+  "ended": 1793981811.111119,
+  "busy_s": 687.6610491275787,
+  "usage": {
+    "input": 14342019,
+    "cached_input": 13214816,
+    "cache_write": 0,
+    "output": 23144,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 3
+  },
+  "cost_list": null,
+  "nudges": 1,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {
+    "shell": 115,
+    "read": 15,
+    "subagent": 2
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793981123.3646138,
+      "ended": 1793981765.053675,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 6952621,
+        "cached_input": 6394270,
+        "cache_write": 0,
+        "output": 11066,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "61c14b8b-580d-4878-92e6-b75aa32a0c49",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+    },
+    {
+      "index": 1,
+      "started": 1793981765.109365,
+      "ended": 1793981811.081353,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 7389398,
+        "cached_input": 6820546,
+        "cache_write": 0,
+        "output": 12078,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "61c14b8b-580d-4878-92e6-b75aa32a0c49",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+}

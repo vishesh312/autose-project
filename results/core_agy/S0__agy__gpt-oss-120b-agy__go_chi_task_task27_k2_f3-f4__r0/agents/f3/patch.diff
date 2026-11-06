@@ -1,0 +1,78 @@
+diff --git a/mux.go b/mux.go
+index 56fa4d2..f8db237 100644
+--- a/mux.go
++++ b/mux.go
+@@ -3,11 +3,21 @@ package chi
+ import (
+ 	"context"
+ 	"fmt"
++	"log"
+ 	"net/http"
+ 	"strings"
+ 	"sync"
+ )
+ 
++// debugLogging controls detailed logging for route pattern handling.
++var debugLogging bool
++
++// EnableDebugLogging turns on debug-level logging; off by default.
++func EnableDebugLogging() {
++	debugLogging = true
++}
++
++
+ var _ Router = &Mux{}
+ 
+ // Mux is a simple HTTP route multiplexer that parses a request path,
+@@ -108,10 +118,17 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ // execute the `handler` http.Handler.
+ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ 	parts := strings.SplitN(pattern, " ", 2)
++	if debugLogging {
++		log.Printf("Handle pattern parsing: original='%s'", pattern)
++	}
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])
+ 		path := parts[1]
+ 
++		if debugLogging {
++			log.Printf("Detected method token: %s, path: %s", methodStr, path)
++		}
++
+ 		method, ok := methodMap[methodStr]
+ 		if !ok {
+ 			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
+@@ -122,11 +139,33 @@ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ 	}
+ 
+ 	mx.handle(mALL, pattern, handler)
++
+ }
+ 
+ // HandleFunc adds the route `pattern` that matches any http method to
+ // execute the `handlerFn` http.HandlerFunc.
+ func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
++	parts := strings.SplitN(pattern, " ", 2)
++	if debugLogging {
++		log.Printf("HandleFunc pattern parsing: original='%s'", pattern)
++	}
++	if len(parts) == 2 {
++		methodStr := strings.ToUpper(parts[0])
++		path := parts[1]
++
++		if debugLogging {
++			log.Printf("Detected method token in HandleFunc: %s, path: %s", methodStr, path)
++		}
++
++		method, ok := methodMap[methodStr]
++		if !ok {
++			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
++		}
++
++		mx.handle(method, path, handlerFn)
++		return
++	}
++
+ 	mx.handle(mALL, pattern, handlerFn)
+ }
+ 

@@ -1,0 +1,100 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    1,
+    4
+  ],
+  "started": 1793980429.011368,
+  "ended": 1793980761.426854,
+  "busy_s": 332.31841707229614,
+  "usage": {
+    "input": 4266925,
+    "cached_input": 4110912,
+    "cache_write": 0,
+    "output": 58113,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 6
+  },
+  "cost_list": null,
+  "nudges": 2,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {
+    "read": 22
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793980429.0116348,
+      "ended": 1793980660.326889,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1157537,
+        "cached_input": 1107776,
+        "cache_write": 0,
+        "output": 17581,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "009b5814-8e94-4790-ad2d-330f7f52c68f",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "There is no find_file tool, but we can read more lines further down to locate _resolve_context.There is no find_file tool, but we can read more lines further down to locate _resolve_context.\n",
+      "error": "ERROR"
+    },
+    {
+      "index": 1,
+      "started": 1793980660.390239,
+      "ended": 1793980671.561801,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1181841,
+        "cached_input": 1131776,
+        "cache_write": 0,
+        "output": 17743,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "009b5814-8e94-4790-ad2d-330f7f52c68f",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": "ERROR"
+    },
+    {
+      "index": 2,
+      "started": 1793980671.594282,
+      "ended": 1793980761.4258828,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 1927547,
+        "cached_input": 1871360,
+        "cache_write": 0,
+        "output": 22789,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "num_turns": 3,
+      "session_id": "009b5814-8e94-4790-ad2d-330f7f52c68f",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": "ERROR"
+}

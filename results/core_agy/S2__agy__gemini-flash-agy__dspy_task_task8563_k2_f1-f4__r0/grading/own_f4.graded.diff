@@ -1,0 +1,60 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..fb191f67 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,9 +1,11 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+-from pydantic import BaseModel, TypeAdapter, create_model
++from pydantic import BaseModel, Field, TypeAdapter, create_model
+ 
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+@@ -254,10 +256,42 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_tool_args(obj: Any) -> Any:
++    """Canonicalize tool arguments recursively.
++
++    - Sort keys in dictionaries recursively.
++    - Convert tuples to lists.
++    - Trim leading/trailing whitespace from string values.
++    - Preserve numeric, boolean, None, and other types unchanged.
++    """
++    if isinstance(obj, dict):
++        return {k: _canonicalize_tool_args(obj[k]) for k in sorted(obj.keys())}
++    elif isinstance(obj, (list, tuple)):
++        return [_canonicalize_tool_args(item) for item in obj]
++    elif isinstance(obj, str):
++        return obj.strip()
++    return obj
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = Field(default="", frozen=True)
++        id: str = Field(default="", frozen=True)
++
++        def __init__(self, **data: Any):
++            super().__init__(**data)
++            if not self.fingerprint:
++                canonical_args = _canonicalize_tool_args(self.args)
++                canonical_obj = {
++                    "name": self.name,
++                    "args": canonical_args,
++                }
++                serialized = json.dumps(canonical_obj, sort_keys=True, separators=(",", ":"))
++                fp = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++                object.__setattr__(self, "fingerprint", fp)
++                object.__setattr__(self, "id", fp[:8])
+ 
+     tool_calls: list[ToolCall]
+ 

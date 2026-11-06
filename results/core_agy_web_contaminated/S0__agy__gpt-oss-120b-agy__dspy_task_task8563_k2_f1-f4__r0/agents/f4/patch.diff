@@ -1,0 +1,33 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..5287e8f7 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -258,6 +258,28 @@ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        def __init__(self, **data):
++            super().__init__(**data)
++            # Compute canonical representation of args
++            def _canonicalize(val):
++                if isinstance(val, dict):
++                    return {k: _canonicalize(val[k]) for k in sorted(val)}
++                if isinstance(val, (list, tuple)):
++                    return [_canonicalize(v) for v in val]
++                if isinstance(val, str):
++                    return val.strip()
++                return val
++
++            canonical_args = _canonicalize(self.args)
++            import json, hashlib
++            canonical_obj = {"name": self.name, "args": canonical_args}
++            serialized = json.dumps(canonical_obj, sort_keys=True, separators=(",", ":"))
++            fp = hashlib.sha256(serialized.encode()).hexdigest()
++            object.__setattr__(self, "fingerprint", fp)
++            object.__setattr__(self, "id", fp[:8])
+ 
+     tool_calls: list[ToolCall]
+ 

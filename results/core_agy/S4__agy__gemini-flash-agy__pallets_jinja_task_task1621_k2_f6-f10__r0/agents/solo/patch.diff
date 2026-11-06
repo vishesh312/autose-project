@@ -1,0 +1,497 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..f9a171a 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -71,6 +71,28 @@ class BaseLoader:
+     #: .. versionadded:: 2.4
+     has_source_access = True
+ 
++    def __init__(
++        self,
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
++    ) -> None:
++        self.path_transform = path_transform
++        self._aliases: t.Dict[str, str] = {}
++
++    def add_alias(self, alias: str, target: str) -> None:
++        """Add an alias pointing to a target template name."""
++        self._aliases[alias] = target
++
++    def remove_alias(self, alias: str) -> None:
++        """Remove an alias if it exists."""
++        self._aliases.pop(alias, None)
++
++    def _resolve_template_name(self, template: str) -> str:
++        """Resolve alias and apply path transformation if configured."""
++        resolved = self._aliases.get(template, template)
++        if self.path_transform is not None:
++            resolved = self.path_transform(resolved)
++        return resolved
++
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+@@ -180,7 +202,9 @@ class FileSystemLoader(BaseLoader):
+         searchpath: t.Union[str, os.PathLike, t.Sequence[t.Union[str, os.PathLike]]],
+         encoding: str = "utf-8",
+         followlinks: bool = False,
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
+     ) -> None:
++        super().__init__(path_transform=path_transform)
+         if not isinstance(searchpath, abc.Iterable) or isinstance(searchpath, str):
+             searchpath = [searchpath]
+ 
+@@ -191,7 +215,8 @@ class FileSystemLoader(BaseLoader):
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, str, t.Callable[[], bool]]:
+-        pieces = split_template_path(template)
++        resolved_template = self._resolve_template_name(template)
++        pieces = split_template_path(resolved_template)
+         for searchpath in self.searchpath:
+             filename = os.path.join(searchpath, *pieces)
+             f = open_if_exists(filename)
+@@ -206,12 +231,15 @@ class FileSystemLoader(BaseLoader):
+ 
+             def uptodate() -> bool:
+                 try:
+-                    return os.path.getmtime(filename) == mtime
++                    return (
++                        self._resolve_template_name(template) == resolved_template
++                        and os.path.getmtime(filename) == mtime
++                    )
+                 except OSError:
+                     return False
+ 
+             return contents, filename, uptodate
+-        raise TemplateNotFound(template)
++        raise TemplateNotFound(resolved_template)
+ 
+     def list_templates(self) -> t.List[str]:
+         found = set()
+@@ -269,7 +297,9 @@ class PackageLoader(BaseLoader):
+         package_name: str,
+         package_path: "str" = "templates",
+         encoding: str = "utf-8",
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
+     ) -> None:
++        super().__init__(path_transform=path_transform)
+         package_path = os.path.normpath(package_path).rstrip(os.path.sep)
+ 
+         # normpath preserves ".", which isn't valid in zip paths.
+@@ -326,13 +356,14 @@ class PackageLoader(BaseLoader):
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, str, t.Optional[t.Callable[[], bool]]]:
+-        p = os.path.join(self._template_root, *split_template_path(template))
++        resolved_template = self._resolve_template_name(template)
++        p = os.path.join(self._template_root, *split_template_path(resolved_template))
+         up_to_date: t.Optional[t.Callable[[], bool]]
+ 
+         if self._archive is None:
+             # Package is a directory.
+             if not os.path.isfile(p):
+-                raise TemplateNotFound(template)
++                raise TemplateNotFound(resolved_template)
+ 
+             with open(p, "rb") as f:
+                 source = f.read()
+@@ -340,14 +371,18 @@ class PackageLoader(BaseLoader):
+             mtime = os.path.getmtime(p)
+ 
+             def up_to_date() -> bool:
+-                return os.path.isfile(p) and os.path.getmtime(p) == mtime
++                return (
++                    self._resolve_template_name(template) == resolved_template
++                    and os.path.isfile(p)
++                    and os.path.getmtime(p) == mtime
++                )
+ 
+         else:
+             # Package is a zip file.
+             try:
+                 source = self._loader.get_data(p)  # type: ignore
+             except OSError as e:
+-                raise TemplateNotFound(template) from e
++                raise TemplateNotFound(resolved_template) from e
+ 
+             # Could use the zip's mtime for all template mtimes, but
+             # would need to safely reload the module if it's out of
+@@ -401,16 +436,29 @@ class DictLoader(BaseLoader):
+     Because auto reloading is rarely useful this is disabled per default.
+     """
+ 
+-    def __init__(self, mapping: t.Mapping[str, str]) -> None:
++    def __init__(
++        self,
++        mapping: t.Mapping[str, str],
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
++    ) -> None:
++        super().__init__(path_transform=path_transform)
+         self.mapping = mapping
+ 
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, None, t.Callable[[], bool]]:
+-        if template in self.mapping:
+-            source = self.mapping[template]
+-            return source, None, lambda: source == self.mapping.get(template)
+-        raise TemplateNotFound(template)
++        resolved_template = self._resolve_template_name(template)
++        if resolved_template in self.mapping:
++            source = self.mapping[resolved_template]
++            return (
++                source,
++                None,
++                lambda: (
++                    self._resolve_template_name(template) == resolved_template
++                    and source == self.mapping.get(resolved_template)
++                ),
++            )
++        raise TemplateNotFound(resolved_template)
+ 
+     def list_templates(self) -> t.List[str]:
+         return sorted(self.mapping)
+@@ -444,21 +492,42 @@ class FunctionLoader(BaseLoader):
+                 ]
+             ],
+         ],
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
+     ) -> None:
++        super().__init__(path_transform=path_transform)
+         self.load_func = load_func
+ 
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+-        rv = self.load_func(template)
++        resolved_template = self._resolve_template_name(template)
++        rv = self.load_func(resolved_template)
+ 
+         if rv is None:
+-            raise TemplateNotFound(template)
++            raise TemplateNotFound(resolved_template)
+ 
+         if isinstance(rv, str):
+-            return rv, None, None
++            return (
++                rv,
++                None,
++                lambda: self._resolve_template_name(template) == resolved_template,
++            )
+ 
+-        return rv
++        source, filename, uptodate = rv
++        if uptodate is not None:
++            return (
++                source,
++                filename,
++                lambda: (
++                    self._resolve_template_name(template) == resolved_template
++                    and uptodate()
++                ),
++            )
++        return (
++            source,
++            filename,
++            lambda: self._resolve_template_name(template) == resolved_template,
++        )
+ 
+ 
+ class PrefixLoader(BaseLoader):
+@@ -477,29 +546,49 @@ class PrefixLoader(BaseLoader):
+     """
+ 
+     def __init__(
+-        self, mapping: t.Mapping[str, BaseLoader], delimiter: str = "/"
++        self,
++        mapping: t.Mapping[str, BaseLoader],
++        delimiter: str = "/",
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
+     ) -> None:
++        super().__init__(path_transform=path_transform)
+         self.mapping = mapping
+         self.delimiter = delimiter
+ 
+     def get_loader(self, template: str) -> t.Tuple[BaseLoader, str]:
++        resolved_template = self._resolve_template_name(template)
+         try:
+-            prefix, name = template.split(self.delimiter, 1)
++            prefix, name = resolved_template.split(self.delimiter, 1)
+             loader = self.mapping[prefix]
+         except (ValueError, KeyError) as e:
+-            raise TemplateNotFound(template) from e
++            raise TemplateNotFound(resolved_template) from e
+         return loader, name
+ 
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
++        resolved_template = self._resolve_template_name(template)
+         loader, name = self.get_loader(template)
+         try:
+-            return loader.get_source(environment, name)
++            source, filename, uptodate = loader.get_source(environment, name)
+         except TemplateNotFound as e:
+             # re-raise the exception with the correct filename here.
+             # (the one that includes the prefix)
+-            raise TemplateNotFound(template) from e
++            raise TemplateNotFound(resolved_template) from e
++        if uptodate is not None:
++            return (
++                source,
++                filename,
++                lambda: (
++                    self._resolve_template_name(template) == resolved_template
++                    and uptodate()
++                ),
++            )
++        return (
++            source,
++            filename,
++            lambda: self._resolve_template_name(template) == resolved_template,
++        )
+ 
+     @internalcode
+     def load(
+@@ -508,13 +597,14 @@ class PrefixLoader(BaseLoader):
+         name: str,
+         globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+     ) -> "Template":
++        resolved_name = self._resolve_template_name(name)
+         loader, local_name = self.get_loader(name)
+         try:
+             return loader.load(environment, local_name, globals)
+         except TemplateNotFound as e:
+             # re-raise the exception with the correct filename here.
+             # (the one that includes the prefix)
+-            raise TemplateNotFound(name) from e
++            raise TemplateNotFound(resolved_name) from e
+ 
+     def list_templates(self) -> t.List[str]:
+         result = []
+@@ -538,18 +628,40 @@ class ChoiceLoader(BaseLoader):
+     from a different location.
+     """
+ 
+-    def __init__(self, loaders: t.Sequence[BaseLoader]) -> None:
++    def __init__(
++        self,
++        loaders: t.Sequence[BaseLoader],
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
++    ) -> None:
++        super().__init__(path_transform=path_transform)
+         self.loaders = loaders
+ 
+     def get_source(
+         self, environment: "Environment", template: str
+     ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
++        resolved_template = self._resolve_template_name(template)
+         for loader in self.loaders:
+             try:
+-                return loader.get_source(environment, template)
++                source, filename, uptodate = loader.get_source(
++                    environment, resolved_template
++                )
++                if uptodate is not None:
++                    return (
++                        source,
++                        filename,
++                        lambda: (
++                            self._resolve_template_name(template) == resolved_template
++                            and uptodate()
++                        ),
++                    )
++                return (
++                    source,
++                    filename,
++                    lambda: self._resolve_template_name(template) == resolved_template,
++                )
+             except TemplateNotFound:
+                 pass
+-        raise TemplateNotFound(template)
++        raise TemplateNotFound(resolved_template)
+ 
+     @internalcode
+     def load(
+@@ -558,12 +670,13 @@ class ChoiceLoader(BaseLoader):
+         name: str,
+         globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+     ) -> "Template":
++        resolved_name = self._resolve_template_name(name)
+         for loader in self.loaders:
+             try:
+-                return loader.load(environment, name, globals)
++                return loader.load(environment, resolved_name, globals)
+             except TemplateNotFound:
+                 pass
+-        raise TemplateNotFound(name)
++        raise TemplateNotFound(resolved_name)
+ 
+     def list_templates(self) -> t.List[str]:
+         found = set()
+@@ -592,8 +705,11 @@ class ModuleLoader(BaseLoader):
+     has_source_access = False
+ 
+     def __init__(
+-        self, path: t.Union[str, os.PathLike, t.Sequence[t.Union[str, os.PathLike]]]
++        self,
++        path: t.Union[str, os.PathLike, t.Sequence[t.Union[str, os.PathLike]]],
++        path_transform: t.Optional[t.Callable[[str], str]] = None,
+     ) -> None:
++        super().__init__(path_transform=path_transform)
+         package_name = f"_jinja2_module_templates_{id(self):x}"
+ 
+         # create a fake module that looks for the templates in the
+@@ -630,7 +746,8 @@ class ModuleLoader(BaseLoader):
+         name: str,
+         globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+     ) -> "Template":
+-        key = self.get_template_key(name)
++        resolved_name = self._resolve_template_name(name)
++        key = self.get_template_key(resolved_name)
+         module = f"{self.package_name}.{key}"
+         mod = getattr(self.module, module, None)
+ 
+@@ -638,7 +755,7 @@ class ModuleLoader(BaseLoader):
+             try:
+                 mod = __import__(module, None, None, ["root"])
+             except ImportError as e:
+-                raise TemplateNotFound(name) from e
++                raise TemplateNotFound(resolved_name) from e
+ 
+             # remove the entry from sys.modules, we only want the attribute
+             # on the module object we have stored on the loader.
+diff --git a/tests/test_loader.py b/tests/test_loader.py
+index b300c8f..296eaf1 100644
+--- a/tests/test_loader.py
++++ b/tests/test_loader.py
+@@ -401,3 +401,128 @@ def test_pep_451_import_hook():
+         assert "test.html" in package_loader.list_templates()
+     finally:
+         sys.meta_path[:] = before
++
++
++def test_path_transform():
++    # 1. Template aliasing via transform
++    def alias_transform(template):
++        aliases = {"home": "index.html", "contact": "contact-us.html"}
++        return aliases.get(template, template)
++
++    loader = loaders.DictLoader({"index.html": "HOME", "contact-us.html": "CONTACT"}, path_transform=alias_transform)
++    env = Environment(loader=loader)
++    assert env.get_template("home").render() == "HOME"
++    assert env.get_template("contact").render() == "CONTACT"
++
++    # TemplateNotFound contains original untransformed name
++    with pytest.raises(TemplateNotFound) as exc_info:
++        env.get_template("missing")
++    assert exc_info.value.name == "missing"
++
++    # 2. Path normalization
++    def normalize_path(template):
++        return template.lstrip("/").replace("\\", "/")
++
++    loader2 = loaders.DictLoader({"sub/test.html": "SUB"}, path_transform=normalize_path)
++    env2 = Environment(loader=loader2)
++    assert env2.get_template(r"/sub\test.html").render() == "SUB"
++
++    # 3. Empty strings handling
++    def default_transform(template):
++        if template == "":
++            return "default.html"
++        return template
++
++    loader3 = loaders.DictLoader({"default.html": "DEFAULT"}, path_transform=default_transform)
++    env3 = Environment(loader=loader3)
++    assert env3.get_template("").render() == "DEFAULT"
++
++    # 4. Exception propagation
++    def broken_transform(template):
++        raise ValueError("transform error")
++
++    loader4 = loaders.DictLoader({"test.html": "OK"}, path_transform=broken_transform)
++    env4 = Environment(loader=loader4)
++    with pytest.raises(ValueError, match="transform error"):
++        env4.get_template("test.html")
++
++    # 5. Across loader types: FileSystemLoader
++    here = Path(__file__).parent.resolve()
++    fs_loader = loaders.FileSystemLoader(
++        here / "res" / "templates",
++        path_transform=lambda p: "test.html" if p == "alias.html" else p,
++    )
++    env_fs = Environment(loader=fs_loader)
++    assert env_fs.get_template("alias.html").render().strip() == "BAR"
++
++    # 6. FunctionLoader
++    fn_loader = loaders.FunctionLoader(
++        {"real.html": "FN"}.get,
++        path_transform=lambda p: "real.html" if p == "virtual.html" else p,
++    )
++    env_fn = Environment(loader=fn_loader)
++    assert env_fn.get_template("virtual.html").render() == "FN"
++
++    # 7. PrefixLoader
++    prefix_loader = loaders.PrefixLoader(
++        {"app": loaders.DictLoader({"index.html": "APP"})},
++        path_transform=lambda p: "app/index.html" if p == "home" else p,
++    )
++    env_prefix = Environment(loader=prefix_loader)
++    assert env_prefix.get_template("home").render() == "APP"
++
++    # 8. ChoiceLoader
++    choice_loader = loaders.ChoiceLoader(
++        [loaders.DictLoader({"real.html": "CHOICE"})],
++        path_transform=lambda p: "real.html" if p == "chosen" else p,
++    )
++    env_choice = Environment(loader=choice_loader)
++    assert env_choice.get_template("chosen").render() == "CHOICE"
++
++
++def test_path_aliasing():
++    loader = loaders.DictLoader({"template.html": "Hello {{ name }}!"})
++    loader.add_alias("main.html", "template.html")
++    loader.add_alias("index.html", "template.html")
++
++    env = Environment(loader=loader)
++    # All three should work identically
++    assert env.get_template("template.html").render(name="World") == "Hello World!"
++    assert env.get_template("main.html").render(name="World") == "Hello World!"
++    assert env.get_template("index.html").render(name="World") == "Hello World!"
++
++    # Alias removal
++    loader.remove_alias("main.html")
++    # Now 'main.html' should raise TemplateNotFound
++    with pytest.raises(TemplateNotFound) as exc_info:
++        env.get_template("main.html")
++    assert exc_info.value.name == "main.html"
++
++    # Error handling: when an alias points to a nonexistent template,
++    # TemplateNotFound should reference target template name, not alias name
++    loader.add_alias("broken.html", "nonexistent.html")
++    with pytest.raises(TemplateNotFound) as exc_info:
++        env.get_template("broken.html")
++    assert exc_info.value.name == "nonexistent.html"
++
++    # Aliases should NOT chain (no recursive resolution)
++    loader.add_alias("step1", "template.html")
++    loader.add_alias("step2", "step1")
++    # step2 -> step1, but step1 is not loaded recursively, so it looks for template named "step1"
++    with pytest.raises(TemplateNotFound) as exc_info:
++        env.get_template("step2")
++    assert exc_info.value.name == "step1"
++
++    # Overwrite alias
++    loader.add_alias("step2", "template.html")
++    assert env.get_template("step2").render(name="World") == "Hello World!"
++
++    # remove_alias is safe to call with nonexistent alias names
++    loader.remove_alias("nonexistent_alias")
++
++    # Works with empty string and special characters
++    loader.add_alias("", "template.html")
++    assert env.get_template("").render(name="World") == "Hello World!"
++    loader.add_alias("@special#key$", "template.html")
++    assert env.get_template("@special#key$").render(name="World") == "Hello World!"
++

@@ -1,0 +1,280 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "dspy_task/task8563/k2/f1-f4",
+    "pool": "dspy_task/task8563",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "agy",
+    "model": "gpt-oss-120b-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793985683.619519
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 10302341,
+      "cached_input": 10001600,
+      "cache_write": 0,
+      "output": 79399,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 21
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 1573.4505920410156,
+    "agent_busy_s": 673.2263906002045,
+    "effective_parallelism": 0.42786624124429784,
+    "container_setup_s": 2.503200054168701,
+    "grading_s": 85.09104323387146,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        1,
+        4
+      ],
+      "started": 1793985686.124326,
+      "ended": 1793987259.505924,
+      "busy_s": 673.2263906002045,
+      "usage": {
+        "input": 10302341,
+        "cached_input": 10001600,
+        "cache_write": 0,
+        "output": 79399,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 21
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "infra_retries": 5,
+      "infra_wait_s": 900.0,
+      "infra_failed": false,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 43,
+        "edit": 10
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 218,
+      "patch_files": [
+        "dspy/adapters/base.py",
+        "dspy/adapters/two_step_adapter.py",
+        "dspy/adapters/types/tool.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793985686.1245792,
+          "ended": 1793985696.270916,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 7213,
+            "cached_input": 128,
+            "cache_write": 0,
+            "output": 63,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "bb971676-c327-4563-917e-54c328450298",
+          "nudge_reason": "infra_retry_in_60s",
+          "final_text_tail": "",
+          "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+        },
+        {
+          "index": 1,
+          "started": 1793985756.278364,
+          "ended": 1793985809.223167,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 319488,
+            "cached_input": 293248,
+            "cache_write": 0,
+            "output": 2871,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "bb971676-c327-4563-917e-54c328450298",
+          "nudge_reason": "infra_retry_in_120s",
+          "final_text_tail": "",
+          "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+        },
+        {
+          "index": 2,
+          "started": 1793985929.234014,
+          "ended": 1793985941.03281,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 345712,
+            "cached_input": 318784,
+            "cache_write": 0,
+            "output": 3033,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "bb971676-c327-4563-917e-54c328450298",
+          "nudge_reason": "infra_retry_in_180s",
+          "final_text_tail": "",
+          "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+        },
+        {
+          "index": 3,
+          "started": 1793986121.040097,
+          "ended": 1793986138.4344268,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 412877,
+            "cached_input": 385088,
+            "cache_write": 0,
+            "output": 3511,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 4
+          },
+          "num_turns": 4,
+          "session_id": "bb971676-c327-4563-917e-54c328450298",
+          "nudge_reason": "infra_retry_in_240s",
+          "final_text_tail": "",
+          "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+        },
+        {
+          "index": 4,
+          "started": 1793986378.441565,
+          "ended": 1793986765.180346,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 3712928,
+            "cached_input": 3620544,
+            "cache_write": 0,
+            "output": 27251,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 5
+          },
+          "num_turns": 5,
+          "session_id": "bb971676-c327-4563-917e-54c328450298",
+          "nudge_reason": "infra_retry_in_300s",
+          "final_text_tail": "",
+          "error": "ERROR: Our servers are experiencing high traffic right now, please try again in a minute. (UNAVAILABLE (code 503): No capacity available for model gpt-oss-120b-medium on the server)"
+        },
+        {
+          "index": 5,
+          "started": 1793987065.187583,
+          "ended": 1793987259.390927,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 5504123,
+            "cached_input": 5383808,
+            "cache_write": 0,
+            "output": 42670,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 6
+          },
+          "num_turns": 6,
+          "session_id": "bb971676-c327-4563-917e-54c328450298",
+          "nudge_reason": null,
+          "final_text_tail": "Implemented flexible parsing and deterministic fingerprinting for `ToolCalls`:\n\n- Added canonicalization helper and fingerprint computation.\n- Updated `ToolCalls.ToolCall` to store read\u2011only `fingerprint` and `id`.\n- Implemented `ToolCalls.validate_input` to normalize varied LM outputs.\n- Enhanced `ToolCalls.from_dict_list` to create fingerprinted tool calls.\n- Updated adapters (`base.py`, `two_step_adapter.py`) to use `validate_input` for alternative formats.\n- Integrated new imports and helper functions.\n\nAll changes are in `dspy/adapters/types/tool.py` and relevant adapter files.\n",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 2,
+        "duration_s": 37.16187906265259,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 2,
+        "duration_s": 3.2557668685913086,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 2,
+        "duration_s": 38.820659160614014,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__dspy_task_task8563_k2_f1-f4__r0/grading/final.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 2,
+        "duration_s": 3.683077812194824,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gpt-oss-120b-agy__dspy_task_task8563_k2_f1-f4__r0/grading/final.f4.log"
+      }
+    }
+  }
+}

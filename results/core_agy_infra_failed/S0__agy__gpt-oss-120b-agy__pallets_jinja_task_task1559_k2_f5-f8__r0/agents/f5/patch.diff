@@ -1,0 +1,89 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..5606195 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -247,6 +247,84 @@ class InternationalizationExtension(Extension):
+ 
+     tags = {"trans"}
+ 
++    # Reserved gettext function names that cannot be used as variable names
++    _reserved_names = set(GETTEXT_FUNCTIONS)
++
++    def _validate_trans_expression(self, name: str, expr: "nodes.Expr", parser: "Parser", lineno: int) -> None:
++        """Validate a single expression used in a trans block.
++
++        Allowed expression types are:
++            - nodes.Const (literal values)
++            - nodes.Name (variable reference)
++            - nodes.Call where the callee is a nodes.Name
++            - nodes.Getattr
++            - nodes.Filter
++            - nodes.Test
++        """
++        allowed = (
++            nodes.Const,
++            nodes.Name,
++            nodes.Call,
++            nodes.Getattr,
++            nodes.Filter,
++            nodes.Test,
++        )
++        if isinstance(expr, nodes.Call):
++            # Ensure the function being called is a simple name, not complex expression
++            if not isinstance(expr.node, nodes.Name):
++                parser.fail(
++                    f"invalid expression for variable '{name}': function call must be a simple name",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++        if not isinstance(expr, allowed):
++            parser.fail(
++                f"invalid expression for variable '{name}': {type(expr).__name__} is not allowed in translation contexts",
++                lineno,
++                exc=TemplateSyntaxError,
++            )
++
++    def _validate_trans_variables(self, variables: dict, parser: "Parser", lineno: int) -> None:
++        """Validate all variables declared or used in a trans block.
++
++        Checks performed:
++            * Variable name must be a valid Python identifier.
++            * Variable name must not conflict with reserved gettext function names.
++            * Each expression must be of an allowed type.
++        """
++        identifier_re = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
++        for name, expr in variables.items():
++            if not identifier_re.match(name):
++                parser.fail(
++                    f"Invalid variable name '{name}' in trans block; must be a valid Python identifier",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            if name in self._reserved_names:
++                parser.fail(
++                    f"Variable name '{name}' in trans block conflicts with translation function name",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            # Validate the expression itself
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def __init__(self, environment: Environment) -> None:
++        super().__init__(environment)
++        environment.globals["_"] = _gettext_alias
++        environment.extend(
++            install_gettext_translations=self._install,
++            install_null_translations=self._install_null,
++            install_gettext_callables=self._install_callables,
++            uninstall_gettext_translations=self._uninstall,
++            extract_translations=self._extract,
++            newstyle_gettext=False,
++        )
++
++    """This extension adds gettext support to Jinja."""
++
++    tags = {"trans"}
++
+     # TODO: the i18n extension is currently reevaluating values in a few
+     # situations.  Take this example:
+     #   {% trans count=something() %}{{ count }} foo{% pluralize

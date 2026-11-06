@@ -1,0 +1,62 @@
+{
+  "agent_id": "resolver_f10",
+  "role": "resolver",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    10
+  ],
+  "started": 1793985098.1445918,
+  "ended": 1793985166.537879,
+  "busy_s": 68.39163708686829,
+  "usage": {
+    "input": 274918,
+    "cached_input": 164456,
+    "cache_write": 0,
+    "output": 801,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 13,
+    "other": 1,
+    "read": 1
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793985098.1448388,
+      "ended": 1793985166.536476,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 274918,
+        "cached_input": 164456,
+        "cache_write": 0,
+        "output": 801,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "14095994-c933-430c-ac54-bffce8ff0e0b",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+    }
+  ],
+  "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+}

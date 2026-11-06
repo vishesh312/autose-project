@@ -1,0 +1,176 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "dspy_task/task8563/k2/f1-f4",
+    "pool": "dspy_task/task8563",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "agy",
+    "model": "gemini-flash-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793979103.783273
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          4
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "4": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 3775130,
+      "cached_input": 3424879,
+      "cache_write": 0,
+      "output": 13089,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 1
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 453.452397108078,
+    "agent_busy_s": 453.26796793937683,
+    "effective_parallelism": 0.9995932777731965,
+    "container_setup_s": 2.7237000465393066,
+    "grading_s": 42.53204607963562,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "agy",
+      "model": "gemini-flash-agy",
+      "feature_ids": [
+        1,
+        4
+      ],
+      "started": 1793979106.50855,
+      "ended": 1793979559.880047,
+      "busy_s": 453.26796793937683,
+      "usage": {
+        "input": 3775130,
+        "cached_input": 3424879,
+        "cache_write": 0,
+        "output": 13089,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 63,
+        "read": 15,
+        "subagent": 3,
+        "edit": 3,
+        "other": 1
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 368,
+      "patch_files": [
+        "dspy/adapters/types/tool.py",
+        "tests/adapters/test_tool.py",
+        "uv.lock"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793979106.508804,
+          "ended": 1793979559.776772,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 3775130,
+            "cached_input": 3424879,
+            "cache_write": 0,
+            "output": 13089,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "553b6023-af49-4dfa-a802-d09c9a5e399f",
+          "nudge_reason": null,
+          "final_text_tail": "s canonical dicts with the `tool_calls` key.\n   - Parses valid JSON strings before normalization, and preserves invalid / non-JSON strings as-is.\n\n2. **Task 2: Deterministic Parse Fingerprinting for `ToolCalls`**\n   - Added `canonicalize_args` to recursively sort dict keys, convert tuples to lists, and strip leading/trailing whitespace on string values without coercing numeric or boolean types.\n   - Added `compute_tool_call_fingerprint` to serialize `{\"name\": name, \"args\": canonical_args}` with `json.dumps(..., sort_keys=True, separators=(\",\", \":\"))` and hash it using SHA-256.\n   - Added `fingerprint: str` (64-char hex) and `id: str` (first 8 hex chars) fields to [`ToolCalls.ToolCall`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yw83omu2/repo/dspy/adapters/types/tool.py#L283), computed once at creation time in `__init__` and enforced as read-only.\n   - Works seamlessly when creating `ToolCalls` via [`ToolCalls.from_dict_list`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yw83omu2/repo/dspy/adapters/types/tool.py#L318) or direct validation.\n\n3. **Testing**\n   - Added unit tests covering all flexible parsing scenarios, input validation returns, stable fingerprinting, whitespace trimming, tuple normalization, and read-only attribute constraints in [tests/adapters/test_tool.py](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-yw83omu2/repo/tests/adapters/test_tool.py). All tests pass.\n",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 45,
+        "tests_failed": 5,
+        "duration_s": 17.03511118888855,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 59,
+        "tests_failed": 0,
+        "duration_s": 4.393033981323242,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 45,
+        "tests_failed": 5,
+        "duration_s": 15.747292041778564,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__dspy_task_task8563_k2_f1-f4__r0/grading/final.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 59,
+        "tests_failed": 0,
+        "duration_s": 4.233309984207153,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S1__agy__gemini-flash-agy__dspy_task_task8563_k2_f1-f4__r0/grading/final.f4.log"
+      }
+    }
+  }
+}

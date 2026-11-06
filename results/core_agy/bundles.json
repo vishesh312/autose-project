@@ -1,21 +1,26 @@
 {
-  "dspy_task/task8563/k2/f1-f4": {
-    "id": "dspy_task/task8563/k2/f1-f4",
-    "pool": "dspy_task/task8563",
-    "image": "akhatua/cooperbench-dspy:task8563",
+  "pallets_jinja_task/task1621/k2/f6-f10": {
+    "id": "pallets_jinja_task/task1621/k2/f6-f10",
+    "pool": "pallets_jinja_task/task1621",
+    "image": "akhatua/cooperbench-pallets-jinja:task1621",
     "k": 2,
     "features": [
-      1,
-      4
+      6,
+      10
     ],
     "gold_files": {
-      "1": [
-        "dspy/adapters/types/tool.py"
+      "6": [
+        "src/jinja2/loaders.py"
       ],
-      "4": [
-        "dspy/adapters/types/tool.py"
+      "10": [
+        "src/jinja2/loaders.py"
       ]
     },
-    "gold_conflict_pairs": []
+    "gold_conflict_pairs": [
+      [
+        6,
+        10
+      ]
+    ]
   }
 }

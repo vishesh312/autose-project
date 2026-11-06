@@ -1,0 +1,79 @@
+{
+  "agent_id": "f6",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gpt-oss-120b-agy",
+  "feature_ids": [
+    6
+  ],
+  "started": 1793978457.4764092,
+  "ended": 1793978636.7726111,
+  "busy_s": 179.19473505020142,
+  "usage": {
+    "input": 839296,
+    "cached_input": 768000,
+    "cache_write": 0,
+    "output": 20772,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 3
+  },
+  "cost_list": null,
+  "nudges": 1,
+  "timed_out": false,
+  "returncode": 3,
+  "tool_calls": {
+    "read": 10,
+    "edit": 11
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793978457.476696,
+      "ended": 1793978522.438074,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 232797,
+        "cached_input": 203584,
+        "cache_write": 0,
+        "output": 4832,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "6cba9f59-7364-4ce4-adce-a73c125150b1",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": "ERROR"
+    },
+    {
+      "index": 1,
+      "started": 1793978522.485213,
+      "ended": 1793978636.71857,
+      "returncode": 3,
+      "timed_out": false,
+      "usage": {
+        "input": 606499,
+        "cached_input": 564416,
+        "cache_write": 0,
+        "output": 15940,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 2
+      },
+      "num_turns": 2,
+      "session_id": "6cba9f59-7364-4ce4-adce-a73c125150b1",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "ERROR"
+    }
+  ],
+  "error": "ERROR"
+}

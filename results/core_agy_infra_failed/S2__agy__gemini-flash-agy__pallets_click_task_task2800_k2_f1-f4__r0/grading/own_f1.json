@@ -1,0 +1,11 @@
+{
+  "1": {
+    "fid": 1,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 67,
+    "tests_failed": 1,
+    "duration_s": 1.4192728996276855,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_f1.f1.log"
+  }
+}

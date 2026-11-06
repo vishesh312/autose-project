@@ -1,0 +1,9384 @@
+{
+ "repo": "swesmith/oauthlib__oauthlib.1fd52536",
+ "base_sha": "614b1348ef893b4fa90e76f56df44ee64f5d0222",
+ "k": 4,
+ "seed": 0,
+ "summary": [
+  {
+   "level": "L0 different files",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 0.0,
+   "same_func": 0.0,
+   "near": 0.0,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L1 same file, different functions",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 1.0,
+   "same_func": 0.0,
+   "near": 0.0,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L2a two bugs in one function",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 0.16666666666666666,
+   "same_func": 0.16666666666666666,
+   "near": 0.0,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L2b all k bugs in one function",
+   "bundles": 12,
+   "valid": 12,
+   "same_file": 1.0,
+   "same_func": 1.0,
+   "near": 0.013888888888888888,
+   "conflict": 0.0,
+   "restored": 1.0
+  },
+  {
+   "level": "L3 two bugs on adjacent lines",
+   "bundles": 10,
+   "valid": 10,
+   "same_file": 0.16666666666666666,
+   "same_func": 0.16666666666666666,
+   "near": 0.16666666666666666,
+   "conflict": 0.0,
+   "restored": 1.0
+  }
+ ],
+ "bundles": {
+  "L0 different files": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__fujllcja",
+     "oauthlib__oauthlib.1fd52536.func_basic__yxkg1g6o",
+     "oauthlib__oauthlib.1fd52536.func_basic__yetyypmw",
+     "oauthlib__oauthlib.1fd52536.func_basic__q553vi4s"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "te__fujllcja",
+      "b": "ic__yxkg1g6o",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        167,
+        173
+       ]
+      ],
+      "spans_b": [
+       [
+        82,
+        83
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__fujllcja",
+      "b": "ic__yetyypmw",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        167,
+        173
+       ]
+      ],
+      "spans_b": [
+       [
+        410,
+        410
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__fujllcja",
+      "b": "ic__q553vi4s",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        167,
+        173
+       ]
+      ],
+      "spans_b": [
+       [
+        19,
+        21
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__yxkg1g6o",
+      "b": "ic__yetyypmw",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        82,
+        83
+       ]
+      ],
+      "spans_b": [
+       [
+        410,
+        410
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__yxkg1g6o",
+      "b": "ic__q553vi4s",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        82,
+        83
+       ]
+      ],
+      "spans_b": [
+       [
+        19,
+        21
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__yetyypmw",
+      "b": "ic__q553vi4s",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        410,
+        410
+       ]
+      ],
+      "spans_b": [
+       [
+        19,
+        21
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__r08ui6za",
+     "oauthlib__oauthlib.1fd52536.func_basic__kvzcwsza",
+     "oauthlib__oauthlib.1fd52536.func_basic__nqrt9um5",
+     "oauthlib__oauthlib.1fd52536.func_basic__4yk7arbb"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__r08ui6za",
+      "b": "ic__kvzcwsza",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        225,
+        226
+       ]
+      ],
+      "spans_b": [
+       [
+        65,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__r08ui6za",
+      "b": "ic__nqrt9um5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        225,
+        226
+       ]
+      ],
+      "spans_b": [
+       [
+        44,
+        45
+       ],
+       [
+        48,
+        59
+       ],
+       [
+        62,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__r08ui6za",
+      "b": "ic__4yk7arbb",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        225,
+        226
+       ]
+      ],
+      "spans_b": [
+       [
+        53,
+        54
+       ],
+       [
+        87,
+        88
+       ],
+       [
+        91,
+        97
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__kvzcwsza",
+      "b": "ic__nqrt9um5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        65,
+        67
+       ]
+      ],
+      "spans_b": [
+       [
+        44,
+        45
+       ],
+       [
+        48,
+        59
+       ],
+       [
+        62,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__kvzcwsza",
+      "b": "ic__4yk7arbb",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        65,
+        67
+       ]
+      ],
+      "spans_b": [
+       [
+        53,
+        54
+       ],
+       [
+        87,
+        88
+       ],
+       [
+        91,
+        97
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nqrt9um5",
+      "b": "ic__4yk7arbb",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        44,
+        45
+       ],
+       [
+        48,
+        59
+       ],
+       [
+        62,
+        67
+       ]
+      ],
+      "spans_b": [
+       [
+        53,
+        54
+       ],
+       [
+        87,
+        88
+       ],
+       [
+        91,
+        97
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__15p7x87y",
+     "oauthlib__oauthlib.1fd52536.func_basic__ub4ntmqq",
+     "oauthlib__oauthlib.1fd52536.func_basic__5wccico5",
+     "oauthlib__oauthlib.1fd52536.func_basic__gsmd9bzy"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__15p7x87y",
+      "b": "ic__ub4ntmqq",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "spans_b": [
+       [
+        37,
+        40
+       ],
+       [
+        46,
+        47
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__15p7x87y",
+      "b": "ic__5wccico5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "spans_b": [
+       [
+        100,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__15p7x87y",
+      "b": "ic__gsmd9bzy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "spans_b": [
+       [
+        70,
+        75
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__ub4ntmqq",
+      "b": "ic__5wccico5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        37,
+        40
+       ],
+       [
+        46,
+        47
+       ]
+      ],
+      "spans_b": [
+       [
+        100,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__ub4ntmqq",
+      "b": "ic__gsmd9bzy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        37,
+        40
+       ],
+       [
+        46,
+        47
+       ]
+      ],
+      "spans_b": [
+       [
+        70,
+        75
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__5wccico5",
+      "b": "ic__gsmd9bzy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        100,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        70,
+        75
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__o8xzkevh",
+     "oauthlib__oauthlib.1fd52536.func_basic__np3hmysy",
+     "oauthlib__oauthlib.1fd52536.func_basic__pzjwtuyc",
+     "oauthlib__oauthlib.1fd52536.func_basic__r5zihvvz"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__o8xzkevh",
+      "b": "ic__np3hmysy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        189,
+        190
+       ]
+      ],
+      "spans_b": [
+       [
+        118,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__o8xzkevh",
+      "b": "ic__pzjwtuyc",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        189,
+        190
+       ]
+      ],
+      "spans_b": [
+       [
+        246,
+        247
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__o8xzkevh",
+      "b": "ic__r5zihvvz",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        189,
+        190
+       ]
+      ],
+      "spans_b": [
+       [
+        34,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__np3hmysy",
+      "b": "ic__pzjwtuyc",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        118,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        246,
+        247
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__np3hmysy",
+      "b": "ic__r5zihvvz",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        118,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        34,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__pzjwtuyc",
+      "b": "ic__r5zihvvz",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        246,
+        247
+       ]
+      ],
+      "spans_b": [
+       [
+        34,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__ub4ntmqq",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__ydqbvmqj",
+     "oauthlib__oauthlib.1fd52536.func_basic__4yk7arbb",
+     "oauthlib__oauthlib.1fd52536.func_basic__hif1vy3a"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__ub4ntmqq",
+      "b": "te__ydqbvmqj",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        37,
+        40
+       ],
+       [
+        46,
+        47
+       ]
+      ],
+      "spans_b": [
+       [
+        91,
+        123
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__ub4ntmqq",
+      "b": "ic__4yk7arbb",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        37,
+        40
+       ],
+       [
+        46,
+        47
+       ]
+      ],
+      "spans_b": [
+       [
+        53,
+        54
+       ],
+       [
+        87,
+        88
+       ],
+       [
+        91,
+        97
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__ub4ntmqq",
+      "b": "ic__hif1vy3a",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        37,
+        40
+       ],
+       [
+        46,
+        47
+       ]
+      ],
+      "spans_b": [
+       [
+        27,
+        28
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__ydqbvmqj",
+      "b": "ic__4yk7arbb",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        91,
+        123
+       ]
+      ],
+      "spans_b": [
+       [
+        53,
+        54
+       ],
+       [
+        87,
+        88
+       ],
+       [
+        91,
+        97
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__ydqbvmqj",
+      "b": "ic__hif1vy3a",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        91,
+        123
+       ]
+      ],
+      "spans_b": [
+       [
+        27,
+        28
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__4yk7arbb",
+      "b": "ic__hif1vy3a",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        53,
+        54
+       ],
+       [
+        87,
+        88
+       ],
+       [
+        91,
+        97
+       ]
+      ],
+      "spans_b": [
+       [
+        27,
+        28
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__r5zihvvz",
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q",
+     "oauthlib__oauthlib.1fd52536.func_basic__lpglyr7k",
+     "oauthlib__oauthlib.1fd52536.func_basic__zasev90x"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__r5zihvvz",
+      "b": "ic__06jdbp8q",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        34,
+        35
+       ]
+      ],
+      "spans_b": [
+       [
+        488,
+        489
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__r5zihvvz",
+      "b": "ic__lpglyr7k",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        34,
+        35
+       ]
+      ],
+      "spans_b": [
+       [
+        446,
+        449
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__r5zihvvz",
+      "b": "ic__zasev90x",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        34,
+        35
+       ]
+      ],
+      "spans_b": [
+       [
+        20,
+        22
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__lpglyr7k",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        446,
+        449
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__zasev90x",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        20,
+        22
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__lpglyr7k",
+      "b": "ic__zasev90x",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        446,
+        449
+       ]
+      ],
+      "spans_b": [
+       [
+        20,
+        22
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__8at4zxay",
+     "oauthlib__oauthlib.1fd52536.func_basic__pzneyhuv",
+     "oauthlib__oauthlib.1fd52536.func_basic__zasev90x",
+     "oauthlib__oauthlib.1fd52536.func_basic__lly4dlq9"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__8at4zxay",
+      "b": "ic__pzneyhuv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        43,
+        46
+       ]
+      ],
+      "spans_b": [
+       [
+        24,
+        25
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__8at4zxay",
+      "b": "ic__zasev90x",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        43,
+        46
+       ]
+      ],
+      "spans_b": [
+       [
+        20,
+        22
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__8at4zxay",
+      "b": "ic__lly4dlq9",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        43,
+        46
+       ]
+      ],
+      "spans_b": [
+       [
+        34,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__pzneyhuv",
+      "b": "ic__zasev90x",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        24,
+        25
+       ]
+      ],
+      "spans_b": [
+       [
+        20,
+        22
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__pzneyhuv",
+      "b": "ic__lly4dlq9",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        24,
+        25
+       ]
+      ],
+      "spans_b": [
+       [
+        34,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__zasev90x",
+      "b": "ic__lly4dlq9",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        20,
+        22
+       ]
+      ],
+      "spans_b": [
+       [
+        34,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__7nvgsns6",
+     "oauthlib__oauthlib.1fd52536.func_basic__gsmd9bzy",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__bx12p9xf",
+     "oauthlib__oauthlib.1fd52536.func_basic__52hxppu4"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__7nvgsns6",
+      "b": "ic__gsmd9bzy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        18,
+        20
+       ]
+      ],
+      "spans_b": [
+       [
+        70,
+        75
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__7nvgsns6",
+      "b": "te__bx12p9xf",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        18,
+        20
+       ]
+      ],
+      "spans_b": [
+       [
+        44,
+        63
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__7nvgsns6",
+      "b": "ic__52hxppu4",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        18,
+        20
+       ]
+      ],
+      "spans_b": [
+       [
+        157,
+        158
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__gsmd9bzy",
+      "b": "te__bx12p9xf",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        70,
+        75
+       ]
+      ],
+      "spans_b": [
+       [
+        44,
+        63
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__gsmd9bzy",
+      "b": "ic__52hxppu4",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        70,
+        75
+       ]
+      ],
+      "spans_b": [
+       [
+        157,
+        158
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__bx12p9xf",
+      "b": "ic__52hxppu4",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        44,
+        63
+       ]
+      ],
+      "spans_b": [
+       [
+        157,
+        158
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__7ba6xqj2",
+     "oauthlib__oauthlib.1fd52536.func_basic__r5zihvvz",
+     "oauthlib__oauthlib.1fd52536.func_basic__j3ku5eir",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uryp713l"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__7ba6xqj2",
+      "b": "ic__r5zihvvz",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        91,
+        96
+       ]
+      ],
+      "spans_b": [
+       [
+        34,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__7ba6xqj2",
+      "b": "ic__j3ku5eir",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        91,
+        96
+       ]
+      ],
+      "spans_b": [
+       [
+        48,
+        97
+       ],
+       [
+        99,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__7ba6xqj2",
+      "b": "te__uryp713l",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        91,
+        96
+       ]
+      ],
+      "spans_b": [
+       [
+        389,
+        400
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__r5zihvvz",
+      "b": "ic__j3ku5eir",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        34,
+        35
+       ]
+      ],
+      "spans_b": [
+       [
+        48,
+        97
+       ],
+       [
+        99,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__r5zihvvz",
+      "b": "te__uryp713l",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        34,
+        35
+       ]
+      ],
+      "spans_b": [
+       [
+        389,
+        400
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__j3ku5eir",
+      "b": "te__uryp713l",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        48,
+        97
+       ],
+       [
+        99,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        389,
+        400
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__hif1vy3a",
+     "oauthlib__oauthlib.1fd52536.func_basic__wiimx18e",
+     "oauthlib__oauthlib.1fd52536.func_basic__zrajljoi",
+     "oauthlib__oauthlib.1fd52536.func_basic__w9lyza4e"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__hif1vy3a",
+      "b": "ic__wiimx18e",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        27,
+        28
+       ]
+      ],
+      "spans_b": [
+       [
+        132,
+        134
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__hif1vy3a",
+      "b": "ic__zrajljoi",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        27,
+        28
+       ]
+      ],
+      "spans_b": [
+       [
+        40,
+        42
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__hif1vy3a",
+      "b": "ic__w9lyza4e",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        27,
+        28
+       ]
+      ],
+      "spans_b": [
+       [
+        45,
+        58
+       ],
+       [
+        60,
+        61
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__wiimx18e",
+      "b": "ic__zrajljoi",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        132,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        40,
+        42
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__wiimx18e",
+      "b": "ic__w9lyza4e",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        132,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        45,
+        58
+       ],
+       [
+        60,
+        61
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__zrajljoi",
+      "b": "ic__w9lyza4e",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        40,
+        42
+       ]
+      ],
+      "spans_b": [
+       [
+        45,
+        58
+       ],
+       [
+        60,
+        61
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__olaxlnuq",
+     "oauthlib__oauthlib.1fd52536.func_basic__nzddo56b",
+     "oauthlib__oauthlib.1fd52536.func_basic__71kwv90y",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__oz0hojtv"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__olaxlnuq",
+      "b": "ic__nzddo56b",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        46,
+        49
+       ]
+      ],
+      "spans_b": [
+       [
+        20,
+        21
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__olaxlnuq",
+      "b": "ic__71kwv90y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        46,
+        49
+       ]
+      ],
+      "spans_b": [
+       [
+        220,
+        223
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__olaxlnuq",
+      "b": "cs__oz0hojtv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        46,
+        49
+       ]
+      ],
+      "spans_b": [
+       [
+        69,
+        113
+       ],
+       [
+        198,
+        199
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nzddo56b",
+      "b": "ic__71kwv90y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        20,
+        21
+       ]
+      ],
+      "spans_b": [
+       [
+        220,
+        223
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nzddo56b",
+      "b": "cs__oz0hojtv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        20,
+        21
+       ]
+      ],
+      "spans_b": [
+       [
+        69,
+        113
+       ],
+       [
+        198,
+        199
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__71kwv90y",
+      "b": "cs__oz0hojtv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        220,
+        223
+       ]
+      ],
+      "spans_b": [
+       [
+        69,
+        113
+       ],
+       [
+        198,
+        199
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__zt6ro2hv",
+     "oauthlib__oauthlib.1fd52536.func_basic__66l82m5l",
+     "oauthlib__oauthlib.1fd52536.func_basic__52w4ldd8",
+     "oauthlib__oauthlib.1fd52536.func_basic__o8xzkevh"
+    ],
+    "same_file_frac": 0.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__zt6ro2hv",
+      "b": "ic__66l82m5l",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        208,
+        209
+       ]
+      ],
+      "spans_b": [
+       [
+        44,
+        44
+       ],
+       [
+        46,
+        50
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__zt6ro2hv",
+      "b": "ic__52w4ldd8",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        208,
+        209
+       ]
+      ],
+      "spans_b": [
+       [
+        122,
+        124
+       ],
+       [
+        126,
+        127
+       ],
+       [
+        129,
+        133
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__zt6ro2hv",
+      "b": "ic__o8xzkevh",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        208,
+        209
+       ]
+      ],
+      "spans_b": [
+       [
+        189,
+        190
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__66l82m5l",
+      "b": "ic__52w4ldd8",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        44,
+        44
+       ],
+       [
+        46,
+        50
+       ]
+      ],
+      "spans_b": [
+       [
+        122,
+        124
+       ],
+       [
+        126,
+        127
+       ],
+       [
+        129,
+        133
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__66l82m5l",
+      "b": "ic__o8xzkevh",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        44,
+        44
+       ],
+       [
+        46,
+        50
+       ]
+      ],
+      "spans_b": [
+       [
+        189,
+        190
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__52w4ldd8",
+      "b": "ic__o8xzkevh",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        122,
+        124
+       ],
+       [
+        126,
+        127
+       ],
+       [
+        129,
+        133
+       ]
+      ],
+      "spans_b": [
+       [
+        189,
+        190
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   }
+  ],
+  "L1 same file, different functions": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__os9e93va",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__0mg80en1"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__os9e93va",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 639,
+      "spans_a": [
+       [
+        742,
+        752
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__os9e93va",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 283,
+      "spans_a": [
+       [
+        742,
+        752
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__os9e93va",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 161,
+      "spans_a": [
+       [
+        742,
+        752
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 462,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 106,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__0mg80en1",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 245,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 106,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__0mg80en1",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 462,
+      "spans_a": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__3w1yor1b",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__3w1yor1b",
+      "same_file": true,
+      "gap": 437,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        540,
+        542
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__3w1yor1b",
+      "same_file": true,
+      "gap": 81,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        540,
+        542
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__3w1yor1b",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 220,
+      "spans_a": [
+       [
+        540,
+        542
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__0mg80en1",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 106,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__0mg80en1",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 462,
+      "spans_a": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__0mg80en1",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 245,
+      "spans_a": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__xbl5ukuq",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__xbl5ukuq",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 461,
+      "spans_a": [
+       [
+        781,
+        782
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__xbl5ukuq",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 678,
+      "spans_a": [
+       [
+        781,
+        782
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__xbl5ukuq",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 322,
+      "spans_a": [
+       [
+        781,
+        782
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__wrj0yqlc",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__wrj0yqlc",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 88,
+      "spans_a": [
+       [
+        547,
+        549
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__wrj0yqlc",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 227,
+      "spans_a": [
+       [
+        547,
+        549
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__wrj0yqlc",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 444,
+      "spans_a": [
+       [
+        547,
+        549
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__ul3pse4t",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "te__ul3pse4t",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 461,
+      "spans_a": [
+       [
+        564,
+        583
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "te__ul3pse4t",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 244,
+      "spans_a": [
+       [
+        564,
+        583
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "te__ul3pse4t",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 105,
+      "spans_a": [
+       [
+        564,
+        583
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__68z2yj4h",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__68z2yj4h",
+      "same_file": true,
+      "gap": 6,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        465,
+        467
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__68z2yj4h",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 362,
+      "spans_a": [
+       [
+        465,
+        467
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__68z2yj4h",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 145,
+      "spans_a": [
+       [
+        465,
+        467
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__yeic1urt",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__yeic1urt",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 652,
+      "spans_a": [
+       [
+        755,
+        756
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__yeic1urt",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 435,
+      "spans_a": [
+       [
+        755,
+        756
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__yeic1urt",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 296,
+      "spans_a": [
+       [
+        755,
+        756
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9",
+     "oauthlib__oauthlib.1fd52536.func_basic__z9ez9yvn"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__z9ez9yvn",
+      "same_file": true,
+      "gap": 332,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        791,
+        792
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z9ez9yvn",
+      "same_file": true,
+      "gap": 688,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        791,
+        792
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__z9ez9yvn",
+      "same_file": true,
+      "gap": 471,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        791,
+        792
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__0mg80en1",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__0mg80en1",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 106,
+      "spans_a": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__0mg80en1",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 462,
+      "spans_a": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__0mg80en1",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 245,
+      "spans_a": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__w6xplaas",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__w6xplaas",
+     "oauthlib__oauthlib.1fd52536.func_basic__z3jmlcj9",
+     "oauthlib__oauthlib.1fd52536.func_basic__cyi7y43n",
+     "oauthlib__oauthlib.1fd52536.func_basic__0mg80en1"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 0.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__z3jmlcj9",
+      "same_file": true,
+      "gap": 156,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 352,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__w6xplaas",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 462,
+      "spans_a": [
+       [
+        59,
+        83
+       ],
+       [
+        86,
+        93
+       ],
+       [
+        96,
+        102
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__cyi7y43n",
+      "same_file": true,
+      "gap": 135,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        455,
+        458
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z3jmlcj9",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 245,
+      "spans_a": [
+       [
+        259,
+        260
+       ],
+       [
+        263,
+        274
+       ],
+       [
+        278,
+        283
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__cyi7y43n",
+      "b": "ic__0mg80en1",
+      "same_file": true,
+      "gap": 106,
+      "spans_a": [
+       [
+        455,
+        458
+       ]
+      ],
+      "spans_b": [
+       [
+        565,
+        565
+       ],
+       [
+        568,
+        570
+       ],
+       [
+        573,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   }
+  ],
+  "L2a two bugs in one function": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q",
+     "oauthlib__oauthlib.1fd52536.func_basic__u45u1zuk",
+     "oauthlib__oauthlib.1fd52536.func_basic__15p7x87y",
+     "oauthlib__oauthlib.1fd52536.func_basic__y6se9162"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__u45u1zuk",
+      "same_file": true,
+      "gap": 89,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        579,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__15p7x87y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__y6se9162",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        71,
+        72
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__u45u1zuk",
+      "b": "ic__15p7x87y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        579,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__u45u1zuk",
+      "b": "ic__y6se9162",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        579,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        71,
+        72
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__15p7x87y",
+      "b": "ic__y6se9162",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "spans_b": [
+       [
+        71,
+        72
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__kw860ayc",
+     "oauthlib__oauthlib.1fd52536.func_basic__5sfxti61",
+     "oauthlib__oauthlib.1fd52536.func_basic__q553vi4s",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__cthm4php"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__kw860ayc",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 214,
+      "spans_a": [
+       [
+        365,
+        366
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__kw860ayc",
+      "b": "ic__q553vi4s",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        365,
+        366
+       ]
+      ],
+      "spans_b": [
+       [
+        19,
+        21
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__kw860ayc",
+      "b": "cs__cthm4php",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        365,
+        366
+       ]
+      ],
+      "spans_b": [
+       [
+        32,
+        63
+       ],
+       [
+        189,
+        190
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__q553vi4s",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        19,
+        21
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__5sfxti61",
+      "b": "cs__cthm4php",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        32,
+        63
+       ],
+       [
+        189,
+        190
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__q553vi4s",
+      "b": "cs__cthm4php",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        19,
+        21
+       ]
+      ],
+      "spans_b": [
+       [
+        32,
+        63
+       ],
+       [
+        189,
+        190
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__mh30x7ht",
+     "oauthlib__oauthlib.1fd52536.func_basic__rp8lzx3m",
+     "oauthlib__oauthlib.1fd52536.func_basic__x8fawxja",
+     "oauthlib__oauthlib.1fd52536.func_basic__on8j56e5"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__mh30x7ht",
+      "b": "ic__rp8lzx3m",
+      "same_file": true,
+      "gap": 465,
+      "spans_a": [
+       [
+        506,
+        507
+       ]
+      ],
+      "spans_b": [
+       [
+        39,
+        40
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__mh30x7ht",
+      "b": "ic__x8fawxja",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        506,
+        507
+       ]
+      ],
+      "spans_b": [
+       [
+        25,
+        26
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__mh30x7ht",
+      "b": "ic__on8j56e5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        506,
+        507
+       ]
+      ],
+      "spans_b": [
+       [
+        46,
+        48
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__rp8lzx3m",
+      "b": "ic__x8fawxja",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        39,
+        40
+       ]
+      ],
+      "spans_b": [
+       [
+        25,
+        26
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__rp8lzx3m",
+      "b": "ic__on8j56e5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        39,
+        40
+       ]
+      ],
+      "spans_b": [
+       [
+        46,
+        48
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__x8fawxja",
+      "b": "ic__on8j56e5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        25,
+        26
+       ]
+      ],
+      "spans_b": [
+       [
+        46,
+        48
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__rxkupk6s",
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.func_basic__nidnzfay",
+     "oauthlib__oauthlib.1fd52536.func_basic__15p7x87y"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 249,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__nidnzfay",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        104,
+        106
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__15p7x87y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__nidnzfay",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        104,
+        106
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__15p7x87y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nidnzfay",
+      "b": "ic__15p7x87y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        104,
+        106
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__nong5iwt",
+     "oauthlib__oauthlib.1fd52536.func_basic__8d0q2u39",
+     "oauthlib__oauthlib.1fd52536.func_basic__v71k54mj",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__47z41ybp"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__8d0q2u39",
+      "same_file": true,
+      "gap": 169,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        133,
+        134
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__v71k54mj",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        75,
+        78
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nong5iwt",
+      "b": "te__47z41ybp",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        23,
+        29
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__8d0q2u39",
+      "b": "ic__v71k54mj",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        75,
+        78
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__8d0q2u39",
+      "b": "te__47z41ybp",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        23,
+        29
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__v71k54mj",
+      "b": "te__47z41ybp",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        75,
+        78
+       ]
+      ],
+      "spans_b": [
+       [
+        23,
+        29
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__rxkupk6s",
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__b61bpmd5",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_base__j4094o24"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 249,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "te__b61bpmd5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        60,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "se__j4094o24",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        22,
+        23
+       ],
+       [
+        231,
+        232
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "te__b61bpmd5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        60,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "se__j4094o24",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        22,
+        23
+       ],
+       [
+        231,
+        232
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__b61bpmd5",
+      "b": "se__j4094o24",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        60,
+        67
+       ]
+      ],
+      "spans_b": [
+       [
+        22,
+        23
+       ],
+       [
+        231,
+        232
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.func_basic__45phn4gb",
+     "oauthlib__oauthlib.1fd52536.func_basic__3w1y9vv8",
+     "oauthlib__oauthlib.1fd52536.func_basic__m3uxnqi6"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__45phn4gb",
+      "same_file": true,
+      "gap": 284,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__3w1y9vv8",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        164,
+        165
+       ],
+       [
+        169,
+        176
+       ],
+       [
+        179,
+        181
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__m3uxnqi6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        65,
+        68
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__45phn4gb",
+      "b": "ic__3w1y9vv8",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        470,
+        471
+       ]
+      ],
+      "spans_b": [
+       [
+        164,
+        165
+       ],
+       [
+        169,
+        176
+       ],
+       [
+        179,
+        181
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__45phn4gb",
+      "b": "ic__m3uxnqi6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        470,
+        471
+       ]
+      ],
+      "spans_b": [
+       [
+        65,
+        68
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__3w1y9vv8",
+      "b": "ic__m3uxnqi6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        164,
+        165
+       ],
+       [
+        169,
+        176
+       ],
+       [
+        179,
+        181
+       ]
+      ],
+      "spans_b": [
+       [
+        65,
+        68
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__8d0q2u39",
+     "oauthlib__oauthlib.1fd52536.func_basic__u45u1zuk",
+     "oauthlib__oauthlib.1fd52536.func_basic__gsmd9bzy",
+     "oauthlib__oauthlib.1fd52536.func_basic__f11gwu5g"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__8d0q2u39",
+      "b": "ic__u45u1zuk",
+      "same_file": true,
+      "gap": 444,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        579,
+        580
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__8d0q2u39",
+      "b": "ic__gsmd9bzy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        70,
+        75
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__8d0q2u39",
+      "b": "ic__f11gwu5g",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        122
+       ],
+       [
+        125,
+        126
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__u45u1zuk",
+      "b": "ic__gsmd9bzy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        579,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        70,
+        75
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__u45u1zuk",
+      "b": "ic__f11gwu5g",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        579,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        122
+       ],
+       [
+        125,
+        126
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__gsmd9bzy",
+      "b": "ic__f11gwu5g",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        70,
+        75
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        122
+       ],
+       [
+        125,
+        126
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__uqy2evrq",
+     "oauthlib__oauthlib.1fd52536.func_basic__nong5iwt",
+     "oauthlib__oauthlib.1fd52536.func_basic__7f475fwz",
+     "oauthlib__oauthlib.1fd52536.func_basic__zt6ro2hv"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__uqy2evrq",
+      "b": "ic__nong5iwt",
+      "same_file": true,
+      "gap": 183,
+      "spans_a": [
+       [
+        119,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        304,
+        305
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__uqy2evrq",
+      "b": "ic__7f475fwz",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        119,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        66,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__uqy2evrq",
+      "b": "ic__zt6ro2hv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        119,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        208,
+        209
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__7f475fwz",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        66,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__zt6ro2hv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        208,
+        209
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__7f475fwz",
+      "b": "ic__zt6ro2hv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        66,
+        67
+       ]
+      ],
+      "spans_b": [
+       [
+        208,
+        209
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.func_basic__fjiq6ubh",
+     "oauthlib__oauthlib.1fd52536.func_basic__jvieyr1j",
+     "oauthlib__oauthlib.1fd52536.func_basic__mrux3wgq"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__fjiq6ubh",
+      "same_file": true,
+      "gap": 355,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        541,
+        542
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__jvieyr1j",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        57,
+        61
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__mrux3wgq",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        58,
+        58
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__fjiq6ubh",
+      "b": "ic__jvieyr1j",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        541,
+        542
+       ]
+      ],
+      "spans_b": [
+       [
+        57,
+        61
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__fjiq6ubh",
+      "b": "ic__mrux3wgq",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        541,
+        542
+       ]
+      ],
+      "spans_b": [
+       [
+        58,
+        58
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__jvieyr1j",
+      "b": "ic__mrux3wgq",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        57,
+        61
+       ]
+      ],
+      "spans_b": [
+       [
+        58,
+        58
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__5bwzrrp3",
+     "oauthlib__oauthlib.1fd52536.func_basic__os9e93va",
+     "oauthlib__oauthlib.1fd52536.func_basic__8at4zxay",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__fujllcja"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__5bwzrrp3",
+      "b": "ic__os9e93va",
+      "same_file": true,
+      "gap": 233,
+      "spans_a": [
+       [
+        506,
+        508
+       ]
+      ],
+      "spans_b": [
+       [
+        742,
+        752
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__5bwzrrp3",
+      "b": "ic__8at4zxay",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        506,
+        508
+       ]
+      ],
+      "spans_b": [
+       [
+        43,
+        46
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__5bwzrrp3",
+      "b": "te__fujllcja",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        506,
+        508
+       ]
+      ],
+      "spans_b": [
+       [
+        167,
+        173
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__os9e93va",
+      "b": "ic__8at4zxay",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        742,
+        752
+       ]
+      ],
+      "spans_b": [
+       [
+        43,
+        46
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__os9e93va",
+      "b": "te__fujllcja",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        742,
+        752
+       ]
+      ],
+      "spans_b": [
+       [
+        167,
+        173
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__8at4zxay",
+      "b": "te__fujllcja",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        43,
+        46
+       ]
+      ],
+      "spans_b": [
+       [
+        167,
+        173
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__yeic1urt",
+     "oauthlib__oauthlib.1fd52536.func_basic__xbl5ukuq",
+     "oauthlib__oauthlib.1fd52536.func_basic__pzjwtuyc",
+     "oauthlib__oauthlib.1fd52536.func_basic__on8j56e5"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__yeic1urt",
+      "b": "ic__xbl5ukuq",
+      "same_file": true,
+      "gap": 24,
+      "spans_a": [
+       [
+        755,
+        756
+       ]
+      ],
+      "spans_b": [
+       [
+        781,
+        782
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__yeic1urt",
+      "b": "ic__pzjwtuyc",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        755,
+        756
+       ]
+      ],
+      "spans_b": [
+       [
+        246,
+        247
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__yeic1urt",
+      "b": "ic__on8j56e5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        755,
+        756
+       ]
+      ],
+      "spans_b": [
+       [
+        46,
+        48
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__xbl5ukuq",
+      "b": "ic__pzjwtuyc",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        781,
+        782
+       ]
+      ],
+      "spans_b": [
+       [
+        246,
+        247
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__xbl5ukuq",
+      "b": "ic__on8j56e5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        781,
+        782
+       ]
+      ],
+      "spans_b": [
+       [
+        46,
+        48
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__pzjwtuyc",
+      "b": "ic__on8j56e5",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        246,
+        247
+       ]
+      ],
+      "spans_b": [
+       [
+        46,
+        48
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   }
+  ],
+  "L2b all k bugs in one function": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q",
+     "oauthlib__oauthlib.1fd52536.func_basic__rxkupk6s",
+     "oauthlib__oauthlib.1fd52536.func_basic__nong5iwt",
+     "oauthlib__oauthlib.1fd52536.func_basic__fjiq6ubh"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__rxkupk6s",
+      "same_file": true,
+      "gap": 51,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        435,
+        436
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__nong5iwt",
+      "same_file": true,
+      "gap": 182,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        304,
+        305
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__fjiq6ubh",
+      "same_file": true,
+      "gap": 51,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        541,
+        542
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__nong5iwt",
+      "same_file": true,
+      "gap": 129,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        304,
+        305
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__fjiq6ubh",
+      "same_file": true,
+      "gap": 104,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        541,
+        542
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__fjiq6ubh",
+      "same_file": true,
+      "gap": 235,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        541,
+        542
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__nong5iwt",
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q",
+     "oauthlib__oauthlib.1fd52536.func_basic__50tgnt0s",
+     "oauthlib__oauthlib.1fd52536.func_basic__uqy2evrq"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__06jdbp8q",
+      "same_file": true,
+      "gap": 182,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        488,
+        489
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__50tgnt0s",
+      "same_file": true,
+      "gap": 111,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        417,
+        418
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__nong5iwt",
+      "b": "ic__uqy2evrq",
+      "same_file": true,
+      "gap": 183,
+      "spans_a": [
+       [
+        304,
+        305
+       ]
+      ],
+      "spans_b": [
+       [
+        119,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__50tgnt0s",
+      "same_file": true,
+      "gap": 69,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        417,
+        418
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__uqy2evrq",
+      "same_file": true,
+      "gap": 367,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        119,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__uqy2evrq",
+      "same_file": true,
+      "gap": 296,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        119,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q",
+     "oauthlib__oauthlib.1fd52536.func_basic__50tgnt0s",
+     "oauthlib__oauthlib.1fd52536.func_basic__uqy2evrq",
+     "oauthlib__oauthlib.1fd52536.func_basic__45phn4gb"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__50tgnt0s",
+      "same_file": true,
+      "gap": 69,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        417,
+        418
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__uqy2evrq",
+      "same_file": true,
+      "gap": 367,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        119,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__45phn4gb",
+      "same_file": true,
+      "gap": 16,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__uqy2evrq",
+      "same_file": true,
+      "gap": 296,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        119,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__45phn4gb",
+      "same_file": true,
+      "gap": 51,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__uqy2evrq",
+      "b": "ic__45phn4gb",
+      "same_file": true,
+      "gap": 349,
+      "spans_a": [
+       [
+        119,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__fjiq6ubh",
+     "oauthlib__oauthlib.1fd52536.func_basic__mh30x7ht",
+     "oauthlib__oauthlib.1fd52536.func_basic__5sfxti61",
+     "oauthlib__oauthlib.1fd52536.func_basic__rp8lzx3m"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__fjiq6ubh",
+      "b": "ic__mh30x7ht",
+      "same_file": true,
+      "gap": 33,
+      "spans_a": [
+       [
+        541,
+        542
+       ]
+      ],
+      "spans_b": [
+       [
+        506,
+        507
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__fjiq6ubh",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 390,
+      "spans_a": [
+       [
+        541,
+        542
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__fjiq6ubh",
+      "b": "ic__rp8lzx3m",
+      "same_file": true,
+      "gap": 500,
+      "spans_a": [
+       [
+        541,
+        542
+       ]
+      ],
+      "spans_b": [
+       [
+        39,
+        40
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__mh30x7ht",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 355,
+      "spans_a": [
+       [
+        506,
+        507
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__mh30x7ht",
+      "b": "ic__rp8lzx3m",
+      "same_file": true,
+      "gap": 465,
+      "spans_a": [
+       [
+        506,
+        507
+       ]
+      ],
+      "spans_b": [
+       [
+        39,
+        40
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__rp8lzx3m",
+      "same_file": true,
+      "gap": 108,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        39,
+        40
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__8d0q2u39",
+     "oauthlib__oauthlib.1fd52536.func_basic__50tgnt0s",
+     "oauthlib__oauthlib.1fd52536.func_basic__g9ujzq8i",
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__8d0q2u39",
+      "b": "ic__50tgnt0s",
+      "same_file": true,
+      "gap": 282,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        417,
+        418
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__8d0q2u39",
+      "b": "ic__g9ujzq8i",
+      "same_file": true,
+      "gap": 390,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        525,
+        526
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__8d0q2u39",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 49,
+      "spans_a": [
+       [
+        133,
+        134
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__g9ujzq8i",
+      "same_file": true,
+      "gap": 106,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        525,
+        526
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 231,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__g9ujzq8i",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 339,
+      "spans_a": [
+       [
+        525,
+        526
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__rxkupk6s",
+     "oauthlib__oauthlib.1fd52536.func_basic__4zs7dzp5",
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q",
+     "oauthlib__oauthlib.1fd52536.func_basic__5sfxti61"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__4zs7dzp5",
+      "same_file": true,
+      "gap": 358,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        75,
+        76
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__06jdbp8q",
+      "same_file": true,
+      "gap": 51,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        488,
+        489
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rxkupk6s",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 284,
+      "spans_a": [
+       [
+        435,
+        436
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__4zs7dzp5",
+      "b": "ic__06jdbp8q",
+      "same_file": true,
+      "gap": 411,
+      "spans_a": [
+       [
+        75,
+        76
+       ]
+      ],
+      "spans_b": [
+       [
+        488,
+        489
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__4zs7dzp5",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 72,
+      "spans_a": [
+       [
+        75,
+        76
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__06jdbp8q",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 337,
+      "spans_a": [
+       [
+        488,
+        489
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__u45u1zuk",
+     "oauthlib__oauthlib.1fd52536.func_basic__50tgnt0s",
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.func_basic__5sfxti61"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__u45u1zuk",
+      "b": "ic__50tgnt0s",
+      "same_file": true,
+      "gap": 160,
+      "spans_a": [
+       [
+        579,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        417,
+        418
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__u45u1zuk",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 393,
+      "spans_a": [
+       [
+        579,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__u45u1zuk",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 428,
+      "spans_a": [
+       [
+        579,
+        580
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 231,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 266,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__5sfxti61",
+      "same_file": true,
+      "gap": 33,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        149,
+        150
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__5sfxti61",
+     "oauthlib__oauthlib.1fd52536.func_basic__rp8lzx3m",
+     "oauthlib__oauthlib.1fd52536.func_basic__45phn4gb",
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__rp8lzx3m",
+      "same_file": true,
+      "gap": 108,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        39,
+        40
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__45phn4gb",
+      "same_file": true,
+      "gap": 319,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 33,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rp8lzx3m",
+      "b": "ic__45phn4gb",
+      "same_file": true,
+      "gap": 429,
+      "spans_a": [
+       [
+        39,
+        40
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__rp8lzx3m",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 143,
+      "spans_a": [
+       [
+        39,
+        40
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__45phn4gb",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 284,
+      "spans_a": [
+       [
+        470,
+        471
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__5sfxti61",
+     "oauthlib__oauthlib.1fd52536.func_basic__kw860ayc",
+     "oauthlib__oauthlib.1fd52536.func_basic__szjrl620",
+     "oauthlib__oauthlib.1fd52536.func_basic__06jdbp8q"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__kw860ayc",
+      "same_file": true,
+      "gap": 214,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        365,
+        366
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 33,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__5sfxti61",
+      "b": "ic__06jdbp8q",
+      "same_file": true,
+      "gap": 337,
+      "spans_a": [
+       [
+        149,
+        150
+       ]
+      ],
+      "spans_b": [
+       [
+        488,
+        489
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__kw860ayc",
+      "b": "ic__szjrl620",
+      "same_file": true,
+      "gap": 179,
+      "spans_a": [
+       [
+        365,
+        366
+       ]
+      ],
+      "spans_b": [
+       [
+        184,
+        185
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__kw860ayc",
+      "b": "ic__06jdbp8q",
+      "same_file": true,
+      "gap": 121,
+      "spans_a": [
+       [
+        365,
+        366
+       ]
+      ],
+      "spans_b": [
+       [
+        488,
+        489
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__szjrl620",
+      "b": "ic__06jdbp8q",
+      "same_file": true,
+      "gap": 302,
+      "spans_a": [
+       [
+        184,
+        185
+       ]
+      ],
+      "spans_b": [
+       [
+        488,
+        489
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__45phn4gb",
+     "oauthlib__oauthlib.1fd52536.func_basic__wq1hprwz",
+     "oauthlib__oauthlib.1fd52536.func_basic__50tgnt0s",
+     "oauthlib__oauthlib.1fd52536.func_basic__nong5iwt"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__45phn4gb",
+      "b": "ic__wq1hprwz",
+      "same_file": true,
+      "gap": 306,
+      "spans_a": [
+       [
+        470,
+        471
+       ]
+      ],
+      "spans_b": [
+       [
+        162,
+        163
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__45phn4gb",
+      "b": "ic__50tgnt0s",
+      "same_file": true,
+      "gap": 51,
+      "spans_a": [
+       [
+        470,
+        471
+       ]
+      ],
+      "spans_b": [
+       [
+        417,
+        418
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__45phn4gb",
+      "b": "ic__nong5iwt",
+      "same_file": true,
+      "gap": 164,
+      "spans_a": [
+       [
+        470,
+        471
+       ]
+      ],
+      "spans_b": [
+       [
+        304,
+        305
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__wq1hprwz",
+      "b": "ic__50tgnt0s",
+      "same_file": true,
+      "gap": 253,
+      "spans_a": [
+       [
+        162,
+        163
+       ]
+      ],
+      "spans_b": [
+       [
+        417,
+        418
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__wq1hprwz",
+      "b": "ic__nong5iwt",
+      "same_file": true,
+      "gap": 140,
+      "spans_a": [
+       [
+        162,
+        163
+       ]
+      ],
+      "spans_b": [
+       [
+        304,
+        305
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     },
+     {
+      "a": "ic__50tgnt0s",
+      "b": "ic__nong5iwt",
+      "same_file": true,
+      "gap": 111,
+      "spans_a": [
+       [
+        417,
+        418
+       ]
+      ],
+      "spans_b": [
+       [
+        304,
+        305
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/request_validator.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__z9ez9yvn",
+     "oauthlib__oauthlib.1fd52536.func_basic__os9e93va",
+     "oauthlib__oauthlib.1fd52536.func_basic__3yrd90h8",
+     "oauthlib__oauthlib.1fd52536.func_basic__57dy4owp"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.0,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__z9ez9yvn",
+      "b": "ic__os9e93va",
+      "same_file": true,
+      "gap": 38,
+      "spans_a": [
+       [
+        791,
+        792
+       ]
+      ],
+      "spans_b": [
+       [
+        742,
+        752
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z9ez9yvn",
+      "b": "ic__3yrd90h8",
+      "same_file": true,
+      "gap": 4,
+      "spans_a": [
+       [
+        791,
+        792
+       ]
+      ],
+      "spans_b": [
+       [
+        785,
+        786
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__z9ez9yvn",
+      "b": "ic__57dy4owp",
+      "same_file": true,
+      "gap": 319,
+      "spans_a": [
+       [
+        791,
+        792
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__os9e93va",
+      "b": "ic__3yrd90h8",
+      "same_file": true,
+      "gap": 32,
+      "spans_a": [
+       [
+        742,
+        752
+       ]
+      ],
+      "spans_b": [
+       [
+        785,
+        786
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__os9e93va",
+      "b": "ic__57dy4owp",
+      "same_file": true,
+      "gap": 270,
+      "spans_a": [
+       [
+        742,
+        752
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__3yrd90h8",
+      "b": "ic__57dy4owp",
+      "same_file": true,
+      "gap": 313,
+      "spans_a": [
+       [
+        785,
+        786
+       ]
+      ],
+      "spans_b": [
+       [
+        470,
+        471
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__ecuk5rb8",
+     "oauthlib__oauthlib.1fd52536.func_basic__wrj0yqlc",
+     "oauthlib__oauthlib.1fd52536.func_basic__5bwzrrp3",
+     "oauthlib__oauthlib.1fd52536.func_basic__08cmnon5"
+    ],
+    "same_file_frac": 1.0,
+    "same_func_frac": 1.0,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__ecuk5rb8",
+      "b": "ic__wrj0yqlc",
+      "same_file": true,
+      "gap": 245,
+      "spans_a": [
+       [
+        795,
+        796
+       ]
+      ],
+      "spans_b": [
+       [
+        547,
+        549
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__ecuk5rb8",
+      "b": "ic__5bwzrrp3",
+      "same_file": true,
+      "gap": 286,
+      "spans_a": [
+       [
+        795,
+        796
+       ]
+      ],
+      "spans_b": [
+       [
+        506,
+        508
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__ecuk5rb8",
+      "b": "ic__08cmnon5",
+      "same_file": true,
+      "gap": 291,
+      "spans_a": [
+       [
+        795,
+        796
+       ]
+      ],
+      "spans_b": [
+       [
+        502,
+        503
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__wrj0yqlc",
+      "b": "ic__5bwzrrp3",
+      "same_file": true,
+      "gap": 38,
+      "spans_a": [
+       [
+        547,
+        549
+       ]
+      ],
+      "spans_b": [
+       [
+        506,
+        508
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__wrj0yqlc",
+      "b": "ic__08cmnon5",
+      "same_file": true,
+      "gap": 43,
+      "spans_a": [
+       [
+        547,
+        549
+       ]
+      ],
+      "spans_b": [
+       [
+        502,
+        503
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     },
+     {
+      "a": "ic__5bwzrrp3",
+      "b": "ic__08cmnon5",
+      "same_file": true,
+      "gap": 2,
+      "spans_a": [
+       [
+        506,
+        508
+       ]
+      ],
+      "spans_b": [
+       [
+        502,
+        503
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/signature.py\n"
+     }
+    ]
+   }
+  ],
+  "L3 two bugs on adjacent lines": [
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__jvieyr1j",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__xbulf5rr",
+     "oauthlib__oauthlib.1fd52536.func_basic__6a201p5o",
+     "oauthlib__oauthlib.1fd52536.func_basic__fm89kzc6"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__jvieyr1j",
+      "b": "cs__xbulf5rr",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        57,
+        61
+       ]
+      ],
+      "spans_b": [
+       [
+        62,
+        86
+       ],
+       [
+        124,
+        131
+       ],
+       [
+        138,
+        239
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/endpoints/metadata.py\n"
+     },
+     {
+      "a": "ic__jvieyr1j",
+      "b": "ic__6a201p5o",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        57,
+        61
+       ]
+      ],
+      "spans_b": [
+       [
+        499,
+        500
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__jvieyr1j",
+      "b": "ic__fm89kzc6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        57,
+        61
+       ]
+      ],
+      "spans_b": [
+       [
+        265,
+        294
+       ],
+       [
+        298,
+        298
+       ],
+       [
+        303,
+        307
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__xbulf5rr",
+      "b": "ic__6a201p5o",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        62,
+        86
+       ],
+       [
+        124,
+        131
+       ],
+       [
+        138,
+        239
+       ]
+      ],
+      "spans_b": [
+       [
+        499,
+        500
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__xbulf5rr",
+      "b": "ic__fm89kzc6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        62,
+        86
+       ],
+       [
+        124,
+        131
+       ],
+       [
+        138,
+        239
+       ]
+      ],
+      "spans_b": [
+       [
+        265,
+        294
+       ],
+       [
+        298,
+        298
+       ],
+       [
+        303,
+        307
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__6a201p5o",
+      "b": "ic__fm89kzc6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        499,
+        500
+       ]
+      ],
+      "spans_b": [
+       [
+        265,
+        294
+       ],
+       [
+        298,
+        298
+       ],
+       [
+        303,
+        307
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__xo0tq6gf",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__rihbigix",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_base__jc90u7bb",
+     "oauthlib__oauthlib.1fd52536.func_basic__qpiwixs0"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__xo0tq6gf",
+      "b": "cs__rihbigix",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        295,
+        296
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/request_validator.py\n"
+     },
+     {
+      "a": "ic__xo0tq6gf",
+      "b": "se__jc90u7bb",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        295,
+        296
+       ]
+      ],
+      "spans_b": [
+       [
+        14,
+        15
+       ],
+       [
+        139,
+        140
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__xo0tq6gf",
+      "b": "ic__qpiwixs0",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        295,
+        296
+       ]
+      ],
+      "spans_b": [
+       [
+        33,
+        34
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "se__jc90u7bb",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        14,
+        15
+       ],
+       [
+        139,
+        140
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "ic__qpiwixs0",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        33,
+        34
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "se__jc90u7bb",
+      "b": "ic__qpiwixs0",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        14,
+        15
+       ],
+       [
+        139,
+        140
+       ]
+      ],
+      "spans_b": [
+       [
+        33,
+        34
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__nqn1zwzi",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__rihbigix",
+     "oauthlib__oauthlib.1fd52536.func_basic__qqe0jk8x",
+     "oauthlib__oauthlib.1fd52536.func_basic__7nvgsns6"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__nqn1zwzi",
+      "b": "cs__rihbigix",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        783,
+        784
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/request_validator.py\n"
+     },
+     {
+      "a": "ic__nqn1zwzi",
+      "b": "ic__qqe0jk8x",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        783,
+        784
+       ]
+      ],
+      "spans_b": [
+       [
+        67,
+        68
+       ],
+       [
+        71,
+        74
+       ],
+       [
+        77,
+        78
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__nqn1zwzi",
+      "b": "ic__7nvgsns6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        783,
+        784
+       ]
+      ],
+      "spans_b": [
+       [
+        18,
+        20
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "ic__qqe0jk8x",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        67,
+        68
+       ],
+       [
+        71,
+        74
+       ],
+       [
+        77,
+        78
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "ic__7nvgsns6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        18,
+        20
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__qqe0jk8x",
+      "b": "ic__7nvgsns6",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        67,
+        68
+       ],
+       [
+        71,
+        74
+       ],
+       [
+        77,
+        78
+       ]
+      ],
+      "spans_b": [
+       [
+        18,
+        20
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__2jkxlfz8",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__rihbigix",
+     "oauthlib__oauthlib.1fd52536.func_basic__da0whhe7",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_base__zp9eyarm"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__2jkxlfz8",
+      "b": "cs__rihbigix",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        673,
+        674
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/request_validator.py\n"
+     },
+     {
+      "a": "ic__2jkxlfz8",
+      "b": "ic__da0whhe7",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        673,
+        674
+       ]
+      ],
+      "spans_b": [
+       [
+        76,
+        151
+       ],
+       [
+        159,
+        161
+       ],
+       [
+        179,
+        180
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__2jkxlfz8",
+      "b": "se__zp9eyarm",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        673,
+        674
+       ]
+      ],
+      "spans_b": [
+       [
+        21,
+        22
+       ],
+       [
+        209,
+        210
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "ic__da0whhe7",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        76,
+        151
+       ],
+       [
+        159,
+        161
+       ],
+       [
+        179,
+        180
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "se__zp9eyarm",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        21,
+        22
+       ],
+       [
+        209,
+        210
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__da0whhe7",
+      "b": "se__zp9eyarm",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        76,
+        151
+       ],
+       [
+        159,
+        161
+       ],
+       [
+        179,
+        180
+       ]
+      ],
+      "spans_b": [
+       [
+        21,
+        22
+       ],
+       [
+        209,
+        210
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__4lxy3wmb",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__uql5tgba",
+     "oauthlib__oauthlib.1fd52536.func_basic__858d5jmd",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__oz0hojtv"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__4lxy3wmb",
+      "b": "te__uql5tgba",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        111,
+        112
+       ]
+      ],
+      "spans_b": [
+       [
+        96,
+        110
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/grant_types/base.py\n"
+     },
+     {
+      "a": "ic__4lxy3wmb",
+      "b": "ic__858d5jmd",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        111,
+        112
+       ]
+      ],
+      "spans_b": [
+       [
+        24,
+        26
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__4lxy3wmb",
+      "b": "cs__oz0hojtv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        111,
+        112
+       ]
+      ],
+      "spans_b": [
+       [
+        69,
+        113
+       ],
+       [
+        198,
+        199
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__uql5tgba",
+      "b": "ic__858d5jmd",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        96,
+        110
+       ]
+      ],
+      "spans_b": [
+       [
+        24,
+        26
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__uql5tgba",
+      "b": "cs__oz0hojtv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        96,
+        110
+       ]
+      ],
+      "spans_b": [
+       [
+        69,
+        113
+       ],
+       [
+        198,
+        199
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__858d5jmd",
+      "b": "cs__oz0hojtv",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        24,
+        26
+       ]
+      ],
+      "spans_b": [
+       [
+        69,
+        113
+       ],
+       [
+        198,
+        199
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__yxkg1g6o",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__ks5l2gdj",
+     "oauthlib__oauthlib.1fd52536.func_basic__i6lxix6t",
+     "oauthlib__oauthlib.1fd52536.func_basic__np3hmysy"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__yxkg1g6o",
+      "b": "cs__ks5l2gdj",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        82,
+        83
+       ]
+      ],
+      "spans_b": [
+       [
+        36,
+        62
+       ],
+       [
+        84,
+        92
+       ],
+       [
+        231,
+        232
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc8628/endpoints/device_authorization.py\n"
+     },
+     {
+      "a": "ic__yxkg1g6o",
+      "b": "ic__i6lxix6t",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        82,
+        83
+       ]
+      ],
+      "spans_b": [
+       [
+        32,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__yxkg1g6o",
+      "b": "ic__np3hmysy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        82,
+        83
+       ]
+      ],
+      "spans_b": [
+       [
+        118,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__ks5l2gdj",
+      "b": "ic__i6lxix6t",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        36,
+        62
+       ],
+       [
+        84,
+        92
+       ],
+       [
+        231,
+        232
+       ]
+      ],
+      "spans_b": [
+       [
+        32,
+        35
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__ks5l2gdj",
+      "b": "ic__np3hmysy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        36,
+        62
+       ],
+       [
+        84,
+        92
+       ],
+       [
+        231,
+        232
+       ]
+      ],
+      "spans_b": [
+       [
+        118,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__i6lxix6t",
+      "b": "ic__np3hmysy",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        32,
+        35
+       ]
+      ],
+      "spans_b": [
+       [
+        118,
+        120
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__2byv9c20",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__syb7cmcd",
+     "oauthlib__oauthlib.1fd52536.func_basic__15p7x87y",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_base__z0c1kcmj"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "te__2byv9c20",
+      "b": "te__syb7cmcd",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        31,
+        69
+       ]
+      ],
+      "spans_b": [
+       [
+        70,
+        106
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/endpoints/base.py\n"
+     },
+     {
+      "a": "te__2byv9c20",
+      "b": "ic__15p7x87y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        31,
+        69
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__2byv9c20",
+      "b": "se__z0c1kcmj",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        31,
+        69
+       ]
+      ],
+      "spans_b": [
+       [
+        23,
+        24
+       ],
+       [
+        238,
+        239
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__syb7cmcd",
+      "b": "ic__15p7x87y",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        70,
+        106
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__syb7cmcd",
+      "b": "se__z0c1kcmj",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        70,
+        106
+       ]
+      ],
+      "spans_b": [
+       [
+        23,
+        24
+       ],
+       [
+        238,
+        239
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__15p7x87y",
+      "b": "se__z0c1kcmj",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        77,
+        80
+       ],
+       [
+        82,
+        83
+       ],
+       [
+        90,
+        91
+       ]
+      ],
+      "spans_b": [
+       [
+        23,
+        24
+       ],
+       [
+        238,
+        239
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__24bn70ts",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__5lm8kw99",
+     "oauthlib__oauthlib.1fd52536.func_basic__xybavrjw",
+     "oauthlib__oauthlib.1fd52536.func_basic__2gh1nrkd"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__24bn70ts",
+      "b": "cs__5lm8kw99",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        285,
+        291
+       ]
+      ],
+      "spans_b": [
+       [
+        292,
+        330
+       ],
+       [
+        350,
+        351
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth2/rfc6749/tokens.py\n"
+     },
+     {
+      "a": "ic__24bn70ts",
+      "b": "ic__xybavrjw",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        285,
+        291
+       ]
+      ],
+      "spans_b": [
+       [
+        75,
+        76
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__24bn70ts",
+      "b": "ic__2gh1nrkd",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        285,
+        291
+       ]
+      ],
+      "spans_b": [
+       [
+        133,
+        145
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__5lm8kw99",
+      "b": "ic__xybavrjw",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        292,
+        330
+       ],
+       [
+        350,
+        351
+       ]
+      ],
+      "spans_b": [
+       [
+        75,
+        76
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__5lm8kw99",
+      "b": "ic__2gh1nrkd",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        292,
+        330
+       ],
+       [
+        350,
+        351
+       ]
+      ],
+      "spans_b": [
+       [
+        133,
+        145
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__xybavrjw",
+      "b": "ic__2gh1nrkd",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        75,
+        76
+       ]
+      ],
+      "spans_b": [
+       [
+        133,
+        145
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__qnda22vm",
+     "oauthlib__oauthlib.1fd52536.lm_rewrite__w3lrry31",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__ogtftdvd",
+     "oauthlib__oauthlib.1fd52536.func_basic__f11gwu5g"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "te__qnda22vm",
+      "b": "te__w3lrry31",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        179,
+        240
+       ]
+      ],
+      "spans_b": [
+       [
+        114,
+        178
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/endpoints/base.py\n"
+     },
+     {
+      "a": "te__qnda22vm",
+      "b": "cs__ogtftdvd",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        179,
+        240
+       ]
+      ],
+      "spans_b": [
+       [
+        18,
+        72
+       ],
+       [
+        77,
+        87
+       ],
+       [
+        92,
+        95
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__qnda22vm",
+      "b": "ic__f11gwu5g",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        179,
+        240
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        122
+       ],
+       [
+        125,
+        126
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__w3lrry31",
+      "b": "cs__ogtftdvd",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        114,
+        178
+       ]
+      ],
+      "spans_b": [
+       [
+        18,
+        72
+       ],
+       [
+        77,
+        87
+       ],
+       [
+        92,
+        95
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "te__w3lrry31",
+      "b": "ic__f11gwu5g",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        114,
+        178
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        122
+       ],
+       [
+        125,
+        126
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__ogtftdvd",
+      "b": "ic__f11gwu5g",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        18,
+        72
+       ],
+       [
+        77,
+        87
+       ],
+       [
+        92,
+        95
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        122
+       ],
+       [
+        125,
+        126
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   },
+   {
+    "valid": true,
+    "ids": [
+     "oauthlib__oauthlib.1fd52536.func_basic__o09bli90",
+     "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__rihbigix",
+     "oauthlib__oauthlib.1fd52536.func_basic__cmmotoqg",
+     "oauthlib__oauthlib.1fd52536.func_basic__kvzcwsza"
+    ],
+    "same_file_frac": 0.16666666666666666,
+    "same_func_frac": 0.16666666666666666,
+    "near_frac": 0.16666666666666666,
+    "reversible": true,
+    "conflict_rate": 0.0,
+    "fixes_merged": 4,
+    "fully_restored": true,
+    "pair_detail": [
+     {
+      "a": "ic__o09bli90",
+      "b": "cs__rihbigix",
+      "same_file": true,
+      "gap": 0,
+      "spans_a": [
+       [
+        119,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "conflict": false,
+      "merge_err": "Auto-merging oauthlib/oauth1/rfc5849/request_validator.py\n"
+     },
+     {
+      "a": "ic__o09bli90",
+      "b": "ic__cmmotoqg",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        119,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        85
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__o09bli90",
+      "b": "ic__kvzcwsza",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        119,
+        120
+       ]
+      ],
+      "spans_b": [
+       [
+        65,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "ic__cmmotoqg",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        77,
+        85
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "cs__rihbigix",
+      "b": "ic__kvzcwsza",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        121,
+        124
+       ],
+       [
+        149,
+        152
+       ],
+       [
+        297,
+        362
+       ]
+      ],
+      "spans_b": [
+       [
+        65,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     },
+     {
+      "a": "ic__cmmotoqg",
+      "b": "ic__kvzcwsza",
+      "same_file": false,
+      "gap": null,
+      "spans_a": [
+       [
+        77,
+        85
+       ]
+      ],
+      "spans_b": [
+       [
+        65,
+        67
+       ]
+      ],
+      "conflict": false,
+      "merge_err": ""
+     }
+    ]
+   }
+  ]
+ },
+ "n_indexed": 558,
+ "n_single": 308
+}

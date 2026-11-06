@@ -1,0 +1,440 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "go_chi_task/task27/k2/f3-f4",
+    "pool": "go_chi_task/task27",
+    "k": 2,
+    "features": [
+      3,
+      4
+    ],
+    "strategy": "S2",
+    "strategy_id": "S2",
+    "harness": "agy",
+    "model": "gpt-oss-120b-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793979750.970467
+  },
+  "correctness": {
+    "primary": "llm",
+    "by_final": {
+      "naive": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "union": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "llm": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "3": false,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 2355112,
+      "cached_input": 2200960,
+      "cache_write": 0,
+      "output": 30549,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 3
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 174849,
+    "coordination_overhead": 0.0732916369928502,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 332.6358127593994,
+    "agent_busy_s": 527.9563388824463,
+    "effective_parallelism": 1.5871903103359626,
+    "container_setup_s": 1.2519919872283936,
+    "grading_s": 15.144752979278564,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": {
+    "pairwise": [
+      {
+        "a": "f3",
+        "b": "f4",
+        "conflict": true,
+        "files": [
+          "mux.go"
+        ]
+      }
+    ],
+    "conflict_rate": 1.0,
+    "overlap_lines": 0,
+    "modes": {
+      "naive": {
+        "lost_features": [
+          4
+        ],
+        "steps": [
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f4",
+            "feature_ids": [
+              4
+            ],
+            "conflicted": true,
+            "conflict_files": [
+              "mux.go"
+            ],
+            "outcome": "skipped"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "union": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f4",
+            "feature_ids": [
+              4
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "llm": {
+        "lost_features": [
+          4
+        ],
+        "steps": [
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f4",
+            "feature_ids": [
+              4
+            ],
+            "conflicted": true,
+            "conflict_files": [
+              "mux.go"
+            ],
+            "outcome": "resolve_failed"
+          }
+        ],
+        "resolver_agents": [
+          "resolver_f4"
+        ]
+      }
+    }
+  },
+  "agents": [
+    {
+      "agent_id": "f3",
+      "role": "worker",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        3
+      ],
+      "started": 1793979752.2242272,
+      "ended": 1793980030.765514,
+      "busy_s": 278.4816298484802,
+      "usage": {
+        "input": 1506810,
+        "cached_input": 1435520,
+        "cache_write": 0,
+        "output": 14924,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 9,
+        "edit": 6,
+        "read": 12
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 33,
+      "patch_files": [
+        "mux.go"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793979752.225311,
+          "ended": 1793980030.706941,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 1506810,
+            "cached_input": 1435520,
+            "cache_write": 0,
+            "output": 14924,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "7f708ca8-f4b3-44ed-bc9f-8537933ee098",
+          "nudge_reason": null,
+          "final_text_tail": "nitions, including the `Router` interface with `Handle` and `HandleFunc`. I will add a new public function `EnableDebugLogging()` and integrate debug\u2011level logs into the `Handle` and `HandleFunc` implementations.\n\n**Plan**\n1. Locate the implementation of `Handle` and `HandleFunc` (likely in `mux.go` or related files).  \n2. Add conditional debug logs that output the parsed pattern, detected HTTP method (if any), and registration details.  \n3. Introduce a package\u2011level flag and the exported `EnableDebugLogging()` function to turn on these logs.  \n4. Use the existing logging mechanism (`logger.go`) for consistency.  \n5. Run the test suite to ensure nothing breaks.\n\nI'll now inspect the implementation of `Handle`/`HandleFunc`.\nImplemented detailed debug\u2011level logging for route pattern handling:\n\n- Added `debugLogging` flag and `EnableDebugLogging()` function.\n- Integrated debug logs into `Handle` and `HandleFunc` to output method and path parsing details when enabled.\n- Updated imports to include `log`.\n- All tests now pass (`go test ./...`).\nImplemented the requested feature:\n\n- Added a `debugLogging` flag and `EnableDebugLogging()` function to toggle debug\u2011level logging.\n- Integrated detailed debug logs into `Mux.Handle` and `Mux.HandleFunc` for method and path parsing.\n- Updated imports to include the `log` package.\n- Ran the full test suite (`go test ./...`) \u2013 all tests now pass.\n\nThe repository now supports enabling detailed route pattern logging via `EnableDebugLogging()`.\n",
+          "error": null
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f4",
+      "role": "worker",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        4
+      ],
+      "started": 1793979752.2241879,
+      "ended": 1793979949.1774368,
+      "busy_s": 196.8985137939453,
+      "usage": {
+        "input": 676622,
+        "cached_input": 625536,
+        "cache_write": 0,
+        "output": 12456,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 12,
+        "edit": 2,
+        "read": 2
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 32,
+      "patch_files": [
+        "mux.go"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793979752.2245371,
+          "ended": 1793979949.123051,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 676622,
+            "cached_input": 625536,
+            "cache_write": 0,
+            "output": 12456,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "c3985822-3f88-49fb-b334-4bc134a75200",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    },
+    {
+      "agent_id": "resolver_f4",
+      "role": "resolver",
+      "harness": "agy",
+      "model": "gpt-oss-120b-agy",
+      "feature_ids": [
+        4
+      ],
+      "started": 1793980032.180044,
+      "ended": 1793980084.7571,
+      "busy_s": 52.57619524002075,
+      "usage": {
+        "input": 171680,
+        "cached_input": 139904,
+        "cache_write": 0,
+        "output": 3169,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "cost_list": null,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 1,
+        "read": 4,
+        "edit": 2
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793980032.1802728,
+          "ended": 1793980084.756468,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 171680,
+            "cached_input": 139904,
+            "cache_write": 0,
+            "output": 3169,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "e106e3fb-ef08-46e1-80bb-2a978b88cb31",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    }
+  ],
+  "grades": {
+    "own_f3": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.5617170333862305,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_f3.f3.log"
+      }
+    },
+    "own_f4": {
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.429086208343506,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/own_f4.f4.log"
+      }
+    },
+    "naive": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.563045024871826,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/naive.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.23789024353027344,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/naive.f4.log"
+      }
+    },
+    "union": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.508370876312256,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/union.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.09812712669372559,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/union.f4.log"
+      }
+    },
+    "llm": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 2.498061180114746,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/llm.f3.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.24334406852722168,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gpt-oss-120b-agy__go_chi_task_task27_k2_f3-f4__r0/grading/llm.f4.log"
+      }
+    }
+  }
+}

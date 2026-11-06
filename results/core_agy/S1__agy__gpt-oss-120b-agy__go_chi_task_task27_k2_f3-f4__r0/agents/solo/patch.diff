@@ -1,0 +1,103 @@
+diff --git a/debug_logging.go b/debug_logging.go
+new file mode 100644
+index 0000000..0e0c38f
+--- /dev/null
++++ b/debug_logging.go
+@@ -0,0 +1,18 @@
++package chi
++
++import "log"
++
++// debugEnabled indicates whether debug-level logging is active.
++var debugEnabled bool
++
++// EnableDebugLogging turns on debug-level logging; off by default.
++func EnableDebugLogging() {
++    debugEnabled = true
++    log.Printf("chi: debug logging enabled")
++}
++
++func debugLog(format string, args ...interface{}) {
++    if debugEnabled {
++        log.Printf("chi debug: "+format, args...)
++    }
++}
+diff --git a/mux.go b/mux.go
+index 56fa4d2..ddde3e4 100644
+--- a/mux.go
++++ b/mux.go
+@@ -107,11 +107,14 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ // Handle adds the route `pattern` that matches any http method to
+ // execute the `handler` http.Handler.
+ func (mx *Mux) Handle(pattern string, handler http.Handler) {
++	// Debug logging for pattern handling
++	debugLog("Handle called with pattern=%s", pattern)
+ 	parts := strings.SplitN(pattern, " ", 2)
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])
+ 		path := parts[1]
+ 
++		debugLog("Detected method prefix: %s, path=%s", methodStr, path)
+ 		method, ok := methodMap[methodStr]
+ 		if !ok {
+ 			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
+@@ -121,12 +124,28 @@ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ 		return
+ 	}
+ 
++	debugLog("No method prefix detected, using default ANY method")
+ 	mx.handle(mALL, pattern, handler)
+ }
+ 
+ // HandleFunc adds the route `pattern` that matches any http method to
+ // execute the `handlerFn` http.HandlerFunc.
+ func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
++	// Debug logging for pattern handling
++	debugLog("HandleFunc called with pattern=%s", pattern)
++	parts := strings.SplitN(pattern, " ", 2)
++	if len(parts) == 2 {
++		methodStr := strings.ToUpper(parts[0])
++		path := parts[1]
++		debugLog("Detected method prefix: %s, path=%s", methodStr, path)
++		method, ok := methodMap[methodStr]
++		if !ok {
++			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
++		}
++		mx.handle(method, path, handlerFn)
++		return
++	}
++	debugLog("No method prefix detected, using default ANY method")
+ 	mx.handle(mALL, pattern, handlerFn)
+ }
+ 
+diff --git a/mux_test.go b/mux_test.go
+index 9190cb5..360bd87 100644
+--- a/mux_test.go
++++ b/mux_test.go
+@@ -1872,6 +1872,26 @@ func (k ctxKey) String() string {
+ 	return "context value " + k.name
+ }
+ 
++func TestMuxMethodPatternPrefix(t *testing.T) {
++    r := NewRouter()
++    r.Handle("GET /api/*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++        w.Write([]byte("prefix hit"))
++    }))
++
++    ts := httptest.NewServer(r)
++    defer ts.Close()
++
++    resp, body := testRequest(t, ts, "GET", "/api/users", nil)
++    if resp.StatusCode != http.StatusOK || body != "prefix hit" {
++        t.Fatalf("expected status %d and body %s, got %d %s", http.StatusOK, "prefix hit", resp.StatusCode, body)
++    }
++
++    resp2, _ := testRequest(t, ts, "GET", "/other", nil)
++    if resp2.StatusCode != http.StatusNotFound {
++        t.Fatalf("expected 404 for non-matching path, got %d", resp2.StatusCode)
++    }
++}
++
+ func BenchmarkMux(b *testing.B) {
+ 	h1 := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
+ 	h2 := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})

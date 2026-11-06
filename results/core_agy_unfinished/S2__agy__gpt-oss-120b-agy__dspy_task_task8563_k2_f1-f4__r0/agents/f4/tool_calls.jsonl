@@ -1,0 +1,32 @@
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "ls -R"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 400, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 30, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 340, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py", "StartLine": 250}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python -m pytest -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/clients/cache.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/clients/cache.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 20, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest tests/clients/test_cache.py -q"}, "ok": null, "ts": null}
+{"name": "write_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/cachetools/__init__.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/clients/__init__.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/clients/__init__.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "manage_task", "kind": "other", "args": {"Action": "status", "TaskId": "task-107"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest tests/adapters/test_tool.py -q"}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/adapters/types/tool.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest tests/adapters/test_tool.py::test_tool_calls_format_basic[tool_calls_data1-expected1] -q"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q tests/adapters/test_tool.py"}, "ok": null, "ts": null}
+{"name": "run_command", "kind": "shell", "args": {"CommandLine": "python3 -m pytest -q"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/tests/clients/test_cache.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "edit_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/dspy/clients/cache.py"}, "ok": null, "ts": null}
+{"name": "read_file", "kind": "read", "args": {"EndLine": 200, "Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/tests/test_utils/server/__init__.py", "StartLine": 1}, "ok": null, "ts": null}
+{"name": "write_file", "kind": "edit", "args": {"Path": "/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-4ty5vekw/repo/litellm"}, "ok": null, "ts": null}

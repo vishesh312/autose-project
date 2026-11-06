@@ -1,0 +1,430 @@
+{
+  "run": {
+    "experiment": "core_agy",
+    "bundle": "pallets_click_task/task2800/k2/f1-f4",
+    "pool": "pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S2",
+    "strategy_id": "S2",
+    "harness": "agy",
+    "model": "gemini-flash-agy",
+    "repeat": 0,
+    "host": "Mac-274.lan",
+    "arch": "arm64",
+    "started": 1793981122.135823
+  },
+  "correctness": {
+    "primary": "llm",
+    "by_final": {
+      "naive": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "union": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "llm": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 40397181,
+      "cached_input": 37825091,
+      "cache_write": 0,
+      "output": 55592,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 9
+    },
+    "cost_usd": null,
+    "cost_reported_usd": null,
+    "cost_list_usd": null,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 705.2229809761047,
+    "agent_busy_s": 1390.8634009361267,
+    "effective_parallelism": 1.97223210027986,
+    "container_setup_s": 1.226590871810913,
+    "grading_s": 14.678722143173218,
+    "nudges": 3,
+    "timeouts": 0
+  },
+  "merge": {
+    "pairwise": [
+      {
+        "a": "f1",
+        "b": "f4",
+        "conflict": false,
+        "files": []
+      }
+    ],
+    "conflict_rate": 0.0,
+    "overlap_lines": 0,
+    "modes": {
+      "naive": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f4",
+            "feature_ids": [
+              4
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "empty"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "union": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f4",
+            "feature_ids": [
+              4
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "empty"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "llm": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f4",
+            "feature_ids": [
+              4
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "empty"
+          }
+        ],
+        "resolver_agents": []
+      }
+    }
+  },
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "agy",
+      "model": "gemini-flash-agy",
+      "feature_ids": [
+        1
+      ],
+      "started": 1793981123.364222,
+      "ended": 1793981811.111119,
+      "busy_s": 687.6610491275787,
+      "usage": {
+        "input": 14342019,
+        "cached_input": 13214816,
+        "cache_write": 0,
+        "output": 23144,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "cost_list": null,
+      "nudges": 1,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 115,
+        "read": 15,
+        "subagent": 2
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 1,
+      "patch_files": [
+        "dummy.txt"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793981123.3646138,
+          "ended": 1793981765.053675,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 6952621,
+            "cached_input": 6394270,
+            "cache_write": 0,
+            "output": 11066,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "61c14b8b-580d-4878-92e6-b75aa32a0c49",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+        },
+        {
+          "index": 1,
+          "started": 1793981765.109365,
+          "ended": 1793981811.081353,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 7389398,
+            "cached_input": 6820546,
+            "cache_write": 0,
+            "output": 12078,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "61c14b8b-580d-4878-92e6-b75aa32a0c49",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": " denied_actions=[{'action': 'read_file', 'display_name': 'ReadFile'}]"
+    },
+    {
+      "agent_id": "f4",
+      "role": "worker",
+      "harness": "agy",
+      "model": "gemini-flash-agy",
+      "feature_ids": [
+        4
+      ],
+      "started": 1793981123.364258,
+      "ended": 1793981826.6671731,
+      "busy_s": 703.202351808548,
+      "usage": {
+        "input": 26055162,
+        "cached_input": 24610275,
+        "cache_write": 0,
+        "output": 32448,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 6
+      },
+      "cost_list": null,
+      "nudges": 2,
+      "timed_out": false,
+      "returncode": 3,
+      "tool_calls": {
+        "shell": 117,
+        "subagent": 2,
+        "read": 38
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793981123.365189,
+          "ended": 1793981811.7715368,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 8685054,
+            "cached_input": 8203425,
+            "cache_write": 0,
+            "output": 10816,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "39cf0422-30ec-49ae-987c-d2665c716ca3",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": "ERROR"
+        },
+        {
+          "index": 1,
+          "started": 1793981811.834518,
+          "ended": 1793981819.224365,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 8685054,
+            "cached_input": 8203425,
+            "cache_write": 0,
+            "output": 10816,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "39cf0422-30ec-49ae-987c-d2665c716ca3",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": "ERROR"
+        },
+        {
+          "index": 2,
+          "started": 1793981819.260886,
+          "ended": 1793981826.667043,
+          "returncode": 3,
+          "timed_out": false,
+          "usage": {
+            "input": 8685054,
+            "cached_input": 8203425,
+            "cache_write": 0,
+            "output": 10816,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "39cf0422-30ec-49ae-987c-d2665c716ca3",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": "ERROR"
+        }
+      ],
+      "error": "ERROR"
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 1.4192728996276855,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f4": {
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 2.2363219261169434,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_f4.f4.log"
+      }
+    },
+    "naive": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 1.2391870021820068,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/naive.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 1.799684762954712,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/naive.f4.log"
+      }
+    },
+    "union": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 1.0663750171661377,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/union.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 1.7462432384490967,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/union.f4.log"
+      }
+    },
+    "llm": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 1.1033170223236084,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/llm.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 1.7468798160552979,
+        "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/core_agy/S2__agy__gemini-flash-agy__pallets_click_task_task2800_k2_f1-f4__r0/grading/llm.f4.log"
+      }
+    }
+  }
+}

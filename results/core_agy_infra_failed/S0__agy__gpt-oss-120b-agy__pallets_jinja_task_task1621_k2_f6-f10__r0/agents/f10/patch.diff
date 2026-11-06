@@ -1,0 +1,116 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..c17968d 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -39,6 +39,111 @@ def split_template_path(template: str) -> t.List[str]:
+ 
+ 
+ class BaseLoader:
++    """Baseclass for all loaders. Subclass this and override `get_source` to
++    implement a custom loading mechanism.
++
++    Provides optional template aliasing functionality.
++    """
++
++    #: if set to `False` it indicates that the loader cannot provide access
++    #: to the source of templates.
++    #: .. versionadded:: 2.4
++    has_source_access = True
++
++    def __init__(self) -> None:
++        """Initialize the base loader.
++
++        Sets up an internal alias mapping dictionary. Subclasses may or may not
++        call ``super().__init__()``; the implementation is tolerant of missing
++        calls by lazily creating the attribute where needed.
++        """
++        self._aliases: t.Dict[str, str] = {}
++
++    def add_alias(self, alias: str, target: str) -> None:
++        """Add or overwrite an alias.
++
++        ``alias`` is the name used when loading a template, ``target`` is the
++        actual template name that will be resolved. Overwrites any existing
++        mapping for ``alias``.
++        """
++        if not hasattr(self, "_aliases"):
++            self._aliases = {}
++        self._aliases[alias] = target
++
++    def remove_alias(self, alias: str) -> None:
++        """Remove an alias if present. Does nothing when the alias does not
++        exist.
++        """
++        if hasattr(self, "_aliases"):
++            self._aliases.pop(alias, None)
++
++    def get_source(
++        self, environment: "Environment", template: str
++    ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
++        """Get the template source, filename and reload helper for a template.
++        It's passed the environment and template name and has to return a
++        tuple in the form ``(source, filename, uptodate)`` or raise a
++        `TemplateNotFound` error if it can't locate the template.
++        """
++        if not self.has_source_access:
++            raise RuntimeError(
++                f"{type(self).__name__} cannot provide access to the source"
++            )
++        raise TemplateNotFound(template)
++
++    def list_templates(self) -> t.List[str]:
++        """Iterates over all templates.  If the loader does not support that
++        it should raise a :exc:`TypeError` which is the default behavior.
++        """
++        raise TypeError("this loader cannot iterate over all templates")
++
++    @internalcode
++    def load(
++        self,
++        environment: "Environment",
++        name: str,
++        globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
++    ) -> "Template":
++        """Loads a template.  This method looks up the template in the cache
++        or loads one by calling :meth:`get_source`.  Subclasses should not
++        override this method as loaders working on collections of other
++        loaders (such as :class:`PrefixLoader` or :class:`ChoiceLoader`)
++        will not call this method but `get_source` directly.
++        """
++        # Resolve alias if present (no chaining).
++        if hasattr(self, "_aliases"):
++            name = self._aliases.get(name, name)
++        code = None
++        if globals is None:
++            globals = {}
++
++        # first we try to get the source for this template together
++        # with the filename and the uptodate function.
++        source, filename, uptodate = self.get_source(environment, name)
++
++        # try to load the code from the bytecode cache if there is a
++        # bytecode cache configured.
++        bcc = environment.bytecode_cache
++        if bcc is not None:
++            bucket = bcc.get_bucket(environment, name, filename, source)
++            code = bucket.code
++
++        # if we don't have code so far (not cached, no longer up to
++        # date) etc. we compile the template
++        if code is None:
++            code = environment.compile(source, name, filename)
++
++        # if the bytecode cache is available and the bucket doesn't
++        # have a code so far, we give the bucket the new code and put
++        # it back to the bytecode cache.
++        if bcc is not None and bucket.code is None:
++            bucket.code = code
++            bcc.set_bucket(bucket)
++
++        return environment.template_class.from_code(
++            environment, code, globals, uptodate
++        )
++
+     """Baseclass for all loaders.  Subclass this and override `get_source` to
+     implement a custom loading mechanism.  The environment provides a
+     `get_template` method that calls the loader's `load` method to get the

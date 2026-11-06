@@ -2,7 +2,7 @@
   "name": "core_agy",
   "dataset": "external/CooperBench/dataset",
   "pools": [
-    "dspy_task/task8563"
+    "pallets_jinja_task/task1621"
   ],
   "subset": "core",
   "host_harnesses": [],

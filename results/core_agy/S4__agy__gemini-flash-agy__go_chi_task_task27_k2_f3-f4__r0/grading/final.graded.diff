@@ -1,0 +1,80 @@
+diff --git a/mux.go b/mux.go
+index 56fa4d2..231e088 100644
+--- a/mux.go
++++ b/mux.go
+@@ -3,12 +3,29 @@ package chi
+ import (
+ 	"context"
+ 	"fmt"
++	"log"
+ 	"net/http"
+ 	"strings"
+ 	"sync"
+ )
+ 
+-var _ Router = &Mux{}
++var (
++	_ Router = &Mux{}
++
++	// debugLogging controls debug-level logging for route pattern handling.
++	debugLogging bool
++)
++
++// EnableDebugLogging turns on debug-level logging; off by default.
++func EnableDebugLogging() {
++	debugLogging = true
++}
++
++func logDebug(format string, v ...interface{}) {
++	if debugLogging {
++		log.Printf(format, v...)
++	}
++}
+ 
+ // Mux is a simple HTTP route multiplexer that parses a request path,
+ // records any URL params, and executes an end handler. It implements
+@@ -107,6 +124,18 @@ func (mx *Mux) Use(middlewares ...func(http.Handler) http.Handler) {
+ // Handle adds the route `pattern` that matches any http method to
+ // execute the `handler` http.Handler.
+ func (mx *Mux) Handle(pattern string, handler http.Handler) {
++	m, path := parsePattern(pattern)
++	mx.handle(m, path, handler)
++}
++
++// HandleFunc adds the route `pattern` that matches any http method to
++// execute the `handlerFn` http.HandlerFunc.
++func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
++	m, path := parsePattern(pattern)
++	mx.handle(m, path, handlerFn)
++}
++
++func parsePattern(pattern string) (methodTyp, string) {
+ 	parts := strings.SplitN(pattern, " ", 2)
+ 	if len(parts) == 2 {
+ 		methodStr := strings.ToUpper(parts[0])
+@@ -114,20 +143,16 @@ func (mx *Mux) Handle(pattern string, handler http.Handler) {
+ 
+ 		method, ok := methodMap[methodStr]
+ 		if !ok {
++			logDebug("chi: invalid HTTP method specified in pattern %q: %s", pattern, methodStr)
+ 			panic("chi: invalid HTTP method specified in pattern: " + methodStr)
+ 		}
+ 
+-		mx.handle(method, path, handler)
+-		return
++		logDebug("chi: parsed HTTP method %s with path %s from pattern %q", methodStr, path, pattern)
++		return method, path
+ 	}
+ 
+-	mx.handle(mALL, pattern, handler)
+-}
+-
+-// HandleFunc adds the route `pattern` that matches any http method to
+-// execute the `handlerFn` http.HandlerFunc.
+-func (mx *Mux) HandleFunc(pattern string, handlerFn http.HandlerFunc) {
+-	mx.handle(mALL, pattern, handlerFn)
++	logDebug("chi: parsed pattern %q without HTTP method (matches all methods)", pattern)
++	return mALL, pattern
+ }
+ 
+ // Method adds the route `pattern` that matches `method` http method to

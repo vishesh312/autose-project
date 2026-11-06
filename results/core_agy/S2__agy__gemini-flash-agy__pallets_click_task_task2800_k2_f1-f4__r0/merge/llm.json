@@ -1,0 +1,28 @@
+{
+  "mode": "llm",
+  "lost": [
+    4
+  ],
+  "steps": [
+    {
+      "branch": "f1",
+      "feature_ids": [
+        1
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    },
+    {
+      "branch": "f4",
+      "feature_ids": [
+        4
+      ],
+      "conflicted": true,
+      "conflict_files": [
+        "src/click/shell_completion.py"
+      ],
+      "outcome": "resolve_failed"
+    }
+  ]
+}
