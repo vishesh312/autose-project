@@ -124,7 +124,14 @@ Used for & OpenCode runs on the \texttt{core} Python pools; a Qwen3.8-27B (INT4)
 
 \textbf{Per-pool view.} Table~\ref{tab:pool} shows the pattern behind the averages. With Gemini, the jinja~1621 pair passes both tasks in S0 and S1, while the dspy, go\_chi and click pairs pass exactly one of two in S0 and S1: one task per pair is consistently out of reach for this setup, whatever the strategy. We have not yet inspected which task fails or why. Because the agents could not run the repository tests on the host, some failures may be unverified mistakes, not missing capability.
 
-\textbf{OpenCode + Qwen2.5-7B (GPU machine, partial, Python pools).} Across S0, S1 and S2 ($n{=}11,11,9$) no task has passed (0.00, 95\% CI up to 0.15--0.18), with and without a ``small model'' prompt. We cannot yet tell whether the model is too weak for these tasks (CooperBench reports weak results for small open models) or whether part of the no-Docker setup is at fault; this is the first thing to investigate.
+\begin{table}[t]
+\caption{OpenCode + Qwen2.5-7B-Instruct on the \texttt{core} Python pools ($k{=}2$, GPU machine; partial). Wall and tokens are medians per run.}
+\label{tab:qwen}
+\small
+\input{tables_qwen}
+\end{table}
+
+\textbf{OpenCode + Qwen2.5-7B (GPU machine, Python pools).} Table~\ref{tab:qwen} shows no task passing under S0, S1 or S2 (in all three merge modes), with the default prompt or with a ``small model'' prompt. The model did attempt the tasks: only a few agent runs ended with an empty patch. According to the log analysis (\texttt{docs/analysis\_qwen7b.md}), failures are mostly broken code (syntax and import errors, truncated edits), not wrong-but-valid implementations, and merging does not rescue them (merge conflict rate about 0.4). The small-model prompt removes the model's wandering (git and scratch-file commands drop to about zero) and multiplies real edits, but does not change the pass rate and increases time and tokens. S1 reaches genuine assertion failures more often than S0 or S2, a hypothesis we have not tested. This model therefore cannot rank the strategies on success, only on time, tokens and conflicts; a stronger model (Qwen3.8-27B, INT4, is planned) is needed. Some bundles appear twice in reversed task order and are extra samples, not independent bundles.
 
 \section{Problems Faced}
 Making CooperBench usable for $k>2$ took real work: its grader and runner handle only two features, and its images leak future upstream history, so we wrote our own grader and a history scrub. Each agent harness behaved differently from its documentation, which required adapters verified against live output, and keeping results trustworthy cost us several reruns: agents found and searched for the upstream fix on the web, and service quota and capacity errors silently ended runs early. We now block web tools, retry through service errors, mark affected runs invalid, and audit the logs. The full benchmark is about 3,900 agent sessions for $k{=}2$ alone, so we evaluate curated subsets.
@@ -141,7 +148,7 @@ $n$ is tiny and each configuration has one repeat; confidence intervals are wide
 \section{Remaining Work (to 30 November)}
 \begin{itemize}\itemsep0pt
 \item Finish the \texttt{core} runs (S4 and the heavy pools: outlines, typst, tiktoken, llama\_index, react-hook-form) and add repeats ($\ge$3) with confidence intervals.
-\item The main OpenCode experiments on a GPU machine with a stronger open model (Qwen 27B--35B class), and find out why Qwen2.5-7B passes nothing.
+\item The main OpenCode experiments on the GPU machine with a stronger open model (Qwen3.8-27B, INT4, then a 35B-class model), since Qwen2.5-7B passes nothing.
 \item $k=3,4,6$ bundles and an analysis by conflict density using CooperBench's gold conflict report.
 \item Validate the Pi, Claude Code and Codex adapters on real output; cache S0 results across bundles.
 \item Our own contribution: a predict-then-schedule strategy (S3) that predicts each task's files, runs conflicting tasks one after another and the rest in parallel, evaluated with file-prediction recall and the cost saved.

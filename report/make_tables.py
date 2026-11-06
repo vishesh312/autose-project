@@ -91,3 +91,33 @@ if g0 and g1:
     mac += [f"\\newcommand{{\\tokRatio}}{{{t0/t1:.1f}}}", f"\\newcommand{{\\tokLow}}{{{t1/2e6:.0f}}}", f"\\newcommand{{\\tokHigh}}{{{t0/2e6:.0f}}}"]
 with open(ROOT / "report/stats.tex", "a") as fh:
     fh.write("\n".join(mac) + "\n")
+
+
+# ---- Qwen2.5-7B via OpenCode on the GPU machine (pulled from the repo: results/core_opencode_vllm*)
+qrows = collections.defaultdict(list)
+for exp, prompt in (("core_opencode_vllm", "default"), ("core_opencode_vllm_sm", "small-model")):
+    for f in glob.glob(str(ROOT / f"results/{exp}/*/run.json")):
+        d = json.load(open(f))
+        if not d.get("valid", True):
+            continue
+        r, c = d["run"], d["correctness"]
+        p = c["by_final"][c["primary"]]
+        m = d.get("merge") or {}
+        qrows[(prompt, r["strategy_id"])].append(dict(
+            pass_rate=p["task_pass_rate"], wall=d["time"]["wall_clock_s"], tok=d["cost"]["usage"]["input"],
+            conflict=m.get("conflict_rate")))
+q = [r"\begin{tabular}{@{}llrcccc@{}}", r"\toprule",
+     r"Prompt & Strat. & $n$ & Task pass & Wall (s) & In-tokens (K) & Conflict \\", r"\midrule"]
+for prompt in ("default", "small-model"):
+    for st in ("S0", "S1", "S2"):
+        v = qrows.get((prompt, st))
+        if not v:
+            continue
+        conf = [x["conflict"] for x in v if x["conflict"] is not None]
+        q.append(f"{prompt} & {st} & {len(v)} & {statistics.mean(x['pass_rate'] for x in v):.2f} & "
+                 f"{statistics.median(x['wall'] for x in v):.0f} & {statistics.median(x['tok'] for x in v)/1e3:.0f} & "
+                 f"{(f'{statistics.mean(conf):.2f}' if conf else '--')} \\\\")
+    if prompt == "default":
+        q.append(r"\midrule")
+q += [r"\bottomrule", r"\end{tabular}"]
+(ROOT / "report/tables_qwen.tex").write_text("\n".join(q) + "\n")
