@@ -1,0 +1,74 @@
+{
+  "agent_id": "probe",
+  "role": "probe",
+  "harness": "opencode",
+  "model": "qwen3.5-9b-ollama",
+  "feature_ids": [],
+  "started": 1793971163.331862,
+  "ended": 1793971165.250103,
+  "busy_s": 1.6294071674346924,
+  "usage": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "cost_list": 0.0,
+  "nudges": 1,
+  "timed_out": false,
+  "returncode": 1,
+  "tool_calls": {},
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793971163.458045,
+      "ended": 1793971164.32955,
+      "returncode": 1,
+      "timed_out": false,
+      "usage": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "num_turns": 0,
+      "session_id": "ses_e4efc6d28ffe8m4GyMaRMqhJAn",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": "{\"type\": \"error\", \"timestamp\": 1793971164247, \"sessionID\": \"ses_e4efc6d28ffe8m4GyMaRMqhJAn\", \"error\": {\"type\": \"provider.no-route\", \"message\": \"Model unavailable: local/qwen3.5:9b\"}}"
+    },
+    {
+      "index": 1,
+      "started": 1793971164.49206,
+      "ended": 1793971165.249962,
+      "returncode": 1,
+      "timed_out": false,
+      "usage": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "num_turns": 0,
+      "session_id": "ses_e4efc6d28ffe8m4GyMaRMqhJAn",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": "{\"type\": \"error\", \"timestamp\": 1793971165172, \"sessionID\": \"ses_e4efc6d28ffe8m4GyMaRMqhJAn\", \"error\": {\"type\": \"provider.no-route\", \"message\": \"Model unavailable: local/qwen3.5:9b\"}}"
+    }
+  ],
+  "error": "{\"type\": \"error\", \"timestamp\": 1793971164247, \"sessionID\": \"ses_e4efc6d28ffe8m4GyMaRMqhJAn\", \"error\": {\"type\": \"provider.no-route\", \"message\": \"Model unavailable: local/qwen3.5:9b\"}}"
+}

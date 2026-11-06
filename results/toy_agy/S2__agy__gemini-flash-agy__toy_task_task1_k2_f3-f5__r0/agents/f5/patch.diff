@@ -1,0 +1,53 @@
+diff --git a/tests/test_slug.py b/tests/test_slug.py
+new file mode 100644
+index 0000000..90e9038
+--- /dev/null
++++ b/tests/test_slug.py
+@@ -0,0 +1,27 @@
++from textkit.slug import slugify
++
++
++def test_slugify_basic():
++    assert slugify("  Hello, World!! ") == "hello-world"
++
++
++def test_slugify_custom_separator():
++    assert slugify("A B", sep="_") == "a_b"
++
++
++def test_slugify_empty_and_special_chars():
++    assert slugify("") == ""
++    assert slugify("   ") == ""
++    assert slugify("!@#$%^&*()") == ""
++
++
++def test_slugify_alphanumeric():
++    assert slugify("Item 123: 456 pieces") == "item-123-456-pieces"
++
++
++def test_slugify_repeated_separators():
++    assert slugify("---a---b---") == "a-b"
++
++
++def test_slugify_empty_sep():
++    assert slugify("Hello, World!", sep="") == "helloworld"
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..8ec2fda
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,14 @@
++"""URL slug generation."""
++
++import re
++
++_NON_ALPHANUM_RE = re.compile(r"[^a-zA-Z0-9]+")
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase text and replace runs of non-alphanumeric ASCII characters with sep."""
++    lowered = text.lower()
++    replaced = _NON_ALPHANUM_RE.sub(sep, lowered)
++    if sep:
++        return replaced.strip(sep)
++    return replaced

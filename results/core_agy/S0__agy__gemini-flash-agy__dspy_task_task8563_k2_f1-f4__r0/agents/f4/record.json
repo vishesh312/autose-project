@@ -1,0 +1,60 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    4
+  ],
+  "started": 1793975423.923904,
+  "ended": 1793975942.554359,
+  "busy_s": 518.5556468963623,
+  "usage": {
+    "input": 2902107,
+    "cached_input": 2624270,
+    "cache_write": 0,
+    "output": 10747,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 10,
+    "shell": 61,
+    "subagent": 5,
+    "edit": 4
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793975423.9244192,
+      "ended": 1793975942.480066,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 2902107,
+        "cached_input": 2624270,
+        "cache_write": 0,
+        "output": 10747,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "02b08740-31d6-4e3e-adee-11903ef59081",
+      "nudge_reason": null,
+      "final_text_tail": "rves booleans, numbers, and other types without coercion.\n2. **Fingerprint computation** (`_compute_tool_call_fingerprint` in [dspy/adapters/types/tool.py](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-hca76ocl/repo/dspy/adapters/types/tool.py#L273-L280)):\n   - Packages `{\"name\": name, \"args\": canonical_args}`.\n   - Serializes using `json.dumps(..., sort_keys=True, separators=(\",\", \":\"))`.\n   - Hashes with SHA-256 to produce a 64-character hex `.fingerprint` and extracts the first 8 characters as `.id`.\n3. **`ToolCall` initialization and read-only attributes** ([dspy/adapters/types/tool.py](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-hca76ocl/repo/dspy/adapters/types/tool.py#L283-L297)):\n   - Added `fingerprint: str = Field(default=\"\", frozen=True)` and `id: str = Field(default=\"\", frozen=True)` to `ToolCalls.ToolCall`.\n   - Computes `.fingerprint` and `.id` upon instantiation in `ToolCall.__init__` and sets them as read-only fields.\n   - Instances created directly or via `ToolCalls.from_dict_list(...)` automatically receive `.fingerprint` and `.id`.\n4. **Tests** ([tests/adapters/test_tool.py](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-hca76ocl/repo/tests/adapters/test_tool.py#L462-L498)):\n   - Added unit tests verifying fingerprint length, short ID prefix, invariance to dictionary key order, whitespace trimming, tuple-to-list equivalence, type preservation, and immutability.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

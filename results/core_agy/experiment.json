@@ -1,0 +1,47 @@
+{
+  "name": "core_agy",
+  "dataset": "external/CooperBench/dataset",
+  "pools": [
+    "dspy_task/task8563"
+  ],
+  "subset": "core",
+  "host_harnesses": [],
+  "k": [
+    2
+  ],
+  "bundles_per_pool": 1,
+  "seed": 0,
+  "strategies": [
+    "S0",
+    "S1",
+    "S2",
+    "S4"
+  ],
+  "harnesses": [
+    "agy"
+  ],
+  "models": [
+    "gpt-oss-120b-agy"
+  ],
+  "repeats": 1,
+  "agent_timeout_s": 1800,
+  "max_turns": 100,
+  "max_nudges": 2,
+  "max_parallel_runs": 1,
+  "s0_parallel": 1,
+  "grade_parallel": 1,
+  "merge": {
+    "modes": [
+      "naive",
+      "union",
+      "llm"
+    ]
+  },
+  "prompt_variants": {},
+  "container_memory": null,
+  "container_cpus": null,
+  "forward_env": [],
+  "copy_auth_files": false,
+  "agent_image_suffix": "parbench-agent",
+  "results_dir": "results"
+}

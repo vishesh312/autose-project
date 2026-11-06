@@ -1,0 +1,91 @@
+diff --git a/tests/test_new_features.py b/tests/test_new_features.py
+new file mode 100644
+index 0000000..0e4e136
+--- /dev/null
++++ b/tests/test_new_features.py
+@@ -0,0 +1,35 @@
++import json
++import tempfile
++from textkit.cli import main
++from textkit.slug import slugify
++
++
++def test_slugify():
++    assert slugify("  Hello, World!! ") == "hello-world"
++    assert slugify("A B", sep="_") == "a_b"
++    assert slugify("---Hello---World---") == "hello-world"
++    assert slugify("Hello 123 World") == "hello-123-world"
++    assert slugify("") == ""
++    assert slugify("!!!") == ""
++    assert slugify("A B", sep="--") == "a--b"
++
++
++def test_cli_json(capsys=None):
++    with tempfile.NamedTemporaryFile(mode="w", delete=False) as f:
++        f.write("one two three")
++        f_path = f.name
++
++    import io
++    import sys
++
++    old_stdout = sys.stdout
++    sys.stdout = io.StringIO()
++    try:
++        main(["words", f_path])
++        assert sys.stdout.getvalue().strip() == "3"
++
++        sys.stdout = io.StringIO()
++        main(["--json", "words", f_path])
++        assert json.loads(sys.stdout.getvalue()) == {"op": "words", "result": 3}
++    finally:
++        sys.stdout = old_stdout
+diff --git a/textkit/cli.py b/textkit/cli.py
+index 7cd1c65..b2f6e36 100644
+--- a/textkit/cli.py
++++ b/textkit/cli.py
+@@ -1,6 +1,7 @@
+ """Command line interface: textkit OP FILE"""
+ 
+ import argparse
++import json
+ import sys
+ 
+ from .core import OPERATIONS, run
+@@ -8,13 +9,17 @@ from .core import OPERATIONS, run
+ 
+ def main(argv=None) -> int:
+     parser = argparse.ArgumentParser(prog="textkit")
++    parser.add_argument("--json", action="store_true", help="output JSON")
+     parser.add_argument("op", choices=sorted(OPERATIONS))
+     parser.add_argument("file")
+     args = parser.parse_args(argv)
+     with open(args.file) as fh:
+         text = fh.read()
+     result = run(args.op, text)
+-    print(result)
++    if args.json:
++        print(json.dumps({"op": args.op, "result": result}))
++    else:
++        print(result)
+     return 0
+ 
+ 
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..15ae262
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,13 @@
++"""Slugify text helper."""
++
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase text, replace runs of non-ASCII-alphanumeric chars with sep, strip leading/trailing sep."""
++    lowered = text.lower()
++    replaced = re.sub(r"[^a-z0-9]+", sep, lowered)
++    if sep:
++        esc = re.escape(sep)
++        return re.sub(rf"^(?:{esc})+|(?:{esc})+$", "", replaced)
++    return replaced

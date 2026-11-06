@@ -1,0 +1,24 @@
+{
+  "mode": "llm",
+  "lost": [],
+  "steps": [
+    {
+      "branch": "f3",
+      "feature_ids": [
+        3
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    },
+    {
+      "branch": "f5",
+      "feature_ids": [
+        5
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    }
+  ]
+}

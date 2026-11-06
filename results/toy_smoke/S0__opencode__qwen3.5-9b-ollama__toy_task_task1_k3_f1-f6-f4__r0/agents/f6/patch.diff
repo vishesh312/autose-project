@@ -1,0 +1,19 @@
+diff --git a/textkit/core.py b/textkit/core.py
+index af4b9bf..b84ec53 100644
+--- a/textkit/core.py
++++ b/textkit/core.py
+@@ -1,9 +1,12 @@
+ """Core text operations."""
++import re
+ 
+ 
+ def word_count(text: str) -> int:
+-    """Number of whitespace-separated words."""
+-    return len(text.split())
++    """Number of whitespace-separated words. Punctuation-only tokens (with no letter or digit) are not counted."""
++    def is_word(token: str) -> bool:
++        return bool(re.search(r'\w', token))
++    return len([t for t in text.split() if is_word(t)])
+ 
+ 
+ def char_count(text: str) -> int:

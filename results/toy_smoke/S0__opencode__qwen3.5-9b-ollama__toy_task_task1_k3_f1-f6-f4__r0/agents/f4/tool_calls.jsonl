@@ -1,0 +1,12 @@
+{"name": "read", "kind": "read", "args": {"path": "/workspace/repo/textkit/cli.py"}, "ok": true, "ts": null}
+{"name": "edit", "kind": "edit", "args": {"path": "/workspace/repo/textkit/cli.py", "oldString": "    parser.add_argument(\"file\")\n    args = parser.parse_args(argv)\n    with open(args.file) as fh:\n        text = fh.read()", "newString": "    parser.add_argument(\"file\", help=\"Input file; use '-' to read from standard input\")\n    args = parser.parse_args(argv)\n    if args.file == \"-\":\n        text = sys.stdin.read()\n    else:\n        with open(args.file) as fh:\n            text = fh.read()"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"path": "/workspace/repo/textkit/cli.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "**/test*.py", "path": "/workspace/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"path": "/workspace/repo/tests/test_core.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "**/pyproject.toml", "path": "/workspace/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"path": "/workspace/repo/pyproject.toml"}, "ok": true, "ts": null}
+{"name": "shell", "kind": "shell", "args": {"command": "cd /workspace/repo && pip install -e . -q", "timeout": 30000}, "ok": true, "ts": null}
+{"name": "shell", "kind": "shell", "args": {"command": "cd /workspace/repo && textkit --help"}, "ok": true, "ts": null}
+{"name": "shell", "kind": "shell", "args": {"command": "cd /workspace/repo && echo \"hello world\" | textkit words -"}, "ok": true, "ts": null}
+{"name": "shell", "kind": "shell", "args": {"command": "cd /workspace/repo && echo \"hello world\" | textkit chars -"}, "ok": true, "ts": null}
+{"name": "shell", "kind": "shell", "args": {"command": "cd /workspace/repo && echo \"hello world\" > /tmp/test.txt && textkit words /tmp/test.txt"}, "ok": true, "ts": null}

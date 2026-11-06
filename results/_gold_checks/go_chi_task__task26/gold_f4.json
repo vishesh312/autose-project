@@ -1,0 +1,11 @@
+{
+  "4": {
+    "fid": 4,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 1,
+    "tests_failed": 0,
+    "duration_s": 13.208297967910767,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/go_chi_task__task26/gold_f4.f4.log"
+  }
+}

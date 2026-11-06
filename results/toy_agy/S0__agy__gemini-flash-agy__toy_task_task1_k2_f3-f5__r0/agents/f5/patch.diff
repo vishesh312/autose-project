@@ -1,0 +1,48 @@
+diff --git a/tests/test_slug.py b/tests/test_slug.py
+new file mode 100644
+index 0000000..5515ff6
+--- /dev/null
++++ b/tests/test_slug.py
+@@ -0,0 +1,27 @@
++from textkit.slug import slugify
++
++
++def test_slugify_basic():
++    assert slugify("  Hello, World!! ") == "hello-world"
++
++
++def test_slugify_custom_separator():
++    assert slugify("A B", sep="_") == "a_b"
++
++
++def test_slugify_multiple_separators():
++    assert slugify("foo---bar...baz") == "foo-bar-baz"
++
++
++def test_slugify_numbers():
++    assert slugify("item 123 details 456") == "item-123-details-456"
++
++
++def test_slugify_empty_and_non_ascii():
++    assert slugify("") == ""
++    assert slugify("   !!!   ") == ""
++    assert slugify("---") == ""
++
++
++def test_slugify_separator_runs():
++    assert slugify("a...b///c", sep="/") == "a/b/c"
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..1382e50
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,9 @@
++"""Slugify helper."""
++
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase text, replace non-alphanumeric runs with sep, and strip leading/trailing sep."""
++    words = re.findall(r"[a-zA-Z0-9]+", text.lower())
++    return sep.join(words)

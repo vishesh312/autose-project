@@ -1,0 +1,60 @@
+{
+  "agent_id": "f3",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    3
+  ],
+  "started": 1793973333.657145,
+  "ended": 1793973451.29329,
+  "busy_s": 117.58749294281006,
+  "usage": {
+    "input": 326282,
+    "cached_input": 59752,
+    "cache_write": 0,
+    "output": 2254,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 18,
+    "subagent": 1,
+    "read": 4,
+    "edit": 1
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793973333.65885,
+      "ended": 1793973451.246343,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 326282,
+        "cached_input": 59752,
+        "cache_write": 0,
+        "output": 2254,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "6d857c67-b1e5-4823-a9c4-6bafaf6011f1",
+      "nudge_reason": null,
+      "final_text_tail": "The `--json` output flag has been added to `textkit` in [textkit/cli.py](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_3h22k9c/repo/textkit/cli.py).\n\n### Summary of Changes\n- Added `--json` flag to `argparse` in `main()` of [textkit/cli.py](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-_3h22k9c/repo/textkit/cli.py#L12).\n- When `--json` is provided, the output is formatted as a JSON object `{\"op\": <operation name>, \"result\": <result>}` via `json.dumps`.\n- When `--json` is omitted, the plain result is printed as before.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

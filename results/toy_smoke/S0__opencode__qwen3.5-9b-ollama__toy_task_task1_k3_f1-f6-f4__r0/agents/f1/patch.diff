@@ -1,0 +1,23 @@
+diff --git a/textkit/core.py b/textkit/core.py
+index af4b9bf..6ce4a69 100644
+--- a/textkit/core.py
++++ b/textkit/core.py
+@@ -11,9 +11,18 @@ def char_count(text: str) -> int:
+     return len(text)
+ 
+ 
++def line_count(text: str) -> int:
++    """Number of lines in text. A trailing newline does not count as an extra line."""
++    lines = text.split('\n')
++    if lines and len(lines) > 1 and lines[-1] == '':
++        lines = lines[:-1]
++    return len(lines) if lines != [''] else 0
++
++
+ OPERATIONS = {
+     "words": word_count,
+     "chars": char_count,
++    "lines": line_count,
+ }
+ 
+ 

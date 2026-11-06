@@ -1,0 +1,31 @@
+diff --git a/textkit/cli.py b/textkit/cli.py
+index 7cd1c65..c680318 100644
+--- a/textkit/cli.py
++++ b/textkit/cli.py
+@@ -1,6 +1,7 @@
+ """Command line interface: textkit OP FILE"""
+ 
+ import argparse
++import json
+ import sys
+ 
+ from .core import OPERATIONS, run
+@@ -8,13 +9,17 @@ from .core import OPERATIONS, run
+ 
+ def main(argv=None) -> int:
+     parser = argparse.ArgumentParser(prog="textkit")
++    parser.add_argument("--json", action="store_true", help="output result as JSON")
+     parser.add_argument("op", choices=sorted(OPERATIONS))
+     parser.add_argument("file")
+     args = parser.parse_args(argv)
+     with open(args.file) as fh:
+         text = fh.read()
+     result = run(args.op, text)
+-    print(result)
++    if args.json:
++        print(json.dumps({"op": args.op, "result": result}))
++    else:
++        print(result)
+     return 0
+ 
+ 

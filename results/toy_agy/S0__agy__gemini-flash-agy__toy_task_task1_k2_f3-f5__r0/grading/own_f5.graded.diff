@@ -1,0 +1,15 @@
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..1382e50
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,9 @@
++"""Slugify helper."""
++
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase text, replace non-alphanumeric runs with sep, and strip leading/trailing sep."""
++    words = re.findall(r"[a-zA-Z0-9]+", text.lower())
++    return sep.join(words)

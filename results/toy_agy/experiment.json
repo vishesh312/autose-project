@@ -1,0 +1,48 @@
+{
+  "name": "toy_agy",
+  "dataset": "smoke/dataset",
+  "pools": [
+    "toy_task/task1"
+  ],
+  "subset": null,
+  "host_harnesses": [],
+  "k": [
+    2,
+    3
+  ],
+  "bundles_per_pool": 1,
+  "seed": 0,
+  "strategies": [
+    "S0",
+    "S1",
+    "S2",
+    "S4"
+  ],
+  "harnesses": [
+    "agy"
+  ],
+  "models": [
+    "gemini-flash-agy"
+  ],
+  "repeats": 1,
+  "agent_timeout_s": 900,
+  "max_turns": 40,
+  "max_nudges": 2,
+  "max_parallel_runs": 1,
+  "s0_parallel": 1,
+  "grade_parallel": 2,
+  "merge": {
+    "modes": [
+      "naive",
+      "union",
+      "llm"
+    ]
+  },
+  "prompt_variants": {},
+  "container_memory": null,
+  "container_cpus": null,
+  "forward_env": [],
+  "copy_auth_files": false,
+  "agent_image_suffix": "parbench-agent",
+  "results_dir": "results"
+}

@@ -1,0 +1,60 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "agy",
+  "model": "gemini-flash-agy",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793974573.000004,
+  "ended": 1793975417.387446,
+  "busy_s": 844.3424258232117,
+  "usage": {
+    "input": 4461147,
+    "cached_input": 4162909,
+    "cache_write": 0,
+    "output": 12712,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 1
+  },
+  "cost_list": null,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 69,
+    "read": 17,
+    "subagent": 10,
+    "edit": 3
+  },
+  "files_read": [],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793974573.000858,
+      "ended": 1793975417.343284,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 4461147,
+        "cached_input": 4162909,
+        "cache_write": 0,
+        "output": 12712,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "f1a6f843-8138-4421-ab59-c079521d12fe",
+      "nudge_reason": null,
+      "final_text_tail": "sk to add flexible parsing for [`dspy.ToolCalls`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-87w19peg/repo/dspy/adapters/types/tool.py#L258) has been completed.\n\n### Changes Made\n1. **`ToolCalls.validate_input` validator** ([`dspy/adapters/types/tool.py`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-87w19peg/repo/dspy/adapters/types/tool.py#L265-L290)):\n   - Added a `@model_validator(mode=\"before\")` classmethod `validate_input(cls, data: Any) -> Any`.\n   - Handles string inputs by attempting to parse them via `json_repair.loads`. If parsing fails or produces an empty string for non-empty input, the original string is preserved.\n   - For a single dictionary with `name` and `args` (and without `tool_calls`), wraps it into `{\"tool_calls\": [data]}`.\n   - For a bare list of dictionaries where each contains `name` and `args`, wraps it into `{\"tool_calls\": data}`.\n   - Preserves existing dictionary structure when `tool_calls` is already present.\n   - Returns normalized Python structures (dict/list/string).\n2. **Unit tests** ([`tests/adapters/test_tool.py`](file:///private/var/folders/3q/2m8v425s7p39t7qxjp0kcdw80000gn/T/parbench-host-87w19peg/repo/tests/adapters/test_tool.py#L462-L517)):\n   - Added `test_tool_calls_validate_input` covering canonical dicts, single-object dicts, bare lists of tool call dicts, JSON strings for each variant, non-JSON strings, plain JSON strings, and existing `ToolCalls` model instances.\n",
+      "error": null
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,20 @@
+diff --git a/textkit/core.py b/textkit/core.py
+index af4b9bf..c6f8ded 100644
+--- a/textkit/core.py
++++ b/textkit/core.py
+@@ -11,9 +11,15 @@ def char_count(text: str) -> int:
+     return len(text)
+ 
+ 
++def line_count(text: str) -> int:
++    """Number of lines in the text."""
++    return len(text.splitlines())
++
++
+ OPERATIONS = {
+     "words": word_count,
+     "chars": char_count,
++    "lines": line_count,
+ }
+ 
+ 

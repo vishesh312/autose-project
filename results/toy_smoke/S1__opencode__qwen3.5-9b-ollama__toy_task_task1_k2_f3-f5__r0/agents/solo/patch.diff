@@ -1,0 +1,76 @@
+diff --git a/textkit/cli.py b/textkit/cli.py
+index 7cd1c65..326a20e 100644
+--- a/textkit/cli.py
++++ b/textkit/cli.py
+@@ -10,11 +10,16 @@ def main(argv=None) -> int:
+     parser = argparse.ArgumentParser(prog="textkit")
+     parser.add_argument("op", choices=sorted(OPERATIONS))
+     parser.add_argument("file")
++    parser.add_argument("--json", action="store_true", help="Output result as JSON")
+     args = parser.parse_args(argv)
+     with open(args.file) as fh:
+         text = fh.read()
+     result = run(args.op, text)
+-    print(result)
++    if args.json:
++        import json
++        print(json.dumps({"op": args.op, "result": result}))
++    else:
++        print(result)
+     return 0
+ 
+ 
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..6f1c2b7
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,48 @@
++"""Slug generation utilities."""
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Convert text to a URL-friendly slug.
++    
++    Lowercases the text, replaces every run of non-ASCII letters or digits with sep,
++    and strips leading/trailing separators.
++    
++    Args:
++        text: The input text to convert.
++        sep: The separator character (default: "-").
++    
++    Returns:
++        A slugified string.
++    
++    Examples:
++        >>> slugify("  Hello, World!! ")
++        'hello-world'
++        >>> slugify("A B", sep="_")
++        'a_b'
++    """
++    # Replace runs of non-ASCII letters/digits with a single separator
++    # Then collapse multiple consecutive separators into one
++    
++    lowercase = text.lower()
++    
++    # First pass: replace any non-alphanum character with the separator
++    processed_chars = []
++    for c in lowercase:
++        if c.isascii() and (c.isalpha() or c.isdigit()):
++            processed_chars.append(c)
++        else:
++            processed_chars.append(sep)
++    
++    # Second pass: collapse consecutive separators into one
++    collapsed = []
++    prev_was_sep = False
++    for c in processed_chars:
++        if c == sep and prev_was_sep:
++            continue  # skip duplicate separator
++        collapsed.append(c)
++        prev_was_sep = (c == sep)
++    
++    slug = "".join(collapsed)
++    
++    # Strip leading/trailing separators
++    return slug.strip(sep)

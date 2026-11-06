@@ -1,0 +1,56 @@
+{
+  "1": {
+    "fid": 1,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 50,
+    "tests_failed": 0,
+    "duration_s": 53.717376947402954,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/dspy_task__task8563/combined.f1.log"
+  },
+  "2": {
+    "fid": 2,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 52,
+    "tests_failed": 0,
+    "duration_s": 11.741933822631836,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/dspy_task__task8563/combined.f2.log"
+  },
+  "3": {
+    "fid": 3,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 53,
+    "tests_failed": 0,
+    "duration_s": 10.589284181594849,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/dspy_task__task8563/combined.f3.log"
+  },
+  "4": {
+    "fid": 4,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 59,
+    "tests_failed": 0,
+    "duration_s": 9.96429705619812,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/dspy_task__task8563/combined.f4.log"
+  },
+  "5": {
+    "fid": 5,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 57,
+    "tests_failed": 0,
+    "duration_s": 11.031163930892944,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/dspy_task__task8563/combined.f5.log"
+  },
+  "6": {
+    "fid": 6,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 59,
+    "tests_failed": 0,
+    "duration_s": 9.22510290145874,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/dspy_task__task8563/combined.f6.log"
+  }
+}

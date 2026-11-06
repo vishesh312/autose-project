@@ -1,0 +1,65 @@
+{
+  "1": {
+    "fid": 1,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 68,
+    "tests_failed": 0,
+    "duration_s": 2.454620838165283,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_click_task__task2800/combined.f1.log"
+  },
+  "2": {
+    "fid": 2,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 76,
+    "tests_failed": 0,
+    "duration_s": 1.173771858215332,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_click_task__task2800/combined.f2.log"
+  },
+  "3": {
+    "fid": 3,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 72,
+    "tests_failed": 0,
+    "duration_s": 0.9210910797119141,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_click_task__task2800/combined.f3.log"
+  },
+  "4": {
+    "fid": 4,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 77,
+    "tests_failed": 0,
+    "duration_s": 2.2225489616394043,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_click_task__task2800/combined.f4.log"
+  },
+  "5": {
+    "fid": 5,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 74,
+    "tests_failed": 0,
+    "duration_s": 1.4617819786071777,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_click_task__task2800/combined.f5.log"
+  },
+  "6": {
+    "fid": 6,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 79,
+    "tests_failed": 0,
+    "duration_s": 0.9369089603424072,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_click_task__task2800/combined.f6.log"
+  },
+  "7": {
+    "fid": 7,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 72,
+    "tests_failed": 0,
+    "duration_s": 0.9922409057617188,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_click_task__task2800/combined.f7.log"
+  }
+}

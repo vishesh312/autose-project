@@ -1,0 +1,21 @@
+{
+  "dspy_task/task8563/k2/f1-f4": {
+    "id": "dspy_task/task8563/k2/f1-f4",
+    "pool": "dspy_task/task8563",
+    "image": "akhatua/cooperbench-dspy:task8563",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "gold_files": {
+      "1": [
+        "dspy/adapters/types/tool.py"
+      ],
+      "4": [
+        "dspy/adapters/types/tool.py"
+      ]
+    },
+    "gold_conflict_pairs": []
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "1": {
+    "fid": 1,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 47,
+    "tests_failed": 0,
+    "duration_s": 2.296523094177246,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f1.log"
+  },
+  "10": {
+    "fid": 10,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 55,
+    "tests_failed": 0,
+    "duration_s": 1.0650160312652588,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f10.log"
+  },
+  "2": {
+    "fid": 2,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 44,
+    "tests_failed": 0,
+    "duration_s": 1.0791821479797363,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f2.log"
+  },
+  "3": {
+    "fid": 3,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 49,
+    "tests_failed": 0,
+    "duration_s": 1.2716166973114014,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f3.log"
+  },
+  "4": {
+    "fid": 4,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 47,
+    "tests_failed": 0,
+    "duration_s": 1.2878460884094238,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f4.log"
+  },
+  "5": {
+    "fid": 5,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 48,
+    "tests_failed": 0,
+    "duration_s": 1.4828908443450928,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f5.log"
+  },
+  "6": {
+    "fid": 6,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 49,
+    "tests_failed": 0,
+    "duration_s": 1.10017728805542,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f6.log"
+  },
+  "7": {
+    "fid": 7,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 49,
+    "tests_failed": 0,
+    "duration_s": 1.177511215209961,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f7.log"
+  },
+  "8": {
+    "fid": 8,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 56,
+    "tests_failed": 0,
+    "duration_s": 1.081787109375,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f8.log"
+  },
+  "9": {
+    "fid": 9,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 50,
+    "tests_failed": 0,
+    "duration_s": 6.753139972686768,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1621/combined.f9.log"
+  }
+}

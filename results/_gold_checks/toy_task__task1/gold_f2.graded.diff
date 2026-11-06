@@ -1,0 +1,20 @@
+diff --git a/textkit/core.py b/textkit/core.py
+index af4b9bf..97fd5ae 100644
+--- a/textkit/core.py
++++ b/textkit/core.py
+@@ -11,9 +11,15 @@ def char_count(text: str) -> int:
+     return len(text)
+ 
+ 
++def unique_words(text: str) -> int:
++    """Number of distinct words, compared case-insensitively."""
++    return len({w.lower() for w in text.split()})
++
++
+ OPERATIONS = {
+     "words": word_count,
+     "chars": char_count,
++    "unique": unique_words,
+ }
+ 
+ 

@@ -1,0 +1,103 @@
+diff --git a/tests/test_features.py b/tests/test_features.py
+new file mode 100644
+index 0000000..7630de2
+--- /dev/null
++++ b/tests/test_features.py
+@@ -0,0 +1,42 @@
++import json
++import tempfile
++from textkit.cli import main
++from textkit.slug import slugify
++
++
++def test_slugify_basic():
++    assert slugify("  Hello, World!! ") == "hello-world"
++    assert slugify("A B", sep="_") == "a_b"
++    assert slugify("foo") == "foo"
++    assert slugify("Foo Bar Baz") == "foo-bar-baz"
++    assert slugify("") == ""
++    assert slugify("---") == ""
++    assert slugify("!@#$%^&*()") == ""
++    assert slugify("hello_world") == "hello-world"
++    assert slugify("123 456") == "123-456"
++
++
++def test_cli_json(capsys=None):
++    with tempfile.NamedTemporaryFile("w+", delete=True) as tf:
++        tf.write("one two three")
++        tf.flush()
++
++        import io
++        from contextlib import redirect_stdout
++
++        buf = io.StringIO()
++        with redirect_stdout(buf):
++            main(["words", tf.name])
++        assert buf.getvalue().strip() == "3"
++
++        buf = io.StringIO()
++        with redirect_stdout(buf):
++            main(["--json", "words", tf.name])
++        data = json.loads(buf.getvalue().strip())
++        assert data == {"op": "words", "result": 3}
++
++        buf = io.StringIO()
++        with redirect_stdout(buf):
++            main(["--json", "chars", tf.name])
++        data = json.loads(buf.getvalue().strip())
++        assert data == {"op": "chars", "result": 13}
+diff --git a/textkit/cli.py b/textkit/cli.py
+index 7cd1c65..48d3f53 100644
+--- a/textkit/cli.py
++++ b/textkit/cli.py
+@@ -1,6 +1,7 @@
+ """Command line interface: textkit OP FILE"""
+ 
+ import argparse
++import json
+ import sys
+ 
+ from .core import OPERATIONS, run
+@@ -8,15 +9,20 @@ from .core import OPERATIONS, run
+ 
+ def main(argv=None) -> int:
+     parser = argparse.ArgumentParser(prog="textkit")
++    parser.add_argument("--json", action="store_true", help="output JSON")
+     parser.add_argument("op", choices=sorted(OPERATIONS))
+     parser.add_argument("file")
+     args = parser.parse_args(argv)
+     with open(args.file) as fh:
+         text = fh.read()
+     result = run(args.op, text)
+-    print(result)
++    if args.json:
++        print(json.dumps({"op": args.op, "result": result}))
++    else:
++        print(result)
+     return 0
+ 
+ 
+ if __name__ == "__main__":
+     sys.exit(main())
++
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..e98e403
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,15 @@
++"""Slugify helper."""
++
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase text, replace non-ASCII alphanumeric runs with sep, and strip leading/trailing sep."""
++    lowered = text.lower()
++    replaced = re.sub(r"[^a-z0-9]+", sep, lowered)
++    if sep:
++        while replaced.startswith(sep):
++            replaced = replaced[len(sep):]
++        while replaced.endswith(sep):
++            replaced = replaced[:-len(sep)]
++    return replaced

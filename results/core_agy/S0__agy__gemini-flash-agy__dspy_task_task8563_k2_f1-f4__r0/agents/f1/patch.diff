@@ -1,0 +1,113 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..952fdca4 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -3,7 +3,8 @@ import inspect
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+-from pydantic import BaseModel, TypeAdapter, create_model
++from pydantic import BaseModel, TypeAdapter, create_model, model_validator
++import json_repair
+ 
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+@@ -261,6 +262,32 @@ class ToolCalls(Type):
+ 
+     tool_calls: list[ToolCall]
+ 
++    @model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                parsed = json_repair.loads(data)
++                if parsed == "" and data != "":
++                    parsed = data
++            except Exception:
++                parsed = data
++            data = parsed
++
++        if isinstance(data, dict):
++            if "tool_calls" not in data and "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++            return data
++        elif isinstance(data, list):
++            if all(isinstance(item, dict) and "name" in item and "args" in item for item in data):
++                return {"tool_calls": data}
++            return data
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.
+diff --git a/tests/adapters/test_tool.py b/tests/adapters/test_tool.py
+index 18571453..1bfe781f 100644
+--- a/tests/adapters/test_tool.py
++++ b/tests/adapters/test_tool.py
+@@ -457,3 +457,61 @@ def test_tool_calls_format_from_dict_list():
+     assert len(result[0]["tool_calls"]) == 2
+     assert result[0]["tool_calls"][0]["function"]["name"] == "search"
+     assert result[0]["tool_calls"][1]["function"]["name"] == "translate"
++
++
++def test_tool_calls_validate_input():
++    # 1. Dict with tool_calls key
++    canonical = {"tool_calls": [{"name": "search", "args": {"query": "hello"}}]}
++    assert ToolCalls.validate_input(canonical) == canonical
++    tc = ToolCalls.model_validate(canonical)
++    assert len(tc.tool_calls) == 1
++    assert tc.tool_calls[0].name == "search"
++
++    # 2. Single object without outer tool_calls key
++    single_obj = {"name": "search", "args": {"query": "hello"}}
++    assert ToolCalls.validate_input(single_obj) == {"tool_calls": [single_obj]}
++    tc_single = ToolCalls.model_validate(single_obj)
++    assert len(tc_single.tool_calls) == 1
++    assert tc_single.tool_calls[0].name == "search"
++    assert tc_single.tool_calls[0].args == {"query": "hello"}
++
++    # 3. Bare list of tool-call objects
++    bare_list = [
++        {"name": "search", "args": {"query": "hello"}},
++        {"name": "translate", "args": {"text": "world"}},
++    ]
++    assert ToolCalls.validate_input(bare_list) == {"tool_calls": bare_list}
++    tc_list = ToolCalls.model_validate(bare_list)
++    assert len(tc_list.tool_calls) == 2
++    assert tc_list.tool_calls[0].name == "search"
++    assert tc_list.tool_calls[1].name == "translate"
++
++    # 4. JSON string of canonical dict
++    json_canonical = '{"tool_calls": [{"name": "search", "args": {"query": "hello"}}]}'
++    assert ToolCalls.validate_input(json_canonical) == canonical
++    tc_from_str1 = ToolCalls.model_validate(json_canonical)
++    assert len(tc_from_str1.tool_calls) == 1
++
++    # 5. JSON string of single object
++    json_single = '{"name": "search", "args": {"query": "hello"}}'
++    assert ToolCalls.validate_input(json_single) == {"tool_calls": [single_obj]}
++    tc_from_str2 = ToolCalls.model_validate(json_single)
++    assert len(tc_from_str2.tool_calls) == 1
++
++    # 6. JSON string of bare list
++    json_list = '[{"name": "search", "args": {"query": "hello"}}, {"name": "translate", "args": {"text": "world"}}]'
++    assert ToolCalls.validate_input(json_list) == {"tool_calls": bare_list}
++    tc_from_str3 = ToolCalls.model_validate(json_list)
++    assert len(tc_from_str3.tool_calls) == 2
++
++    # 7. Non-JSON string that cannot be parsed
++    non_json = "not a valid json string"
++    assert ToolCalls.validate_input(non_json) == non_json
++
++    # 8. Plain JSON string that parses to string/primitive
++    json_str_literal = '"just a string"'
++    assert ToolCalls.validate_input(json_str_literal) == "just a string"
++
++    # 9. Existing ToolCalls instance
++    assert ToolCalls.validate_input(tc_single) == tc_single
++

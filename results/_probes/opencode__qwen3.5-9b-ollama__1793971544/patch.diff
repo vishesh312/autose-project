@@ -1,0 +1,31 @@
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..afc642c
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,25 @@
++"""slugify: convert text to URL-friendly slugs."""
++
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Convert text to a lowercase slug with non-alphanumeric characters replaced by separator.
++    
++    Args:
++        text: The text to slugify.
++        sep: The separator character between words (default: "-").
++    
++    Returns:
++        A lowercase slug with runs of non-ASCII letters/digits replaced by `sep`,
++        and leading/trailing separators stripped.
++    
++    Examples:
++        >>> slugify("  Hello, World!! ")
++        'hello-world'
++        >>> slugify("A B", sep="_")
++        'a_b'
++    """
++    result = text.lower()
++    result = re.sub(r"[^\da-zA-Z]+", sep, result)
++    return result.strip(sep)

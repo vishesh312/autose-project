@@ -220,6 +220,9 @@ class Container:
 
 
 
+_HOST_ENV_ALLOW = {"PATH", "HOME", "USER", "LOGNAME", "SHELL", "LANG", "TERM", "TMPDIR", "TZ"}
+
+
 class HostWorkspace(Container):
     """Same interface as Container, but the repo is a temp dir on the HOST (cloned out of the pool image).
 
@@ -264,7 +267,10 @@ class HostWorkspace(Container):
     def exec(self, cmd, *, timeout=None, env=None, workdir=None, stdout_path=None, stderr_path=None) -> ExecResult:
         import signal
 
-        full_env = {**os.environ, **self.env, **(env or {}),
+        # Only a short allowlist of the host environment reaches the agent: it can run `env`, and your shell holds
+        # API keys and session tokens (an earlier agy run dumped them into its log). HOME stays so logins work.
+        base = {k: v for k, v in os.environ.items() if k in _HOST_ENV_ALLOW or k.startswith("LC_")}
+        full_env = {**base, **self.env, **(env or {}),
                     "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_CONFIG_SYSTEM": "/dev/null", "GIT_TERMINAL_PROMPT": "0"}
         out_f = open(stdout_path, "w") if stdout_path else subprocess.PIPE
         err_f = open(stderr_path, "w") if stderr_path else subprocess.PIPE

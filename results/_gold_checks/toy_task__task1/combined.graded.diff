@@ -1,0 +1,88 @@
+diff --git a/textkit/cli.py b/textkit/cli.py
+index 7cd1c65..b62c5b7 100644
+--- a/textkit/cli.py
++++ b/textkit/cli.py
+@@ -1,6 +1,7 @@
+ """Command line interface: textkit OP FILE"""
+ 
+ import argparse
++import json
+ import sys
+ 
+ from .core import OPERATIONS, run
+@@ -9,12 +10,19 @@ from .core import OPERATIONS, run
+ def main(argv=None) -> int:
+     parser = argparse.ArgumentParser(prog="textkit")
+     parser.add_argument("op", choices=sorted(OPERATIONS))
+-    parser.add_argument("file")
++    parser.add_argument("file", help="input file, or - to read standard input")
++    parser.add_argument("--json", action="store_true", help="print the result as JSON")
+     args = parser.parse_args(argv)
+-    with open(args.file) as fh:
+-        text = fh.read()
++    if args.file == "-":
++        text = sys.stdin.read()
++    else:
++        with open(args.file) as fh:
++            text = fh.read()
+     result = run(args.op, text)
+-    print(result)
++    if args.json:
++        print(json.dumps({"op": args.op, "result": result}))
++    else:
++        print(result)
+     return 0
+ 
+ 
+diff --git a/textkit/core.py b/textkit/core.py
+index af4b9bf..df16912 100644
+--- a/textkit/core.py
++++ b/textkit/core.py
+@@ -2,8 +2,8 @@
+ 
+ 
+ def word_count(text: str) -> int:
+-    """Number of whitespace-separated words."""
+-    return len(text.split())
++    """Number of whitespace-separated words. Tokens with no letter or digit (e.g. "--") are ignored."""
++    return len([w for w in text.split() if any(ch.isalnum() for ch in w)])
+ 
+ 
+ def char_count(text: str) -> int:
+@@ -11,9 +11,21 @@ def char_count(text: str) -> int:
+     return len(text)
+ 
+ 
++def line_count(text: str) -> int:
++    """Number of lines; a trailing newline does not start a new line."""
++    return len(text.splitlines())
++
++
++def unique_words(text: str) -> int:
++    """Number of distinct words, compared case-insensitively."""
++    return len({w.lower() for w in text.split()})
++
++
+ OPERATIONS = {
+     "words": word_count,
+     "chars": char_count,
++    "lines": line_count,
++    "unique": unique_words,
+ }
+ 
+ 
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..6ad753c
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,9 @@
++"""URL slugs."""
++
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase, replace runs of non-alphanumeric characters with `sep`, strip leading/trailing `sep`."""
++    slug = re.sub(r"[^a-z0-9]+", sep, text.lower())
++    return slug.strip(sep)

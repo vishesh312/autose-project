@@ -1,0 +1,41 @@
+diff --git a/tests/test_slug.py b/tests/test_slug.py
+new file mode 100644
+index 0000000..9950865
+--- /dev/null
++++ b/tests/test_slug.py
+@@ -0,0 +1,18 @@
++from textkit.slug import slugify
++
++
++def test_slugify_basic():
++    assert slugify("  Hello, World!! ") == "hello-world"
++    assert slugify("A B", sep="_") == "a_b"
++
++
++def test_slugify_empty_and_whitespace():
++    assert slugify("") == ""
++    assert slugify("   ") == ""
++    assert slugify("---") == ""
++
++
++def test_slugify_special_characters():
++    assert slugify("foo...bar") == "foo-bar"
++    assert slugify("café") == "caf"
++    assert slugify("123 abc DEF") == "123-abc-def"
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..8618d21
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,11 @@
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase text, replace non-ASCII alphanumeric runs with sep, and strip leading/trailing sep."""
++    lowered = text.lower()
++    # Replace runs of characters that are not ASCII letters or digits with sep
++    replaced = re.sub(r"[^a-z0-9]+", sep, lowered)
++    if sep:
++        return replaced.strip(sep)
++    return replaced

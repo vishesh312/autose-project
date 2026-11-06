@@ -1,0 +1,47 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..952fdca4 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -3,7 +3,8 @@ import inspect
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+-from pydantic import BaseModel, TypeAdapter, create_model
++from pydantic import BaseModel, TypeAdapter, create_model, model_validator
++import json_repair
+ 
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+@@ -261,6 +262,32 @@ class ToolCalls(Type):
+ 
+     tool_calls: list[ToolCall]
+ 
++    @model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                parsed = json_repair.loads(data)
++                if parsed == "" and data != "":
++                    parsed = data
++            except Exception:
++                parsed = data
++            data = parsed
++
++        if isinstance(data, dict):
++            if "tool_calls" not in data and "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++            return data
++        elif isinstance(data, list):
++            if all(isinstance(item, dict) and "name" in item and "args" in item for item in data):
++                return {"tool_calls": data}
++            return data
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.

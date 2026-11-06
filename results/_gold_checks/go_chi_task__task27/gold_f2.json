@@ -1,0 +1,11 @@
+{
+  "2": {
+    "fid": 2,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 2,
+    "tests_failed": 0,
+    "duration_s": 4.872824192047119,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/go_chi_task__task27/gold_f2.f2.log"
+  }
+}

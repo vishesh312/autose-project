@@ -1,0 +1,67 @@
+diff --git a/tests/test_cli.py b/tests/test_cli.py
+new file mode 100644
+index 0000000..531d9d2
+--- /dev/null
++++ b/tests/test_cli.py
+@@ -0,0 +1,27 @@
++import json
++from textkit.cli import main
++
++
++def test_cli_plain(tmp_path, capsys):
++    test_file = tmp_path / "sample.txt"
++    test_file.write_text("hello world from textkit")
++
++    ret = main(["words", str(test_file)])
++    assert ret == 0
++    captured = capsys.readouterr()
++    assert captured.out.strip() == "4"
++
++
++def test_cli_json(tmp_path, capsys):
++    test_file = tmp_path / "sample.txt"
++    test_file.write_text("hello world")
++
++    ret = main(["--json", "words", str(test_file)])
++    assert ret == 0
++    captured = capsys.readouterr()
++    assert json.loads(captured.out.strip()) == {"op": "words", "result": 2}
++
++    ret = main(["chars", str(test_file), "--json"])
++    assert ret == 0
++    captured = capsys.readouterr()
++    assert json.loads(captured.out.strip()) == {"op": "chars", "result": 11}
+diff --git a/textkit/cli.py b/textkit/cli.py
+index 7cd1c65..0172e3a 100644
+--- a/textkit/cli.py
++++ b/textkit/cli.py
+@@ -1,6 +1,7 @@
+ """Command line interface: textkit OP FILE"""
+ 
+ import argparse
++import json
+ import sys
+ 
+ from .core import OPERATIONS, run
+@@ -8,15 +9,20 @@ from .core import OPERATIONS, run
+ 
+ def main(argv=None) -> int:
+     parser = argparse.ArgumentParser(prog="textkit")
++    parser.add_argument("--json", action="store_true", help="output result as JSON")
+     parser.add_argument("op", choices=sorted(OPERATIONS))
+     parser.add_argument("file")
+     args = parser.parse_args(argv)
+     with open(args.file) as fh:
+         text = fh.read()
+     result = run(args.op, text)
+-    print(result)
++    if args.json:
++        print(json.dumps({"op": args.op, "result": result}))
++    else:
++        print(result)
+     return 0
+ 
+ 
+ if __name__ == "__main__":
+     sys.exit(main())
++

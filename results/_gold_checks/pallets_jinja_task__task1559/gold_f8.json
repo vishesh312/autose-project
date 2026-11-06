@@ -1,0 +1,11 @@
+{
+  "8": {
+    "fid": 8,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 55,
+    "tests_failed": 0,
+    "duration_s": 2.021324872970581,
+    "log": "/Users/vishesh/College/4-1/ASE/autose-project/results/_gold_checks/pallets_jinja_task__task1559/gold_f8.f8.log"
+  }
+}

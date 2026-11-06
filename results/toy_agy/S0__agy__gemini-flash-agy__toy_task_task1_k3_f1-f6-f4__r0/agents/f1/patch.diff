@@ -1,0 +1,44 @@
+diff --git a/tests/test_core.py b/tests/test_core.py
+index 057ac9f..1b8824a 100644
+--- a/tests/test_core.py
++++ b/tests/test_core.py
+@@ -1,4 +1,4 @@
+-from textkit.core import char_count, run, word_count
++from textkit.core import char_count, line_count, run, word_count
+ 
+ 
+ def test_word_count():
+@@ -9,5 +9,13 @@ def test_char_count():
+     assert char_count("ab c") == 4
+ 
+ 
++def test_line_count():
++    assert line_count("") == 0
++    assert line_count("a\nb\n") == 2
++    assert line_count("a\nb") == 2
++    assert line_count("hello") == 1
++
++
+ def test_run():
+     assert run("words", "x y") == 2
++    assert run("lines", "a\nb\n") == 2
+diff --git a/textkit/core.py b/textkit/core.py
+index af4b9bf..c6f8ded 100644
+--- a/textkit/core.py
++++ b/textkit/core.py
+@@ -11,9 +11,15 @@ def char_count(text: str) -> int:
+     return len(text)
+ 
+ 
++def line_count(text: str) -> int:
++    """Number of lines in the text."""
++    return len(text.splitlines())
++
++
+ OPERATIONS = {
+     "words": word_count,
+     "chars": char_count,
++    "lines": line_count,
+ }
+ 
+ 
