@@ -13,7 +13,9 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from .dataset import Feature, Pool
-from .sandbox import Container
+import os
+
+from .sandbox import Container, HostWorkspace
 
 TEST_TIMEOUT_S = 900
 
@@ -39,6 +41,9 @@ def grade(pool: Pool, features: list[Feature], patch: str, log_dir: Path, label:
 
     def work(chunk: list[Feature]) -> dict[int, TestResult]:
         out = {}
+        if pool.image.startswith("hostpool:"):
+            out.update(_work_host(pool, chunk, patch, log_dir, label))
+            return out
         with Container(pool.image, labels={"parbench.role": "grader"}, **(container_kw or {})) as c:
             base = c.base_sha()
             c.put_file("/patches/final.diff", patch)
@@ -66,6 +71,43 @@ def grade(pool: Pool, features: list[Feature], patch: str, log_dir: Path, label:
             results.update(part)
     (log_dir / f"{label}.json").write_text(json.dumps({k: asdict(v) for k, v in results.items()}, indent=2))
     return results
+
+
+def _work_host(pool: Pool, chunk: list[Feature], patch: str, log_dir: Path, label: str) -> dict[int, TestResult]:
+    """No-Docker grading: the pool's own runner.sh, with paths rewritten and pip/uv stubbed (deps are in the venv)."""
+    out = {}
+    c = HostWorkspace(pool.image).start()
+    try:
+        shims = Path(c.work) / "shims"
+        shims.mkdir(parents=True, exist_ok=True)
+        for n in ("pip", "uv"):
+            (shims / n).write_text("#!/bin/sh\nexit 0\n")
+            (shims / n).chmod(0o755)
+        pdir = Path(c.work) / "patches"
+        pdir.mkdir(exist_ok=True)
+        script = (pool.dir / "runner.sh").read_text()
+        script = script.replace("/workspace/repo", c.repo).replace("/patches", str(pdir)).replace("git clean -fdx", "git clean -fd")
+        (Path(c.work) / "runner_host.sh").write_text(script)
+        (pdir / "final.diff").write_text(patch)
+        base = c.base_sha()
+        env = {"PATH": f"{shims}:{c.env['PATH']}"}
+        for f in chunk:
+            (pdir / f"tests{f.fid}.patch").write_text(f.tests_patch.read_text())
+            feat_arg = "final.diff" if patch.strip() else ""
+            r = c.exec(
+                "rm -f .git/index.lock; "
+                f"git checkout -q --force {base} && git reset -q --hard {base} && git clean -fdq; "
+                f"bash {c.work}/runner_host.sh tests{f.fid}.patch {feat_arg}",
+                timeout=TEST_TIMEOUT_S, env=env,
+            )
+            parsed = parse_results(r.output)
+            lp = log_dir / f"{label}.f{f.fid}.log"
+            lp.write_text(r.output)
+            out[f.fid] = TestResult(f.fid, r.returncode == 0 and parsed["passed"] > 0, r.returncode,
+                                    parsed["passed"], parsed["failed"], r.ended - r.started, str(lp))
+    finally:
+        c.remove()
+    return out
 
 
 def parse_results(output: str) -> dict:

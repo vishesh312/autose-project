@@ -238,6 +238,15 @@ class HostWorkspace(Container):
         self.work = str(self.root / "work")
 
     def start(self) -> "HostWorkspace":
+        if self.image.startswith("hostpool:"):  # no-Docker mode (PARBENCH_HOST_POOLS), see scripts/host_setup_pools.sh
+            pool = Path(os.environ["PARBENCH_HOST_POOLS"]) / self.image.split(":", 1)[1]
+            self._shutil.copytree(pool / "repo", self.repo, symlinks=True)
+            Path(self.work).mkdir(parents=True, exist_ok=True)
+            venv = pool / "venv"
+            self.env = {**self.env, "VIRTUAL_ENV": str(venv), "PATH": f"{venv}/bin:{os.environ['PATH']}",
+                        "PYTHONPATH": f"{self.repo}:{self.repo}/src"}
+            self.started = True
+            return self
         cid = _docker("create", "--entrypoint", "", self.image, "sleep", "1").stdout.strip()
         try:
             _docker("cp", f"{cid}:{REPO}", str(self.root))  # -> <root>/repo

@@ -8,6 +8,7 @@ An optional <pool>/IMAGE file overrides the Docker image name (used by toy pools
 
 from __future__ import annotations
 
+import os
 import json
 import re
 from dataclasses import dataclass, field
@@ -60,6 +61,8 @@ class Pool:
 
     @property
     def image(self) -> str:
+        if os.environ.get("PARBENCH_HOST_POOLS"):  # no-Docker mode: pool = a prepared host directory
+            return f"hostpool:{self.repo}/task{self.task_id}"
         override = self.dir / "IMAGE"
         if override.exists():
             return override.read_text().strip()

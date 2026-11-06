@@ -44,6 +44,16 @@ models:
     temperature: 0.15
     price: {input: 0.10, output: 0.30}   # PLACEHOLDER: not on OpenRouter
 
+  qwen2.5-7b-vllm:                    # NVIDIA box, GPU 0, no-Docker host mode (localhost)
+    model: "qwen2.5-7b-instruct"
+    provider: openai_compat
+    base_url: http://localhost:8000/v1
+    context: 32768
+    max_output: 4096
+    temperature: 0.2
+    price: {input: 0.05, output: 0.15}   # PLACEHOLDER reference price
+    notes: "Qwen2.5-7B-Instruct bf16, vLLM 0.8.5, hermes tool parser, no thinking mode"
+
   # ---------------- hosted open models via OpenRouter ----------------
   qwen3.6-35b-a3b-openrouter:
     model: "qwen/qwen3.6-35b-a3b"
