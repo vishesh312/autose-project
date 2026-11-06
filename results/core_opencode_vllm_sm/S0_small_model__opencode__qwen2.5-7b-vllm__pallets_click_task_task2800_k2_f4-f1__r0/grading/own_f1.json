@@ -1,0 +1,11 @@
+{
+  "1": {
+    "fid": 1,
+    "passed": false,
+    "exit_code": 2,
+    "tests_passed": 0,
+    "tests_failed": 1,
+    "duration_s": 0.8852708339691162,
+    "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S0_small_model__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/own_f1.f1.log"
+  }
+}

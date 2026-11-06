@@ -1,0 +1,449 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "dottxt_ai_outlines_task/task1655/k2/f1-f3",
+    "pool": "dottxt_ai_outlines_task/task1655",
+    "k": 2,
+    "features": [
+      1,
+      3
+    ],
+    "strategy": "S2",
+    "strategy_id": "S2",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793977886.9853213
+  },
+  "correctness": {
+    "primary": "llm",
+    "by_final": {
+      "naive": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "union": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "llm": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "3": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 771151,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 31522,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 56
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.04328585000000001,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 31614,
+    "coordination_overhead": 0.03938590185542556,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "outlines/types/__init__.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 1096.154560804367,
+    "agent_busy_s": 1868.024631023407,
+    "effective_parallelism": 1.7041617102360413,
+    "container_setup_s": 1.91255784034729,
+    "grading_s": 18.172125577926636,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": {
+    "pairwise": [
+      {
+        "a": "f1",
+        "b": "f3",
+        "conflict": true,
+        "files": [
+          "outlines/types/__init__.py"
+        ]
+      }
+    ],
+    "conflict_rate": 1.0,
+    "overlap_lines": 65,
+    "modes": {
+      "naive": {
+        "lost_features": [
+          3
+        ],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": true,
+            "conflict_files": [
+              "outlines/types/__init__.py"
+            ],
+            "outcome": "skipped"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "union": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "llm": {
+        "lost_features": [
+          3
+        ],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": true,
+            "conflict_files": [
+              "outlines/types/__init__.py"
+            ],
+            "outcome": "resolve_failed"
+          }
+        ],
+        "resolver_agents": [
+          "resolver_f3"
+        ]
+      }
+    }
+  },
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1793977889.4877832,
+      "ended": 1793978794.1702902,
+      "busy_s": 904.6590275764465,
+      "usage": {
+        "input": 322532,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 15191,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 22
+      },
+      "cost_list": 0.01840525,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 1,
+      "tool_calls": {
+        "read": 2,
+        "shell": 3,
+        "edit": 15
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 73,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793977889.4888394,
+          "ended": 1793978794.147867,
+          "returncode": 1,
+          "timed_out": false,
+          "usage": {
+            "input": 322532,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 15191,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 22
+          },
+          "num_turns": 22,
+          "session_id": "ses_e4e95c60bffeAB3iDG6SYCegN4",
+          "nudge_reason": null,
+          "final_text_tail": "## Next Steps\n1. Define the `Regex` class or import it from another module.\n2. Re-run the tests to verify the changes.\n\nTo proceed, we need to either define the `Regex` class in the file or import it from another module where it is already defined. Let's define the `Regex` class now.",
+          "error": "{\"type\": \"error\", \"timestamp\": 1793978778857, \"sessionID\": \"ses_e4e95c60bffeAB3iDG6SYCegN4\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 43240 tokens (39144 in the messages, 4096 in the comple"
+        }
+      ],
+      "error": "{\"type\": \"error\", \"timestamp\": 1793978778857, \"sessionID\": \"ses_e4e95c60bffeAB3iDG6SYCegN4\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 43240 tokens (39144 in the messages, 4096 in the comple"
+    },
+    {
+      "agent_id": "f3",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        3
+      ],
+      "started": 1793977889.487694,
+      "ended": 1793978664.344697,
+      "busy_s": 774.8326289653778,
+      "usage": {
+        "input": 421438,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 11898,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 32
+      },
+      "cost_list": 0.0228566,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 1,
+      "tool_calls": {
+        "read": 3,
+        "other": 23,
+        "edit": 3,
+        "shell": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 77,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793977889.4891343,
+          "ended": 1793978664.3217633,
+          "returncode": 1,
+          "timed_out": false,
+          "usage": {
+            "input": 421438,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 11898,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 32
+          },
+          "num_turns": 32,
+          "session_id": "ses_e4e95c650ffefPe2CuUURU09Hs",
+          "nudge_reason": null,
+          "final_text_tail": "## Next Steps\n1. Run the remaining tests to ensure the changes are correct.\n2. Commit the changes if the tests pass.\n\nIf you want to proceed, I will run the tests now.",
+          "error": "{\"type\": \"error\", \"timestamp\": 1793978640954, \"sessionID\": \"ses_e4e95c650ffefPe2CuUURU09Hs\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 37378 tokens (33282 in the messages, 4096 in the comple"
+        }
+      ],
+      "error": "{\"type\": \"error\", \"timestamp\": 1793978640954, \"sessionID\": \"ses_e4e95c650ffefPe2CuUURU09Hs\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 37378 tokens (33282 in the messages, 4096 in the comple"
+    },
+    {
+      "agent_id": "resolver_f3",
+      "role": "resolver",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        3
+      ],
+      "started": 1793978796.4006157,
+      "ended": 1793978984.937603,
+      "busy_s": 188.53297448158264,
+      "usage": {
+        "input": 27181,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 4433,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 2
+      },
+      "cost_list": 0.002024,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 75
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793978796.4019086,
+          "ended": 1793978984.934883,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 27181,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 4433,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4e87f1b5ffezF7TY3m3FFHv5N",
+          "nudge_reason": null,
+          "final_text_tail": "I've located the sections in `outlines/types/__init__.py` where the new types should be added. Based on the output, it seems the `# System-specific types` section is around line 9. Let's proceed to add the new types:\n\n```python\n# System-specific types\nhex_str = Regex(r'[0-9a-fA-F]+')\nuuid4 = Regex(r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}')\nipv4 = Regex(r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)')\n```\n\nNext, let's add the `octal_str` type after the `# Document-specific types` section:\n\n```python\n# Document-specific types\n...\n\n# System-specific types\noctal_str = Regex(r'0[0-7]+')\n```\n\nNow, I'll edit the file to include these types.",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.4989523887634277,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f3": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.381178855895996,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f3.f3.log"
+      }
+    },
+    "naive": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.2345786094665527,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.273836851119995,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f3.log"
+      }
+    },
+    "union": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.2876803874969482,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/union.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.2788233757019043,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/union.f3.log"
+      }
+    },
+    "llm": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.1483421325683594,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/llm.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.2580935955047607,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S2__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/llm.f3.log"
+      }
+    }
+  }
+}

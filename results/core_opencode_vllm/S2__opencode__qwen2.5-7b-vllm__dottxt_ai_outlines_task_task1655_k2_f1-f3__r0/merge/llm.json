@@ -1,0 +1,28 @@
+{
+  "mode": "llm",
+  "lost": [
+    3
+  ],
+  "steps": [
+    {
+      "branch": "f1",
+      "feature_ids": [
+        1
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    },
+    {
+      "branch": "f3",
+      "feature_ids": [
+        3
+      ],
+      "conflicted": true,
+      "conflict_files": [
+        "outlines/types/__init__.py"
+      ],
+      "outcome": "resolve_failed"
+    }
+  ]
+}

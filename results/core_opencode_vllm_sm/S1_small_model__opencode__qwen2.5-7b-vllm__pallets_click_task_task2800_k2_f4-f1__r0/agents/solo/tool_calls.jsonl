@@ -1,0 +1,6 @@
+{"name": "glob", "kind": "read", "args": {"pattern": "*.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "Context\\(cmd, cleanup_timeout=5\\.0\\)"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "ResourceWarning: unclosed file", "path": "src/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-tepanlis/repo/src/click/core.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-tepanlis/repo/src/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "Context\\(cmd", "path": "/tmp/parbench-host-tepanlis/repo/src/click/core.py"}, "ok": true, "ts": null}

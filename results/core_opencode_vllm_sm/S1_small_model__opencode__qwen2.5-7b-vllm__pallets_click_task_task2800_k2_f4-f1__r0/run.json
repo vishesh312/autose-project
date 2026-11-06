@@ -1,0 +1,190 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm_sm",
+    "bundle": "pallets_click_task/task2800/k2/f4-f1",
+    "pool": "pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      4,
+      1
+    ],
+    "strategy": "S1+small_model",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793979445.476698
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "4": false,
+      "1": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 56242,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 750,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 6
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0029246000000000003,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 34.89615774154663,
+    "agent_busy_s": 34.825302839279175,
+    "effective_parallelism": 0.9979695500349284,
+    "container_setup_s": 0.5846004486083984,
+    "grading_s": 3.931039571762085,
+    "nudges": 1,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        4,
+        1
+      ],
+      "started": 1793979446.0631738,
+      "ended": 1793979480.9247854,
+      "busy_s": 34.825302839279175,
+      "usage": {
+        "input": 56242,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 750,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 6
+      },
+      "cost_list": 0.0029246000000000003,
+      "nudges": 1,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 6
+      },
+      "files_read": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793979446.0643117,
+          "ended": 1793979473.4008257,
+          "returncode": 1,
+          "timed_out": false,
+          "usage": {
+            "input": 36052,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 634,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 4
+          },
+          "num_turns": 4,
+          "session_id": "ses_e4e7e0806ffeAK37XdgdJHmCbf",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "## Next Steps\n1. Search for appropriate places in `src/click/core.py` to add the `cleanup_timeout` parameter.\n2. Search for and fix resource leak issues in `src/click/shell_completion.py`.\n\nLet's start by searching for where to add the `cleanup_timeout` parameter in `click/core.py`.",
+          "error": "{\"type\": \"error\", \"timestamp\": 1793979458676, \"sessionID\": \"ses_e4e7e0806ffeAK37XdgdJHmCbf\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 39762 tokens (35666 in the messages, 4096 in the comple"
+        },
+        {
+          "index": 1,
+          "started": 1793979473.4356196,
+          "ended": 1793979480.9244084,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 20190,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 116,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4e7e0806ffeAK37XdgdJHmCbf",
+          "nudge_reason": null,
+          "final_text_tail": "No instances of `Context(cmd` were found in `src/click/core.py`. Let's move on to searching for resource leak issues in `src/click/shell_completion.py`.\n\nSearching for resource leak issues in `src/click/shell_completion.py`.",
+          "error": null
+        }
+      ],
+      "error": "{\"type\": \"error\", \"timestamp\": 1793979458676, \"sessionID\": \"ses_e4e7e0806ffeAK37XdgdJHmCbf\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 39762 tokens (35666 in the messages, 4096 in the comple"
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 1.884425401687622,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/own_solo.f4.log"
+      },
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 0.8111324310302734,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/own_solo.f1.log"
+      }
+    },
+    "final": {
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 68,
+        "tests_failed": 9,
+        "duration_s": 1.8884804248809814,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/final.f4.log"
+      },
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 67,
+        "tests_failed": 1,
+        "duration_s": 0.7729840278625488,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S1_small_model__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/final.f1.log"
+      }
+    }
+  }
+}

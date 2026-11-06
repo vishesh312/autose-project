@@ -1,0 +1,3 @@
+{"name": "grep", "kind": "read", "args": {"pattern": "Context", "path": "/tmp/parbench-host-ei4gq2f1/repo/src"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "cleanup_timeout", "path": "/tmp/parbench-host-ei4gq2f1/repo/src"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-ei4gq2f1/repo/src/click/core.py", "offset": 1}, "ok": true, "ts": null}
