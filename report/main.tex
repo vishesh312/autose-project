@@ -127,10 +127,35 @@ $n$ is tiny and each configuration has one repeat; confidence intervals are wide
 \end{itemize}
 
 \section{Use of AI Tools}
-Most of the pipeline code, documentation and this draft were written with Claude Code (Claude Opus~5.5 and Sonnet~5.5), including delegated research subagents; AI agents are also the subjects of the experiments (Gemini, GPT-OSS, Qwen via OpenCode and \texttt{agy}). Outputs were verified by running the grader on gold patches, dry-running experiment plans, inspecting run logs, and review of every commit. \textbf{[Team: attach prompt log and list how each person verified or changed AI-written parts.]}
+\textbf{Tools.} Most of the pipeline code, prompts, documentation and the first draft of this report were written with Claude Code (Claude Opus~5.5 and Sonnet~5.5), including research subagents that read the CooperBench repository, the agent CLIs, model-serving options and Antigravity's quota terms (\texttt{docs/}). AI agents are also the \emph{subjects} of the experiments (Gemini, GPT-OSS, Qwen through OpenCode and \texttt{agy}); their outputs are data, not part of our code.
+
+\textbf{Decisions are the team's.} The AI proposed options and implemented them; the team made the decisions on models, harnesses, strategies, tasks (the \texttt{core} subset, $k{=}2$ first), compute, the sandbox design, the use of Antigravity despite its terms, and the removal of web tools to prevent contamination.
+
+\textbf{Verification.} Outputs were checked by running the grader on gold patches (41 real tasks and 6 toy tasks), dry-running every experiment plan, probing each harness against the real tool, scanning logs for secrets and web use, and correcting the AI's first attempts where they were wrong (documented in \texttt{docs/findings.md}). In addition, the team read and checked the key files in Table~\ref{tab:files}. The prompts, a summary of the AI's outputs and the checklist are in \texttt{docs/ai\_usage\_log.md}.
+
+\begin{table}[t]
+\caption{Key files the team reviewed (all under \texttt{src/parbench/} unless noted).}
+\label{tab:files}
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{0.43\columnwidth}p{0.5\columnwidth}@{}}
+\toprule
+File & What was checked \\
+\midrule
+\texttt{grader.py} & pass criterion, agent tests removed, clean reset \\
+\texttt{strategies.py}, \texttt{merge.py} & S0/S1/S2/S4 logic; merge modes, conflict rate \\
+\texttt{agent\_runner.py}, \texttt{runner.py} & nudges, retries, token and metric computation, validity flag \\
+\texttt{sandbox.py}, \texttt{dataset.py} & history scrub, host mode, bundling, subsets \\
+\texttt{harnesses/cli\_agents.py} & per-harness commands and token conventions \\
+\texttt{prompts/*.md}, \texttt{configs/agy\_agents/} & exact agent prompts; disabled tools \\
+\texttt{configs/experiments/*.yaml}, \texttt{models.yaml} & settings behind every reported number \\
+\texttt{docs/findings.md}, \texttt{results/*/run.json} & claims and table values against raw logs \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section*{Repository}
-\url{https://github.com/vishesh312/autose-project} \textbf{[currently private: grant TA/instructor access or make public]}. The history has 34 commits from three contributors over 4--6 November (pipeline, adapters, documentation, and GPU-machine runs with automated result publishing). Start with \texttt{AGENTS.md}, \texttt{docs/findings.md} and \texttt{docs/core\_subset\_plan.md}.
+\url{https://github.com/vishesh312/autose-project} (public). The history has 34+ commits from three contributors over 4--6 November (pipeline, adapters, documentation, and GPU-machine runs with automated result publishing). Start with \texttt{AGENTS.md}, \texttt{docs/findings.md} and \texttt{docs/core\_subset\_plan.md}.
 
 \begin{thebibliography}{9}
 \bibitem{cooperbench} CooperBench: benchmarking coding-agent cooperation. arXiv:2601.13295, 2026 (code: github.com/cooperbench/CooperBench).
