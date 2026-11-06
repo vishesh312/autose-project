@@ -59,22 +59,22 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 
 \textbf{Harnesses.} Adapters exist for OpenCode, Pi, Claude Code, Codex CLI, Antigravity (\texttt{agy}) and Gemini CLI; each writes its own config, runs headless with JSON output, and a parser converts tokens to a common convention (input including cached tokens). Only OpenCode and \texttt{agy} have been checked against real output so far.
 
-\textbf{Sandbox.} Agents run in Docker containers built from the CooperBench pool image, so they can run the project's own tests. A host mode (temporary clone, no Docker) exists for \texttt{agy} and for OpenCode; a teammate added a second no-Docker route using prepared host directories for use on a GPU machine.
+\textbf{Sandbox.} Agents run in Docker containers built from the CooperBench pool image, so they can run the project's own tests. A host mode (temporary clone, no Docker) exists for \texttt{agy} and for OpenCode; a second no-Docker route was added using prepared host directories for use on a GPU machine.
 
 \section{Decisions Made}
 \begin{itemize}\itemsep0pt
 \item \textbf{Build on CooperBench} (pinned submodule, commit \texttt{63b9d44}) and re-bundle it, instead of writing tasks by hand.
-\item \textbf{Strategies first}: S0, S1, S2, S4. Teammates' literature notes are treated as guidance, not a specification.
+\item \textbf{Strategies first}: S0, S1, S2, S4. The team's literature notes are treated as guidance, not a specification.
 \item \textbf{Docker sandbox per agent} and agents may run the repository's tests; hidden tests are never visible.
 \item \textbf{Fully autonomous agents}: no human in the loop, resumed with a fixed nudge, up to two times.
-\item \textbf{Compute}: local Ollama on a 24~GB Mac for smoke tests; a GPU machine with vLLM for the main OpenCode runs (run by Manas Mittal on another machine); Antigravity for hosted Gemini and GPT-OSS. The team accepted the terms-of-service risk of scripting \texttt{agy} on a personal account at low concurrency.
+\item \textbf{Compute}: local Ollama on a 24~GB Mac for smoke tests; a GPU machine with vLLM for the main OpenCode runs (run on a separate machine); Antigravity for hosted Gemini and GPT-OSS. The team accepted the terms-of-service risk of scripting \texttt{agy} on a personal account at low concurrency.
 \item \textbf{Fairness}: same model for agents, resolver and planner; same step limit; one seeded task order per bundle.
 \item \textbf{Everything is logged raw} (JSON from each harness), so parsers can be fixed and runs re-scored without re-running agents.
 \end{itemize}
 
 \section{Experimental Setup}
 \textbf{Datasets.} (a) A toy pool (6 features of a small Python package, known conflict structure) to check the pipeline. (b) CooperBench \texttt{core}: five Python/Go pools so far (dspy~8563, go\_chi~27, click~2800, jinja~1559 and~1621), $k{=}2$, one repeat. \textbf{Grader check.} For 41 real features in six pools, the tests fail on the base, the gold patch passes, and CooperBench's combined patch passes, on arm64 images; likewise for the six toy features.
-\textbf{Models and harnesses.} \texttt{agy} with Gemini~3.8~Flash (low) and GPT-OSS~120B; OpenCode with Qwen3.5-9B (Ollama, thinking off, 64K context) on the toy pool and with Qwen2.5-7B-Instruct (vLLM, one RTX~5000 Ada; run by Manas Mittal, partial) on the Python pools of \texttt{core}.
+\textbf{Models and harnesses.} \texttt{agy} with Gemini~3.8~Flash (low) and GPT-OSS~120B; OpenCode with Qwen3.5-9B (Ollama, thinking off, 64K context) on the toy pool and with Qwen2.5-7B-Instruct (vLLM, one RTX~5000 Ada; partial) on the Python pools of \texttt{core}.
 \textbf{Metrics.} Task pass rate, bundle success, retention versus S0, pairwise conflict rate, overlap, tokens, wall-clock and agent-busy time, effective parallelism, nudges, and a validity flag. No dollar cost is computed for subscription models.
 
 \section{Results (Preliminary)}
@@ -99,7 +99,7 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 
 \textbf{Per-pool view.} Table~\ref{tab:pool} shows the pattern behind the averages. With Gemini, the jinja~1621 pair passes both tasks in S0 and S1, while the dspy, go\_chi and click pairs pass exactly one of two in S0 and S1: one task per pair is consistently out of reach for this setup, whatever the strategy. We have not yet inspected which task fails or why. Because the agents could not run the repository tests on the host, some failures may be unverified mistakes, not missing capability.
 
-\textbf{OpenCode + Qwen2.5-7B (Manas Mittal, partial, Python pools).} Across S0, S1 and S2 ($n{=}11,11,9$) no task has passed (0.00, 95\% CI up to 0.15--0.18), with and without a ``small model'' prompt. We cannot yet tell whether the model is too weak for these tasks (CooperBench reports weak results for small open models) or whether part of the no-Docker setup is at fault; this is the first thing to investigate.
+\textbf{OpenCode + Qwen2.5-7B (GPU machine, partial, Python pools).} Across S0, S1 and S2 ($n{=}11,11,9$) no task has passed (0.00, 95\% CI up to 0.15--0.18), with and without a ``small model'' prompt. We cannot yet tell whether the model is too weak for these tasks (CooperBench reports weak results for small open models) or whether part of the no-Docker setup is at fault; this is the first thing to investigate.
 
 \section{Problems Faced}
 \begin{itemize}\itemsep0pt
@@ -137,7 +137,7 @@ $n$ is tiny and each configuration has one repeat; confidence intervals are wide
 Most of the pipeline code, documentation and this draft were written with Claude Code (Claude Opus~5.5 and Sonnet~5.5), including delegated research subagents; AI agents are also the subjects of the experiments (Gemini, GPT-OSS, Qwen via OpenCode and \texttt{agy}). Outputs were verified by running the grader on gold patches, dry-running experiment plans, inspecting run logs, and review of every commit. \textbf{[Team: attach prompt log and list how each person verified or changed AI-written parts.]}
 
 \section*{Repository}
-\url{https://github.com/vishesh312/autose-project} \textbf{[currently private: grant TA/instructor access or make public]}. The history has 34 commits from three contributors over 4--6 November (pipeline, adapters, documentation, and a teammate's GPU-machine runs with automated result publishing). Start with \texttt{AGENTS.md}, \texttt{docs/findings.md} and \texttt{docs/core\_subset\_plan.md}.
+\url{https://github.com/vishesh312/autose-project} \textbf{[currently private: grant TA/instructor access or make public]}. The history has 34 commits from three contributors over 4--6 November (pipeline, adapters, documentation, and GPU-machine runs with automated result publishing). Start with \texttt{AGENTS.md}, \texttt{docs/findings.md} and \texttt{docs/core\_subset\_plan.md}.
 
 \begin{thebibliography}{9}
 \bibitem{cooperbench} CooperBench: benchmarking coding-agent cooperation. arXiv:2601.13295, 2026 (code: github.com/cooperbench/CooperBench).
