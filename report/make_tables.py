@@ -61,3 +61,33 @@ for key, label in POOL.items():
     out.append(label + " & " + " & ".join(cells) + r" \\")
 out += [r"\bottomrule", r"\end{tabular}"]
 (ROOT / "report/tables_pool.tex").write_text("\n".join(out) + "\n")
+
+
+# ---- macros for the numbers quoted in the text (so prose and tables cannot drift apart)
+import datetime
+NAMES = {"S0": "Zero", "S1": "One", "S2": "Two", "S4": "Four"}
+mac = [f"\\newcommand{{\\asof}}{{{datetime.datetime.now().strftime('%-d %b, %H:%M')} IST}}"]
+par = {}
+for f in glob.glob(str(ROOT / "results/core_agy/*/run.json")):
+    d = json.load(open(f))
+    if d.get("valid", True) and d["run"]["model"] == "gemini-flash-agy":
+        par.setdefault(d["run"]["strategy"], []).append((d["time"]["effective_parallelism"], (d.get("merge") or {}).get("conflict_rate")))
+for st, nm in NAMES.items():
+    v = rows.get(("gemini-flash-agy", st), [])
+    if not v:
+        mac += [f"\\newcommand{{\\gem{nm}{k}}}{{--}}" for k in ("N", "P", "W", "T", "Par", "C")]
+        continue
+    pars = [p for p, _ in par.get(st, [])]
+    confs = [c for _, c in par.get(st, []) if c is not None]
+    mac += [f"\\newcommand{{\\gem{nm}N}}{{{len(v)}}}",
+            f"\\newcommand{{\\gem{nm}P}}{{{statistics.mean(x['pass_rate'] for x in v):.2f}}}",
+            f"\\newcommand{{\\gem{nm}W}}{{{statistics.median(x['wall'] for x in v):.0f}}}",
+            f"\\newcommand{{\\gem{nm}T}}{{{statistics.median(x['tok'] for x in v)/1e6:.1f}}}",
+            f"\\newcommand{{\\gem{nm}Par}}{{{statistics.mean(pars):.2f}}}" if pars else f"\\newcommand{{\\gem{nm}Par}}{{--}}",
+            f"\\newcommand{{\\gem{nm}C}}{{{statistics.mean(confs):.2f}}}" if confs else f"\\newcommand{{\\gem{nm}C}}{{--}}"]
+g0 = rows.get(("gemini-flash-agy", "S0")); g1 = rows.get(("gemini-flash-agy", "S1"))
+if g0 and g1:
+    t0, t1 = statistics.median(x["tok"] for x in g0), statistics.median(x["tok"] for x in g1)
+    mac += [f"\\newcommand{{\\tokRatio}}{{{t0/t1:.1f}}}", f"\\newcommand{{\\tokLow}}{{{t1/2e6:.0f}}}", f"\\newcommand{{\\tokHigh}}{{{t0/2e6:.0f}}}"]
+with open(ROOT / "report/stats.tex", "a") as fh:
+    fh.write("\n".join(mac) + "\n")

@@ -77,6 +77,29 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 
 \section{Experimental Setup}
 \textbf{Datasets.} (a) A toy pool (6 features of a small Python package, known conflict structure) to check the pipeline. (b) CooperBench \texttt{core}: five Python/Go pools so far (dspy~8563, go\_chi~27, click~2800, jinja~1559 and~1621), $k{=}2$, one repeat. \textbf{Grader check.} For 41 real features in six pools, the tests fail on the base, the gold patch passes, and CooperBench's combined patch passes, on arm64 images; likewise for the six toy features.
+\textbf{Hardware and software.} Two machines were used (Table~\ref{tab:hw}). Runs on the two machines are not mixed in any comparison.
+\begin{table}[t]
+\caption{Machines and software used for the reported runs.}
+\label{tab:hw}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.2\columnwidth}p{0.75\columnwidth}@{}}
+\toprule
+ & \textbf{Development machine} \\
+\midrule
+Hardware & Apple M5, 10 cores, 24~GB unified memory (arm64) \\
+Software & macOS, Docker Desktop (8~GB for containers); OpenCode 2.2.4 and Antigravity 1.5 in containers or on the host; Ollama for local smoke tests (Qwen3.5-9B, 64K context) \\
+Used for & Antigravity runs (hosted Gemini 3.8 Flash and GPT-OSS 120B), pipeline validation, grading in Docker \\
+\midrule
+ & \textbf{GPU server} \\
+\midrule
+Hardware & 3$\times$ NVIDIA RTX 5000 Ada (32~GB each, shared; one GPU per run), Intel Xeon Gold 5317, 48 logical CPUs, 251~GB RAM \\
+Software & Ubuntu 24.04, driver 560.35 / CUDA 12.6, vLLM 0.8.5 serving Qwen2.5-7B-Instruct (bf16, 32K context, Hermes tool parser), OpenCode 1.19.5 on the host (no Docker; prepared host pools) \\
+Used for & OpenCode runs on the \texttt{core} Python pools; a Qwen3.8-27B (INT4) trial is planned \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \textbf{Models and harnesses.} \texttt{agy} with Gemini~3.8~Flash (low) and GPT-OSS~120B; OpenCode with Qwen3.5-9B (local, thinking off) on the toy pool and with Qwen2.5-7B-Instruct (vLLM; partial) on the Python pools of \texttt{core}.
 \textbf{Metrics.} Task pass rate, bundle success, retention versus S0, pairwise conflict rate, overlap, tokens, wall-clock and agent-busy time, effective parallelism, nudges, and a validity flag. No dollar cost is computed for subscription models.
 
@@ -84,14 +107,13 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 \textbf{Toy pool, OpenCode + Qwen3.5-9B (local).} All strategies pass all tasks: S0 $k{=}2$ (938\,s), S1 (536\,s), S2 (592\,s, all three merge modes), S0 $k{=}3$ (1312\,s). The bundle used had no conflicting pair, so the conflict path of the resolver was not exercised. These runs show the pipeline works end to end; they are not results.
 
 \begin{table}[t]
-\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of 6 Nov, 22:30 IST; runs still in progress). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run.}
+\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of \asof; runs still in progress). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run.}
 \label{tab:agy}
 \small
 \input{tables}
 \end{table}
 
-\textbf{Antigravity, \texttt{core}.} Table~\ref{tab:agy} shows \validruns{} valid runs. With Gemini, S1 (one agent, both tasks) passes slightly more than S0 (0.70 vs.\ 0.60, $n{=}5$) and, because the isolated reference runs two agents, uses 2.4$\times$ fewer input tokens (6.8M vs.\ 16.0M) and less than half the wall-clock time (554\,s vs.\ 1350\,s). S2 passes 0.83 ($n{=}3$) with a pairwise conflict rate of 0.33 and an effective parallelism of 1.56; S4 has one valid run so far. The differences are not statistically meaningful at this $n$. GPT-OSS results are dominated by service failures (below) and say little about the model. A single task costs 3--8M input tokens, far above our initial estimate.
-
+\textbf{Antigravity, \texttt{core}.} Table~\ref{tab:agy} shows \validruns{} valid runs. With Gemini, S1 (one agent, both tasks) passes \gemOneP{} of the tasks against \gemZeroP{} for S0 ($n{=}\gemOneN{}$ each). Because the isolated reference runs two agents, S1 uses $\gemOneT$M input tokens against $\gemZeroT$M for S0 ($\tokRatio\times$ fewer) and takes \gemOneW\,s against \gemZeroW\,s. S2 (parallel agents, then merge) passes \gemTwoP{} ($n{=}\gemTwoN{}$) at a pairwise conflict rate of \gemTwoC{} and an effective parallelism of \gemTwoPar{}; S4 (native subagents) passes \gemFourP{} ($n{=}\gemFourN{}$). The differences are not statistically meaningful at this $n$. GPT-OSS results are dominated by service failures (Section~6) and say little about the model. A single task costs about \tokLow--\tokHigh M input tokens, far above our initial estimate.
 
 \begin{table}[t]
 \caption{Task pass fraction per pool (valid runs; 1.0 = both tasks pass, -- = no valid run yet).}
