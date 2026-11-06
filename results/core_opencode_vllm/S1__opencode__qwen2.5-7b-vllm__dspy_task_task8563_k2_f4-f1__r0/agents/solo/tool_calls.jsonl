@@ -1,0 +1,4 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout main && git pull && pip install -r requirements.txt", "workdir": "/tmp/parbench-host-lyqqpdfn/repo"}, "ok": true, "ts": null}
+{"name": "skill", "kind": "other", "args": {"name": "docs"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "**/tool.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "nano dspy/adapters/types/tool.py", "workdir": "/tmp/parbench-host-lyqqpdfn/repo"}, "ok": true, "ts": null}

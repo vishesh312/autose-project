@@ -1,0 +1,54 @@
+diff --git a/outlines/types/__init__.py b/outlines/types/__init__.py
+index 85af9ad..11cdfa4 100644
+--- a/outlines/types/__init__.py
++++ b/outlines/types/__init__.py
+@@ -55,7 +55,7 @@ paragraph = Regex(rf"{sentence.pattern}(?:\s+{sentence.pattern})*\n+")
+ 
+ # The following regex is FRC 5322 compliant and was found at:
+ # https://emailregex.com/
+-email = Regex(
++octal_str = Regex(r'0o[0-7]+')(
+     r"""(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"""
+ )
+ 
+diff --git a/tests/types/test_octal_str.py b/tests/types/test_octal_str.py
+new file mode 100644
+index 0000000..94d090d
+--- /dev/null
++++ b/tests/types/test_octal_str.py
+@@ -0,0 +1,35 @@
++from outlines.types import octal_str
++from pydantic import BaseModel, ValidationError
++
++# Test cases
++valid_cases = [
++    ('0o755', True),
++    ('0o123', True),
++]
++
++invalid_cases = [
++    ('755', False),
++    ('0o756', False),
++    ('0o800', False),
++    ('0o75x', False),
++]
++
++
++class FilePermission(BaseModel):
++    mode: octal_str
++
++# Test valid cases
++for case, expected in valid_cases:
++    try:
++        perm = FilePermission(mode=case)
++        assert perm.mode == case
++    except ValidationError as e:
++        print(f'Validation failed for {case}: {e}')
++
++# Test invalid cases
++for case, expected in invalid_cases:
++    try:
++        perm = FilePermission(mode=case)
++        assert False, f'Validation should have failed for {case}'
++    except ValidationError as e:
++        pass

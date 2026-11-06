@@ -1,0 +1,55 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..eac2aa8e 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -31,7 +31,49 @@ class Tool(Type):
+     arg_desc: dict[str, str] | None = None
+     has_kwargs: bool = False
+ 
+-    def __init__(
++    def __init__
++def validate_input(data):
++    if isinstance(data, dict) and 'name' in data and 'args' in data:
++        return [{'name': data['name'], 'args': data['args']}
++    elif isinstance(data, list) and all(isinstance(item, dict) and 'name' in item and 'args' in item for item in data):
++        return [{'tool_calls': data}
++    return data
++def validate_input(data):
++    if isinstance(data, dict) and 'name' in data and 'args' in data:
++        return [{'name': data['name'], 'args': data['args']}
++    elif isinstance(data, list) and all(isinstance(item, dict) and 'name' in item and 'args' in item for item in data):
++        return [{'tool_calls': data}
++    return data
++def validate_input(data):
++    if isinstance(data, dict) and 'name' in data and 'args' in data:
++        return [{'name': data['name'], 'args': data['args']}
++    elif isinstance(data, list) and all(isinstance(item, dict) and 'name' in item and 'args' in item for item in data):
++        return [{'tool_calls': data}
++    return data
++def validate_input(data):
++    if isinstance(data, dict) and 'name' in data and 'args' in data:
++        return [{'name': data['name'], 'args': data['args']]
++    elif isinstance(data, list) and all(isinstance(item, dict) and 'name' in item and 'args' in item for item in data):
++        return [{'tool_calls': data]
++    return data
++def validate_input(data):
++    if isinstance(data, dict) and 'name' in data and 'args' in data:
++        return [{'name': data['name'], 'args': data['args']]
++    elif isinstance(data, list) and all(isinstance(item, dict) and 'name' in item and 'args' in item for item in data):
++        return [{'tool_calls': data]
++    return data
++def validate_input(data):
++    if isinstance(data, dict) and 'name' in data and 'args' in data:
++        return [{'name': data['name'], 'args': data['args']]
++    elif isinstance(data, list) and all(isinstance(item, dict) and 'name' in item and 'args' in item for item in data):
++        return [{'tool_calls': data]
++    return data
++def validate_input(data):
++    if isinstance(data, dict) and 'name' in data and 'args' in data:
++        return [{'name': data['name'], 'args': data['args']]
++    elif isinstance(data, list) and all(isinstance(item, dict) and 'name' in item and 'args' in item for item in data):
++        return [{'tool_calls': data]
++    return data(
+         self,
+         func: Callable,
+         name: str | None = None,

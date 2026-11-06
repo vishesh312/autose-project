@@ -1,0 +1,169 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "pallets_click_task/task2800/k2/f4-f1",
+    "pool": "pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      4,
+      1
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793978175.418871
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "4": false,
+      "1": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 21500,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 440,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 2
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.001141,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 37.14253282546997,
+    "agent_busy_s": 37.06642436981201,
+    "effective_parallelism": 0.9979509083019301,
+    "container_setup_s": 0.541224479675293,
+    "grading_s": 0.9934263229370117,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        4,
+        1
+      ],
+      "started": 1793978175.9614067,
+      "ended": 1793978213.0432978,
+      "busy_s": 37.06642436981201,
+      "usage": {
+        "input": 21500,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 440,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 2
+      },
+      "cost_list": 0.001141,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 5
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 27,
+      "patch_files": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793978175.9622204,
+          "ended": 1793978213.0286448,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 21500,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 440,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4e91696bffeX48A5VDQi6GbRz",
+          "nudge_reason": null,
+          "final_text_tail": "Changes have been made to `src/click/core.py` and `src/click/shell_completion.py`. Next, you should review the changes and run the project's tests to ensure everything works as expected. If the tests pass, you can proceed to create a pull request.",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.41663408279418945,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/own_solo.f4.log"
+      },
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.432450532913208,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/own_solo.f1.log"
+      }
+    },
+    "final": {
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.4564385414123535,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/final.f4.log"
+      },
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.4145810604095459,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_click_task_task2800_k2_f4-f1__r0/grading/final.f1.log"
+      }
+    }
+  }
+}

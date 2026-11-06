@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/manasm/ase/autose-project/src/parbench/runner.py", line 75, in one
+    execute_run(cfg, b, StrategySpec.parse(s), get_harness(h), models[m], r, run_dir)
+  File "/home/manasm/ase/autose-project/src/parbench/runner.py", line 114, in execute_run
+    res = run_strategy(ctx, spec)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/manasm/ase/autose-project/src/parbench/strategies.py", line 229, in run_strategy
+    return run_s2(ctx, spec)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/manasm/ase/autose-project/src/parbench/strategies.py", line 192, in run_s2
+    _branch_setup(c, base, res.worker_patches)
+  File "/home/manasm/ase/autose-project/src/parbench/merge.py", line 49, in _branch_setup
+    raise RuntimeError(f"could not apply {name}'s own patch to base: {r.output[-800:]}")
+RuntimeError: could not apply f6's own patch to base: -index-packs/llama-index-packs-sub-question-weaviate/llama_index/packs/sub_question_weaviate/base.py' cleanly.
+Applied patch to 'llama-index-packs/llama-index-packs-timescale-vector-autoretrieval/llama_index/packs/timescale_vector_autoretrieval/base.py' cleanly.
+Applied patch to 'llama-index-packs/llama-index-packs-vectara-rag/llama_index/packs/vectara_rag/base.py' cleanly.
+Applied patch to 'llama-index-packs/llama-index-packs-zenguard/llama_index/packs/zenguard/__init__.py' cleanly.
+Applied patch to 'llama-index-utils/llama-index-utils-oracleai/llama_index/utils/oracleai/__init__.py' cleanly.
+Applied patch to 'llama-index-utils/llama-index-utils-qianfan/llama_index/utils/qianfan/client.py' cleanly.
+Falling back to direct application...
+Applied patch to 'scripts/bump_packages.py' cleanly.
+

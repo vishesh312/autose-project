@@ -1,0 +1,171 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "dottxt_ai_outlines_task/task1655/k2/f1-f3",
+    "pool": "dottxt_ai_outlines_task/task1655",
+    "k": 2,
+    "features": [
+      1,
+      3
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793977886.9850955
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "3": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 119917,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 742,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 9
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.00610715,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 63.643229246139526,
+    "agent_busy_s": 62.99071526527405,
+    "effective_parallelism": 0.9897473150153666,
+    "container_setup_s": 1.882291316986084,
+    "grading_s": 9.099991083145142,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        1,
+        3
+      ],
+      "started": 1793977889.4566646,
+      "ended": 1793977952.45924,
+      "busy_s": 62.99071526527405,
+      "usage": {
+        "input": 119917,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 742,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 9
+      },
+      "cost_list": 0.00610715,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 10,
+        "read": 2
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 4,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793977889.4586532,
+          "ended": 1793977952.4493685,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 119917,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 742,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 9
+          },
+          "num_turns": 9,
+          "session_id": "ses_e4e95c5a7ffe5bSqvteWAThQ0V",
+          "nudge_reason": null,
+          "final_text_tail": "Both tasks have been completed:\n\n1. Added IPv4, UUID4, and Hex String types to the Regex DSL.\n2. Added Octal String type to the Regex DSL.\n\nThe changes have been committed to the respective branches. Next steps would be to merge these branches back into the main branch and run the project's tests to ensure everything works as expected.",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 4.355076789855957,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_solo.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 78,
+        "tests_failed": 9,
+        "duration_s": 4.517501592636108,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_solo.f3.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.7548940181732178,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/final.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 78,
+        "tests_failed": 9,
+        "duration_s": 3.856252670288086,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/final.f3.log"
+      }
+    }
+  }
+}

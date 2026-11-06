@@ -1,0 +1,68 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b add_octal_str_type"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "mkdir -p outlines/types"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'from outlines.types.dsl import Regex' > outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '# System-specific types' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'class octal_str(Regex):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    pattern = r'^0o[0-7]{3}$'' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __init__(self, value):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def matches(self, value):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __repr__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __str__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __eq__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __bool__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __len__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __getitem__(self, key):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __setitem__(self, key, value):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __delitem__(self, key):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __iter__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __reversed__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __contains__(self, item):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __add__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __radd__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __mul__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __rmul__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __mod__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __floordiv__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __truediv__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __pow__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __lshift__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __rshift__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __and__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __xor__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __or__(self, other):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __neg__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __pos__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __invert__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __int__(self):' >> outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}

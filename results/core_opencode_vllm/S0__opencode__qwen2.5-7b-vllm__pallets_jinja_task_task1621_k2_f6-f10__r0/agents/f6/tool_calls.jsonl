@@ -1,0 +1,6 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b add-template-path-transformation-support", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "mkdir -p src/jinja2/loaders && touch src/jinja2/loaders/__init__.py", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders.py", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git add src/jinja2/loaders.py src/jinja2/loaders/__init__.py && git commit -m \"Add initial support for template path transformations\" && git push origin add-template-path-transformation-support", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "pytest tests/unit/test_loaders.py", "timeout": 120000}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "npm run lint && npm run typecheck", "timeout": 120000}, "ok": true, "ts": null}

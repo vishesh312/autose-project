@@ -1,0 +1,65 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen2.5-7b-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793977559.0716057,
+  "ended": 1793977927.8361323,
+  "busy_s": 368.67582297325134,
+  "usage": {
+    "input": 410490,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 7048,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 22
+  },
+  "cost_list": 0.021581700000000002,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 5,
+    "edit": 7,
+    "shell": 7
+  },
+  "files_read": [
+    "/tmp/parbench-host-wxyu5ozy/repo",
+    "dspy/adapters/types",
+    "dspy/adapters/types/tool.py"
+  ],
+  "files_edited": [
+    "dspy/adapters/types/tool.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793977559.0736358,
+      "ended": 1793977927.7494588,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 410490,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 7048,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 22
+      },
+      "num_turns": 22,
+      "session_id": "ses_e4e9ad316ffeySOshtP6by6ABl",
+      "nudge_reason": null,
+      "final_text_tail": "Let's re-run the tests to see if the issue has been resolved.\n\n```bash\npython -m pytest dspy/adapters/types/tool.py -x -q\n```",
+      "error": null
+    }
+  ],
+  "error": null
+}

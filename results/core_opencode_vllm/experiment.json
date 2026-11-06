@@ -7,7 +7,8 @@
     "pallets_click_task/task2800",
     "dspy_task/task8563",
     "openai_tiktoken_task/task0",
-    "llama_index_task/task17244"
+    "llama_index_task/task17244",
+    "dottxt_ai_outlines_task/task1655"
   ],
   "subset": "core",
   "host_harnesses": [

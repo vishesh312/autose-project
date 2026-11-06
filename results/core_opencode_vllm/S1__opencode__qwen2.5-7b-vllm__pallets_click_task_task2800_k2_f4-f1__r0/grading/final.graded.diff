@@ -1,0 +1,43 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..3bd8ef5 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -3036,3 +3036,24 @@ def __getattr__(name: str) -> object:
+         return _MultiCommand
+ 
+     raise AttributeError(name)
++class Context(object):
++    def __init__(self, cmd, cleanup_timeout=None):
++        self.cmd = cmd
++        self.cleanup_timeout = cleanup_timeout
++        self._cleanup_timeout_set = bool(cleanup_timeout)
++
++    def close(self):
++        if self._cleanup_timeout_set:
++            import signal
++            import time
++            try:
++                signal.alarm(int(self.cleanup_timeout))
++                self._cleanup()
++            except Exception as e:
++                print(fCleanup timed out: {e})
++                signal.alarm(0)
++        else:
++            self._cleanup()
++
++    def _cleanup(self):
++        pass
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..a4f61e9 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -631,3 +631,9 @@ def _resolve_incomplete(
+     # There were no unparsed arguments, the command may be a group that
+     # will provide command name completions.
+     return ctx.command, incomplete
++def get_completions(ctx, complete_var, incomplete):
++    with ctx.cli.make_context(ctx.command.name) as main_ctx:
++        with ctx.cmd.make_context(main_ctx.command.name) as sub_ctx:
++            with ctx.cmd.make_context(sub_ctx.command.name) as sub_sub_ctx:
++                completions = ctx.cmd.get_completions(sub_sub_ctx, incomplete)
++                return completions

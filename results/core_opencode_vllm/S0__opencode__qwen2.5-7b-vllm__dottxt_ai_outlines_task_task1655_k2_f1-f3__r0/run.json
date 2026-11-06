@@ -1,0 +1,215 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "dottxt_ai_outlines_task/task1655/k2/f1-f3",
+    "pool": "dottxt_ai_outlines_task/task1655",
+    "k": 2,
+    "features": [
+      1,
+      3
+    ],
+    "strategy": "S0",
+    "strategy_id": "S0",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793977886.9848642
+  },
+  "correctness": {
+    "primary": "isolated",
+    "by_final": {
+      "isolated": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "3": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 130288,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 4437,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 11
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.007179950000000001,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 282.7746694087982,
+    "agent_busy_s": 279.15606594085693,
+    "effective_parallelism": 0.9872032262454528,
+    "container_setup_s": 0.0,
+    "grading_s": 8.1443510055542,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1793977889.423868,
+      "ended": 1793977950.6563365,
+      "busy_s": 61.20350456237793,
+      "usage": {
+        "input": 106230,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 712,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 9
+      },
+      "cost_list": 0.0054183,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 2,
+        "shell": 1,
+        "edit": 4,
+        "other": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 42,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793977889.4262733,
+          "ended": 1793977950.629778,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 106230,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 712,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 9
+          },
+          "num_turns": 9,
+          "session_id": "ses_e4e95c682ffeO7nKa8sabC7qDY",
+          "nudge_reason": null,
+          "final_text_tail": "Todos updated:\n\n- Add IPv4, UUID4, and Hex String Types to Regex DSL: completed (high priority)\n\nThe IPv4, UUID4, and Hex String types have been added to `outlines/types/__init__.py`. Next, I will run the project's tests to verify everything works as expected.",
+          "error": null
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f3",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        3
+      ],
+      "started": 1793977951.5877583,
+      "ended": 1793978169.59679,
+      "busy_s": 217.952561378479,
+      "usage": {
+        "input": 24058,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 3725,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 2
+      },
+      "cost_list": 0.00176165,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 68
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 104,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793977951.5881572,
+          "ended": 1793978169.5407186,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 24058,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 3725,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4e94d582ffe96yW34ocNd9Zn0",
+          "nudge_reason": null,
+          "final_text_tail": "ho '    def __truediv__(self, other):' >> outlines/types/__init__.py\necho '        return self.value / other' >> outlines/types/__init__.py\necho '    def __pow__(self, other):' >> outlines/types/__init__.py\necho '        return self.value ** other' >> outlines/types/__init__.py\necho '    def __lshift__(self, other):' >> outlines/types/__init__.py\necho '        return self.value << other' >> outlines/types/__init__.py\necho '    def __rshift__(self, other):' >> outlines/types/__init__.py\necho '        return self.value >> other' >> outlines/types/__init__.py\necho '    def __and__(self, other):' >> outlines/types/__init__.py\necho '        return self.value & other' >> outlines/types/__init__.py\necho '    def __xor__(self, other):' >> outlines/types/__init__.py\necho '        return self.value ^ other' >> outlines/types/__init__.py\necho '    def __or__(self, other):' >> outlines/types/__init__.py\necho '        return self.value | other' >> outlines/types/__init__.py\necho '    def __neg__(self):' >> outlines/types/__init__.py\necho '        return -int(self.value)' >> outlines/types/__init__.py\necho '    def __pos__(self):' >> outlines/types/__init__.py\necho '        return +int(self.value)' >> outlines/types/__init__.py\necho '    def __invert__(self):' >> outlines/types/__init__.py\necho '        return ~int(self.value)' >> outlines/types/__init__.py\necho '    def __int__(self):' >> outlines/types/__init__.py\necho '        return int(self.value, 8)' >> outlines/types/__init__.py\n```",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 4.307629108428955,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S0__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f3": {
+      "3": {
+        "fid": 3,
+        "passed": false,
+        "exit_code": 2,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 3.211827516555786,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S0__opencode__qwen2.5-7b-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f3.f3.log"
+      }
+    }
+  }
+}

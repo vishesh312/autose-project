@@ -1,0 +1,4 @@
+{"name": "glob", "kind": "read", "args": {"pattern": "**/click/core.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "**/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-v2u0yge1/repo/src/click/core.py", "offset": 1}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-v2u0yge1/repo/src/click/shell_completion.py", "offset": 1}, "ok": true, "ts": null}
