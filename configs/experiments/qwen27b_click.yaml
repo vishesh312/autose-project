@@ -1,0 +1,18 @@
+# One-bundle trial of Qwen3.8-27B (INT4, thinking off) on the click pool: S1, S0, S2 with the small_model prompt extra.
+name: qwen27b_click
+dataset: external/CooperBench/dataset
+subset: core
+k: [2]
+seed: 0
+strategies: [S1+small_model, S0+small_model, S2+small_model]
+harnesses: [opencode]
+host_harnesses: [opencode]
+models: [qwen3.8-27b-vllm]
+repeats: 1
+agent_timeout_s: 1800
+max_turns: 60
+max_nudges: 1
+max_parallel_runs: 3
+grade_parallel: 2
+merge: {modes: [naive, union, llm]}
+pools: [pallets_click_task/task2800]
