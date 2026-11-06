@@ -16,4 +16,4 @@ max_nudges: 1
 max_parallel_runs: 8                # vLLM batches: 8 streams ~ 283 tok/s vs ~35 tok/s for one
 grade_parallel: 3
 merge: {modes: [naive, union, llm]}
-pools: [pallets_jinja_task/task1559, pallets_jinja_task/task1621, pallets_click_task/task2800, dspy_task/task8563, openai_tiktoken_task/task0, llama_index_task/task17244]
+pools: [pallets_jinja_task/task1559, pallets_jinja_task/task1621, pallets_click_task/task2800, dspy_task/task8563, openai_tiktoken_task/task0, llama_index_task/task17244, dottxt_ai_outlines_task/task1655]

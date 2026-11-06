@@ -1,0 +1,19 @@
+# OpenCode (host, no Docker) + Qwen2.5-7B-Instruct on vLLM (NVIDIA box, GPU 0) on the Python pools of CooperBench `core`.
+# go_chi, react_hook_form and typst pools are skipped: they need Go / Node / Rust toolchains (not set up here).
+name: core_opencode_vllm_sm
+dataset: external/CooperBench/dataset
+subset: core
+k: [2]
+seed: 0
+strategies: [S0+small_model, S1+small_model, S2+small_model]
+harnesses: [opencode]
+host_harnesses: [opencode]
+models: [qwen2.5-7b-vllm]
+repeats: 1
+agent_timeout_s: 1500
+max_turns: 60
+max_nudges: 1
+max_parallel_runs: 4
+grade_parallel: 3
+merge: {modes: [naive, union, llm]}
+pools: [pallets_jinja_task/task1559, pallets_jinja_task/task1621, pallets_click_task/task2800, dspy_task/task8563, openai_tiktoken_task/task0, llama_index_task/task17244, dottxt_ai_outlines_task/task1655]
