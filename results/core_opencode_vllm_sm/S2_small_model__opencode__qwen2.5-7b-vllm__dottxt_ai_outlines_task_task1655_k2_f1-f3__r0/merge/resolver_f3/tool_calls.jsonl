@@ -1,0 +1,9 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --ours outlines/types/__init__.py", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --theirs outlines/types/__init__.py", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git apply --check /tmp/parbench-host-2r6lkvrf/conflicts/outlines/types/__init__.py.patch", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git apply /tmp/parbench-host-2r6lkvrf/conflicts/outlines/types/__init__.py.patch", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git add outlines/types/__init__.py", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "pytest outlines/types", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'hex_str = Regex(r\"0x[0-9a-fA-F]+\")\nuuid4 = Regex(r\"(?i)[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89abAB][0-9a-f]{3}-[0-9a-f]{12}\")\nip4 = Regex(r\"(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}\")\noctal_str = Regex(r\"0[0-7]+\")' >> outlines/types/__init__.py", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git add outlines/types/__init__.py", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "pytest outlines/types", "workdir": "/tmp/parbench-host-2r6lkvrf/repo"}, "ok": true, "ts": null}

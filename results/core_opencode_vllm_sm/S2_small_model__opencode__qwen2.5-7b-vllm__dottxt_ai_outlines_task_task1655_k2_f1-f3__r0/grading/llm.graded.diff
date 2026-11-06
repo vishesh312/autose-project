@@ -1,0 +1,44 @@
+diff --git a/outlines/types/__init__.py b/outlines/types/__init__.py
+index 85af9ad..9fc9de7 100644
+--- a/outlines/types/__init__.py
++++ b/outlines/types/__init__.py
+@@ -50,7 +50,15 @@ whitespace = Regex(r"\s")
+ 
+ # Document-specific types
+ sentence = Regex(r"[A-Z].*\s*[.!?]")
+-paragraph = Regex(rf"{sentence.pattern}(?:\s+{sentence.pattern})*\n+")
++    octal_str = Regex(r'0o[0-7]+', name='octal_str', description='Octal number string following Python octal literal format')
++
++        octal_str = Regex(r'0o[0-7]+', name='octal_str', description='Octal number string following Python octal literal format')
++
++        octal_str = Regex(r'0o[0-7]+', name='octal_str', description='Octal number string following Python octal literal format')
++
++            octal_str = Regex(r'0o[0-7]+', name='octal_str', description='Octal number string following Python octal literal format')
++
++    paragraph = Regex(rf"{sentence.pattern}(?:\s+{sentence.pattern})*\n+")
+ 
+ 
+ # The following regex is FRC 5322 compliant and was found at:
+@@ -65,6 +73,10 @@ email = Regex(
+ # https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
+ #
+ # TODO: The check digit can only be computed by calling a function to compute it dynamically
+-isbn = Regex(
++octal_str = Regex(r'0o[0-7]+', name='octal_str', description='Octal number string following Python octal literal format')
+     r"(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]"
+ )
++hex_str = Regex(r"0x[0-9a-fA-F]+")
++uuid4 = Regex(r"(?i)[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89abAB][0-9a-f]{3}-[0-9a-f]{12}")
++ip4 = Regex(r"(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}")
++octal_str = Regex(r"0[0-7]+")
+diff --git a/outlines/types/examples.py b/outlines/types/examples.py
+new file mode 100644
+index 0000000..f0ad57e
+--- /dev/null
++++ b/outlines/types/examples.py
+@@ -0,0 +1,4 @@
++from outlines.types import octal_str
++
++class FilePermission(BaseModel):
++    mode: octal_str
+\ No newline at end of file

@@ -1,0 +1,21 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..93bb6be1 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -255,6 +255,16 @@ class Tool(Type):
+ 
+ 
+ class ToolCalls(Type):
++    @staticmethod
++    def validate_input(data):
++        if isinstance(data, dict) and 'tool_calls' in data:
++            return {"tool_calls": [ToolCall(**item) for item in data['tool_calls']]}
++        elif isinstance(data, list):
++            return {"tool_calls": [ToolCall(**item) for item in data]}
++        elif isinstance(data, dict) and 'name' in data and 'args' in data:
++            return {"tool_calls": [ToolCall(**data)]}
++        else:
++            return data
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
