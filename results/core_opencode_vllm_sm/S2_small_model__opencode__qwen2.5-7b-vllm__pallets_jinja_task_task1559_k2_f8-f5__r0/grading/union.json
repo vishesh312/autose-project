@@ -1,0 +1,20 @@
+{
+  "8": {
+    "fid": 8,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 47,
+    "tests_failed": 8,
+    "duration_s": 1.042022943496704,
+    "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1559_k2_f8-f5__r0/grading/union.f8.log"
+  },
+  "5": {
+    "fid": 5,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 54,
+    "tests_failed": 3,
+    "duration_s": 0.9005844593048096,
+    "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1559_k2_f8-f5__r0/grading/union.f5.log"
+  }
+}

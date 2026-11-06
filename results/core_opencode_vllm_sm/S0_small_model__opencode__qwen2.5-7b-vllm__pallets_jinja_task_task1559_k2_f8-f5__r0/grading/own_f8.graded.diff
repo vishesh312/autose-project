@@ -1,0 +1,156 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..3357f1f 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -597,6 +597,151 @@ class LoopControlExtension(Extension):
+ 
+ 
+ class DebugExtension(Extension):
++    tags = {"debug"}
++    def __init__(self, environment: Environment) -> None:
++        super().__init__(environment)
++    def parse(self, parser: "Parser") -> nodes.Output:
++        token = next(parser.stream)
++        if token.value == "debug":
++            return nodes.Output([nodes.ContextReference()], lineno=token.lineno)
++        raise TemplateSyntaxError("Expected 'debug' tag", token.lineno)
++    def _render(self, context: Context) -> str:
++        result = {
++            "context": context.get_all(),
++            "filters": sorted(self.environment.filters.keys()),
++            "tests": sorted(self.environment.tests.keys())
++        }
++        return pprint.pformat(result, depth=3, compact=True)
++
++
++class ConditionalI18nExtension(Extension):
++    tags = {"ctrans"}
++    def __init__(self, environment: Environment) -> None:
++        super().__init__(environment)
++    def parse(self, parser: "Parser") -> t.Union[nodes.Node, t.List[nodes.Node]]:
++        lineno = next(parser.stream).lineno
++        condition = parser.parse_expression()
++        variables = {}
++        plural_expr = None
++        trimmed = None
++
++        while parser.stream.current.type != "block_end":
++            if parser.stream.current.type == "comma":
++                next(parser.stream)
++            elif parser.stream.current.type == "name":
++                name = parser.stream.current.value
++                if name in variables:
++                    parser.fail(f"Variable {name defined twice.", parser.stream.current.lineno)
++                variables[name] = parser.parse_expression()
++            elif parser.stream.current.type == "name" and parser.stream.current.value == "trimmed":
++                trimmed = True
++                next(parser.stream)
++            elif parser.stream.current.type == "name" and parser.stream.current.value == "notrimmed":
++                trimmed = False
++                next(parser.stream)
++            else:
++                parser.fail(f"Unexpected token {parser.stream.current.type}", parser.stream.current.lineno)
++
++        parser.stream.expect("block_end")
++
++        singular_names, singular = self._parse_block(parser, True)
++        if singular_names:
++            if plural_expr is None:
++                plural_expr = nodes.Name(singular_names[0], "load")
++            else:
++                plural_expr = nodes.Name(singular_names[0], "load")
++
++        if parser.stream.current.test("name:pluralize"):
++            next(parser.stream)
++            plural_names, plural = self._parse_block(parser, False)
++            if plural_names:
++                if plural_expr is None:
++                    plural_expr = nodes.Name(plural_names[0], "load")
++        else:
++            next(parser.stream)
++
++        return self._make_node(singular, plural, variables, plural_expr, bool(variables), False)
++
++    def _parse_block(self, parser: "Parser", allow_pluralize: bool) -> t.Tuple[t.List[str], str]:
++        referenced = []
++        buf = []
++
++        while True:
++            if parser.stream.current.type == "data":
++                buf.append(parser.stream.current.value.replace("%
++", "%%"))
++                next(parser.stream)
++            elif parser.stream.current.type == "variable_begin":
++                next(parser.stream)
++                name = parser.stream.expect("name").value
++                referenced.append(name)
++                buf.append(f"%({name})s")
++                parser.stream.expect("variable_end")
++            elif parser.stream.current.type == "block_begin":
++                next(parser.stream)
++                if parser.stream.current.test("name:endctrans"): break
++                elif parser.stream.current.test("name:pluralize"): if allow_pluralize: break; parser.fail("A ctrans block can have only one pluralize section")
++                parser.fail("Control structures in ctrans blocks are not allowed")
++            elif parser.stream.eos: parser.fail("Unclosed ctrans block")
++            else: raise RuntimeError("Internal parser error")
++
++        return referenced, concat(buf)
++
++    def _make_node(self, singular: str, plural: t.Optional[str], variables: t.Dict[str, nodes.Expr], plural_expr: t.Optional[nodes.Expr], vars_referenced: bool, num_called_num: bool) -> nodes.Output:
++        newstyle = self.environment.newstyle_gettext  # type: ignore
++        node: nodes.Expr
++
++        if plural_expr is None:
++            node = nodes.Call(nodes.Name("gettext", "load"), [nodes.Const(singular)], [], None, None)
++        else:
++            node = nodes.Call(nodes.Name("ngettext", "load"), [nodes.Const(singular), nodes.Const(plural), plural_expr], [], None, None)
++
++        if newstyle:
++            for key, value in variables.items():
++                node.kwargs.append(nodes.Keyword(key, value))
++        else:
++            node = nodes.Mod(node, nodes.Dict([nodes.Pair(nodes.Const(key), value) for key, value in variables.items()]))
++
++        return nodes.Output([node])
++
++    def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
++        return _ws_re.sub(" ", string.strip())
++    tags = {"debug"}
++    def __init__(self, environment: Environment) -> None:
++        super().__init__(environment)
++    def parse(self, parser: "Parser") -> nodes.Output:
++        token = next(parser.stream)
++        if token.value == "debug":
++            return nodes.Output([nodes.ContextReference()], lineno=token.lineno)
++        raise TemplateSyntaxError("Expected 'debug' tag", token.lineno)
++    def _render(self, context: Context) -> str:
++        result = {
++            "context": context.get_all(),
++            "filters": sorted(self.environment.filters.keys()),
++            "tests": sorted(self.environment.tests.keys())
++        }
++        return pprint.pformat(result, depth=3, compact=True)
++
++
++class ConditionalI18nExtension(Extension):
++    tags = {"ctrans"}
++    def __init__(self, environment: Environment) -> None:
++        super().__init__(environment)
++    def parse(self, parser: "Parser") -> t.Union[nodes.Node, t.List[nodes.Node]]:
++        # Implementation goes here
++        pass
++    def _parse_block(self, parser: "Parser", allow_pluralize: bool) -> t.Tuple[t.List[str], str]:
++        # Implementation goes here
++        pass
++    def _make_conditional_node(self) -> nodes.Node:
++        # Implementation goes here
++        pass
++    def _make_node(self, singular: str, plural: t.Optional[str], variables: t.Dict[str, nodes.Expr], plural_expr: t.Optional[nodes.Expr], vars_referenced: bool, num_called_num: bool) -> nodes.Output:
++        # Implementation goes here
++        pass
++    def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
++        # Implementation goes here
++        pass
+     """A ``{% debug %}`` tag that dumps the available variables,
+     filters, and tests.
+ 

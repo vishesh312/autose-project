@@ -1,0 +1,5 @@
+{"name": "glob", "kind": "read", "args": {"pattern": "*.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "i18n", "path": "/tmp/parbench-host-szseoabe/repo/src/jinja2/ext.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-szseoabe/repo/src/jinja2/ext.py", "offset": 440, "limit": 100}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "i18n", "path": "/tmp/parbench-host-szseoabe/repo/src/jinja2/ext.py", "include": "*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-szseoabe/repo/src/jinja2/ext.py", "offset": 1, "limit": 2000}, "ok": true, "ts": null}

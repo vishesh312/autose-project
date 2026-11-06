@@ -1,0 +1,29 @@
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/ext.py"}, "ok": false, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "*.py", "path": "src/jinja2"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/ext.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/runtime.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/tests.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/exceptions.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/constants.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/async_utils.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/_identifier.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/utils.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/sandbox.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/filters.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/meta.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/environment.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/__init__.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/bccache.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/defaults.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/compiler.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/visitor.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/parser.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/idtracking.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/optimizer.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/loaders.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/nodes.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/lexer.py"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "{% trans %}", "path": "src/jinja2/nativetypes.py"}, "ok": false, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "src/jinja2/ext.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "src/jinja2/ext.py", "offset": 1, "limit": 2000}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/tmp/parbench-host-uaw5wfkx/repo/src/jinja2/ext.py", "offset": 1}, "ok": true, "ts": null}

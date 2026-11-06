@@ -1,0 +1,13 @@
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..6a9215b 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -270,7 +270,7 @@ class ShellComplete:
+         :param args: List of complete args before the incomplete value.
+         :param incomplete: Value being completed. May be empty.
+         """
+-        ctx = _resolve_context(self.cli, self.ctx_args, self.prog_name, args)
++        ctx = with self.cli.make_context(...) as ctx:
+         obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
+         return obj.shell_complete(ctx, incomplete)
+ 

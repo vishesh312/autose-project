@@ -1,0 +1,24 @@
+{
+  "mode": "union",
+  "lost": [],
+  "steps": [
+    {
+      "branch": "f8",
+      "feature_ids": [
+        8
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "empty"
+    },
+    {
+      "branch": "f5",
+      "feature_ids": [
+        5
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "empty"
+    }
+  ]
+}

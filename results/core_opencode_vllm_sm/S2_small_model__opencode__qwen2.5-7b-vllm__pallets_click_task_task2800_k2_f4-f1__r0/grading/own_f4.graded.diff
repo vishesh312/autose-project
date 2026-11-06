@@ -1,0 +1,70 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..1474485 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -159,6 +159,65 @@ class ParameterSource(enum.Enum):
+ 
+ 
+ class Context:
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++    '''The context is a special internal object that holds state relevant
++    to the execution of a command. It is passed to all callback functions
++    and can be used to store and retrieve information throughout the
++    execution of a command.'''
++    cleanup_timeout: Optional[float] = None
++
++cleanup_timeout: Optional[float] = None
++
+     """The context is a special internal object that holds state relevant
+     for the script execution at every single level.  It's normally invisible
+     to commands unless they opt-in to getting access to it.

@@ -1,0 +1,65 @@
+{
+  "agent_id": "f8",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen2.5-7b-vllm",
+  "feature_ids": [
+    8
+  ],
+  "started": 1793978913.3551326,
+  "ended": 1793979589.6242783,
+  "busy_s": 676.24538397789,
+  "usage": {
+    "input": 371363,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 12345,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 19
+  },
+  "cost_list": 0.0204199,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 4,
+    "shell": 6,
+    "other": 2,
+    "edit": 5
+  },
+  "files_read": [
+    "tiktoken",
+    "tiktoken/core.py"
+  ],
+  "files_edited": [
+    "tiktoken/core.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793978913.356935,
+      "ended": 1793979589.602319,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 371363,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 12345,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 19
+      },
+      "num_turns": 19,
+      "session_id": "ses_e4e862754ffePr8JDg62Bdwfnk",
+      "nudge_reason": null,
+      "final_text_tail": "Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.",
+      "error": null
+    }
+  ],
+  "error": null
+}
