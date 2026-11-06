@@ -28,6 +28,7 @@ setup_one() {
     *)                  uv pip install -q --python "$py" -e ".[test]" || uv pip install -q --python "$py" -e . ;;
   esac
   uv pip install -q --python "$py" pytest pytest-xdist pytest_mock regex hypothesis openai
+  printf '*.egg-info/\nbuild/\n*.so\n__pycache__/\n.pytest_cache/\n.hypothesis/\ntarget/\n' >> "$out/repo/.git/info/exclude"  # editable-install artifacts must not enter agent diffs
   echo "[$pool] done" | tee "$out/READY"
 }
 

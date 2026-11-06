@@ -100,7 +100,7 @@ def merge_mode(
                 + " ; ".join(f"grep -lE '^(<<<<<<<|>>>>>>>)( |$)' {shlex.quote(f)} 2>/dev/null" for f in files)
             ).stdout.split()
             if not left:
-                c.sh("git add -A && git commit -q --no-edit -m resolved || git commit -q -am resolved")
+                c.sh("git add -A && { git commit -q --no-edit -m resolved || git commit -q -am resolved || git diff --cached --quiet; }")
                 step.outcome = "resolved"
             else:
                 c.exec("git merge --abort 2>/dev/null; git reset -q --hard")
