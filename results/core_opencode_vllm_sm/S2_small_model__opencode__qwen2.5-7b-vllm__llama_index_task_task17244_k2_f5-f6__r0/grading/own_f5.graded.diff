@@ -1,0 +1,41 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf23..74509f673 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -54,6 +54,36 @@ class ImageBlock(BaseModel):
+     path: FilePath | None = None
+     url: AnyUrl | str | None = None
+     image_mimetype: str | None = None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
+     detail: str | None = None
+ 
+     @field_validator("url", mode="after")

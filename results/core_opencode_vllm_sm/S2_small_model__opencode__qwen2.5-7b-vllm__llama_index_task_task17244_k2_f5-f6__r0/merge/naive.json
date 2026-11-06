@@ -1,8 +1,6 @@
 {
   "mode": "naive",
-  "lost": [
-    6
-  ],
+  "lost": [],
   "steps": [
     {
       "branch": "f5",
@@ -18,11 +16,9 @@
       "feature_ids": [
         6
       ],
-      "conflicted": true,
-      "conflict_files": [
-        "llama-index-core/llama_index/core/base/llms/types.py"
-      ],
-      "outcome": "skipped"
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
     }
   ]
 }

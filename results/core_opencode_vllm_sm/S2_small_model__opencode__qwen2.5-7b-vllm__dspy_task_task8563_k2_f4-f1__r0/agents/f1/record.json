@@ -6,30 +6,32 @@
   "feature_ids": [
     1
   ],
-  "started": 1793977559.0716057,
-  "ended": 1793977927.8361323,
-  "busy_s": 368.67582297325134,
+  "started": 1793985566.3618038,
+  "ended": 1793985997.2078261,
+  "busy_s": 430.74041175842285,
   "usage": {
-    "input": 410490,
+    "input": 81551,
     "cached_input": 0,
     "cache_write": 0,
-    "output": 7048,
+    "output": 403,
     "reasoning": 0,
     "cost_reported": 0.0,
-    "calls": 22
+    "calls": 6
   },
-  "cost_list": 0.021581700000000002,
+  "cost_list": 0.004138,
   "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
   "timed_out": false,
   "returncode": 0,
   "tool_calls": {
     "read": 5,
-    "edit": 7,
-    "shell": 7
+    "edit": 1
   },
   "files_read": [
-    "/tmp/parbench-host-wxyu5ozy/repo",
-    "dspy/adapters/types",
+    "/tmp/parbench-host-s3mds891/repo",
+    "dspy",
     "dspy/adapters/types/tool.py"
   ],
   "files_edited": [
@@ -41,23 +43,23 @@
   "attempts": [
     {
       "index": 0,
-      "started": 1793977559.0736358,
-      "ended": 1793977927.7494588,
+      "started": 1793985566.3633132,
+      "ended": 1793985997.103725,
       "returncode": 0,
       "timed_out": false,
       "usage": {
-        "input": 410490,
+        "input": 81551,
         "cached_input": 0,
         "cache_write": 0,
-        "output": 7048,
+        "output": 403,
         "reasoning": 0,
         "cost_reported": 0.0,
-        "calls": 22
+        "calls": 6
       },
-      "num_turns": 22,
-      "session_id": "ses_e4e9ad316ffeySOshtP6by6ABl",
+      "num_turns": 6,
+      "session_id": "ses_e4e20a47effeqHgm7Y2WxsGi0m",
       "nudge_reason": null,
-      "final_text_tail": "Let's re-run the tests to see if the issue has been resolved.\n\n```bash\npython -m pytest dspy/adapters/types/tool.py -x -q\n```",
+      "final_text_tail": "",
       "error": null
     }
   ],

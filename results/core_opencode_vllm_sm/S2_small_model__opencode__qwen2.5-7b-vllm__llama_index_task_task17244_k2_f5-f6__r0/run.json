@@ -1,0 +1,385 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm_sm",
+    "bundle": "llama_index_task/task17244/k2/f5-f6",
+    "pool": "llama_index_task/task17244",
+    "k": 2,
+    "features": [
+      5,
+      6
+    ],
+    "strategy": "S2+small_model",
+    "strategy_id": "S2",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793985562.6233788
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "llm",
+    "by_final": {
+      "naive": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "union": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      },
+      "llm": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "5": false,
+      "6": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 68699,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 356,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 6
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0034883500000000003,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "llama-index-core/llama_index/core/base/llms/types.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 192.46923089027405,
+    "agent_busy_s": 212.55168080329895,
+    "effective_parallelism": 1.1043410929639648,
+    "container_setup_s": 8.43224287033081,
+    "grading_s": 274.55842995643616,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": {
+    "pairwise": [
+      {
+        "a": "f5",
+        "b": "f6",
+        "conflict": false,
+        "files": []
+      }
+    ],
+    "conflict_rate": 0.0,
+    "overlap_lines": 0,
+    "modes": {
+      "naive": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f5",
+            "feature_ids": [
+              5
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f6",
+            "feature_ids": [
+              6
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "union": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f5",
+            "feature_ids": [
+              5
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f6",
+            "feature_ids": [
+              6
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "llm": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f5",
+            "feature_ids": [
+              5
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f6",
+            "feature_ids": [
+              6
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      }
+    }
+  },
+  "agents": [
+    {
+      "agent_id": "f5",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        5
+      ],
+      "started": 1793985571.0584471,
+      "ended": 1793985748.8976371,
+      "busy_s": 176.8979630470276,
+      "usage": {
+        "input": 48093,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 265,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 4
+      },
+      "cost_list": 0.0024444000000000002,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "timed_out": false,
+      "returncode": 1,
+      "tool_calls": {
+        "read": 2,
+        "edit": 1,
+        "shell": 1
+      },
+      "files_read": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "files_edited": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 30,
+      "patch_files": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793985571.0597887,
+          "ended": 1793985747.9577518,
+          "returncode": 1,
+          "timed_out": false,
+          "usage": {
+            "input": 48093,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 265,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 4
+          },
+          "num_turns": 4,
+          "session_id": "ses_e4e209223ffe0Fjm7n7aL6tVwQ",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": null
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f6",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        6
+      ],
+      "started": 1793985571.0574605,
+      "ended": 1793985607.6564295,
+      "busy_s": 35.65371775627136,
+      "usage": {
+        "input": 20606,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 91,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 2
+      },
+      "cost_list": 0.00104395,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 2,
+        "edit": 2
+      },
+      "files_read": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "files_edited": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 20,
+      "patch_files": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793985571.058304,
+          "ended": 1793985606.7120218,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 20606,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 91,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4e209231ffe2x5PjzR6CkQdvn",
+          "nudge_reason": null,
+          "final_text_tail": "",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f5": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 4.201858282089233,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/own_f5.f5.log"
+      }
+    },
+    "own_f6": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 8,
+        "tests_failed": 6,
+        "duration_s": 5.706415414810181,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/own_f6.f6.log"
+      }
+    },
+    "naive": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 3.9888644218444824,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/naive.f5.log"
+      },
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 4.369387626647949,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/naive.f6.log"
+      }
+    },
+    "union": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 124.26588344573975,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/union.f5.log"
+      },
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 3.926002264022827,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/union.f6.log"
+      }
+    },
+    "llm": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 123.9303367137909,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/llm.f5.log"
+      },
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 3.960644483566284,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm_sm/S2_small_model__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/llm.f6.log"
+      }
+    }
+  }
+}

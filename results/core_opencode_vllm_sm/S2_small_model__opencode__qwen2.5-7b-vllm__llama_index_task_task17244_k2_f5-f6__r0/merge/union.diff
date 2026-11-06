@@ -1,52 +1,80 @@
 diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
-index 00e30cf23..1bbfc10da 100644
+index 00e30cf23..be0ab4b5e 100644
 --- a/llama-index-core/llama_index/core/base/llms/types.py
 +++ b/llama-index-core/llama_index/core/base/llms/types.py
-@@ -49,6 +49,14 @@ class TextBlock(BaseModel):
+@@ -49,11 +49,49 @@ class TextBlock(BaseModel):
  
  
  class ImageBlock(BaseModel):
-+    @property
-+def get_image_mimetype(self) -> str | None:
-+        if self.image_mimetype is not None:
-+            return self.image_mimetype
-+        guess = filetype.guess(self.image)
-+        self.image_mimetype = guess.mime if guess else None
-+        return self.image_mimetype
 +    encoding: str = Field(default="base64")
      block_type: Literal["image"] = "image"
      image: bytes | None = None
++    @field_validator("image", mode="before")
++    @classmethod
++    def validate_encoding(cls, v: bytes | None, values: dict) -> bytes | None:
++        encoding = values.get("encoding")
++        if encoding == "raw":
++            return v
++        return base64.b64encode(v)
      path: FilePath | None = None
-@@ -65,7 +73,7 @@ class ImageBlock(BaseModel):
-         return AnyUrl(url=url)
+     url: AnyUrl | str | None = None
+     image_mimetype: str | None = None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
++    @property
++def get_image_mimetype(self) -> str:
++        return self.image_mimetype if self.image_mimetype else filetype.guess(self.image).mime if self.image else None
+     detail: str | None = None
+ 
+     @field_validator("url", mode="after")
+@@ -66,6 +104,15 @@ class ImageBlock(BaseModel):
  
      @model_validator(mode="after")
--    def image_to_base64(self) -> Self:
-+    def image_to_base64(self, encoding: str = "base64") -> Self:
+     def image_to_base64(self) -> Self:
++        encoding = self.encoding
++        if encoding == "raw":
++            return self
++        if not self.image:
++            return self
++        if not self.image_mimetype:
++            guess = filetype.guess(self.image)
++            self.image_mimetype = guess.mime if guess else None
++        self.image = base64.b64encode(self.image)
          """Store the image as base64 and guess the mimetype when possible.
  
          In case the model was built passing image data but without a mimetype,
-@@ -79,11 +87,12 @@ class ImageBlock(BaseModel):
-             guess = filetype.guess(self.image)
-             self.image_mimetype = guess.mime if guess else None
- 
--        self.image = base64.b64encode(self.image)
-+        if encoding == "base64":
-+    self.image = base64.b64encode(self.image)
- 
+@@ -84,6 +131,9 @@ class ImageBlock(BaseModel):
          return self
  
--    def resolve_image(self, as_base64: bool = False) -> BytesIO:
-+    def resolve_image(self, as_base64: bool = False, encoding: str = "base64") -> BytesIO:
+     def resolve_image(self, as_base64: bool = False) -> BytesIO:
++        if self.encoding == "raw":
++            return BytesIO(self.image)
++        return super().resolve_image(as_base64)
          """Resolve an image such that PIL can read it.
  
          Args:
-@@ -91,7 +100,7 @@ class ImageBlock(BaseModel):
-         """
-         if self.image is not None:
-             if as_base64:
--                return BytesIO(self.image)
-+                return BytesIO(base64.b64decode(self.image))
-             return BytesIO(base64.b64decode(self.image))
-         elif self.path is not None:
-             img_bytes = self.path.read_bytes()

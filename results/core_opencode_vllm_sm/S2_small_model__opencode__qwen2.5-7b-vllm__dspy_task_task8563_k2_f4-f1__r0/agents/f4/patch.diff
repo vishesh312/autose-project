@@ -1,23 +1,22 @@
 diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
-index 843eceed..d4b67585 100644
+index 843eceed..131c03d5 100644
 --- a/dspy/adapters/types/tool.py
 +++ b/dspy/adapters/types/tool.py
-@@ -1,368 +1,11 @@
+@@ -1,10 +1,6 @@
 -import asyncio
 -import inspect
--from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
 -
--from jsonschema import ValidationError, validate
--from pydantic import BaseModel, TypeAdapter, create_model
+ from jsonschema import ValidationError, validate
+ from pydantic import BaseModel, TypeAdapter, create_model
 -
--from dspy.adapters.types.base_type import Type
--from dspy.dsp.utils.settings import settings
--from dspy.utils.callback import with_callbacks
--
--if TYPE_CHECKING:
--    import mcp
--    from langchain.tools import BaseTool
--
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+ from dspy.utils.callback import with_callbacks
+@@ -13,248 +9,44 @@ if TYPE_CHECKING:
+     import mcp
+     from langchain.tools import BaseTool
+ 
 -_TYPE_MAPPING = {"string": str, "integer": int, "number": float, "boolean": bool, "array": list, "object": dict}
 -
 -
@@ -148,10 +147,18 @@ index 843eceed..d4b67585 100644
 -            else:
 -                parsed_kwargs[k] = v
 -        return parsed_kwargs
--
++_TYPE_MAPPING = {
++    "string": str,
++    "integer": int,
++    "number": float,
++    "boolean": bool,
++    "array": list,
++    "object": dict
++}
+ 
 -    def format(self):
 -        return str(self)
--
+ 
 -    def format_as_litellm_function_call(self):
 -        return {
 -            "type": "function",
@@ -187,7 +194,13 @@ index 843eceed..d4b67585 100644
 -                    "`allow_async=True` to run the async tool in sync mode."
 -                )
 -        return result
--
++class ToolCalls(Type):
++    def __init__(self, tool_calls_dicts: list[dict[str, Any]]):
++        self.tool_calls = [Tool(**item) for item in tool_calls_dicts]
++    class ToolCall(BaseModel):
++        name: str
++        args: dict[str, Any]
+ 
 -    @with_callbacks
 -    async def acall(self, **kwargs):
 -        parsed_kwargs = self._validate_and_parse_args(**kwargs)
@@ -197,8 +210,9 @@ index 843eceed..d4b67585 100644
 -        else:
 -            # We should allow calling a sync tool in the async path.
 -            return result
--
--    @classmethod
++    tool_calls: list[ToolCall]
+ 
+     @classmethod
 -    def from_mcp_tool(cls, session: "mcp.client.session.ClientSession", tool: "mcp.types.Tool") -> "Tool":
 -        """
 -        Build a DSPy tool from an MCP tool and a ClientSession.
@@ -211,10 +225,19 @@ index 843eceed..d4b67585 100644
 -            A Tool object.
 -        """
 -        from dspy.utils.mcp import convert_mcp_tool
--
++    def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> 'ToolCalls':
++        tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
++        return cls(tool_calls=tool_calls)
++    def __init__(self, tool_calls_dicts: list[dict[str, Any]]):
++        self.tool_calls = [Tool(**item) for item in tool_calls_dicts]
++    class ToolCall(BaseModel):
++        name: str
++        args: dict[str, Any]
+ 
 -        return convert_mcp_tool(session, tool)
--
--    @classmethod
++    tool_calls: list[ToolCall]
+ 
+     @classmethod
 -    def from_langchain(cls, tool: "BaseTool") -> "Tool":
 -        """
 -        Build a DSPy tool from a LangChain tool.
@@ -258,15 +281,20 @@ index 843eceed..d4b67585 100644
 -        arg_desc = f"It takes arguments {self.args}."
 -        return f"{self.name}{desc} {arg_desc}"
 -
--
++    def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> 'ToolCalls':
++        tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
++        return cls(tool_calls=tool_calls)
+ 
 -class ToolCalls(Type):
--    class ToolCall(BaseModel):
--        name: str
--        args: dict[str, Any]
--
--    tool_calls: list[ToolCall]
--
--    @classmethod
++    def __init__(self, tool_calls_dicts: list[dict[str, Any]]):
++        self.tool_calls = [Tool(**item) for item in tool_calls_dicts]
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
+@@ -262,107 +54,18 @@ class ToolCalls(Type):
+     tool_calls: list[ToolCall]
+ 
+     @classmethod
 -    def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
 -        """Convert a list of dictionaries to a ToolCalls instance.
 -
@@ -286,9 +314,15 @@ index 843eceed..d4b67585 100644
 -            tool_calls = ToolCalls.from_dict_list(tool_calls_dict)
 -            ```
 -        """
--        tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
--        return cls(tool_calls=tool_calls)
--
++    def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> 'ToolCalls':
+         tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
+         return cls(tool_calls=tool_calls)
++    def __init__(self, tool_calls_dicts: list[dict[str, Any]]):
++        self.tool_calls = [Tool(**item) for item in tool_calls_dicts]
++    class ToolCall(BaseModel):
++        name: str
++        args: dict[str, Any]
+ 
 -    @classmethod
 -    def description(cls) -> str:
 -        return (
@@ -369,17 +403,11 @@ index 843eceed..d4b67585 100644
 -        arg_desc[name] = prop.get("description", "No description provided.")
 -        if name in required:
 -            arg_desc[name] += " (Required)"
--
++    tool_calls: list[ToolCall]
+ 
 -    return args, arg_types, arg_desc
-+from pydantic import BaseModel
-+from typing import Any
-+class ToolCall(BaseModel):
-+    name: str
-+    args: dict[str, Any]
-+    def __init__(self, name: str, args: dict[str, Any]):
-+        super().__init__(name=name, args=args)
-+    name: str
-+    args: dict[str, Any]
-+    def __init__(self, name: str, args: dict[str, Any]):
-+        super().__init__(name=name, args=args)
++    @classmethod
++    def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> 'ToolCalls':
++        tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
++        return cls(tool_calls=tool_calls)
 \ No newline at end of file

@@ -1,0 +1,28 @@
+{
+  "mode": "llm",
+  "lost": [
+    1
+  ],
+  "steps": [
+    {
+      "branch": "f4",
+      "feature_ids": [
+        4
+      ],
+      "conflicted": false,
+      "conflict_files": [],
+      "outcome": "merged"
+    },
+    {
+      "branch": "f1",
+      "feature_ids": [
+        1
+      ],
+      "conflicted": true,
+      "conflict_files": [
+        "dspy/adapters/types/tool.py"
+      ],
+      "outcome": "resolve_failed"
+    }
+  ]
+}
