@@ -107,3 +107,36 @@ Partly validated (details and numbers in `docs/findings.md`): the toy pool runs 
 - Ollama on Apple Silicon serves parallel requests one at a time here, so S2 timing on a Mac measures the queue, not the strategy. Use `max_parallel_runs: 1` and read time metrics with that in mind.
 - Don't compare architectures: CooperBench's arm64 and amd64 images can differ in dependencies. Keep a comparison on one architecture.
 - A graded feature passes only if `runner.sh` exits 0 and at least one test passed. Agent-written test files are removed from the patch before grading (they collide with the hidden tests).
+
+## Project history: summary of the setup session (2026-11-06)
+
+A condensed record of how the repo got here, so a teammate or agent can pick up without the chat. Numbers and sources are in `docs/findings.md`; plans in `docs/core_subset_plan.md`.
+
+### What the user asked for, and decided
+
+- Evaluate coding agents on **k concurrent, possibly conflicting tasks** (k up to 6) built from CooperBench "pools"; measure correctness, tokens, cost, wall-clock time, conflicts, wasted effort.
+- Work was split across teammates. The teammate research notes (`docs/research/`) are **guidance, not a spec**. Ask before making design decisions.
+- Harnesses to support: OpenCode, Pi, Claude Code, Codex CLI, Antigravity (`agy`) with Gemini. Pi has no native subagents, so no S4 for it; OpenCode has native subagents.
+- Strategies first: S0 isolated, S1 one agent all tasks, S2 parallel + merge (naive / union / LLM resolver), S4 harness-native subagents; plus a worktree variant where the lead agent divides and merges (`S4@harness_native_worktrees`). Other candidates (S3 plan-then-schedule, S1b hand-off, S2b self-fix, prompt changes P1 to P3) are in `docs/research/Task5_Strategies.md`.
+- Sandbox: agents run **inside Docker, built from the CooperBench pool image**, and may run the repo's existing tests. Headless runs must never block on a human: when an agent stops to ask, the runner resumes it with "No human is available... use your best judgement" (`prompts/nudge.md`, up to 2 times).
+- Compute: local Ollama on the Mac for smoke tests; GPU machines and the IIIT Ada cluster later; frontier subscriptions. The **main OpenCode experiments will run on a different machine** (GPUs, a Qwen model); this Mac validates the pipeline. Guides must work on any NVIDIA GPU and on a Mac (`docs/serving_models.md`).
+- Antigravity: the user chose to keep using `agy` (Gemini 3.8 Flash and GPT-OSS 120B, which has a separate quota) on their own account after being told about the terms-of-service caveat, and asked for more parallelism. `agy` runs on the host ("dirty" results are acceptable for the mid-term submission; logs can be checked later).
+- Docker Desktop memory raised from 4 GB to 8 GB after stage A (restart job); the user allowed up to 8 to 9 GB.
+
+### What was built
+
+- Package `parbench` (`src/parbench/`): dataset loading and seeded k-bundles (including CooperBench's curated `core`/`flash_10`/`flash`/`lite` subsets), Docker sandbox plus host mode, six harness adapters, nudge loop, strategies S0/S1/S2/S4, merge modes, a k-feature grader reusing each image's `runner.sh`, metrics, report. Pinned CooperBench submodule (`external/CooperBench`, `63b9d44`). Toy dataset and smoke prompts in `smoke/`.
+- Docs: `docs/cooperbench_guide.md`, `harnesses.md`, `serving_models.md`, `agy_quota.md`, `core_subset_plan.md`, `findings.md`; the `AGENTS.md` files.
+- Teammate (MittalManas2005) added a no-Docker host-pool mode (`PARBENCH_HOST_POOLS`), OpenCode 1.x support, a vLLM Qwen2.5-7B model entry, a `small_model` prompt extra and a second `core` experiment arm. These were pulled in; the interaction with the `${repo}` prompt placeholder has not been checked.
+
+### Where things stand (see "Current status" above for the checklist)
+
+- Verified: the toy pool end to end with OpenCode + local `qwen3.5:9b` (S0, S1, S2 all pass; merge modes all graded; no real conflict exercised yet) and with `agy`; grading verified on 37 real CooperBench features across 5 `core` pools (dspy 8563, go_chi 26/27, click 2800, jinja 1559/1621) on arm64.
+- First real agent result: `agy` + Gemini Flash, S0 on dspy 8563 pair f1+f4: 1 of 2 tasks passed, 27 minutes, about 7.4M input tokens (higher than the 0.8 to 2.1M per task we estimated).
+- Experiments are launched per pool from `configs/experiments/core_agy_<pool>.yaml` (Gemini Flash) and `core_agy_gptoss_<pool>.yaml` (GPT-OSS 120B); all write to `results/core_agy` (git-ignored), one process per pool so pools run in parallel. Finished runs are skipped on relaunch. `parbench report results/core_agy` aggregates them.
+- Not done: any agent run on a real pool with OpenCode; S3; S0 caching across bundles; Pi/Claude/Codex/Gemini-CLI adapters checked against live output; the conflict path of the LLM resolver; host vs Docker speed comparison; the `agy` quota cost of a real task.
+
+### Gotchas that cost time this session
+
+- OpenCode 2.x needs an explicit `models` map for custom providers. Thinking models on Ollama need `reasoning_effort: none`. `agy -p` needs its prompt attached to the flag, cannot log in inside a container, and cannot disable subagents. Details in `docs/findings.md`.
+- Don't kill processes with a broad `pkill -f` pattern that can match the watcher's own command line, and don't delete host-mode temp clones while jobs run.
