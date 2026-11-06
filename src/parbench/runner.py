@@ -30,6 +30,8 @@ def _slug(s: str) -> str:
 
 
 def agent_image_name(pool_image: str, suffix: str) -> str:
+    if pool_image.startswith("hostpool:"):  # no-Docker mode: there is no agent image layer
+        return pool_image
     repo, _, tag = pool_image.rpartition(":")
     return f"{suffix}/{_slug(repo.split('/')[-1])}:{tag}"
 

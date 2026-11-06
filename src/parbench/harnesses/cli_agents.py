@@ -9,6 +9,8 @@ under results/_probes/ so they can be fixed quickly.
 from __future__ import annotations
 
 import json
+import os
+import subprocess
 import uuid
 
 from ..config import ModelSpec, Usage
@@ -173,7 +175,50 @@ class OpenCodeHarness(Harness):
     providers = ("openai_compat", "anthropic", "openai", "google", "openrouter")
     repo_artifacts = [".opencode", "opencode.json", "opencode.jsonc"]
 
+    _v1 = None
+
+    @classmethod
+    def is_v1(cls) -> bool:
+        """OpenCode 1.x (e.g. the Linux box) has a different config schema and no --standalone; adapter was written for 2.x."""
+        if cls._v1 is None:
+            try:
+                out = subprocess.run(["opencode", "--version"], capture_output=True, text=True, timeout=30).stdout
+                cls._v1 = out.strip().lstrip("v").startswith("1.")
+            except Exception:
+                cls._v1 = False
+        return cls._v1
+
+    def _setup_v1(self, c, model, opts):
+        cfg = {
+            "$schema": "https://opencode.ai/config.json",
+            "model": f"{self._prov(model)}/{self._key(model)}",
+            "autoupdate": False, "snapshot": False,
+            "permission": {"edit": "allow", "bash": "allow", "webfetch": "deny", "external_directory": "deny"},
+            "tools": {"question": False},
+            "agent": {"build": {"steps": opts.max_turns} if opts.max_turns else {}},
+        }
+        if not opts.subagents:
+            cfg["tools"]["task"] = False
+        if model.provider == "openai_compat":
+            cfg["provider"] = {"local": {
+                "npm": "@ai-sdk/openai-compatible", "name": "Local",
+                "options": {"baseURL": model.base_url.replace("host.docker.internal", "localhost"), "apiKey": "local"},
+                "models": {self._key(model): {
+                    "name": model.model, "tool_call": True,
+                    "limit": {"context": model.context, "output": model.max_output},
+                    **({"temperature": True} if model.temperature is not None else {}),
+                    **({"options": {"temperature": model.temperature}} if model.temperature is not None else {})}}}}
+        env = {"OPENCODE_DISABLE_AUTOUPDATE": "1", "OPENCODE_CONFIG_CONTENT": json.dumps(cfg)}
+        for var, sub_dir in (("XDG_CONFIG_HOME", "xdg/config"), ("XDG_DATA_HOME", "xdg/data"),
+                             ("XDG_STATE_HOME", "xdg/state")):
+            env[var] = f"{c.work}/{sub_dir}"
+        # keep the npm provider package cache shared across workspaces (avoids a download per run)
+        env["XDG_CACHE_HOME"] = os.path.expanduser("~/.cache")
+        return env
+
     def setup(self, c, model, opts):
+        if self.is_v1():
+            return self._setup_v1(c, model, opts)
         rules = [{"action": "question", "resource": "*", "effect": "deny"}]
         if not opts.subagents:
             rules += [{"action": "subagent", "resource": "*", "effect": "deny"},
@@ -209,14 +254,16 @@ class OpenCodeHarness(Harness):
     @staticmethod
     def _key(model):
         """Config key for the model: only generic providers need one (docs/harnesses.md, OpenCode section 7)."""
-        return model.id if model.provider == "openai_compat" else model.model
+        if model.provider == "openai_compat" and not OpenCodeHarness.is_v1():
+            return model.id
+        return model.model
 
     @staticmethod
     def _prov(model):
         return {"openai_compat": "local"}.get(model.provider, model.provider)
 
     def command(self, prompt_file, model, opts, resume_session):
-        a = f"opencode run --standalone --auto --format json -m {self.q(self._prov(model) + '/' + self._key(model))}"
+        a = f"opencode run {'' if self.is_v1() else '--standalone '}--auto --format json -m {self.q(self._prov(model) + '/' + self._key(model))}"
         if resume_session:
             a += f" -s {resume_session}"
         return f"{a} {self.prompt_arg(prompt_file)} </dev/null"
