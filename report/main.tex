@@ -80,7 +80,7 @@ S4 & Harness-native & One prompt with all $k$ tasks to a harness with its own su
 \section{Architectural Choices}
 \begin{itemize}\itemsep0pt
 \item \textbf{Build on CooperBench} (pinned submodule, commit \texttt{63b9d44}) and re-bundle it, instead of writing tasks by hand.
-\item \textbf{Strategies first}: S0, S1, S2, S4. We treat our own literature notes as guidance, not a specification.
+\item \textbf{Strategies first}: S0, S1, S2 and S4 (Table~\ref{tab:strat}); the planner-based S3 comes later.
 \item \textbf{Docker sandbox per agent} and agents may run the repository's tests; hidden tests are never visible.
 \item \textbf{Fully autonomous agents}: no human in the loop, resumed with a fixed nudge, up to two times.
 \item \textbf{Compute}: local models for smoke tests; a GPU machine with vLLM for the main OpenCode runs; Antigravity for hosted Gemini and GPT-OSS.
@@ -120,7 +120,7 @@ Used for & OpenCode runs on the \texttt{core} Python pools; a Qwen3.8-27B (INT4)
 \textbf{Toy pool, OpenCode + Qwen3.5-9B (local).} All strategies pass all tasks: S0 $k{=}2$ (938\,s), S1 (536\,s), S2 (592\,s, all three merge modes), S0 $k{=}3$ (1312\,s). The bundle used had no conflicting pair, so the conflict path of the resolver was not exercised. These runs show the pipeline works end to end; they are not results.
 
 \begin{table}[t]
-\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of \asof; the Gemini set is complete; GPT-OSS runs were still in progress). $n$ = valid runs (one run = one bundle); Task pass = fraction of tasks passing; Bundle = both tasks pass; wall and tokens are medians.}
+\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of \asof; the Gemini set is complete; GPT-OSS was stopped with some runs unfinished). $n$ = valid runs (one run = one bundle); Task pass = fraction of tasks passing; Bundle = both tasks pass; wall and tokens are medians.}
 \label{tab:agy}
 \small
 \input{tables}
@@ -213,7 +213,7 @@ File & What was checked \\
 \end{table}
 
 \section*{Repository}
-\url{https://github.com/vishesh312/autose-project} (public). The history has 34+ commits from three contributors over 4--6 November.
+\url{https://github.com/vishesh312/autose-project}
 
 \begin{thebibliography}{9}
 \bibitem{cooperbench} CooperBench: benchmarking coding-agent cooperation. arXiv:2601.13295, 2026 (code: github.com/cooperbench/CooperBench).
