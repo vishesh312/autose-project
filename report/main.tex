@@ -120,13 +120,13 @@ Used for & OpenCode runs on the \texttt{core} Python pools; a Qwen3.8-27B (INT4)
 \textbf{Toy pool, OpenCode + Qwen3.5-9B (local).} All strategies pass all tasks: S0 $k{=}2$ (938\,s), S1 (536\,s), S2 (592\,s, all three merge modes), S0 $k{=}3$ (1312\,s). The bundle used had no conflicting pair, so the conflict path of the resolver was not exercised. These runs show the pipeline works end to end; they are not results.
 
 \begin{table}[t]
-\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of \asof; the Gemini set is complete; GPT-OSS runs were still in progress). Task pass = mean fraction of the two tasks passing; Bundle = both pass; wall and tokens are medians per run.}
+\caption{\texttt{agy} on CooperBench \texttt{core} (5 pools, $k{=}2$, valid runs only, as of \asof; the Gemini set is complete; GPT-OSS runs were still in progress). $n$ = valid runs (one run = one bundle); Task pass = fraction of tasks passing; Bundle = both tasks pass; wall and tokens are medians.}
 \label{tab:agy}
 \small
 \input{tables}
 \end{table}
 
-\textbf{Antigravity, \texttt{core}.} Table~\ref{tab:agy} shows \validruns{} valid runs. With Gemini, S1 (one agent, both tasks) passes \gemOneP{} of the tasks against \gemZeroP{} for S0 ($n{=}\gemOneN{}$ each). Because the isolated reference runs two agents, S1 uses $\gemOneT$M input tokens against $\gemZeroT$M for S0 ($\tokRatio\times$ fewer) and takes \gemOneW\,s against \gemZeroW\,s. S2 (parallel agents, then merge) passes \gemTwoP{} ($n{=}\gemTwoN{}$) at a pairwise conflict rate of \gemTwoC{} and an effective parallelism of \gemTwoPar{}; S4 (native subagents) passes \gemFourP{} ($n{=}\gemFourN{}$). The differences are not statistically meaningful at this $n$. GPT-OSS results are dominated by service failures (Section~6) and say little about the model. A single task costs about \tokLow--\tokHigh M input tokens, far above our initial estimate.
+\textbf{Antigravity, \texttt{core}.} Table~\ref{tab:agy} shows \validruns{} valid runs. With Gemini, S1 (one agent, both tasks) passes \gemOneP{} of the tasks against \gemZeroP{} for S0 ($n{=}\gemOneN{}$ each). Because the isolated reference runs two agents, S1 uses $\gemOneT$M input tokens against $\gemZeroT$M for S0 ($\tokRatio\times$ fewer) and takes \gemOneW\,s against \gemZeroW\,s. S2 (parallel agents, then merge) passes \gemTwoP{} ($n{=}\gemTwoN{}$) at a pairwise conflict rate of \gemTwoC{} and an effective parallelism of \gemTwoPar{}; S4 (native subagents) passes \gemFourP{} ($n{=}\gemFourN{}$). The differences are not statistically meaningful with so few runs. GPT-OSS results are dominated by service failures (Section~6) and say little about the model. A single task costs about \tokLow--\tokHigh M input tokens, far above our initial estimate.
 
 \begin{table}[t]
 \caption{Task pass fraction per pool (valid runs; 1.0 = both tasks pass, -- = no valid run yet).}
@@ -138,7 +138,7 @@ Used for & OpenCode runs on the \texttt{core} Python pools; a Qwen3.8-27B (INT4)
 \textbf{Per-pool view.} Table~\ref{tab:pool} shows the pattern behind the averages. With Gemini, the jinja~1621 pair passes both tasks in S0 and S1, while the dspy, go\_chi and click pairs pass exactly one of two in S0 and S1: one task per pair is consistently out of reach for this setup, whatever the strategy. We have not yet inspected which task fails or why. Because the agents could not run the repository tests on the host, some failures may be unverified mistakes, not missing capability.
 
 \begin{table}[t]
-\caption{OpenCode + Qwen2.5-7B-Instruct on the \texttt{core} Python pools ($k{=}2$, GPU machine; some planned runs had not finished). Wall and tokens are medians per run.}
+\caption{OpenCode + Qwen2.5-7B-Instruct on the \texttt{core} Python pools ($k{=}2$, GPU machine; some planned runs had not finished). $n$ = number of runs. Wall and tokens are medians per run.}
 \label{tab:qwen}
 \small
 \input{tables_qwen}
@@ -150,7 +150,7 @@ Used for & OpenCode runs on the \texttt{core} Python pools; a Qwen3.8-27B (INT4)
 Making CooperBench usable for $k>2$ took real work: its grader and runner handle only two features, and its images leak future upstream history, so we wrote our own grader and a history scrub. Each agent harness behaved differently from its documentation, which required adapters verified against live output, and keeping results trustworthy cost us several reruns: agents found and searched for the upstream fix on the web, and service quota and capacity errors silently ended runs early. We now block web tools, retry through service errors, mark affected runs invalid, and audit the logs. The full benchmark is about 3,900 agent sessions for $k{=}2$ alone, so we evaluate curated subsets.
 
 \section{Limitations}
-$n$ is tiny and each configuration has one repeat; confidence intervals are wide. \texttt{agy} runs on the host, so agents cannot run the repository's tests, which lowers absolute pass rates and makes them not directly comparable with containerised OpenCode runs; subagents cannot be disabled in \texttt{agy} S0--S2 apart from our custom agent. Model quotas and server capacity are outside our control. Only $k{=}2$ has been run, and only one harness has results on real pools with a model strong enough to pass tasks.
+We have few runs per configuration (at most five bundles, one repeat each), so confidence intervals are wide. \texttt{agy} runs on the host, so agents cannot run the repository's tests, which lowers absolute pass rates and makes them not directly comparable with containerised OpenCode runs; subagents cannot be disabled in \texttt{agy} S0--S2 apart from our custom agent. Model quotas and server capacity are outside our control. Only $k{=}2$ has been run, and only one harness has results on real pools with a model strong enough to pass tasks.
 
 
 \section{Milestones and Changes to the Proposal}
@@ -185,7 +185,7 @@ SWE-smith~\cite{swesmith} is an MIT-licensed toolkit that builds an execution en
 \end{itemize}
 
 \section{Use of AI Tools}
-\textbf{Tools.} Most of the pipeline code, prompts, documentation and the first draft of this report were written with Claude Code (Claude Opus~5.5 and Sonnet~5.5), including research subagents that read the CooperBench repository, the agent CLIs, model-serving options and Antigravity's quota terms (\texttt{docs/}). AI agents are also the \emph{subjects} of the experiments (Gemini, GPT-OSS, Qwen through OpenCode and \texttt{agy}); their outputs are data, not part of our code.
+\textbf{Tools.} Most of the pipeline code, prompts, documentation and the first draft of this report were written with Claude Code (Claude Opus~5.5 and Sonnet~5.5), including research subagents that read the CooperBench repository and the agent CLIs. AI agents are also the \emph{subjects} of the experiments (Gemini, GPT-OSS, Qwen through OpenCode and \texttt{agy}); their outputs are data, not part of our code.
 
 \textbf{The decisions are ours.} The AI proposed options and implemented them; we made the decisions on models, harnesses, strategies, tasks (the \texttt{core} subset, $k{=}2$ first), compute, the sandbox design, and the removal of web tools to prevent contamination.
 
@@ -195,7 +195,7 @@ SWE-smith~\cite{swesmith} is an MIT-licensed toolkit that builds an execution en
 \caption{Key files we reviewed (all under \texttt{src/parbench/} unless noted).}
 \label{tab:files}
 \footnotesize
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.15}
 \begin{tabular}{@{}p{0.43\columnwidth}p{0.5\columnwidth}@{}}
 \toprule
 File & What was checked \\
@@ -213,10 +213,11 @@ File & What was checked \\
 \end{table}
 
 \section*{Repository}
-\url{https://github.com/vishesh312/autose-project} (public). The history has 34+ commits from three contributors over 4--6 November (pipeline, adapters, documentation, and GPU-machine runs with automated result publishing). Start with \texttt{AGENTS.md}, \texttt{docs/findings.md} and \texttt{docs/core\_subset\_plan.md}.
+\url{https://github.com/vishesh312/autose-project} (public). The history has 34+ commits from three contributors over 4--6 November.
 
 \begin{thebibliography}{9}
 \bibitem{cooperbench} CooperBench: benchmarking coding-agent cooperation. arXiv:2601.13295, 2026 (code: github.com/cooperbench/CooperBench).
-\bibitem{swesmith} J.~Yang, K.~Lieret, C.~E.~Jimenez, A.~Wettig, K.~Khandpur, Y.~Zhang, B.~Hui, O.~Press, L.~Schmidt, and D.~Yang. SWE-smith: Scaling data for software engineering agents. arXiv:2504.21798, 2025 (NeurIPS 2025 Datasets and Benchmarks, per the project README; code: github.com/SWE-bench/SWE-smith).\end{thebibliography}
+\bibitem{swesmith} J.~Yang et al. SWE-smith: Scaling data for software engineering agents. arXiv:2504.21798, 2025 (NeurIPS 2025 Datasets and Benchmarks; code: github.com/SWE-bench/SWE-smith).
+\end{thebibliography}
 
 \end{document}
