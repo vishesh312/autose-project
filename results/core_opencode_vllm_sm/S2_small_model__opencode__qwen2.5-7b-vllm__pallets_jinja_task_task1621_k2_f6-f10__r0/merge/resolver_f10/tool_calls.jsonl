@@ -1,0 +1,3 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-5t39yp57/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git status", "workdir": "/tmp/parbench-host-5t39yp57/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git diff", "workdir": "/tmp/parbench-host-5t39yp57/repo"}, "ok": true, "ts": null}

@@ -1,0 +1,61 @@
+{
+  "agent_id": "f8",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen2.5-7b-vllm",
+  "feature_ids": [
+    8
+  ],
+  "started": 1793979158.4188738,
+  "ended": 1793980657.4328578,
+  "busy_s": 1499.0044920444489,
+  "usage": {
+    "input": 446733,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 36570,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 24
+  },
+  "cost_list": 0.02782215,
+  "nudges": 0,
+  "timed_out": true,
+  "returncode": 124,
+  "tool_calls": {
+    "read": 4,
+    "other": 11,
+    "shell": 6
+  },
+  "files_read": [
+    "tiktoken/core.py"
+  ],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793979158.4197433,
+      "ended": 1793980657.4242353,
+      "returncode": 124,
+      "timed_out": true,
+      "usage": {
+        "input": 446733,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 36570,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 24
+      },
+      "num_turns": 24,
+      "session_id": "ses_e4e826b94ffeptyK8wD2YRi3R2",
+      "nudge_reason": null,
+      "final_text_tail": "n_regex(disallowed_special).search(text):\\n            raise_disallowed_special_token(match.group())\\n\\n    token_pairs = {}\\n    tokens = []\\n    prev_token = None\\n\\n    try:\\n        for token in self._core_bpe.encode(text, allowed_special):\\n            if prev_token is not None:\\n                token_pair = (prev_token, token)\\n                token_pairs[token_pair] = token_pairs.get(token_pair, 0) + 1\\n            tokens.append(token)\\n            prev_token = token\\n    except UnicodeEncodeError:\\n        # BPE operates on bytes, but the regex operates on unicode. If we pass a str that is\\n        # invalid UTF-8 to Rust, it will rightfully complain. Here we do a quick and dirty\\n        # fixup for any surrogate pairs that may have sneaked their way into the text.\\n        text = text.encode(\"utf-16\", \"surrogatepass\").decode(\"utf-16\", \"replace\")\\n        for token in self._core_bpe.encode(text, allowed_special):\\n            if prev_token is not None:\\n                token_pair = (prev_token, token)\\n                token_pairs[token_pair] = token_pairs.get(token_pair, 0) + 1\\n            tokens.append(token)\\n            prev_token = token\\n\\n    if return_repeated_pattern:\\n        top_3_pairs = sorted(token_pairs.items(), key=lambda x: x[1], reverse=True)[:3]\\n        return tokens, {pair: freq for pair, freq in top_3_pairs}\\n    else:\\n        return tokens, {}' > /tmp/parbench-host-9477h1ny/repo/tiktoken/core.py\n```\n\nLet's run this command to update the file.\n",
+      "error": "{\"type\": \"error\", \"timestamp\": 1793980536897, \"sessionID\": \"ses_e4e826b94ffeptyK8wD2YRi3R2\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 33236 tokens (29140 in the messages, 4096 in the comple"
+    }
+  ],
+  "error": "{\"type\": \"error\", \"timestamp\": 1793980536897, \"sessionID\": \"ses_e4e826b94ffeptyK8wD2YRi3R2\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 33236 tokens (29140 in the messages, 4096 in the comple"
+}

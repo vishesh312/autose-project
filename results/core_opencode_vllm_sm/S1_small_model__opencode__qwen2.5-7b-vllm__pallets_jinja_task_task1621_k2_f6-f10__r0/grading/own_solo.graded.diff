@@ -1,0 +1,25 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..dcf6d10 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -55,14 +55,17 @@ class BaseLoader:
+             def __init__(self, path):
+                 self.path = path
+ 
+-            def get_source(self, environment, template):
++            def get_source(self, environment: \"Environment\", template: str, path_transform: t.Optional[t.Callable[[str], str]] = None):
+                 path = join(self.path, template)
+                 if not exists(path):
+-                    raise TemplateNotFound(template)
++if path_transform:
++    raise TemplateNotFound(template)
++else:
++    raise TemplateNotFound(template)
+                 mtime = getmtime(path)
+                 with open(path) as f:
+                     source = f.read()
+-                return source, path, lambda: mtime == getmtime(path)
++                return path_transform(source), path, lambda: mtime == getmtime(path)
+     """
+ 
+     #: if set to `False` it indicates that the loader cannot provide access
