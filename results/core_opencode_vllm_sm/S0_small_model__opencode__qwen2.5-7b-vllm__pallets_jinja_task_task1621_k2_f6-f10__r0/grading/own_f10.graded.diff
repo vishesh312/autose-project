@@ -1,0 +1,40 @@
+diff --git a/src/jinja2/loaders.py b/src/jinja2/loaders.py
+index d7d9bd0..9f63a73 100644
+--- a/src/jinja2/loaders.py
++++ b/src/jinja2/loaders.py
+@@ -39,6 +39,35 @@ def split_template_path(template: str) -> t.List[str]:
+ 
+ 
+ class BaseLoader:
++    def add_alias(self, alias, target):
++        self._aliases[alias] = target
++    def remove_alias(self, alias):
++        if alias in self._aliases:
++            del self._aliases[alias]
++    def get_source(self, environment: 'Environment', template: str) -> Tuple[str, Optional[str], Optional[Callable[[], bool]]]:
++        if alias := self._aliases.get(template):
++            template = alias
++        return super().get_source(environment, template)
++    def add_alias(self, alias, target):
++        pass
++    def remove_alias(self, alias):
++        pass
++    def get_source(self, environment: 'Environment', template: str) -> Tuple[str, Optional[str], Optional[Callable[[], bool]]]:
++        if alias := self._aliases.get(template):
++            template = alias
++        return super().get_source(environment, template)
++    def add_alias(self, alias, target):
++        pass
++    def remove_alias(self, alias):
++        pass
++    def get_source(self, environment: 'Environment', template: str) -> Tuple[str, Optional[str], Optional[Callable[[], bool]]]:
++        if alias := self._aliases.get(template):
++            template = alias
++        return super().get_source(environment, template)
++    def add_alias(self, alias, target):
++        pass
++    def remove_alias(self, alias):
++        pass
+     """Baseclass for all loaders.  Subclass this and override `get_source` to
+     implement a custom loading mechanism.  The environment provides a
+     `get_template` method that calls the loader's `load` method to get the
