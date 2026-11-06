@@ -21,6 +21,7 @@ Things we learned by running, not by reading docs. Dated and sourced so they can
 | Building the agent image with four CLIs (opencode, pi, claude, codex) took about **16 minutes**, so build only the harness you use. | `parbench build-images` |
 
 | **`agy` web search leaks the task source.** `search_web` completes headless, is not blockable via `permissions.deny` (`"search_web"` and `"search_web(*)"` both tested), and agents used it: Gemini searched `site:github.com/pallets/click/pull/2800` (the very PR) and `"cooperbench"`. `parbench audit-web <exp>` lists affected runs. First audit (7 runs so far): 2 Gemini runs had leak-looking queries (24 and 9), GPT-OSS used web search 1 to 23 times with none looking like a lookup of the upstream change, and the finished dspy S0 Gemini run used none. | stream-json logs |
+| **Fix for the web leak:** custom agents in `configs/agy_agents/` (all tools except web/browser, `ask_question` and, for non-S4, subagent tools), installed to `~/.gemini/config/agents/`, run with `--agent`. Tested: `search_web` reported unavailable, coding unaffected. Pre-fix runs archived in `results/core_agy_web_contaminated/`. | test runs |
 | **GPT-OSS 120B via `agy` hits Google capacity limits:** `503 UNAVAILABLE: No capacity available for model gpt-oss-120b-medium` (retryable) with 10 sessions in parallel. | stream-json logs |
 
 ## 2. Measurements (toy pool `textkit`, tiny tasks)

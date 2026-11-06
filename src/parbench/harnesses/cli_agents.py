@@ -13,7 +13,7 @@ import os
 import subprocess
 import uuid
 
-from ..config import ModelSpec, Usage
+from ..config import ROOT, ModelSpec, Usage
 from ..sandbox import WORK, Container, HostWorkspace
 from .base import Harness, ParsedRun, RunOptions, ToolCall
 
@@ -361,6 +361,21 @@ class AgyHarness(Harness):
     forward_env = ["GEMINI_API_KEY"]
 
     def setup(self, c, model, opts):
+        # Custom agents (configs/agy_agents/*.md) that omit web/browser tools (they can leak the upstream change),
+        # ask_question and, unless S4, the subagent tools. Installed into ~/.gemini/config/agents, additively
+        # and only when the content differs (parallel processes may call this at the same time).
+        import os
+        import shutil
+        from pathlib import Path
+
+        dest = Path.home() / ".gemini" / "config" / "agents"
+        dest.mkdir(parents=True, exist_ok=True)
+        for src in (ROOT / "configs" / "agy_agents").glob("*.md"):
+            target = dest / src.name
+            if not target.exists() or target.read_text() != src.read_text():
+                tmp = target.with_suffix(f".tmp{os.getpid()}")
+                shutil.copy2(src, tmp)
+                os.replace(tmp, target)
         return {}
 
     def command(self, prompt_file, model, opts, resume_session):
@@ -370,7 +385,7 @@ class AgyHarness(Harness):
         # which we don't modify), so subagents stay available; subagent_calls is logged per agent.
         allow = json.dumps({"permissions": {"allow": ["command(*)"]}})
         a = (f"agy --output-format stream-json --sandbox --mode accept-edits --settings {self.q(allow)} "
-             f"--model {self.q(model.model)}")
+             f"--agent {'parbench-clean-sub' if opts.subagents else 'parbench-clean'} --model {self.q(model.model)}")
         a += f" --print-timeout {max(1, opts.timeout_s // 60)}m"
         if resume_session:
             a += f" --conversation {resume_session}"
