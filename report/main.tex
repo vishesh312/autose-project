@@ -38,20 +38,23 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[font=\scriptsize, node distance=3mm and 4mm,
-  box/.style={draw, rounded corners=1pt, align=center, minimum height=7mm, inner sep=2pt, fill=gray!8},
+\begin{tikzpicture}[font=\footnotesize,
+  box/.style={draw, rounded corners=1pt, align=center, text width=1.78cm, minimum height=9mm, inner sep=2pt, fill=gray!8},
   arr/.style={-{Stealth[length=1.6mm]}}]
-\node[box] (pool) {CooperBench\\pool image};
-\node[box, right=of pool] (bun) {Bundle\\sampler ($k$)};
-\node[box, right=of bun] (strat) {Strategy\\S0/S1/S2/S4};
-\node[box, below=of strat] (ag) {Agents: harness\\adapter + model\\(Docker / host)};
-\node[box, left=of ag] (merge) {Merge\\naive/union/LLM};
-\node[box, left=of merge] (grade) {Grader:\\hidden tests\\per task};
-\node[box, below=of merge, xshift=-8mm] (rec) {\texttt{run.json}: pass, tokens,\\time, conflicts, logs};
+\matrix[row sep=5mm, column sep=2.2mm, ampersand replacement=\&] {
+  \node[box] (pool) {CooperBench\\pool image}; \&
+  \node[box] (bun) {Bundle\\sampler ($k$ tasks)}; \&
+  \node[box] (strat) {Strategy\\S0\,/\,S1\,/\,S2\,/\,S4}; \&
+  \node[box] (ag) {Agents\\(harness + model)}; \\
+  \node[box] (merge) {Merge\\naive\,/\,union\,/\,LLM}; \&
+  \node[box] (grade) {Grader\\hidden tests\\per task}; \&
+  \node[box] (rec) {Run record\\tokens, time,\\conflicts, logs}; \& \\
+};
 \draw[arr] (pool)--(bun); \draw[arr] (bun)--(strat); \draw[arr] (strat)--(ag);
-\draw[arr] (ag)--(merge); \draw[arr] (merge)--(grade); \draw[arr] (grade)|-(rec);
+\draw[arr] (ag.south) -- ++(0,-2.5mm) -| (merge.north);
+\draw[arr] (merge)--(grade); \draw[arr] (grade)--(rec);
 \end{tikzpicture}
-\caption{The \texttt{parbench} pipeline. Every agent starts from a clean copy of the pool image with later upstream history removed.}
+\caption{The \texttt{parbench} pipeline. Agents start from a clean copy of the pool image.}
 \label{fig:pipe}
 \end{figure}
 
@@ -67,14 +70,14 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 \item \textbf{Strategies first}: S0, S1, S2, S4. The team's literature notes are treated as guidance, not a specification.
 \item \textbf{Docker sandbox per agent} and agents may run the repository's tests; hidden tests are never visible.
 \item \textbf{Fully autonomous agents}: no human in the loop, resumed with a fixed nudge, up to two times.
-\item \textbf{Compute}: local Ollama on a 24~GB Mac for smoke tests; a GPU machine with vLLM for the main OpenCode runs (run on a separate machine); Antigravity for hosted Gemini and GPT-OSS. The team accepted the terms-of-service risk of scripting \texttt{agy} on a personal account at low concurrency.
+\item \textbf{Compute}: local models for smoke tests; a GPU machine with vLLM for the main OpenCode runs; Antigravity for hosted Gemini and GPT-OSS. The team accepted the terms-of-service risk of scripting \texttt{agy} on a personal account at low concurrency.
 \item \textbf{Fairness}: same model for agents, resolver and planner; same step limit; one seeded task order per bundle.
 \item \textbf{Everything is logged raw} (JSON from each harness), so parsers can be fixed and runs re-scored without re-running agents.
 \end{itemize}
 
 \section{Experimental Setup}
 \textbf{Datasets.} (a) A toy pool (6 features of a small Python package, known conflict structure) to check the pipeline. (b) CooperBench \texttt{core}: five Python/Go pools so far (dspy~8563, go\_chi~27, click~2800, jinja~1559 and~1621), $k{=}2$, one repeat. \textbf{Grader check.} For 41 real features in six pools, the tests fail on the base, the gold patch passes, and CooperBench's combined patch passes, on arm64 images; likewise for the six toy features.
-\textbf{Models and harnesses.} \texttt{agy} with Gemini~3.8~Flash (low) and GPT-OSS~120B; OpenCode with Qwen3.5-9B (Ollama, thinking off, 64K context) on the toy pool and with Qwen2.5-7B-Instruct (vLLM, one RTX~5000 Ada; partial) on the Python pools of \texttt{core}.
+\textbf{Models and harnesses.} \texttt{agy} with Gemini~3.8~Flash (low) and GPT-OSS~120B; OpenCode with Qwen3.5-9B (local, thinking off) on the toy pool and with Qwen2.5-7B-Instruct (vLLM; partial) on the Python pools of \texttt{core}.
 \textbf{Metrics.} Task pass rate, bundle success, retention versus S0, pairwise conflict rate, overlap, tokens, wall-clock and agent-busy time, effective parallelism, nudges, and a validity flag. No dollar cost is computed for subscription models.
 
 \section{Results (Preliminary)}
@@ -102,17 +105,7 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 \textbf{OpenCode + Qwen2.5-7B (GPU machine, partial, Python pools).} Across S0, S1 and S2 ($n{=}11,11,9$) no task has passed (0.00, 95\% CI up to 0.15--0.18), with and without a ``small model'' prompt. We cannot yet tell whether the model is too weak for these tasks (CooperBench reports weak results for small open models) or whether part of the no-Docker setup is at fault; this is the first thing to investigate.
 
 \section{Problems Faced}
-\begin{itemize}\itemsep0pt
-\item \textbf{Dataset mismatch.} CooperBench's grader and runner handle two features and pass patches through one shell argument (large merged patches break); we wrote our own $k$-task grader and copy files with \texttt{docker cp}. Its images also contain future upstream commits, so we remove them before agents start.
-\item \textbf{Local serving.} Ollama's default 4K context silently truncates prompts; a thinking model took more than five minutes per call (fixed with reasoning off); Ollama serves requests one at a time on the Mac, so parallel timings measure a queue; a \texttt{keep\_alive} bug broke the warm-up script.
-\item \textbf{Docker.} Docker Desktop had 3.8~GB of RAM, too little for large pools; its settings file is ignored, so the limit had to be raised in the UI.
-\item \textbf{Harness quirks.} OpenCode~2.x needs an explicit model map for custom providers (and differs from~1.x); \texttt{agy} rejects prompts passed in the wrong flag order, denies tool calls headless unless allowed, has no switch to disable subagents, and its login cannot be carried into a container, so it runs on the host.
-\item \textbf{Safety and privacy.} A host-mode agent ran \texttt{env} and wrote the shell environment (session tokens) into a log. We redacted the logs before committing and now pass only an allow-list of environment variables.
-\item \textbf{Benchmark contamination.} \texttt{agy} agents used web search to look for the upstream pull request behind the task (\emph{e.g.}, \texttt{site:github.com/pallets/click/pull/2800}). Deny rules did not block it, so we run \texttt{agy} with custom agents without web, browser and question tools, and an audit command flags any web use. 18 early runs were archived as contaminated and rerun.
-\item \textbf{Quota and capacity.} After about 216M Gemini input tokens the account hit a quota limit (429) and GPT-OSS returned 503 ``no capacity'' errors; 23 of 42 runs ended on a service error and are excluded and rerun. The runner now waits and resumes, and marks such runs invalid.
-\item \textbf{Scale.} The full benchmark at $k{=}2$ alone is 3,912 agent sessions (about 70,000 over all $k$), so we use curated subsets.
-\item \textbf{Process mistakes} we corrected: broad process-kill patterns that killed our own watchers, deleting live temporary clones, and editing prompt templates while an experiment was running.
-\end{itemize}
+Making CooperBench usable for $k>2$ took real work: its grader and runner handle only two features, and its images leak future upstream history, so we wrote our own grader and a history scrub. Each agent harness behaved differently from its documentation, which required adapters verified against live output, and keeping results trustworthy cost us several reruns: agents found and searched for the upstream fix on the web, and service quota and capacity errors silently ended runs early. We now block web tools, retry through service errors, mark affected runs invalid, and audit the logs. The full benchmark is about 3,900 agent sessions for $k{=}2$ alone, so we evaluate curated subsets.
 
 \section{Limitations}
 $n$ is tiny and each configuration has one repeat; confidence intervals are wide. \texttt{agy} runs on the host, so agents cannot run the repository's tests, which lowers absolute pass rates and makes them not directly comparable with containerised OpenCode runs; subagents cannot be disabled in \texttt{agy} S0--S2 apart from our custom agent. Model quotas and server capacity are outside our control. Only $k{=}2$ has been run, and only one harness has results on real pools with a model strong enough to pass tasks.
