@@ -91,10 +91,10 @@ Written but **not yet validated end to end**: nothing has been run against real 
 - [x] Dataset loading, bundling, k-feature grader, merge modes, strategies S0/S1/S2/S4, metrics, report
 - [x] Adapters for OpenCode, Pi, Claude Code, Codex, agy, Gemini CLI (UNVERIFIED parsing except agy)
 - [x] Toy dataset generator + image; serving guide and scripts
-- [ ] Toy end-to-end run with a local model (`parbench probe`, then a toy experiment)
-- [ ] `check-gold` on real CooperBench pools (arm64 images, ~28 GB for all 30)
+- [~] Toy end-to-end run: OpenCode + local 9B S0 passed; S1/S2 and the merge modes still running (`configs/experiments/toy_smoke.yaml`); agy + Gemini Flash S0/S1 passed (`toy_agy.yaml`, host mode)
+- [~] `check-gold` on real CooperBench pools: go_chi task26 passes (4/4); the other 29 pools are not checked (arm64 ~28 GB for all 30)
 - [ ] S2 `llm` merge mode port check; S3 (plan-then-schedule) not implemented
-- [ ] Open decisions: which models for the real baselines, compute for them, repeats and budget
+- [ ] Open decisions: which models for the real baselines, repeats and budget. The main OpenCode runs will happen on a different machine (see `docs/core_subset_plan.md`); this Mac is for validating the pipeline
 
 ## Known pitfalls
 

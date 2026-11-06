@@ -1,6 +1,6 @@
 ${preamble}
 
-The working tree of /workspace/repo is in the middle of a git merge. Independently written implementations of the following features were merged and these files contain conflict markers (<<<<<<<, =======, >>>>>>>):
+The working tree of ${repo} is in the middle of a git merge. Independently written implementations of the following features were merged and these files contain conflict markers (<<<<<<<, =======, >>>>>>>):
 
 ${conflict_files}
 

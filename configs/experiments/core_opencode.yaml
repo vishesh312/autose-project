@@ -1,0 +1,19 @@
+# DRAFT: OpenCode on CooperBench `core` (10 curated pairs). See docs/core_subset_plan.md for readiness.
+# TODO(decision): model (local 9B is slow and may pass little), repeats, whether to include S4, pool subset.
+name: core_opencode
+dataset: external/CooperBench/dataset
+subset: core                        # k=2 as listed; k>2 extends each pair from the same pool (our design)
+k: [2]
+seed: 0
+strategies: [S0, S1, S2]            # add S4 (OpenCode native subagents) once the baseline works
+harnesses: [opencode]
+models: [qwen3.5-9b-ollama]
+repeats: 1
+agent_timeout_s: 1800
+max_turns: 100                      # CooperBench's step limit
+max_nudges: 2
+max_parallel_runs: 1                # one bundle at a time; Ollama serves one request at a time anyway
+grade_parallel: 1                   # raise only after Docker has >= 10 GB RAM
+merge: {modes: [naive, union, llm]}
+# Smaller first try (go_chi, two jinja pools, click, dspy): uncomment
+# pools: [go_chi_task/task27, pallets_jinja_task/task1559, pallets_jinja_task/task1621, pallets_click_task/task2800, dspy_task/task8563]

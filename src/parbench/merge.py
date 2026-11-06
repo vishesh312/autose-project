@@ -16,7 +16,7 @@ from itertools import combinations
 from pathlib import Path
 from typing import Callable
 
-from .sandbox import WORK, Container
+from .sandbox import Container
 
 ResolverFn = Callable[[Container, list[str], list[int], Path], object]  # returns an AgentRecord
 
@@ -41,10 +41,10 @@ class ModeResult:
 def _branch_setup(c: Container, base_sha: str, patches: list[tuple[str, list[int], str]]) -> None:
     c.exec("git merge --abort 2>/dev/null; git reset -q --hard && git clean -fdq")
     for name, _, patch in patches:
-        c.put_file(f"{WORK}/{name}.diff", patch)
+        c.put_file(f"{c.work}/{name}.diff", patch)
         c.sh(f"git checkout -q -B {name} {base_sha}")
         if patch.strip():
-            r = c.exec(f"git apply --index --binary {WORK}/{name}.diff || git apply --index --3way {WORK}/{name}.diff")
+            r = c.exec(f"git apply --index --binary {c.work}/{name}.diff || git apply --index --3way {c.work}/{name}.diff")
             if r.returncode != 0:
                 raise RuntimeError(f"could not apply {name}'s own patch to base: {r.output[-800:]}")
         c.sh(f"git commit -q --allow-empty -m {name}")
@@ -77,7 +77,7 @@ def merge_mode(
     resolver: ResolverFn | None = None,
 ) -> tuple[ModeResult, list]:
     """Merge agent branches in the given (bundle) order. Returns (result, resolver agent records)."""
-    attrs = "/workspace/repo/.git/info/attributes"
+    attrs = f"{c.repo}/.git/info/attributes"
     c.exec(f"mkdir -p $(dirname {attrs}); " + (f"echo '* merge=union' > {attrs}" if mode == "union" else f"rm -f {attrs}"))
     steps, records, lost = [], [], []
     c.exec("git merge --abort 2>/dev/null; git reset -q --hard && git clean -fdq")

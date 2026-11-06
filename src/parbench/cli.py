@@ -101,7 +101,7 @@ def cmd_probe(args):
     from .harnesses.base import RunOptions
     from .prompts import render
     from .runner import _auth_files, _env_for, agent_image_name
-    from .sandbox import Container
+    from .sandbox import Container, HostWorkspace
 
     load_dotenv()
     models = load_models()
@@ -111,9 +111,11 @@ def cmd_probe(args):
     pool = next(iter(load_pools(root, [args.pool] if args.pool else None).values()))
     cfg = ExperimentConfig(name="probe", copy_auth_files=args.copy_auth)
     prompt = Path(args.prompt_file).read_text() if args.prompt_file else args.prompt
-    prompt = render("single_task", task=prompt)
     log_dir = ROOT / "results" / "_probes" / f"{args.harness}__{args.model.replace('/', '_')}__{int(time.time())}"
-    with Container(agent_image_name(pool.image, args.suffix), env=_env_for(cfg, model, h)) as c:
+    cls = HostWorkspace if (h.host_mode or args.host) else Container
+    with cls(agent_image_name(pool.image, args.suffix), env=_env_for(cfg, model, h)) as c:
+        prompt = render("single_task", task=prompt, repo=c.repo)
+        (log_dir).mkdir(parents=True, exist_ok=True)
         c.scrub_history()
         for host, dest in _auth_files(cfg, h):
             c.put_path(host, dest)
@@ -167,7 +169,7 @@ def main(argv=None):
     p.add_argument("--pool"); p.add_argument("--prompt", default="Add a one-line docstring to the main module.")
     p.add_argument("--prompt-file"); p.add_argument("--subagents", action="store_true")
     p.add_argument("--max-turns", type=int, default=30); p.add_argument("--timeout", type=int, default=900)
-    p.add_argument("--max-nudges", type=int, default=1); p.add_argument("--copy-auth", action="store_true")
+    p.add_argument("--max-nudges", type=int, default=1); p.add_argument("--host", action="store_true", help="run without Docker (opencode, agy)"); p.add_argument("--copy-auth", action="store_true")
     p.add_argument("--suffix", default="parbench-agent"); p.set_defaults(f=cmd_probe)
 
     p = sub.add_parser("cleanup", help="remove all parbench containers"); p.set_defaults(f=cmd_cleanup)

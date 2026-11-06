@@ -76,6 +76,8 @@ class Harness(ABC):
     cost_is_cumulative = False  # reported cost already includes earlier resumed attempts
     usage_is_cumulative = False  # token usage is a session-level running total (take deltas across attempts)
     forward_env: list[str] = []
+    host_capable = False  # adapter works with HostWorkspace (paths come from c.work / c.repo)
+    host_mode = False  # True: run on the host in a temp clone (login cannot be carried into a container)
     auth_files: list[tuple[str, str]] = []
 
     def check_model(self, model: ModelSpec) -> None:

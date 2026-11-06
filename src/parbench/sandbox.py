@@ -67,6 +67,8 @@ class Container:
         self.cpus = cpus
         self.labels = {"parbench": "1", **(labels or {})}
         self.started = False
+        self.work = WORK  # scratch dir (prompts, harness config); outside the repo
+        self.repo = REPO
 
     # -- lifecycle -------------------------------------------------------
     def start(self) -> "Container":
@@ -109,7 +111,7 @@ class Container:
         *,
         timeout: float | None = None,
         env: dict[str, str] | None = None,
-        workdir: str = REPO,
+        workdir: str | None = None,
         stdout_path: Path | None = None,
         stderr_path: Path | None = None,
     ) -> ExecResult:
@@ -118,7 +120,7 @@ class Container:
         if timeout:
             # `timeout` exists in coreutils (debian) and busybox (alpine). -k: SIGKILL 10s after SIGTERM.
             inner = f"timeout -k 10 {int(timeout)} bash -c {shlex.quote(cmd)}"
-        args = ["docker", "exec", "-w", workdir]
+        args = ["docker", "exec", "-w", workdir or self.repo]
         for k, v in (env or {}).items():
             args += ["-e", f"{k}={v}"]
         args += [self.name, "bash", "-c", inner]
@@ -207,7 +209,7 @@ class Container:
         excludes = " ".join(shlex.quote(f":(exclude){p}") for p in (exclude or []))
         # Use a throwaway index so we never touch the agent's own index/staging.
         cmd = (
-            f"export GIT_INDEX_FILE={WORK}/diff.index; rm -f $GIT_INDEX_FILE; "
+            f"export GIT_INDEX_FILE={self.work}/diff.index; rm -f $GIT_INDEX_FILE; "
             f"git read-tree {base_sha} && git add -A -- . {excludes} && "
             f"git diff --cached --binary {base_sha} -- . {excludes}"
         )
@@ -215,6 +217,94 @@ class Container:
         if r.returncode != 0:
             raise RuntimeError(f"diff failed: {r.stderr[-1000:]}")
         return r.stdout
+
+
+
+class HostWorkspace(Container):
+    """Same interface as Container, but the repo is a temp dir on the HOST (cloned out of the pool image).
+
+    Only for harnesses whose login cannot be carried into a container (agy: Keychain). The agent still runs
+    under its own sandbox flags (see AgyHarness.command). Git is isolated from the user's config via
+    GIT_CONFIG_GLOBAL=/dev/null; nothing under $HOME is modified by us.
+    """
+
+    def __init__(self, image: str, *, name=None, env=None, labels=None, **_ignored):
+        super().__init__(image, name=name or f"parbench-host-{uuid.uuid4().hex[:8]}", env=env, labels=labels)
+        import shutil
+
+        self._shutil = shutil
+        self.root = Path(tempfile.mkdtemp(prefix="parbench-host-"))
+        self.repo = str(self.root / "repo")
+        self.work = str(self.root / "work")
+
+    def start(self) -> "HostWorkspace":
+        cid = _docker("create", "--entrypoint", "", self.image, "sleep", "1").stdout.strip()
+        try:
+            _docker("cp", f"{cid}:{REPO}", str(self.root))  # -> <root>/repo
+        finally:
+            _docker("rm", "-f", cid, check=False)
+        Path(self.work).mkdir(parents=True, exist_ok=True)
+        self.started = True
+        return self
+
+    def remove(self) -> None:
+        if self.started:
+            self._shutil.rmtree(self.root, ignore_errors=True)
+            self.started = False
+
+    def exec(self, cmd, *, timeout=None, env=None, workdir=None, stdout_path=None, stderr_path=None) -> ExecResult:
+        import signal
+
+        full_env = {**os.environ, **self.env, **(env or {}),
+                    "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_CONFIG_SYSTEM": "/dev/null", "GIT_TERMINAL_PROMPT": "0"}
+        out_f = open(stdout_path, "w") if stdout_path else subprocess.PIPE
+        err_f = open(stderr_path, "w") if stderr_path else subprocess.PIPE
+        started, timed_out = time.time(), False
+        proc = subprocess.Popen(["bash", "-c", cmd], cwd=workdir or self.repo, env=full_env, stdout=out_f,
+                                stderr=err_f, text=True, start_new_session=True)
+        try:
+            stdout, stderr = proc.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            os.killpg(proc.pid, signal.SIGKILL)
+            stdout, stderr = proc.communicate()
+        finally:
+            for f in (out_f, err_f):
+                if hasattr(f, "close"):
+                    f.close()
+        if stdout_path:
+            stdout = Path(stdout_path).read_text(errors="replace")
+        if stderr_path:
+            stderr = Path(stderr_path).read_text(errors="replace")
+        return ExecResult(124 if timed_out else proc.returncode, stdout or "", stderr or "", started, time.time(),
+                          timed_out)
+
+    def put_file(self, container_path, content, mode=None) -> None:
+        p = Path(container_path)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(content.encode() if isinstance(content, str) else content)
+        if mode:
+            p.chmod(int(mode, 8))
+
+    def put_path(self, host_path, container_path) -> None:
+        Path(container_path).parent.mkdir(parents=True, exist_ok=True)
+        self._shutil.copy2(host_path, container_path)
+
+    def get_file(self, container_path) -> str:
+        p = Path(container_path)
+        return p.read_text(errors="replace") if p.exists() else ""
+
+    def scrub_history(self) -> None:
+        self.exec(
+            "git remote remove origin 2>/dev/null || true; "
+            "git for-each-ref --format='%(refname)' refs/remotes | xargs -n1 git update-ref -d 2>/dev/null || true; "
+            "git tag -l | xargs -n1 git tag -d >/dev/null 2>&1 || true; "
+            "git for-each-ref --format='%(refname:short)' refs/heads | xargs -n1 git branch -D >/dev/null 2>&1 || true; "
+            "git stash clear 2>/dev/null || true; "
+            "git reflog expire --expire=now --all >/dev/null 2>&1; git gc --prune=now --quiet >/dev/null 2>&1 || true; "
+            "git config user.email parbench@local; git config user.name parbench; git config commit.gpgsign false",
+            timeout=600,
+        )
 
 
 def cleanup_all() -> None:

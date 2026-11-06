@@ -106,6 +106,8 @@ class ExperimentConfig:
     name: str
     dataset: str = "external/CooperBench/dataset"
     pools: list[str] | None = None  # pool ids or repo names; None = all
+    subset: str | None = None  # CooperBench subset name (dataset/subsets/<name>.json): core, flash_10, flash, lite, ...
+    host_harnesses: list[str] = field(default_factory=list)  # run these harnesses on the host (no Docker); see sandbox.HostWorkspace
     k: list[int] = field(default_factory=lambda: [2])
     bundles_per_pool: int | None = 1
     seed: int = 0

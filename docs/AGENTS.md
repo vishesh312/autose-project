@@ -12,6 +12,8 @@ Read the root `AGENTS.md` first.
 | `research/Task5_Strategies.md` | prior work and the strategies S0 to S4 and prompt changes P0 to P3 | guidance; S3 and P2/P3 not implemented yet |
 | `cooperbench_guide.md` | how CooperBench's data and grader work, and how we use them for k>2 | verified by reading code at `63b9d44`, not by running it |
 | `harnesses.md` | per-CLI install, headless command, JSON schema, resume, subagent switches, custom endpoints | each fact marked verified or UNVERIFIED |
+| `core_subset_plan.md` | plan and readiness checklist for OpenCode on the CooperBench `core` subset, including running on another machine | updated as items are checked off |
+| `agy_quota.md` | Antigravity (`agy`) quota, how to see it, and terms-of-service caveats for batch use | mostly from docs; the ToS reading is an inference, re-read the primary pages before relying on it |
 | `serving_models.md` | serving open models on a Mac, NVIDIA GPUs and SLURM; which engine speaks which API | checked against local Ollama only |
 
 ## Rules for editing docs

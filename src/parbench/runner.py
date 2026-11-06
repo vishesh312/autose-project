@@ -18,7 +18,7 @@ from itertools import combinations
 from pathlib import Path
 
 from .config import ROOT, ExperimentConfig, Usage, load_dotenv, load_models
-from .dataset import Bundle, load_gold_conflicts, load_pools, make_bundles
+from .dataset import Bundle, bundles_from_subset, load_gold_conflicts, load_pools, make_bundles
 from .grader import grade
 from .harnesses import get_harness
 from .sandbox import Container, image_exists
@@ -36,7 +36,11 @@ def agent_image_name(pool_image: str, suffix: str) -> str:
 
 def plan(cfg: ExperimentConfig) -> list[tuple[Bundle, str, str, str, int]]:
     pools = load_pools(cfg.dataset_path(), cfg.pools)
-    bundles = [b for k in cfg.k for b in make_bundles(pools, k, cfg.bundles_per_pool, cfg.seed)]
+    if cfg.subset:
+        sf = cfg.dataset_path() / "subsets" / f"{cfg.subset}.json"
+        bundles = [b for k in cfg.k for b in bundles_from_subset(pools, sf, k, cfg.seed)]
+    else:
+        bundles = [b for k in cfg.k for b in make_bundles(pools, k, cfg.bundles_per_pool, cfg.seed)]
     return [(b, s, h, m, r) for b in bundles for s in cfg.strategies for h in cfg.harnesses
             for m in cfg.models for r in range(cfg.repeats)]
 

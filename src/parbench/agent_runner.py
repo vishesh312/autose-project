@@ -10,7 +10,7 @@ from pathlib import Path
 from .config import ModelSpec, Usage
 from .harnesses.base import Harness, ParsedRun, RunOptions, looks_like_question
 from .prompts import render
-from .sandbox import WORK, Container
+from .sandbox import Container
 
 
 @dataclass
@@ -85,7 +85,7 @@ def run_agent(
     prev_cum = Usage()
     deadline = rec.started + opts.timeout_s
     for i in range(max_nudges + 1):
-        prompt_file = f"{WORK}/{agent_id}.prompt{i}.md"
+        prompt_file = f"{c.work}/{agent_id}.prompt{i}.md"
         c.put_file(prompt_file, current_prompt)
         remaining = max(60, int(deadline - time.time()))
         step_opts = RunOptions(opts.subagents, opts.max_turns, remaining)
@@ -130,7 +130,7 @@ def run_agent(
         if not reason or not session:
             break
         rec.nudges += 1
-        current_prompt = render("nudge", reason=reason)
+        current_prompt = render("nudge", reason=reason, repo=c.repo)
 
     rec.ended = time.time()
     rec.cost_list = model.list_cost(rec.usage)
@@ -140,8 +140,9 @@ def run_agent(
             rec.files_read += tc.files
         elif tc.kind == "edit":
             rec.files_edited += tc.files
-    rec.files_read = sorted(set(_norm(p) for p in rec.files_read))
-    rec.files_edited = sorted(set(_norm(p) for p in rec.files_edited))
+    prefix = c.repo.rstrip("/") + "/"
+    rec.files_read = sorted(set(_norm(p, prefix) for p in rec.files_read))
+    rec.files_edited = sorted(set(_norm(p, prefix) for p in rec.files_edited))
     with open(log_dir / "tool_calls.jsonl", "w") as f:
         for tc in all_calls:
             f.write(json.dumps({"name": tc.name, "kind": tc.kind, "args": tc.args, "ok": tc.ok, "ts": tc.ts}) + "\n")
@@ -149,8 +150,8 @@ def run_agent(
     return rec
 
 
-def _norm(p: str) -> str:
-    return p.removeprefix("/workspace/repo/").removeprefix("./")
+def _norm(p: str, prefix: str) -> str:
+    return p.removeprefix(prefix).removeprefix("./")
 
 
 def _nudge_reason(c: Container, parsed: ParsedRun, base_sha: str | None) -> str | None:

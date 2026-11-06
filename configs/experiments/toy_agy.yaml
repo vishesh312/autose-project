@@ -1,0 +1,17 @@
+# Toy pipeline smoke test with Antigravity (agy) + Gemini 3.8 Flash. agy runs on the HOST (its login cannot be
+# carried into a container), under agy's own --sandbox; grading still happens in containers.
+name: toy_agy
+dataset: smoke/dataset
+pools: [toy_task/task1]
+k: [2, 3]
+bundles_per_pool: 1
+seed: 0
+strategies: [S0, S1, S2, S4]
+harnesses: [agy]
+models: [gemini-flash-agy]
+repeats: 1
+agent_timeout_s: 900
+max_turns: 40
+max_nudges: 2
+max_parallel_runs: 1
+merge: {modes: [naive, union, llm]}

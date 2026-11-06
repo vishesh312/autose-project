@@ -22,7 +22,7 @@ from .dataset import Bundle, Feature
 from .harnesses.base import Harness, RunOptions
 from .merge import _branch_setup, merge_mode, overlap_lines, pairwise_conflicts
 from . import prompts
-from .sandbox import Container
+from .sandbox import Container, HostWorkspace
 
 
 @dataclass
@@ -68,7 +68,11 @@ class StrategyResult:
 
 # ----------------------------------------------------------------- helpers
 def _container(ctx: RunContext, role: str) -> tuple[Container, str]:
-    c = Container(
+    want_host = ctx.harness.host_mode or ctx.harness.name in ctx.cfg.host_harnesses
+    if want_host and not ctx.harness.host_capable:
+        raise ValueError(f"{ctx.harness.name} has no host mode yet (host-capable: opencode, agy)")
+    cls = HostWorkspace if want_host else Container
+    c = cls(
         ctx.agent_image,
         env=ctx.env,
         memory=ctx.cfg.container_memory,
@@ -117,7 +121,7 @@ def run_single_session(ctx: RunContext, spec: StrategySpec, *, subagents: bool, 
     try:
         res.setup_s = time.time() - t0
         prompt = prompts.multi_task(ctx.bundle.features, spec.template or default_tmpl,
-                                    extra=spec.extras[0] if spec.extras else None)
+                                    extra=spec.extras[0] if spec.extras else None, repo=c.repo)
         res.t_start = time.time()
         rec = _agent(ctx, c, base, prompt, agent_id="solo", role="solo", fids=ctx.bundle.feature_ids,
                      subagents=subagents)
@@ -138,7 +142,7 @@ def run_s0(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
     def one(f: Feature):
         c, base = _container(ctx, "S0")
         try:
-            prompt = prompts.single_task(f, extra=spec.extras[0] if spec.extras else None)
+            prompt = prompts.single_task(f, extra=spec.extras[0] if spec.extras else None, repo=c.repo)
             rec = _agent(ctx, c, base, prompt, agent_id=f"f{f.fid}", role="worker", fids=[f.fid])
             return rec, _collect(ctx, c, base, rec)
         finally:
@@ -167,7 +171,7 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
 
         def work(i):
             f, (c, base) = feats[i], boxes[i]
-            prompt = prompts.single_task(f, extra=spec.extras[0] if spec.extras else None)
+            prompt = prompts.single_task(f, extra=spec.extras[0] if spec.extras else None, repo=c.repo)
             rec = _agent(ctx, c, base, prompt, agent_id=f"f{f.fid}", role="worker", fids=[f.fid])
             return rec, _collect(ctx, c, base, rec)
 
@@ -193,7 +197,7 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
             def resolver(cc, files, fids, log_dir, _mode=mode):
                 involved = [f for f in feats]  # resolver sees all bundle tasks (it must keep everything working)
                 rec = run_agent(
-                    cc, ctx.harness, ctx.model, prompts.resolver(involved, files), _opts(ctx, False), log_dir,
+                    cc, ctx.harness, ctx.model, prompts.resolver(involved, files, repo=cc.repo), _opts(ctx, False), log_dir,
                     agent_id=log_dir.name, role="resolver", feature_ids=fids, max_nudges=ctx.cfg.max_nudges,
                 )
                 return rec

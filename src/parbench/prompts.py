@@ -15,7 +15,8 @@ def template(name: str) -> str:
 
 
 def render(name: str, **kw) -> str:
-    kw.setdefault("preamble", template("preamble").strip())
+    repo = kw.pop("repo", "/workspace/repo")
+    kw.setdefault("preamble", Template(template("preamble")).safe_substitute(repo=repo).strip())
     return Template(template(name)).safe_substitute(**{k: str(v) for k, v in kw.items()}).strip() + "\n"
 
 
@@ -23,23 +24,25 @@ def tasks_block(features: list[Feature]) -> str:
     return "\n\n".join(f"### Task {i}\n\n{f.description.strip()}" for i, f in enumerate(features, 1))
 
 
-def single_task(feature: Feature, extra: str | None = None) -> str:
+def single_task(feature: Feature, extra: str | None = None, repo: str = "/workspace/repo") -> str:
     task = feature.description.strip()
     if extra:
         task += "\n\n" + template(extra).strip()
-    return render("single_task", task=task)
+    return render("single_task", task=task, repo=repo)
 
 
-def multi_task(features: list[Feature], name: str = "multi_task", extra: str | None = None) -> str:
-    out = render(name, k=len(features), tasks=tasks_block(features))
+def multi_task(features: list[Feature], name: str = "multi_task", extra: str | None = None,
+               repo: str = "/workspace/repo") -> str:
+    out = render(name, k=len(features), tasks=tasks_block(features), repo=repo)
     if extra:
         out += "\n" + template(extra).strip() + "\n"
     return out
 
 
-def resolver(features: list[Feature], conflict_files: list[str]) -> str:
+def resolver(features: list[Feature], conflict_files: list[str], repo: str = "/workspace/repo") -> str:
     return render(
         "resolver",
+        repo=repo,
         tasks=tasks_block(features),
         conflict_files="\n".join(f"- {f}" for f in conflict_files),
     )

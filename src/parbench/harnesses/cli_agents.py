@@ -12,7 +12,7 @@ import json
 import uuid
 
 from ..config import ModelSpec, Usage
-from ..sandbox import WORK, Container
+from ..sandbox import WORK, Container, HostWorkspace
 from .base import Harness, ParsedRun, RunOptions, ToolCall
 
 HOST = "host.docker.internal"
@@ -168,6 +168,7 @@ class CodexHarness(Harness):
 # =============================================================== OpenCode
 class OpenCodeHarness(Harness):
     name = "opencode"
+    host_capable = True
     supports_subagents = True
     providers = ("openai_compat", "anthropic", "openai", "google", "openrouter")
     repo_artifacts = [".opencode", "opencode.json", "opencode.jsonc"]
@@ -192,9 +193,18 @@ class OpenCodeHarness(Harness):
                                               "limit": {"context": model.context, "output": model.max_output},
                                               **({"options": {"reasoningEffort": model.reasoning_effort}}
                                                  if model.reasoning_effort else {})}}}}
-        c.put_file(f"{WORK}/opencode.json", json.dumps(cfg, indent=2))
-        return {"OPENCODE_CONFIG_CONTENT": json.dumps(cfg), "OPENCODE_DISABLE_PROJECT_CONFIG": "1",
-                "PWD": "/workspace/repo"}
+        env = {"OPENCODE_DISABLE_PROJECT_CONFIG": "1", "OPENCODE_DISABLE_AUTOUPDATE": "1", "PWD": c.repo}
+        if isinstance(c, HostWorkspace):
+            # No Docker: reach the model server on localhost, and keep OpenCode's config/data/cache out of $HOME
+            # so your own OpenCode setup and sessions are neither used nor modified.
+            if model.base_url and "providers" in cfg:
+                cfg["providers"]["local"]["settings"]["baseURL"] = model.base_url.replace("host.docker.internal", "localhost")
+            for var, sub_dir in (("XDG_CONFIG_HOME", "xdg/config"), ("XDG_DATA_HOME", "xdg/data"),
+                                 ("XDG_CACHE_HOME", "xdg/cache"), ("XDG_STATE_HOME", "xdg/state")):
+                env[var] = f"{c.work}/{sub_dir}"
+        c.put_file(f"{c.work}/opencode.json", json.dumps(cfg, indent=2))
+        env["OPENCODE_CONFIG_CONTENT"] = json.dumps(cfg)
+        return env
 
     @staticmethod
     def _key(model):
@@ -296,6 +306,8 @@ class PiHarness(Harness):
 # =============================================================== Antigravity (agy)
 class AgyHarness(Harness):
     name = "agy"
+    host_capable = True
+    host_mode = True  # login lives in the macOS Keychain; see docs/harnesses.md
     supports_subagents = True
     providers = ("antigravity", "google")
     repo_artifacts = [".gemini", ".agents", ".agent", ".metadata.json"]
@@ -306,9 +318,12 @@ class AgyHarness(Harness):
 
     def command(self, prompt_file, model, opts, resume_session):
         # agy requires the prompt attached to -p (verified: `-p --output-format` mis-parses).
-        a = f"agy --output-format stream-json --dangerously-skip-permissions --model {self.q(model.model)}"
-        if not opts.subagents:
-            a += " --agent nosub"  # custom agent without subagent tools; see docs/harnesses.md (UNVERIFIED)
+        # Host mode: agy's own --sandbox plus a session-only allow rule (no permission bypass flag).
+        # agy has no switch to turn subagents off (a custom agent would have to be installed under ~/.gemini,
+        # which we don't modify), so subagents stay available; subagent_calls is logged per agent.
+        allow = json.dumps({"permissions": {"allow": ["command(*)"]}})
+        a = (f"agy --output-format stream-json --sandbox --mode accept-edits --settings {self.q(allow)} "
+             f"--model {self.q(model.model)}")
         a += f" --print-timeout {max(1, opts.timeout_s // 60)}m"
         if resume_session:
             a += f" --conversation {resume_session}"

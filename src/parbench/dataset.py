@@ -161,3 +161,31 @@ def make_bundles(pools: dict[str, Pool], k: int, per_pool: int | None, seed: int
             rng.shuffle(c)
             bundles.append(Bundle(pool=pool, feature_ids=c))
     return bundles
+
+
+def bundles_from_subset(pools: dict[str, Pool], subset_file: Path, k: int, seed: int) -> list[Bundle]:
+    """Use the pairs of a CooperBench subset (core, flash_10, flash, lite, ...) as the base of each bundle.
+
+    k=2 gives the pairs as listed. k>2 extends each pair with k-2 more features of the same pool, chosen with a
+    seeded RNG (pairs whose pool has too few features are skipped), so every k-bundle contains a curated pair.
+    """
+    import random
+
+    rng = random.Random(f"{seed}-{k}-subset")
+    data = json.loads(subset_file.read_text())
+    out = []
+    for entry in data["tasks"]:
+        pool = pools.get(f"{entry['repo']}/task{entry['task_id']}")
+        if pool is None:
+            continue
+        for pair in entry["pairs"]:
+            ids = [f for f in pair if f in pool.features]
+            if len(ids) != 2 or k < 2:
+                continue
+            extras = [f for f in sorted(pool.features) if f not in ids]
+            if len(extras) < k - 2:
+                continue
+            ids = ids + rng.sample(extras, k - 2)
+            rng.shuffle(ids)
+            out.append(Bundle(pool=pool, feature_ids=ids))
+    return out
