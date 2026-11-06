@@ -1,0 +1,43 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b feature/template-aliasing-and-transformation"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "mkdir -p src/jinja2/loaders"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/dict_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/function_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/package_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/choice_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/prefix_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/__init__.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/dict_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/function_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/package_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/choice_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "touch src/jinja2/loaders/prefix_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git add . && git commit -m \"Initial commit for template aliasing and transformation support\""}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'from jinja2.loaders import BaseLoader' > src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'class BaseLoader(object):' >> src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __init__(self, path_transform=None):' >> src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '        self.path_transform = path_transform' >> src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def get_source(self, environment, template):' >> src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '        if self.path_transform:' >> src/jinja2/loaders/base_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git add src/jinja2/loaders/base_loader.py && git commit -m \"Add base_loader with path_transform support\""}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'from jinja2.loaders import BaseLoader' > src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo 'class FileSystemLoader(BaseLoader):' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def __init__(self, searchpath, encoding=None, followlinks=False, path_transform=None):' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '        super(FileSystemLoader, self).__init__(path_transform)' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '        self.searchpath = searchpath' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '        self.encoding = encoding' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '        self.followlinks = followlinks' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '    def _get_source(self, environment, template):' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "echo '        if self.path_transform:' >> src/jinja2/loaders/file_system_loader.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}
+{"name": "bash", "kind": "shell", "args": {}, "ok": false, "ts": null}

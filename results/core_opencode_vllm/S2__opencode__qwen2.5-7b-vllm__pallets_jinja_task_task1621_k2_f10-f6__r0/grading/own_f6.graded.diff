@@ -1,0 +1,175 @@
+diff --git a/src/jinja2/loaders/BaseLoader.py b/src/jinja2/loaders/BaseLoader.py
+new file mode 100644
+index 0000000..9957cdb
+--- /dev/null
++++ b/src/jinja2/loaders/BaseLoader.py
+@@ -0,0 +1,27 @@
++from jinja2.environment import Environment
++from jinja2.exceptions import TemplateNotFound
++from jinja2.loaders import Loader
++
++
++class BaseLoader(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(path_transform: Optional[Callable[[str], str]] = None)(Loader):
++    def __init__(self, searchpath, encoding=None, followlinks=False, path_transform: Optional[Callable[[str], str]] = None):
++        super().__init__(searchpath, encoding, followlinks)
++        self.path_transform = path_transform
++
++    def load_template(self, name, globals, path_transform: Optional[Callable[[str], str]] = None):
++        transformed_name = self.path_transform(name) if path_transform else name
++        return super().load_template(transformed_name, globals)
++
++    def get_source(self, environment, name, path_transform: Optional[Callable[[str], str]] = None):
++        transformed_name = self.path_transform(name) if path_transform else name
++        return super().get_source(environment, transformed_name)
++
++    def list_templates(self, path_transform: Optional[Callable[[str], str]] = None):
++        return super().list_templates()
++
++    def is_up_to_date(self, name, last_modified, source_size, path_transform: Optional[Callable[[str], str]] = None):
++        transformed_name = self.path_transform(name) if path_transform else name
++        return super().is_up_to_date(transformed_name, last_modified, source_size)
++
++    def reset(self, path_transform: Optional[Callable[[str], str]] = None):
++        pass
+\ No newline at end of file
+diff --git a/src/jinja2/loaders/ChoiceLoader.py b/src/jinja2/loaders/ChoiceLoader.py
+new file mode 100644
+index 0000000..b45b72c
+--- /dev/null
++++ b/src/jinja2/loaders/ChoiceLoader.py
+@@ -0,0 +1,16 @@
++from jinja2.loaders import BaseLoader
++from jinja2 import ChoiceLoader as _ChoiceLoader
++
++
++class ChoiceLoader(BaseLoader):
++    def __init__(self, loaders, path_transform: Optional[Callable[[str], str]] = None):
++        super().__init__(loaders, path_transform)
++
++    def get_source(self, environment, name, path_transform: Optional[Callable[[str], str]] = None):
++        return super().get_source(environment, name, path_transform)
++
++    def list_templates(self, path_transform: Optional[Callable[[str], str]] = None):
++        return super().list_templates(path_transform)
++
++    def is_up_to_date(self, name, last_modified, source_size, path_transform: Optional[Callable[[str], str]] = None):
++        return super().is_up_to_date(name, last_modified, source_size, path_transform)
+\ No newline at end of file
+diff --git a/src/jinja2/loaders/DictLoader.py b/src/jinja2/loaders/DictLoader.py
+new file mode 100644
+index 0000000..3401102
+--- /dev/null
++++ b/src/jinja2/loaders/DictLoader.py
+@@ -0,0 +1,16 @@
++from jinja2.loaders import BaseLoader
++from jinja2 import DictLoader as _DictLoader
++
++
++class DictLoader(BaseLoader):
++    def __init__(self, namespace, cls=<class 'jinja2.loaders.DictLoader'>, path_transform: Optional[Callable[[str], str]] = None):
++        super().__init__(namespace, cls, path_transform)
++
++    def get_source(self, environment, name, path_transform: Optional[Callable[[str], str]] = None):
++        return super().get_source(environment, name, path_transform)
++
++    def list_templates(self, path_transform: Optional[Callable[[str], str]] = None):
++        return super().list_templates(path_transform)
++
++    def is_up_to_date(self, name, last_modified, source_size, path_transform: Optional[Callable[[str], str]] = None):
++        return super().is_up_to_date(name, last_modified, source_size, path_transform)
+\ No newline at end of file
+diff --git a/src/jinja2/loaders/FileSystemLoader.py b/src/jinja2/loaders/FileSystemLoader.py
+new file mode 100644
+index 0000000..c043513
+--- /dev/null
++++ b/src/jinja2/loaders/FileSystemLoader.py
+@@ -0,0 +1,16 @@
++from jinja2.loaders import BaseLoader
++from jinja2 import FileSystemLoader as _FileSystemLoader
++
++
++class FileSystemLoader(BaseLoader):
++    def __init__(self, searchpath, encoding=None, followlinks=False, path_transform: Optional[Callable[[str], str]] = None):
++        super().__init__(searchpath, encoding, followlinks, path_transform)
++
++    def get_source(self, environment, name, path_transform: Optional[Callable[[str], str]] = None):
++        return super().get_source(environment, name, path_transform)
++
++    def list_templates(self, path_transform: Optional[Callable[[str], str]] = None):
++        return super().list_templates(path_transform)
++
++    def is_up_to_date(self, name, last_modified, source_size, path_transform: Optional[Callable[[str], str]] = None):
++        return super().is_up_to_date(name, last_modified, source_size, path_transform)
+\ No newline at end of file
+diff --git a/src/jinja2/loaders/FunctionLoader.py b/src/jinja2/loaders/FunctionLoader.py
+new file mode 100644
+index 0000000..3984a2a
+--- /dev/null
++++ b/src/jinja2/loaders/FunctionLoader.py
+@@ -0,0 +1,16 @@
++from jinja2.loaders import BaseLoader
++from jinja2 import FunctionLoader as _FunctionLoader
++
++
++class FunctionLoader(BaseLoader):
++    def __init__(self, function, path_transform: Optional[Callable[[str], str]] = None):
++        super().__init__(function, path_transform)
++
++    def get_source(self, environment, name, path_transform: Optional[Callable[[str], str]] = None):
++        return super().get_source(environment, name, path_transform)
++
++    def list_templates(self, path_transform: Optional[Callable[[str], str]] = None):
++        return super().list_templates(path_transform)
++
++    def is_up_to_date(self, name, last_modified, source_size, path_transform: Optional[Callable[[str], str]] = None):
++        return super().is_up_to_date(name, last_modified, source_size, path_transform)
+\ No newline at end of file
+diff --git a/src/jinja2/loaders/PackageLoader.py b/src/jinja2/loaders/PackageLoader.py
+new file mode 100644
+index 0000000..4d90efa
+--- /dev/null
++++ b/src/jinja2/loaders/PackageLoader.py
+@@ -0,0 +1,16 @@
++from jinja2.loaders import BaseLoader
++from jinja2 import PackageLoader as _PackageLoader
++
++
++class PackageLoader(BaseLoader):
++    def __init__(self, package, path_transform: Optional[Callable[[str], str]] = None):
++        super().__init__(package, path_transform)
++
++    def get_source(self, environment, name, path_transform: Optional[Callable[[str], str]] = None):
++        return super().get_source(environment, name, path_transform)
++
++    def list_templates(self, path_transform: Optional[Callable[[str], str]] = None):
++        return super().list_templates(path_transform)
++
++    def is_up_to_date(self, name, last_modified, source_size, path_transform: Optional[Callable[[str], str]] = None):
++        return super().is_up_to_date(name, last_modified, source_size, path_transform)
+\ No newline at end of file
+diff --git a/src/jinja2/loaders/PrefixLoader.py b/src/jinja2/loaders/PrefixLoader.py
+new file mode 100644
+index 0000000..6d489c2
+--- /dev/null
++++ b/src/jinja2/loaders/PrefixLoader.py
+@@ -0,0 +1,16 @@
++from jinja2.loaders import BaseLoader
++from jinja2 import PrefixLoader as _PrefixLoader
++
++
++class PrefixLoader(BaseLoader):
++    def __init__(self, loaders, path_transform: Optional[Callable[[str], str]] = None):
++        super().__init__(loaders, path_transform)
++
++    def get_source(self, environment, name, path_transform: Optional[Callable[[str], str]] = None):
++        return super().get_source(environment, name, path_transform)
++
++    def list_templates(self, path_transform: Optional[Callable[[str], str]] = None):
++        return super().list_templates(path_transform)
++
++    def is_up_to_date(self, name, last_modified, source_size, path_transform: Optional[Callable[[str], str]] = None):
++        return super().is_up_to_date(name, last_modified, source_size, path_transform)
+\ No newline at end of file
+diff --git a/src/jinja2/loaders/__init__.py b/src/jinja2/loaders/__init__.py
+new file mode 100644
+index 0000000..e69de29

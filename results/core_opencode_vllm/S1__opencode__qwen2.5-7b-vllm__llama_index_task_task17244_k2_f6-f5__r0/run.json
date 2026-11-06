@@ -1,0 +1,174 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "llama_index_task/task17244/k2/f6-f5",
+    "pool": "llama_index_task/task17244",
+    "k": 2,
+    "features": [
+      6,
+      5
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793976106.0637271
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "6": false,
+      "5": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 70324,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 717,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 6
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0036237500000000007,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 43.360966205596924,
+    "agent_busy_s": 42.238115072250366,
+    "effective_parallelism": 0.9741045638138566,
+    "container_setup_s": 21.450167894363403,
+    "grading_s": 137.73553204536438,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        6,
+        5
+      ],
+      "started": 1793976127.5153692,
+      "ended": 1793976169.8552723,
+      "busy_s": 42.238115072250366,
+      "usage": {
+        "input": 70324,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 717,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 6
+      },
+      "cost_list": 0.0036237500000000007,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 9,
+        "read": 4,
+        "edit": 2
+      },
+      "files_read": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "files_edited": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 3,
+      "patch_files": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793976127.516259,
+          "ended": 1793976169.754374,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 70324,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 717,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 6
+          },
+          "num_turns": 6,
+          "session_id": "ses_e4eb0a9d5ffeFFp1rvl5eHu6dE",
+          "nudge_reason": null,
+          "final_text_tail": "The repository is not configured to push to a remote. You need to add a remote repository and then push the changes. Use the following commands to add a remote and push:\n\n```sh\ngit remote add origin <repository-url>\ngit push -u origin main\n```\n\nReplace `<repository-url>` with the actual URL of your remote repository.",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 13,
+        "tests_failed": 1,
+        "duration_s": 5.668825387954712,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f6-f5__r0/grading/own_solo.f6.log"
+      },
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 12,
+        "tests_failed": 1,
+        "duration_s": 5.496516466140747,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f6-f5__r0/grading/own_solo.f5.log"
+      }
+    },
+    "final": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 13,
+        "tests_failed": 1,
+        "duration_s": 125.67530393600464,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f6-f5__r0/grading/final.f6.log"
+      },
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 12,
+        "tests_failed": 1,
+        "duration_s": 5.997466564178467,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f6-f5__r0/grading/final.f5.log"
+      }
+    }
+  }
+}

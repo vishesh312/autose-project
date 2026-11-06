@@ -1,0 +1,45 @@
+diff --git a/src/jinja2/loaders/__init__.py b/src/jinja2/loaders/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/base_loader.py b/src/jinja2/loaders/base_loader.py
+new file mode 100644
+index 0000000..ca1b273
+--- /dev/null
++++ b/src/jinja2/loaders/base_loader.py
+@@ -0,0 +1,6 @@
++from jinja2.loaders import BaseLoader
++class BaseLoader(object):
++    def __init__(self, path_transform=None):
++        self.path_transform = path_transform
++    def get_source(self, environment, template):
++        if self.path_transform:
+diff --git a/src/jinja2/loaders/choice_loader.py b/src/jinja2/loaders/choice_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/dict_loader.py b/src/jinja2/loaders/dict_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/file_system_loader.py b/src/jinja2/loaders/file_system_loader.py
+new file mode 100644
+index 0000000..4ac24c0
+--- /dev/null
++++ b/src/jinja2/loaders/file_system_loader.py
+@@ -0,0 +1,9 @@
++from jinja2.loaders import BaseLoader
++class FileSystemLoader(BaseLoader):
++    def __init__(self, searchpath, encoding=None, followlinks=False, path_transform=None):
++        super(FileSystemLoader, self).__init__(path_transform)
++        self.searchpath = searchpath
++        self.encoding = encoding
++        self.followlinks = followlinks
++    def _get_source(self, environment, template):
++        if self.path_transform:
+diff --git a/src/jinja2/loaders/function_loader.py b/src/jinja2/loaders/function_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/package_loader.py b/src/jinja2/loaders/package_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/prefix_loader.py b/src/jinja2/loaders/prefix_loader.py
+new file mode 100644
+index 0000000..e69de29

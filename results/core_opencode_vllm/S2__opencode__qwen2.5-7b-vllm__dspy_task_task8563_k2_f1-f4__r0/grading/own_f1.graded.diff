@@ -1,0 +1,9 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..37c0dd9b 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -366,3 +366,4 @@ def convert_input_schema_to_tool_args(
+             arg_desc[name] += " (Required)"
+ 
+     return args, arg_types, arg_desc
++from typing import List, Dict, Optional, Union, Tuple, Set, Literal, NewType, TypedDict, Protocol, Final, Annotated, TypeAlias, TypeVar, TypeGuard, TypeVarTuple, ParamSpec, Self

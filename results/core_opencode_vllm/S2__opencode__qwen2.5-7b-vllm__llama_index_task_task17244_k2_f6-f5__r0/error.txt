@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/manasm/ase/autose-project/src/parbench/runner.py", line 75, in one
+    execute_run(cfg, b, StrategySpec.parse(s), get_harness(h), models[m], r, run_dir)
+  File "/home/manasm/ase/autose-project/src/parbench/runner.py", line 114, in execute_run
+    res = run_strategy(ctx, spec)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/manasm/ase/autose-project/src/parbench/strategies.py", line 229, in run_strategy
+    return run_s2(ctx, spec)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/manasm/ase/autose-project/src/parbench/strategies.py", line 205, in run_s2
+    mres, recs = merge_mode(c, base, res.worker_patches, mode, merge_dir, resolver if mode == "llm" else None)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/manasm/ase/autose-project/src/parbench/merge.py", line 103, in merge_mode
+    c.sh("git add -A && git commit -q --no-edit -m resolved || git commit -q -am resolved")
+  File "/home/manasm/ase/autose-project/src/parbench/sandbox.py", line 157, in sh
+    raise RuntimeError(f"[{self.name}] command failed ({r.returncode}): {cmd}\n{r.output[-2000:]}")
+RuntimeError: [parbench-host-d3920118] command failed (1): git add -A && git commit -q --no-edit -m resolved || git commit -q -am resolved
+On branch _merge_llm
+nothing to commit, working tree clean
+On branch _merge_llm
+nothing to commit, working tree clean
+

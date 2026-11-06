@@ -1,0 +1,88 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout HEAD -- llama-index-core/llama_index/core/base/llms/types.py", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout --merge", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1}", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge --no-commit --stat HEAD@{1 --abort", "workdir": "/tmp/parbench-host-_gsdf8uq/repo"}, "ok": true, "ts": null}
+{"name": "invalid", "kind": "other", "args": {"tool": "bash", "error": "Invalid input for tool bash: JSON parsing failed: Text: {\"command\": \"git checkout --merge\", \"{\"command\": \"git checkout --merge\"}.\nError message: JSON Parse error: Expected ':' before value in object property definition"}, "ok": true, "ts": null}

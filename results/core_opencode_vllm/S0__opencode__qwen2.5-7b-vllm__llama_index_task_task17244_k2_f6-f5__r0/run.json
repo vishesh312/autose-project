@@ -1,0 +1,225 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "llama_index_task/task17244/k2/f6-f5",
+    "pool": "llama_index_task/task17244",
+    "k": 2,
+    "features": [
+      6,
+      5
+    ],
+    "strategy": "S0",
+    "strategy_id": "S0",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793976106.0631194
+  },
+  "correctness": {
+    "primary": "isolated",
+    "by_final": {
+      "isolated": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "6": false,
+      "5": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 317569,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 2879,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 23
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0163103,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 256.7246673107147,
+    "agent_busy_s": 222.78691506385803,
+    "effective_parallelism": 0.8678048642447681,
+    "container_setup_s": 0.0,
+    "grading_s": 13.79360318183899,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "f6",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        6
+      ],
+      "started": 1793976127.5566528,
+      "ended": 1793976148.4656126,
+      "busy_s": 19.922821283340454,
+      "usage": {
+        "input": 66391,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 238,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 5
+      },
+      "cost_list": 0.00335525,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 2,
+        "edit": 1,
+        "shell": 1
+      },
+      "files_read": [
+        "/tmp/parbench-host-9hovn7q6/repo"
+      ],
+      "files_edited": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 1,
+      "patch_files": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793976127.557486,
+          "ended": 1793976147.4803073,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 66391,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 238,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 5
+          },
+          "num_turns": 5,
+          "session_id": "ses_e4eb0a9e2ffee592qiKVsvC0SU",
+          "nudge_reason": null,
+          "final_text_tail": "The tests did not find any test files. Ensure that your test files are correctly named and located in the appropriate directory. If you have test files, please provide the correct path or name.",
+          "error": null
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f5",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        5
+      ],
+      "started": 1793976157.3967557,
+      "ended": 1793976361.1871436,
+      "busy_s": 202.86409378051758,
+      "usage": {
+        "input": 251178,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 2641,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 18
+      },
+      "cost_list": 0.012955050000000001,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 1,
+      "tool_calls": {
+        "read": 3,
+        "edit": 8,
+        "other": 1,
+        "shell": 4
+      },
+      "files_read": [
+        "llama-index-core/llama_index/core/base/llms",
+        "llama-index-core/llama_index/core/base/llms/tests",
+        "pyproject.toml"
+      ],
+      "files_edited": [
+        "llama-index-core/llama_index/core/base/llms/types.py",
+        "pyproject.toml"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 529,
+      "patch_files": [
+        "llama-index-core/llama_index/core/base/llms/types.py",
+        "pyproject.toml"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793976157.3974302,
+          "ended": 1793976360.261524,
+          "returncode": 1,
+          "timed_out": false,
+          "usage": {
+            "input": 251178,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 2641,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 18
+          },
+          "num_turns": 18,
+          "session_id": "ses_e4eb03514ffeQyhogMU4YgV1Nj",
+          "nudge_reason": null,
+          "final_text_tail": "Let's try running the tests again without the `--timeout` option to see if we can identify the specific errors.\n\nRun the tests and provide the output so we can diagnose the issues.",
+          "error": "{\"type\": \"error\", \"timestamp\": 1793976343752, \"sessionID\": \"ses_e4eb03514ffeQyhogMU4YgV1Nj\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 32857 tokens (28761 in the messages, 4096 in the comple"
+        }
+      ],
+      "error": "{\"type\": \"error\", \"timestamp\": 1793976343752, \"sessionID\": \"ses_e4eb03514ffeQyhogMU4YgV1Nj\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 32857 tokens (28761 in the messages, 4096 in the comple"
+    }
+  ],
+  "grades": {
+    "own_f6": {
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 13,
+        "tests_failed": 1,
+        "duration_s": 5.419182777404785,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S0__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f6-f5__r0/grading/own_f6.f6.log"
+      }
+    },
+    "own_f5": {
+      "5": {
+        "fid": 5,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 4.3319926261901855,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S0__opencode__qwen2.5-7b-vllm__llama_index_task_task17244_k2_f6-f5__r0/grading/own_f5.f5.log"
+      }
+    }
+  }
+}

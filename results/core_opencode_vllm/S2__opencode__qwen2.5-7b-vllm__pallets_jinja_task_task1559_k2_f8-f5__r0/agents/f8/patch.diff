@@ -1,0 +1,365 @@
+diff --git a/.gitignore b/.gitignore
+index 86b119b..1f3f867 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,21 +1,76 @@
+-*.so
+-docs/_build/
+ *.pyc
+-*.pyo
+-*.egg-info/
+-*.egg
+ build/
+ dist/
+-.DS_Store
+-.tox/
+-.cache/
+-.idea/
+-env/
+ venv/
+-venv-*/
+-.coverage
+-.coverage.*
+-htmlcov
+-.pytest_cache/
+-/.vscode/
+-.mypy_cache
++node_modules/
++coverage/
++htmlcov/
++build/
++dist/
++docs/
++data/
++logs/
++tmp/
++venv/
++pytest_cache/
++mypy_cache/
++flake8_cache/
++black_cache/
++isort_cache/
++pre-commit/
++tox/
++coverage/
++htmlcov/
++dist/
++build/
++docs/
++data/
++logs/
++tmp/
++venv/
++pytest_cache/
++mypy_cache/
++flake8_cache/
++black_cache/
++isort_cache/
++pre-commit/
++tox/
++coverage/
++htmlcov/
++dist/
++build/
++docs/
++data/
++logs/
++tmp/
++venv/
++pytest_cache/
++mypy_cache/
++flake8_cache/
++black_cache/
++isort_cache/
++pre-commit/
++tox/
++coverage/
++htmlcov/
++dist/
++build/
++docs/
++data/
++logs/
++tmp/
++venv/
++pytest_cache/
++mypy_cache/
++flake8_cache/
++black_cache/
++isort_cache/
++pre-commit/
++tox/
++coverage/
++htmlcov/
++dist/
++build/
++docs/
++data/
++logs/
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/Jinja2.egg-info/PKG-INFO b/src/Jinja2.egg-info/PKG-INFO
+new file mode 100644
+index 0000000..dbcb575
+--- /dev/null
++++ b/src/Jinja2.egg-info/PKG-INFO
+@@ -0,0 +1,113 @@
++Metadata-Version: 2.4
++Name: Jinja2
++Version: 3.1.0.dev0
++Summary: A very fast and expressive template engine.
++Home-page: https://palletsprojects.com/p/jinja/
++Author: Armin Ronacher
++Author-email: armin.ronacher@active-4.com
++Maintainer: Pallets
++Maintainer-email: contact@palletsprojects.com
++License: BSD-3-Clause
++Project-URL: Donate, https://palletsprojects.com/donate
++Project-URL: Documentation, https://jinja.palletsprojects.com/
++Project-URL: Changes, https://jinja.palletsprojects.com/changes/
++Project-URL: Source Code, https://github.com/pallets/jinja/
++Project-URL: Issue Tracker, https://github.com/pallets/jinja/issues/
++Project-URL: Twitter, https://twitter.com/PalletsTeam
++Project-URL: Chat, https://discord.gg/pallets
++Classifier: Development Status :: 5 - Production/Stable
++Classifier: Environment :: Web Environment
++Classifier: Intended Audience :: Developers
++Classifier: License :: OSI Approved :: BSD License
++Classifier: Operating System :: OS Independent
++Classifier: Programming Language :: Python
++Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
++Classifier: Topic :: Text Processing :: Markup :: HTML
++Requires-Python: >=3.7
++Description-Content-Type: text/x-rst
++License-File: LICENSE.rst
++Requires-Dist: MarkupSafe>=2.0
++Provides-Extra: i18n
++Requires-Dist: Babel>=2.7; extra == "i18n"
++Dynamic: license-file
++Dynamic: provides-extra
++Dynamic: requires-dist
++
++Jinja
++=====
++
++Jinja is a fast, expressive, extensible templating engine. Special
++placeholders in the template allow writing code similar to Python
++syntax. Then the template is passed data to render the final document.
++
++It includes:
++
++-   Template inheritance and inclusion.
++-   Define and import macros within templates.
++-   HTML templates can use autoescaping to prevent XSS from untrusted
++    user input.
++-   A sandboxed environment can safely render untrusted templates.
++-   AsyncIO support for generating templates and calling async
++    functions.
++-   I18N support with Babel.
++-   Templates are compiled to optimized Python code just-in-time and
++    cached, or can be compiled ahead-of-time.
++-   Exceptions point to the correct line in templates to make debugging
++    easier.
++-   Extensible filters, tests, functions, and even syntax.
++
++Jinja's philosophy is that while application logic belongs in Python if
++possible, it shouldn't make the template designer's job difficult by
++restricting functionality too much.
++
++
++Installing
++----------
++
++Install and update using `pip`_:
++
++.. code-block:: text
++
++    $ pip install -U Jinja2
++
++.. _pip: https://pip.pypa.io/en/stable/getting-started/
++
++
++In A Nutshell
++-------------
++
++.. code-block:: jinja
++
++    {% extends "base.html" %}
++    {% block title %}Members{% endblock %}
++    {% block content %}
++      <ul>
++      {% for user in users %}
++        <li><a href="{{ user.url }}">{{ user.username }}</a></li>
++      {% endfor %}
++      </ul>
++    {% endblock %}
++
++
++Donate
++------
++
++The Pallets organization develops and supports Jinja and other popular
++packages. In order to grow the community of contributors and users, and
++allow the maintainers to devote more time to the projects, `please
++donate today`_.
++
++.. _please donate today: https://palletsprojects.com/donate
++
++
++Links
++-----
++
++-   Documentation: https://jinja.palletsprojects.com/
++-   Changes: https://jinja.palletsprojects.com/changes/
++-   PyPI Releases: https://pypi.org/project/Jinja2/
++-   Source Code: https://github.com/pallets/jinja/
++-   Issue Tracker: https://github.com/pallets/jinja/issues/
++-   Website: https://palletsprojects.com/p/jinja/
++-   Twitter: https://twitter.com/PalletsTeam
++-   Chat: https://discord.gg/pallets
+diff --git a/src/Jinja2.egg-info/SOURCES.txt b/src/Jinja2.egg-info/SOURCES.txt
+new file mode 100644
+index 0000000..08cf812
+--- /dev/null
++++ b/src/Jinja2.egg-info/SOURCES.txt
+@@ -0,0 +1,103 @@
++CHANGES.rst
++LICENSE.rst
++MANIFEST.in
++README.rst
++setup.cfg
++setup.py
++tox.ini
++artwork/jinjalogo.svg
++docs/Makefile
++docs/api.rst
++docs/changes.rst
++docs/conf.py
++docs/extensions.rst
++docs/faq.rst
++docs/index.rst
++docs/integration.rst
++docs/intro.rst
++docs/license.rst
++docs/make.bat
++docs/nativetypes.rst
++docs/sandbox.rst
++docs/switching.rst
++docs/templates.rst
++docs/tricks.rst
++docs/_static/jinja-logo-sidebar.png
++docs/_static/jinja-logo.png
++docs/examples/cache_extension.py
++docs/examples/inline_gettext_extension.py
++examples/basic/cycle.py
++examples/basic/debugger.py
++examples/basic/inheritance.py
++examples/basic/test.py
++examples/basic/test_filter_and_linestatements.py
++examples/basic/test_loop_filter.py
++examples/basic/translate.py
++examples/basic/templates/broken.html
++examples/basic/templates/subbroken.html
++requirements/dev.txt
++requirements/docs.txt
++requirements/tests.txt
++requirements/typing.txt
++src/Jinja2.egg-info/PKG-INFO
++src/Jinja2.egg-info/SOURCES.txt
++src/Jinja2.egg-info/dependency_links.txt
++src/Jinja2.egg-info/entry_points.txt
++src/Jinja2.egg-info/requires.txt
++src/Jinja2.egg-info/top_level.txt
++src/jinja2/__init__.py
++src/jinja2/_identifier.py
++src/jinja2/async_utils.py
++src/jinja2/bccache.py
++src/jinja2/compiler.py
++src/jinja2/constants.py
++src/jinja2/debug.py
++src/jinja2/defaults.py
++src/jinja2/environment.py
++src/jinja2/exceptions.py
++src/jinja2/ext.py
++src/jinja2/filters.py
++src/jinja2/idtracking.py
++src/jinja2/lexer.py
++src/jinja2/loaders.py
++src/jinja2/meta.py
++src/jinja2/nativetypes.py
++src/jinja2/nodes.py
++src/jinja2/optimizer.py
++src/jinja2/parser.py
++src/jinja2/py.typed
++src/jinja2/runtime.py
++src/jinja2/sandbox.py
++src/jinja2/tests.py
++src/jinja2/utils.py
++src/jinja2/visitor.py
++tests/conftest.py
++tests/test_api.py
++tests/test_async.py
++tests/test_async_filters.py
++tests/test_bytecode_cache.py
++tests/test_compile.py
++tests/test_core_tags.py
++tests/test_debug.py
++tests/test_ext.py
++tests/test_filters.py
++tests/test_idtracking.py
++tests/test_imports.py
++tests/test_inheritance.py
++tests/test_lexnparse.py
++tests/test_loader.py
++tests/test_nativetypes.py
++tests/test_nodes.py
++tests/test_regression.py
++tests/test_runtime.py
++tests/test_security.py
++tests/test_tests.py
++tests/test_utils.py
++tests/res/__init__.py
++tests/res/package.zip
++tests/res/templates/broken.html
++tests/res/templates/mojibake.txt
++tests/res/templates/syntaxerror.html
++tests/res/templates/test.html
++tests/res/templates/foo/test.html
++tests/res/templates2/foo
+\ No newline at end of file
+diff --git a/src/Jinja2.egg-info/dependency_links.txt b/src/Jinja2.egg-info/dependency_links.txt
+new file mode 100644
+index 0000000..8b13789
+--- /dev/null
++++ b/src/Jinja2.egg-info/dependency_links.txt
+@@ -0,0 +1 @@
++
+diff --git a/src/Jinja2.egg-info/entry_points.txt b/src/Jinja2.egg-info/entry_points.txt
+new file mode 100644
+index 0000000..7b9666c
+--- /dev/null
++++ b/src/Jinja2.egg-info/entry_points.txt
+@@ -0,0 +1,2 @@
++[babel.extractors]
++jinja2 = jinja2.ext:babel_extract[i18n]
+diff --git a/src/Jinja2.egg-info/requires.txt b/src/Jinja2.egg-info/requires.txt
+new file mode 100644
+index 0000000..fbc43b7
+--- /dev/null
++++ b/src/Jinja2.egg-info/requires.txt
+@@ -0,0 +1,4 @@
++MarkupSafe>=2.0
++
++[i18n]
++Babel>=2.7
+diff --git a/src/Jinja2.egg-info/top_level.txt b/src/Jinja2.egg-info/top_level.txt
+new file mode 100644
+index 0000000..7f7afbf
+--- /dev/null
++++ b/src/Jinja2.egg-info/top_level.txt
+@@ -0,0 +1 @@
++jinja2
+diff --git a/tests/test_jinja2_extension.py b/tests/test_jinja2_extension.py
+new file mode 100644
+index 0000000..e69de29

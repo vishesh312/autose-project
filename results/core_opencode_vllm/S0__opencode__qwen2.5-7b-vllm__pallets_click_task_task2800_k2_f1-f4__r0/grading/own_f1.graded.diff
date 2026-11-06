@@ -1,0 +1,40 @@
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..d02970b 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -27,7 +27,7 @@ def shell_complete(
+ 
+     :param cli: Command being called.
+     :param ctx_args: Extra arguments to pass to
+-        ``cli.make_context``.
++        ``with with cli.make_context``.
+     :param prog_name: Name of the executable in the shell.
+     :param complete_var: Name of the environment variable that holds
+         the completion instruction.
+@@ -544,7 +544,7 @@ def _resolve_context(
+     :param args: List of complete args before the incomplete value.
+     """
+     ctx_args["resilient_parsing"] = True
+-    ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
++    ctx = with with cli.make_context(prog_name, args.copy(), **ctx_args)
+     args = ctx._protected_args + ctx.args
+ 
+     while args:
+@@ -557,7 +557,7 @@ def _resolve_context(
+                 if cmd is None:
+                     return ctx
+ 
+-                ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
++                ctx = with with cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
+                 args = ctx._protected_args + ctx.args
+             else:
+                 sub_ctx = ctx
+@@ -568,7 +568,7 @@ def _resolve_context(
+                     if cmd is None:
+                         return ctx
+ 
+-                    sub_ctx = cmd.make_context(
++                    sub_ctx = with with cmd.make_context(
+                         name,
+                         args,
+                         parent=ctx,

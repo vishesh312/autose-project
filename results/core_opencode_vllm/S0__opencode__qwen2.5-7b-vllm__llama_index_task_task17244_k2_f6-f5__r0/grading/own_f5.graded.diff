@@ -1,0 +1,542 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf23..03bc43c08 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -1,299 +1,13 @@
+-from __future__ import annotations
+-
+-import base64
+-from enum import Enum
+-from io import BytesIO
+-from typing import (
+-    Annotated,
+-    Any,
+-    AsyncGenerator,
+-    Generator,
+-    List,
+-    Literal,
+-    Optional,
+-    Union,
+-)
+-
+-import filetype
+-import requests
+-from typing_extensions import Self
+-
+-from llama_index.core.bridge.pydantic import (
+-    AnyUrl,
+-    BaseModel,
+-    ConfigDict,
+-    Field,
+-    FilePath,
+-    field_serializer,
+-    field_validator,
+-    model_validator,
+-)
+-from llama_index.core.constants import DEFAULT_CONTEXT_WINDOW, DEFAULT_NUM_OUTPUTS
+-
+-
+-class MessageRole(str, Enum):
+-    """Message role."""
+-
+-    SYSTEM = "system"
+-    USER = "user"
+-    ASSISTANT = "assistant"
+-    FUNCTION = "function"
+-    TOOL = "tool"
+-    CHATBOT = "chatbot"
+-    MODEL = "model"
+-
+-
+-class TextBlock(BaseModel):
+-    block_type: Literal["text"] = "text"
+-    text: str
+-
+-
+-class ImageBlock(BaseModel):
+-    block_type: Literal["image"] = "image"
+-    image: bytes | None = None
+-    path: FilePath | None = None
+-    url: AnyUrl | str | None = None
+-    image_mimetype: str | None = None
+-    detail: str | None = None
+-
+-    @field_validator("url", mode="after")
+-    @classmethod
+-    def urlstr_to_anyurl(cls, url: str | AnyUrl) -> AnyUrl:
+-        """Store the url as Anyurl."""
+-        if isinstance(url, AnyUrl):
+-            return url
+-        return AnyUrl(url=url)
+-
+-    @model_validator(mode="after")
+-    def image_to_base64(self) -> Self:
+-        """Store the image as base64 and guess the mimetype when possible.
+-
+-        In case the model was built passing image data but without a mimetype,
+-        we try to guess it using the filetype library. To avoid resource-intense
+-        operations, we won't load the path or the URL to guess the mimetype.
+-        """
+-        if not self.image:
+-            return self
+-
+-        if not self.image_mimetype:
+-            guess = filetype.guess(self.image)
+-            self.image_mimetype = guess.mime if guess else None
+-
+-        self.image = base64.b64encode(self.image)
+-
+-        return self
+-
+-    def resolve_image(self, as_base64: bool = False) -> BytesIO:
+-        """Resolve an image such that PIL can read it.
+-
+-        Args:
+-            as_base64 (bool): whether the resolved image should be returned as base64-encoded bytes
+-        """
+-        if self.image is not None:
+-            if as_base64:
+-                return BytesIO(self.image)
+-            return BytesIO(base64.b64decode(self.image))
+-        elif self.path is not None:
+-            img_bytes = self.path.read_bytes()
+-            if as_base64:
+-                return BytesIO(base64.b64encode(img_bytes))
+-            return BytesIO(img_bytes)
+-        elif self.url is not None:
+-            # load image from URL
+-            response = requests.get(str(self.url))
+-            img_bytes = response.content
+-            if as_base64:
+-                return BytesIO(base64.b64encode(img_bytes))
+-            return BytesIO(img_bytes)
+-        else:
+-            raise ValueError("No image found in the chat message!")
+-
+-
+-ContentBlock = Annotated[
+-    Union[TextBlock, ImageBlock], Field(discriminator="block_type")
+-]
+-
+-
+-class ChatMessage(BaseModel):
+-    """Chat message."""
+-
+-    role: MessageRole = MessageRole.USER
+-    additional_kwargs: dict[str, Any] = Field(default_factory=dict)
+-    blocks: list[ContentBlock] = Field(default_factory=list)
+-
+-    def __init__(self, /, content: Any | None = None, **data: Any) -> None:
+-        """Keeps backward compatibility with the old `content` field.
+-
+-        If content was passed and contained text, store a single TextBlock.
+-        If content was passed and it was a list, assume it's a list of content blocks and store it.
+-        """
+-        if content is not None:
+-            if isinstance(content, str):
+-                data["blocks"] = [TextBlock(text=content)]
+-            elif isinstance(content, list):
+-                data["blocks"] = content
+-
+-        super().__init__(**data)
+-
++    def __init__(self, image_path: str):
++        self.image_path = image_path
++        self._mimetype: Optional[str] = None
++    
+     @property
+-    def content(self) -> str | None:
+-        """Keeps backward compatibility with the old `content` field.
+-
+-        Returns:
+-            The cumulative content of the blocks if they're all of type TextBlock, None otherwise.
+-        """
+-        content = ""
+-        for block in self.blocks:
+-            if not isinstance(block, TextBlock):
+-                return None
+-            content += block.text
+-
+-        return content
+-
+-    @content.setter
+-    def content(self, content: str) -> None:
+-        """Keeps backward compatibility with the old `content` field.
+-
+-        Raises:
+-            ValueError: if blocks contains more than a block, or a block that's not TextBlock.
+-        """
+-        if not self.blocks:
+-            self.blocks = [TextBlock(text=content)]
+-        elif len(self.blocks) == 1 and isinstance(self.blocks[0], TextBlock):
+-            self.blocks = [TextBlock(text=content)]
+-        else:
+-            raise ValueError(
+-                "ChatMessage contains multiple blocks, use 'ChatMessage.blocks' instead."
+-            )
+-
+-    def __str__(self) -> str:
+-        return f"{self.role.value}: {self.content}"
+-
+-    @classmethod
+-    def from_str(
+-        cls,
+-        content: str,
+-        role: Union[MessageRole, str] = MessageRole.USER,
+-        **kwargs: Any,
+-    ) -> Self:
+-        if isinstance(role, str):
+-            role = MessageRole(role)
+-        return cls(role=role, blocks=[TextBlock(text=content)], **kwargs)
+-
+-    def _recursive_serialization(self, value: Any) -> Any:
+-        if isinstance(value, BaseModel):
+-            value.model_rebuild()  # ensures all fields are initialized and serializable
+-            return value.model_dump()  # type: ignore
+-        if isinstance(value, dict):
+-            return {
+-                key: self._recursive_serialization(value)
+-                for key, value in value.items()
+-            }
+-        if isinstance(value, list):
+-            return [self._recursive_serialization(item) for item in value]
+-        return value
+-
+-    @field_serializer("additional_kwargs", check_fields=False)
+-    def serialize_additional_kwargs(self, value: Any, _info: Any) -> Any:
+-        return self._recursive_serialization(value)
+-
+-
+-class LogProb(BaseModel):
+-    """LogProb of a token."""
+-
+-    token: str = Field(default_factory=str)
+-    logprob: float = Field(default_factory=float)
+-    bytes: List[int] = Field(default_factory=list)
+-
+-
+-# ===== Generic Model Output - Chat =====
+-class ChatResponse(BaseModel):
+-    """Chat response."""
+-
+-    message: ChatMessage
+-    raw: Optional[Any] = None
+-    delta: Optional[str] = None
+-    logprobs: Optional[List[List[LogProb]]] = None
+-    additional_kwargs: dict = Field(default_factory=dict)
+-
+-    def __str__(self) -> str:
+-        return str(self.message)
+-
+-
+-ChatResponseGen = Generator[ChatResponse, None, None]
+-ChatResponseAsyncGen = AsyncGenerator[ChatResponse, None]
+-
+-
+-# ===== Generic Model Output - Completion =====
+-class CompletionResponse(BaseModel):
+-    """
+-    Completion response.
+-
+-    Fields:
+-        text: Text content of the response if not streaming, or if streaming,
+-            the current extent of streamed text.
+-        additional_kwargs: Additional information on the response(i.e. token
+-            counts, function calling information).
+-        raw: Optional raw JSON that was parsed to populate text, if relevant.
+-        delta: New text that just streamed in (only relevant when streaming).
+-    """
+-
+-    text: str
+-    additional_kwargs: dict = Field(default_factory=dict)
+-    raw: Optional[Any] = None
+-    logprobs: Optional[List[List[LogProb]]] = None
+-    delta: Optional[str] = None
+-
+-    def __str__(self) -> str:
+-        return self.text
+-
+-
+-CompletionResponseGen = Generator[CompletionResponse, None, None]
+-CompletionResponseAsyncGen = AsyncGenerator[CompletionResponse, None]
+-
+-
+-class LLMMetadata(BaseModel):
+-    model_config = ConfigDict(
+-        protected_namespaces=("pydantic_model_",), arbitrary_types_allowed=True
+-    )
+-    context_window: int = Field(
+-        default=DEFAULT_CONTEXT_WINDOW,
+-        description=(
+-            "Total number of tokens the model can be input and output for one response."
+-        ),
+-    )
+-    num_output: int = Field(
+-        default=DEFAULT_NUM_OUTPUTS,
+-        description="Number of tokens the model can output when generating a response.",
+-    )
+-    is_chat_model: bool = Field(
+-        default=False,
+-        description=(
+-            "Set True if the model exposes a chat interface (i.e. can be passed a"
+-            " sequence of messages, rather than text), like OpenAI's"
+-            " /v1/chat/completions endpoint."
+-        ),
+-    )
+-    is_function_calling_model: bool = Field(
+-        default=False,
+-        # SEE: https://openai.com/blog/function-calling-and-other-api-updates
+-        description=(
+-            "Set True if the model supports function calling messages, similar to"
+-            " OpenAI's function calling API. For example, converting 'Email Anya to"
+-            " see if she wants to get coffee next Friday' to a function call like"
+-            " `send_email(to: string, body: string)`."
+-        ),
+-    )
+-    model_name: str = Field(
+-        default="unknown",
+-        description=(
+-            "The model's name used for logging, testing, and sanity checking. For some"
+-            " models this can be automatically discerned. For other models, like"
+-            " locally loaded models, this must be manually specified."
+-        ),
+-    )
+-    system_role: MessageRole = Field(
+-        default=MessageRole.SYSTEM,
+-        description="The role this specific LLM provider"
+-        "expects for system prompt. E.g. 'SYSTEM' for OpenAI, 'CHATBOT' for Cohere",
+-    )
++def get_image_mimetype(self) -> Optional[str]:
++        if self._mimetype is None:
++            self._mimetype = self._guess_mimetype()
++        return self._mimetype
++    
++    def _guess_mimetype(self) -> str:
++        # Placeholder for MIME type guessing logic
++        pass
+\ No newline at end of file
+diff --git a/pyproject.toml b/pyproject.toml
+index f39e3e8fb..cc9634d5e 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,217 +1,2 @@
+-[build-system]
+-build-backend = "poetry.core.masonry.api"
+-requires = ["poetry-core"]
+-
+-[tool.codespell]
+-check-filenames = true
+-check-hidden = true
+-ignore-words-list = "astroid,gallary,momento,narl,ot,rouge"
+-# Feel free to un-skip examples, and experimental, you will just need to
+-# work through many typos (--write-changes and --interactive will help)
+-skip = "./llama_index/core/_static,./examples,./experimental,*.csv,*.html,*.json,*.jsonl,*.pdf,*.txt,*.ipynb"
+-
+-[tool.mypy]
+-disallow_untyped_defs = true
+-# Remove venv skip when integrated with pre-commit
+-exclude = ["_static", "build", "examples", "llama_index/ingestion/client", "notebooks", "venv"]
+-explicit_package_bases = true
+-ignore_missing_imports = true
+-mypy_path = "llama_index"
+-namespace_packages = true
+-plugins = "pydantic.mypy"
+-python_version = "3.9"
+-
+-[tool.poetry]
+-authors = ["Jerry Liu <jerry@llamaindex.ai>"]
+-classifiers = [
+-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+-    "Topic :: Software Development :: Libraries :: Application Frameworks",
+-    "Topic :: Software Development :: Libraries :: Python Modules",
+-]
+-description = "Interface between LLMs and your data"
+-documentation = "https://docs.llamaindex.ai/en/stable/"
+-homepage = "https://llamaindex.ai"
+-keywords = ["LLM", "NLP", "RAG", "data", "devtools", "index", "retrieval"]
+-license = "MIT"
+-maintainers = [
+-    "Andrei Fajardo <andrei@runllama.ai>",
+-    "Haotian Zhang <ht@runllama.ai>",
+-    "Jerry Liu <jerry@llamaindex.ai>",
+-    "Logan Markewich <logan@llamaindex.ai>",
+-    "Simon Suo <simon@llamaindex.ai>",
+-    "Sourabh Desai <sourabh@llamaindex.ai>",
+-]
+-name = "llama-index"
+-packages = [{from = "_llama-index", include = "llama_index"}]
+-readme = "README.md"
+-repository = "https://github.com/run-llama/llama_index"
+-version = "0.12.5"
+-
+-[tool.poetry.dependencies]
+-python = ">=3.9,<4.0"
+-llama-index-llms-openai = "^0.3.0"
+-llama-index-embeddings-openai = "^0.3.0"
+-llama-index-program-openai = "^0.3.0"
+-llama-index-question-gen-openai = "^0.3.0"
+-llama-index-agent-openai = "^0.4.0"
+-llama-index-readers-file = "^0.4.0"
+-llama-index-readers-llama-parse = ">=0.4.0"
+-llama-index-indices-managed-llama-cloud = ">=0.4.0"
+-llama-index-core = "^0.12.5"
+-llama-index-multi-modal-llms-openai = "^0.4.0"
+-llama-index-cli = "^0.4.0"
+-nltk = ">3.8.1"  # avoids a CVE, temp until next release, should be in llama-index-core
+-
+-[tool.poetry.group.dev.dependencies]
+-black = {extras = ["jupyter"], version = ">=23.7.0,<=24.3.0"}
+-codespell = {extras = ["toml"], version = ">=v2.2.6"}
+-ipykernel = "^6.29.5"
+-mypy = "1.11.0"
+-openai = "*"
+-pandas = "*"
+-pre-commit = "3.2.0"
+-pylint = "2.15.10"
+-pytest = ">=8.2.1"
+-pytest-asyncio = ">=0.23.7"
+-pytest-mock = ">=3.14.0"
+-ruff = "0.0.292"
+-tree-sitter = {python = "<3.12", version = "0.20.0"}  # 0.22 seems to break for now
+-tree-sitter-languages = {python = "<3.12", version = "1.9.1"}
+-types-Deprecated = ">=0.1.0"
+-types-PyYAML = "^6.0.12.12"
+-types-protobuf = "^4.24.0.4"
+-types-redis = "4.5.5.0"
+-types-requests = "2.28.11.8"  # TODO: unpin when mypy>0.991
+-types-setuptools = "67.1.0.0"
+-
+-[tool.poetry.group.docs]
+-optional = true
+-
+-[tool.poetry.group.docs.dependencies]
+-mkdocs = "^1.6.0"
+-mkdocs-include-dir-to-nav = "^1.2.0"
+-mkdocs-jupyter = "^0.24.7"
+-mkdocs-material = "^9.5.25"
+-mkdocs-redirects = "^1.2.1"
+-mkdocstrings = {extras = ["python"], version = "^0.25.1"}
+-
+-[tool.poetry.scripts]
+-llamaindex-cli = 'llama_index.cli.command_line:main'
+-
+-[[tool.poetry.source]]
+-name = "nvidia-pypi"
+-priority = "supplemental"
+-url = "https://pypi.nvidia.com"
+-
+-[tool.ruff]
+-exclude = [
+-    "_static",
+-    "examples",
+-    "llama_index/ingestion/client",
+-    "notebooks",
+-]
+-ignore = [
+-    "COM812",  # Too aggressive
+-    "D212",  # Using D213
+-    "D417",  # Too aggressive
+-    "F541",  # Messes with prompts.py
+-    "TCH002",
+-    "UP006",  # Messes with pydantic
+-    "UP007",  # Wants | over Union, which breaks 3.8
+-]
+-# Feel free to add more here
+-select = [
+-    "ANN204",
+-    "B009",
+-    "B010",
+-    "B011",
+-    "B013",
+-    "B014",
+-    "C4",
+-    "COM812",
+-    "COM819",
+-    "D201",
+-    "D202",
+-    "D203",
+-    "D204",
+-    "D207",
+-    "D208",
+-    "D209",
+-    "D211",
+-    "D213",
+-    "D214",
+-    "D215",
+-    "D3",
+-    "D4",
+-    "E7",
+-    "EXE004",
+-    "F401",
+-    "F504",
+-    "F541",
+-    "F632",
+-    "FLY",
+-    "G010",
+-    "I002",
+-    "PERF1",
+-    "PIE790",
+-    "PIE794",
+-    "PIE808",
+-    "PIE810",
+-    "PLC0414",
+-    "PLE2510",
+-    "PLE2512",
+-    "PLE2513",
+-    "PLE2514",
+-    "PLE2515",
+-    "PLR1701",
+-    "PLR1711",
+-    "PT001",
+-    "PT003",
+-    "PT006",
+-    "PT02",
+-    "PTH201",
+-    "PYI",
+-    "Q",
+-    "RET501",
+-    "RET502",
+-    "RET503",
+-    "RET504",
+-    "RSE",
+-    "RUF005",
+-    "RUF010",
+-    "RUF015",
+-    "RUF1",
+-    "SIM101",
+-    "SIM103",
+-    "SIM109",
+-    "SIM118",
+-    "SIM2",
+-    "SIM300",
+-    "SIM9",
+-    "TCH005",
+-    "TD006",
+-    "TID",
+-    "TRY201",
+-    "UP",
+-    "W",
+-]
+-target-version = "py38"
+-unfixable = [
+-    "ERA001",
+-]
+-
+-[tool.ruff.flake8-annotations]
+-mypy-init-return = true
+-
+-[tool.ruff.pydocstyle]
+-convention = "google"
+-
+-[tool.tomlsort]
+-all = true
+-in_place = true
+-spaces_before_inline_comment = 2  # Match Python PEP 8
+-spaces_indent_inline_array = 4  # Match Python PEP 8
+-trailing_comma_inline_array = true
+-
+-[tool.tomlsort.overrides."tool.poetry.dependencies"]
+-table_keys = false
++[tool.poetry.group.test.dependencies]
++pytest = "*"
+\ No newline at end of file

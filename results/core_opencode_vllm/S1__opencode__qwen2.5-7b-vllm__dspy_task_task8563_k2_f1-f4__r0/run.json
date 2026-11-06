@@ -1,0 +1,187 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "dspy_task/task8563/k2/f1-f4",
+    "pool": "dspy_task/task8563",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793976106.061788
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 43816,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 3802,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 3
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0027611000000000003,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 192.73859572410583,
+    "agent_busy_s": 192.514413356781,
+    "effective_parallelism": 0.9988368579397261,
+    "container_setup_s": 8.308647632598877,
+    "grading_s": 18.596959114074707,
+    "nudges": 1,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        1,
+        4
+      ],
+      "started": 1793976114.3780496,
+      "ended": 1793976307.0041485,
+      "busy_s": 192.514413356781,
+      "usage": {
+        "input": 43816,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 3802,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 3
+      },
+      "cost_list": 0.0027611000000000003,
+      "nudges": 1,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 78
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793976114.3819258,
+          "ended": 1793976298.5621574,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 27359,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 3709,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4eb0dc25ffeI5JzygbKC6GQzf",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "It seems the branch 'task-1-and-2' already exists. Let's try a different branch name to avoid conflicts.\n\nI'll proceed with a new branch name, let's call it 'task-1-and-2-fix'.\n\n```bash\ngit checkout -b task-1-and-2-fix\n```",
+          "error": null
+        },
+        {
+          "index": 1,
+          "started": 1793976298.669856,
+          "ended": 1793976307.0040379,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 16457,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 93,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "ses_e4eb0dc25ffeI5JzygbKC6GQzf",
+          "nudge_reason": null,
+          "final_text_tail": "Switched to a new branch 'task-1-and-2-fix'\n\nNow, let's start implementing Task 1: Add flexible parsing for `dspy.ToolCalls` to handle varied LM output formats.\n\nFirst, I'll read the `tool.py` file to understand the current implementation.\n\n```bash\nbash command: read filePath=\"/tmp/parbench-host-j5p4x_4y/repo/dspy/adapters/types/tool.py\"\n```",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 43,
+        "tests_failed": 7,
+        "duration_s": 11.008675336837769,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 46,
+        "tests_failed": 13,
+        "duration_s": 6.518808364868164,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 43,
+        "tests_failed": 7,
+        "duration_s": 6.120330810546875,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/final.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 46,
+        "tests_failed": 13,
+        "duration_s": 6.761921405792236,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/final.f4.log"
+      }
+    }
+  }
+}

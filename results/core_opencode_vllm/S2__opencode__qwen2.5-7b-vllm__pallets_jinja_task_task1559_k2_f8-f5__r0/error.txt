@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/home/manasm/ase/autose-project/src/parbench/runner.py", line 75, in one
+    execute_run(cfg, b, StrategySpec.parse(s), get_harness(h), models[m], r, run_dir)
+  File "/home/manasm/ase/autose-project/src/parbench/runner.py", line 114, in execute_run
+    res = run_strategy(ctx, spec)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/manasm/ase/autose-project/src/parbench/strategies.py", line 229, in run_strategy
+    return run_s2(ctx, spec)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/manasm/ase/autose-project/src/parbench/strategies.py", line 192, in run_s2
+    _branch_setup(c, base, res.worker_patches)
+  File "/home/manasm/ase/autose-project/src/parbench/merge.py", line 49, in _branch_setup
+    raise RuntimeError(f"could not apply {name}'s own patch to base: {r.output[-800:]}")
+RuntimeError: could not apply f8's own patch to base: ependency_links.txt: patch does not apply
+Performing three-way merge...
+error: src/Jinja2.egg-info/entry_points.txt: does not exist in index
+error: cannot read the current contents of 'src/Jinja2.egg-info/entry_points.txt'
+error: src/Jinja2.egg-info/entry_points.txt: patch does not apply
+Performing three-way merge...
+error: src/Jinja2.egg-info/requires.txt: does not exist in index
+error: cannot read the current contents of 'src/Jinja2.egg-info/requires.txt'
+error: src/Jinja2.egg-info/requires.txt: patch does not apply
+Performing three-way merge...
+error: src/Jinja2.egg-info/top_level.txt: does not exist in index
+error: cannot read the current contents of 'src/Jinja2.egg-info/top_level.txt'
+error: src/Jinja2.egg-info/top_level.txt: patch does not apply
+Falling back to direct application...
+

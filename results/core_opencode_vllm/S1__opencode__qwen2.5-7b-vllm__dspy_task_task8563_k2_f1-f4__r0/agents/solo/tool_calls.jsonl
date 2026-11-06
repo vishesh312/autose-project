@@ -1,0 +1,78 @@
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout master", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git merge task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git checkout -b task-1-and-2", "workdir": "/tmp/parbench-host-j5p4x_4y/repo"}, "ok": true, "ts": null}

@@ -1,0 +1,63 @@
+{
+  "agent_id": "f6",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen2.5-7b-vllm",
+  "feature_ids": [
+    6
+  ],
+  "started": 1793976127.5566528,
+  "ended": 1793976148.4656126,
+  "busy_s": 19.922821283340454,
+  "usage": {
+    "input": 66391,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 238,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 5
+  },
+  "cost_list": 0.00335525,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 2,
+    "edit": 1,
+    "shell": 1
+  },
+  "files_read": [
+    "/tmp/parbench-host-9hovn7q6/repo"
+  ],
+  "files_edited": [
+    "llama-index-core/llama_index/core/base/llms/types.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793976127.557486,
+      "ended": 1793976147.4803073,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 66391,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 238,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 5
+      },
+      "num_turns": 5,
+      "session_id": "ses_e4eb0a9e2ffee592qiKVsvC0SU",
+      "nudge_reason": null,
+      "final_text_tail": "The tests did not find any test files. Ensure that your test files are correctly named and located in the appropriate directory. If you have test files, please provide the correct path or name.",
+      "error": null
+    }
+  ],
+  "error": null
+}

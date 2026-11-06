@@ -1,0 +1,31 @@
+diff --git a/src/utils/fingerprint.json b/src/utils/fingerprint.json
+new file mode 100644
+index 00000000..bb154267
+--- /dev/null
++++ b/src/utils/fingerprint.json
+@@ -0,0 +1,24 @@
++```json
++{
++  "name": "ToolCalls",
++  "args": {
++    "tool_calls": [
++      {
++        "name": "bash",
++        "args": {
++          "command": "ls",
++          "timeout": 120000,
++          "workdir": null
++        }
++      },
++      {
++        "name": "grep",
++        "args": {
++          "pattern": "pattern",
++          "path": ".",
++          "include": "*.py"
++        }
++      }
++    ]
++  }
++}```
+\ No newline at end of file

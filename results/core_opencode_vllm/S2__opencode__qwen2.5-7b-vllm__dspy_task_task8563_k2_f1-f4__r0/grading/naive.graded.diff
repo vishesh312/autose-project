@@ -1,0 +1,51 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..2585803b 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -256,6 +256,41 @@ class Tool(Type):
+ 
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
++    fingerprint: str = Field(default_factory=lambda: None)
++    id: str = Field(default_factory=lambda: None)
++
++    @staticmethod
++    def _canonicalize_args(args: dict[str, Any]) -> dict[str, Any]:
++        return {
++            k: v for k, v in sorted(args.items())
++        }
++
++    @staticmethod
++    def _convert_tuples_to_lists(args: dict[str, Any]) -> dict[str, Any]:
++        return {k: (v if not isinstance(v, tuple) else list(v)) for k, v in args.items()}
++
++    @staticmethod
++    def _trim_whitespace_from_strings(args: dict[str, Any]) -> dict[str, Any]:
++        return {k: v.strip() if isinstance(v, str) else v for k, v in args.items()}
++
++    @staticmethod
++    def _canonicalize(args: dict[str, Any]) -> dict[str, Any]:
++        return ToolCall._convert_tuples_to_lists(
++            ToolCall._trim_whitespace_from_strings(
++                ToolCall._canonicalize_args(args)
++            )
++        )
++
++    @staticmethod
++    def _generate_fingerprint(canonical_args: dict[str, Any]) -> str:
++        import hashlib
++        import json
++        return hashlib.sha256(json.dumps(canonical_args, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
++
++    def __init__(self, name: str, args: dict[str, Any]):
++        super().__init__(name=name, args=args)
++        self.fingerprint = self._generate_fingerprint(self._canonicalize(args))
++        self.id = self.fingerprint[:8]
+         name: str
+         args: dict[str, Any]
+ 
+@@ -366,3 +401,4 @@ def convert_input_schema_to_tool_args(
+             arg_desc[name] += " (Required)"
+ 
+     return args, arg_types, arg_desc
++from typing import List, Dict, Optional, Union, Tuple, Set, Literal, NewType, TypedDict, Protocol, Final, Annotated, TypeAlias, TypeVar, TypeGuard, TypeVarTuple, ParamSpec, Self

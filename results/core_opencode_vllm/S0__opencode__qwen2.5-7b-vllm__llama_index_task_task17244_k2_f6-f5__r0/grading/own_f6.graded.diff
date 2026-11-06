@@ -1,0 +1,12 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf23..06e993b38 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -49,6 +49,7 @@ class TextBlock(BaseModel):
+ 
+ 
+ class ImageBlock(BaseModel):
++    encoding: Optional[str] = None
+     block_type: Literal["image"] = "image"
+     image: bytes | None = None
+     path: FilePath | None = None

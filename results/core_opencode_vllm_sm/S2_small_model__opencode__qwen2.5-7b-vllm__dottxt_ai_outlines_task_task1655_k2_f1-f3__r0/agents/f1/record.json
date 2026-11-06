@@ -1,0 +1,66 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen2.5-7b-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1793976843.638484,
+  "ended": 1793977050.4374826,
+  "busy_s": 206.77048444747925,
+  "usage": {
+    "input": 240236,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 3060,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 16
+  },
+  "cost_list": 0.0124708,
+  "nudges": 0,
+  "timed_out": false,
+  "returncode": 1,
+  "tool_calls": {
+    "read": 5,
+    "edit": 11,
+    "shell": 3
+  },
+  "files_read": [
+    "/tmp/parbench-host-htzyev9t/repo",
+    "outlines",
+    "outlines/types/__init__.py",
+    "outlines/types/dsl.py"
+  ],
+  "files_edited": [
+    "outlines/types/__init__.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1793976843.6399364,
+      "ended": 1793977050.410421,
+      "returncode": 1,
+      "timed_out": false,
+      "usage": {
+        "input": 240236,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 3060,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 16
+      },
+      "num_turns": 16,
+      "session_id": "ses_e4ea5bcf6ffeAtafamxiAKQbRm",
+      "nudge_reason": null,
+      "final_text_tail": "## Next Steps\n1. Verify the import statement for `Regex` in `__init__.py`.\n2. Ensure the `Regex` class is correctly defined and imported in `dsl.py`.\n\nTo proceed, let's check the import statement in `__init__.py` and ensure `Regex` is correctly defined in `dsl.py`.",
+      "error": "{\"type\": \"error\", \"timestamp\": 1793977021809, \"sessionID\": \"ses_e4ea5bcf6ffeAtafamxiAKQbRm\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 39843 tokens (35747 in the messages, 4096 in the comple"
+    }
+  ],
+  "error": "{\"type\": \"error\", \"timestamp\": 1793977021809, \"sessionID\": \"ses_e4ea5bcf6ffeAtafamxiAKQbRm\", \"error\": {\"name\": \"ContextOverflowError\", \"data\": {\"message\": \"Bad Request: This model's maximum context length is 32768 tokens. However, you requested 39843 tokens (35747 in the messages, 4096 in the comple"
+}

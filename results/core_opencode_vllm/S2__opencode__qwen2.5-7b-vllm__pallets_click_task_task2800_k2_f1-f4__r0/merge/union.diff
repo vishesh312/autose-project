@@ -1,0 +1,37 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..0930ce5 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -159,6 +159,10 @@ class ParameterSource(enum.Enum):
+ 
+ 
+ class Context:
++    def __init__(self, cmd, cleanup_timeout=None):
++        self.cmd = cmd
++        self.cleanup_timeout = cleanup_timeout
++        # Additional initialization code here:
+     """The context is a special internal object that holds state relevant
+     for the script execution at every single level.  It's normally invisible
+     to commands unless they opt-in to getting access to it.
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..3de52b1 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -544,7 +544,7 @@ def _resolve_context(
+     :param args: List of complete args before the incomplete value.
+     """
+     ctx_args["resilient_parsing"] = True
+-    ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
++    with cli.make_context(prog_name, args.copy(), **ctx_args)
+     args = ctx._protected_args + ctx.args
+ 
+     while args:
+@@ -568,7 +568,7 @@ def _resolve_context(
+                     if cmd is None:
+                         return ctx
+ 
+-                    sub_ctx = cmd.make_context(
++                    with cmd.make_context(
+                         name,
+                         args,
+                         parent=ctx,

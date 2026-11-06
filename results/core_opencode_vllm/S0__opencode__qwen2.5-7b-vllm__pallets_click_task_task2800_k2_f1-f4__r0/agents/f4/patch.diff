@@ -1,0 +1,16 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..ff668d3 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -159,6 +159,11 @@ class ParameterSource(enum.Enum):
+ 
+ 
+ class Context:
++    def __init__(self, cmd, cleanup_timeout=None):
++        if cleanup_timeout is not None and not (isinstance(cleanup_timeout, (int, float)) and cleanup_timeout > 0):
++            raise ValueError("cleanup_timeout must be a positive float value or None")
++        self.cleanup_timeout = cleanup_timeout:
++    def __init__(self, cmd, cleanup_timeout=None):
+     """The context is a special internal object that holds state relevant
+     for the script execution at every single level.  It's normally invisible
+     to commands unless they opt-in to getting access to it.

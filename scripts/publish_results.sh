@@ -24,4 +24,14 @@ PY
 } > $out
 git pull -q --rebase --autostash 2>&1 | tail -1
 git add $out scripts/publish_results.sh
+# raw results too, unless a secret-looking string or one of this shell's secret values is in them
+R="results/core_opencode_vllm results/core_opencode_vllm_sm"
+env | grep -iE "key|token|secret|passw" | cut -d= -f2- | awk 'length>=8' > "${TMPDIR:-/tmp}/.pub_vals" || true
+if { [ -s "${TMPDIR:-/tmp}/.pub_vals" ] && grep -rqFf "${TMPDIR:-/tmp}/.pub_vals" $R 2>/dev/null; } \
+   || grep -rIqE "(sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|hf_[A-Za-z0-9]{20,}|AIza[0-9A-Za-z_-]{30,}|AKIA[0-9A-Z]{16})" $R 2>/dev/null; then
+  echo "secret-like string found in results; NOT adding raw results"
+else
+  git add $R
+fi
+rm -f "${TMPDIR:-/tmp}/.pub_vals"
 git commit -q -m "Update vLLM Qwen2.5-7B partial results summary" 2>/dev/null && git push -q 2>&1 | tail -1

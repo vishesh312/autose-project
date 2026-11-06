@@ -1,0 +1,11 @@
+{
+  "4": {
+    "fid": 4,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 46,
+    "tests_failed": 13,
+    "duration_s": 6.248423337936401,
+    "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S0__opencode__qwen2.5-7b-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_f4.f4.log"
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "run": {
+    "experiment": "core_opencode_vllm",
+    "bundle": "pallets_jinja_task/task1621/k2/f10-f6",
+    "pool": "pallets_jinja_task/task1621",
+    "k": 2,
+    "features": [
+      10,
+      6
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen2.5-7b-vllm",
+    "repeat": 0,
+    "host": "pkgpu",
+    "arch": "x86_64",
+    "started": 1793976579.5961778
+  },
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.0,
+        "bundle_success": false,
+        "passed": [],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "10": false,
+      "6": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 24802,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 1563,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 2
+    },
+    "cost_usd": 0.0,
+    "cost_reported_usd": 0.0,
+    "cost_list_usd": 0.0014745500000000003,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 97.92647337913513,
+    "agent_busy_s": 97.87033462524414,
+    "effective_parallelism": 0.9994267254609115,
+    "container_setup_s": 0.5353488922119141,
+    "grading_s": 1.1635630130767822,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen2.5-7b-vllm",
+      "feature_ids": [
+        10,
+        6
+      ],
+      "started": 1793976580.1332033,
+      "ended": 1793976678.0248735,
+      "busy_s": 97.87033462524414,
+      "usage": {
+        "input": 24802,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 1563,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 2
+      },
+      "cost_list": 0.0014745500000000003,
+      "nudges": 0,
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 43
+      },
+      "files_read": [],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 15,
+      "patch_files": [
+        "src/jinja2/loaders/__init__.py",
+        "src/jinja2/loaders/base_loader.py",
+        "src/jinja2/loaders/choice_loader.py",
+        "src/jinja2/loaders/dict_loader.py",
+        "src/jinja2/loaders/file_system_loader.py",
+        "src/jinja2/loaders/function_loader.py",
+        "src/jinja2/loaders/package_loader.py",
+        "src/jinja2/loaders/prefix_loader.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1793976580.134286,
+          "ended": 1793976678.0046206,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 24802,
+            "cached_input": 0,
+            "cache_write": 0,
+            "output": 1563,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_e4ea9c2f2ffedYyzANRGLrDTZH",
+          "nudge_reason": null,
+          "final_text_tail": "Adding path_transform support to `FileSystemLoader`.\n\nNext steps:\n1. Implement `add_alias` and `remove_alias` methods in `BaseLoader`.\n2. Apply path transformations in all loader classes.\n3. Test the changes thoroughly.",
+          "error": null
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.44274020195007324,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f10-f6__r0/grading/own_solo.f10.log"
+      },
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.4978914260864258,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f10-f6__r0/grading/own_solo.f6.log"
+      }
+    },
+    "final": {
+      "10": {
+        "fid": 10,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.5115048885345459,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f10-f6__r0/grading/final.f10.log"
+      },
+      "6": {
+        "fid": 6,
+        "passed": false,
+        "exit_code": 4,
+        "tests_passed": 0,
+        "tests_failed": 0,
+        "duration_s": 0.5141129493713379,
+        "log": "/home/manasm/ase/autose-project/results/core_opencode_vllm/S1__opencode__qwen2.5-7b-vllm__pallets_jinja_task_task1621_k2_f10-f6__r0/grading/final.f6.log"
+      }
+    }
+  }
+}

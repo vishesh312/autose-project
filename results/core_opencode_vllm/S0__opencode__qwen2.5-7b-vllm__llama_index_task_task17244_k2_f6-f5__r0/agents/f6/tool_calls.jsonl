@@ -1,0 +1,4 @@
+{"name": "glob", "kind": "read", "args": {"pattern": "*.py", "path": "/tmp/parbench-host-9hovn7q6/repo"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "ImageBlock", "path": "/tmp/parbench-host-9hovn7q6/repo"}, "ok": true, "ts": null}
+{"name": "edit", "kind": "edit", "args": {"filePath": "/tmp/parbench-host-9hovn7q6/repo/llama-index-core/llama_index/core/base/llms/types.py", "oldString": "class ImageBlock(BaseModel):", "newString": "class ImageBlock(BaseModel):\n    encoding: Optional[str] = None", "replaceAll": false}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "python -m pytest tests", "timeout": 60000}, "ok": true, "ts": null}

@@ -1,0 +1,39 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..4e9f039 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -437,3 +437,34 @@ def raise_disallowed_special_token(token: str) -> NoReturn:
+         f"by passing `disallowed_special=(enc.special_tokens_set - {{{token!r}}})`.\n"
+         "To disable this check for all special tokens, pass `disallowed_special=()`.\n"
+     )
++chunk_size: int
++return_repeated_pattern: bool
++if chunk_size is not None:
++    # Logic to split text into chunks based on chunk_size
++    token_chunks = []
++    for chunk in text_chunks:
++        token_chunks.append(encoder.encode(chunk))
++    return token_chunks
++elif return_repeated_pattern:
++    # Logic to track token pairs and return them
++    token_pairs = {
++    for i in range(len(tokens) - 1):
++        pair = (tokens[i], tokens[i+1])
++        if pair in token_pairs:
++            token_pairs[pair] += 1
++        else:
++            token_pairs[pair] = 1
++    top_3_pairs = sorted(token_pairs.items(), key=lambda x: x[1], reverse=True)[:3]
++    return tokens, top_3_pairs
++return_repeated_pattern: bool
++if return_repeated_pattern:
++    # Logic to track token pairs and return them
++    token_pairs = {
++    for i in range(len(tokens) - 1):
++        pair = (tokens[i], tokens[i+1])
++        if pair in token_pairs:
++            token_pairs[pair] += 1
++        else:
++            token_pairs[pair] = 1
++    top_3_pairs = sorted(token_pairs.items(), key=lambda x: x[1], reverse=True)[:3]
++    return tokens, top_3_pairs

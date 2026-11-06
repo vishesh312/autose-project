@@ -1,0 +1,22 @@
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..3de52b1 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -544,7 +544,7 @@ def _resolve_context(
+     :param args: List of complete args before the incomplete value.
+     """
+     ctx_args["resilient_parsing"] = True
+-    ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
++    with cli.make_context(prog_name, args.copy(), **ctx_args)
+     args = ctx._protected_args + ctx.args
+ 
+     while args:
+@@ -568,7 +568,7 @@ def _resolve_context(
+                     if cmd is None:
+                         return ctx
+ 
+-                    sub_ctx = cmd.make_context(
++                    with cmd.make_context(
+                         name,
+                         args,
+                         parent=ctx,

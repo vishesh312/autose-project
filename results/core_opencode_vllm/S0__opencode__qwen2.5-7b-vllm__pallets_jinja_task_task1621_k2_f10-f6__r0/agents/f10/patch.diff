@@ -1,0 +1,99 @@
+diff --git a/src/jinja2/loaders/__init__.py b/src/jinja2/loaders/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/base_loader.py b/src/jinja2/loaders/base_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_amqp_loader.py b/src/jinja2/loaders/bytecode_cache_amqp_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_cassandra_loader.py b/src/jinja2/loaders/bytecode_cache_cassandra_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_db_loader.py b/src/jinja2/loaders/bytecode_cache_db_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_file_loader.py b/src/jinja2/loaders/bytecode_cache_file_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_hbase_loader.py b/src/jinja2/loaders/bytecode_cache_hbase_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_hive_loader.py b/src/jinja2/loaders/bytecode_cache_hive_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_kafka_loader.py b/src/jinja2/loaders/bytecode_cache_kafka_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_loader.py b/src/jinja2/loaders/bytecode_cache_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_memory_loader.py b/src/jinja2/loaders/bytecode_cache_memory_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_mongo_loader.py b/src/jinja2/loaders/bytecode_cache_mongo_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_mysql_loader.py b/src/jinja2/loaders/bytecode_cache_mysql_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_nats_loader.py b/src/jinja2/loaders/bytecode_cache_nats_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_oracle_loader.py b/src/jinja2/loaders/bytecode_cache_oracle_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_postgres_loader.py b/src/jinja2/loaders/bytecode_cache_postgres_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_rabbitmq_loader.py b/src/jinja2/loaders/bytecode_cache_rabbitmq_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_redis_cluster_loader.py b/src/jinja2/loaders/bytecode_cache_redis_cluster_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_loader.py b/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_ssl_loader.py b/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_ssl_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_ssl_tls_loader.py b/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_ssl_tls_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_tls_loader.py b/src/jinja2/loaders/bytecode_cache_redis_cluster_sentinel_tls_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_redis_loader.py b/src/jinja2/loaders/bytecode_cache_redis_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_redis_sentinel_loader.py b/src/jinja2/loaders/bytecode_cache_redis_sentinel_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_sqlite_loader.py b/src/jinja2/loaders/bytecode_cache_sqlite_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_sqlserver_loader.py b/src/jinja2/loaders/bytecode_cache_sqlserver_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_stomp_loader.py b/src/jinja2/loaders/bytecode_cache_stomp_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_cache_zmq_loader.py b/src/jinja2/loaders/bytecode_cache_zmq_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/bytecode_loader.py b/src/jinja2/loaders/bytecode_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/dict_loader.py b/src/jinja2/loaders/dict_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/file_system_loader.py b/src/jinja2/loaders/file_system_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/package_loader.py b/src/jinja2/loaders/package_loader.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/jinja2/loaders/zip_loader.py b/src/jinja2/loaders/zip_loader.py
+new file mode 100644
+index 0000000..e69de29

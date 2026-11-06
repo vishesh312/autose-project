@@ -1,0 +1,57 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/test_types.py b/llama-index-core/llama_index/core/base/llms/test_types.py
+new file mode 100644
+index 000000000..83e2491aa
+--- /dev/null
++++ b/llama-index-core/llama_index/core/base/llms/test_types.py
+@@ -0,0 +1,12 @@
++from unittest.mock import patch
++from llama_index.core.base.llms.types import ImageBlock
++
++def test_image_block_encoding():
++    image_block = ImageBlock(image=b'raw_image_data', encoding="raw")
++    assert image_block.image is None
++
++    image_block = ImageBlock(image=b'base64_encoded_data', encoding="base64")
++    assert image_block.image == b'YmFzZTY0X2U='
++
++if __name__ == '__main__':
++    test_image_block_encoding()
+\ No newline at end of file
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf23..273f9a649 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -49,6 +49,7 @@ class TextBlock(BaseModel):
+ 
+ 
+ class ImageBlock(BaseModel):
++    encoding: Literal["base64", "raw"] = Field(default="base64", description="Controls the encoding behavior of the image data.")
+     block_type: Literal["image"] = "image"
+     image: bytes | None = None
+     path: FilePath | None = None
+@@ -79,7 +80,25 @@ class ImageBlock(BaseModel):
+             guess = filetype.guess(self.image)
+             self.image_mimetype = guess.mime if guess else None
+ 
++        if self.encoding == "raw":
++        pass
++else:
++        if self.encoding == "base64":
++        if self.encoding == "base64":
++        if self.encoding == "base64":
++        if self.encoding == "base64":
++        if self.encoding == "base64":
+         self.image = base64.b64encode(self.image)
++else:
++        self.image = None
++else:
++        self.image = None
++else:
++        self.image = None
++else:
++        self.image = None
++else:
++        pass
+ 
+         return self
+ 
