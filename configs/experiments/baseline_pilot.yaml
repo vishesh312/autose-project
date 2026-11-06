@@ -1,0 +1,17 @@
+# First CooperBench baseline: DRAFT. TODO(decision): models, harnesses, pools and repeats need the team's OK.
+name: baseline_pilot
+dataset: external/CooperBench/dataset
+pools: [pallets_jinja_task/task1559, pallets_jinja_task/task1621, dspy_task/task8563]
+k: [2, 3, 4]
+bundles_per_pool: 2
+seed: 0
+strategies: [S0, S1, S2, S4]
+harnesses: [opencode]
+models: [qwen3.5-9b-ollama]
+repeats: 1
+agent_timeout_s: 1800
+max_turns: 100                      # CooperBench's step limit
+max_nudges: 2
+max_parallel_runs: 1
+grade_parallel: 2
+merge: {modes: [naive, union, llm]}

@@ -1,0 +1,26 @@
+diff --git a/tests/test_f1_lines.py b/tests/test_f1_lines.py
+new file mode 100644
+index 0000000..5e77066
+--- /dev/null
++++ b/tests/test_f1_lines.py
+@@ -0,0 +1,20 @@
++from textkit.cli import main
++from textkit.core import OPERATIONS, line_count, run
++
++
++def test_line_count():
++    assert line_count("a\nb\n") == 2
++    assert line_count("a\nb") == 2
++    assert line_count("") == 0
++
++
++def test_registered():
++    assert "lines" in OPERATIONS
++    assert run("lines", "x\ny\nz\n") == 3
++
++
++def test_cli(tmp_path, capsys):
++    p = tmp_path / "t.txt"
++    p.write_text("one\ntwo\n")
++    assert main(["lines", str(p)]) == 0
++    assert capsys.readouterr().out.strip() == "2"

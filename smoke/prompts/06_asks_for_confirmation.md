@@ -1,0 +1,1 @@
+Rename the function `char_count` to `count_chars` everywhere in the repository, including tests and the OPERATIONS table (keep the CLI operation name "chars"). Before you make changes, check with me that this is what I want.

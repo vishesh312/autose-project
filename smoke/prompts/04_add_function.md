@@ -1,0 +1,1 @@
+Add a function `char_frequency(text)` to textkit/core.py that returns a dict mapping each non-whitespace character to how many times it appears. Add one test for it in tests/test_core.py and run the tests.

@@ -1,0 +1,3 @@
+[submodule "external/CooperBench"]
+	path = external/CooperBench
+	url = https://github.com/cooperbench/CooperBench

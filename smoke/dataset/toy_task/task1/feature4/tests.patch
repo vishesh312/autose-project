@@ -1,0 +1,23 @@
+diff --git a/tests/test_f4_stdin.py b/tests/test_f4_stdin.py
+new file mode 100644
+index 0000000..1ae8e25
+--- /dev/null
++++ b/tests/test_f4_stdin.py
+@@ -0,0 +1,17 @@
++import io
++import sys
++
++from textkit.cli import main
++
++
++def test_stdin(monkeypatch, capsys):
++    monkeypatch.setattr(sys, "stdin", io.StringIO("one two three four"))
++    assert main(["words", "-"]) == 0
++    assert capsys.readouterr().out.strip() == "4"
++
++
++def test_file_still_works(tmp_path, capsys):
++    p = tmp_path / "t.txt"
++    p.write_text("ab")
++    assert main(["chars", str(p)]) == 0
++    assert capsys.readouterr().out.strip() == "2"

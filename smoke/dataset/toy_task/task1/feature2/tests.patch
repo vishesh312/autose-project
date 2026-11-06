@@ -1,0 +1,25 @@
+diff --git a/tests/test_f2_unique.py b/tests/test_f2_unique.py
+new file mode 100644
+index 0000000..9d7a14f
+--- /dev/null
++++ b/tests/test_f2_unique.py
+@@ -0,0 +1,19 @@
++from textkit.cli import main
++from textkit.core import OPERATIONS, run, unique_words
++
++
++def test_unique_words():
++    assert unique_words("The the THE cat") == 2
++    assert unique_words("") == 0
++
++
++def test_registered():
++    assert "unique" in OPERATIONS
++    assert run("unique", "a b a") == 2
++
++
++def test_cli(tmp_path, capsys):
++    p = tmp_path / "t.txt"
++    p.write_text("x X y")
++    assert main(["unique", str(p)]) == 0
++    assert capsys.readouterr().out.strip() == "2"

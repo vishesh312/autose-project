@@ -1,0 +1,76 @@
+# Model registry. `id` (the key) is what experiment configs refer to.
+#   provider: openai_compat (any OpenAI-style server) | anthropic | openai | google | antigravity | openrouter
+#   base_url: as reachable FROM INSIDE the container (host.docker.internal = your machine).
+#   price: $/1M tokens. For self-hosted models put a reference API price so cost is comparable across runs;
+#          GPU-hours are reported separately. Prices below are placeholders from docs/research/Task2 (OpenRouter,
+#          4 Nov 2026): re-check before reporting.
+models:
+  # ---------------- local via Ollama on the Mac (smoke tests / small baselines) ----------------
+  qwen3.5-2b-ollama:
+    model: "qwen3.5:2b"
+    provider: openai_compat
+    base_url: http://host.docker.internal:11434/v1
+    anthropic_base_url: http://host.docker.internal:11434      # lets Claude Code use it
+    responses_api: true
+    context: 32768
+    reasoning_effort: none            # Ollama only honours reasoning_effort=none for turning thinking off
+    price: {input: 0.0, output: 0.0}
+    notes: "2B: for pipeline smoke tests only, not for results"
+  qwen3.5-9b-ollama:
+    model: "qwen3.5:9b"
+    provider: openai_compat
+    base_url: http://host.docker.internal:11434/v1
+    anthropic_base_url: http://host.docker.internal:11434
+    responses_api: true
+    context: 65536
+    price: {input: 0.0, output: 0.0}
+    notes: "start server with OLLAMA_CONTEXT_LENGTH>=65536; see docs/serving_models.md"
+
+  # ---------------- local via vLLM / llama.cpp on a GPU box (change the host/port) ----------------
+  qwen3.6-35b-a3b-vllm:
+    model: "Qwen/Qwen3.6-35B-A3B"
+    provider: openai_compat
+    base_url: http://host.docker.internal:8000/v1
+    anthropic_base_url: http://host.docker.internal:8000         # served name must not contain "/" for Claude Code
+    responses_api: true
+    context: 131072
+    price: {input: 0.10, output: 0.90}
+  devstral-small-2-vllm:
+    model: "mistralai/Devstral-Small-2-24B-Instruct-2512"
+    provider: openai_compat
+    base_url: http://host.docker.internal:8000/v1
+    context: 131072
+    temperature: 0.15
+    price: {input: 0.10, output: 0.30}   # PLACEHOLDER: not on OpenRouter
+
+  # ---------------- hosted open models via OpenRouter ----------------
+  qwen3.6-35b-a3b-openrouter:
+    model: "qwen/qwen3.6-35b-a3b"
+    provider: openai_compat
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+    context: 131072
+    price: {input: 0.10, output: 0.90}
+
+  # ---------------- frontier / subscription (harness uses its own login or API key) ----------------
+  claude-sonnet:
+    model: "sonnet"
+    provider: anthropic
+    price: {input: 3.0, cached_input: 0.30, cache_write: 3.75, output: 15.0}   # PLACEHOLDER list price: verify
+  claude-haiku:
+    model: "haiku"
+    provider: anthropic
+    price: {input: 1.0, cached_input: 0.10, cache_write: 1.25, output: 5.0}    # PLACEHOLDER list price: verify
+  gpt-codex-default:
+    model: "gpt-5-codex"
+    provider: openai
+    price: {}                           # subscription: no per-token cost; fill in to compare
+  gemini-flash-agy:
+    model: "gemini-3.8-flash-low"       # `agy models` lists the exact ids
+    provider: antigravity
+    price: {}
+  gemini-flash-cli:
+    model: "gemini-3.8-flash"
+    provider: google
+    api_key_env: GEMINI_API_KEY
+    price: {}

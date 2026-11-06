@@ -1,0 +1,1 @@
+Add a `--json` flag to the `textkit` CLI (textkit/cli.py). When given, print a single JSON object `{"op": <operation name>, "result": <result>}` instead of the plain result. Without the flag, output is unchanged.

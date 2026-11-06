@@ -1,0 +1,23 @@
+diff --git a/tests/test_f3_json.py b/tests/test_f3_json.py
+new file mode 100644
+index 0000000..d1c4239
+--- /dev/null
++++ b/tests/test_f3_json.py
+@@ -0,0 +1,17 @@
++import json
++
++from textkit.cli import main
++
++
++def test_json_flag(tmp_path, capsys):
++    p = tmp_path / "t.txt"
++    p.write_text("a b c")
++    assert main(["words", str(p), "--json"]) == 0
++    assert json.loads(capsys.readouterr().out) == {"op": "words", "result": 3}
++
++
++def test_plain_unchanged(tmp_path, capsys):
++    p = tmp_path / "t.txt"
++    p.write_text("a b c")
++    assert main(["words", str(p)]) == 0
++    assert capsys.readouterr().out.strip() == "3"

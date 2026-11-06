@@ -1,0 +1,1 @@
+No human is available to respond (stopped because: ${reason}). Use your best judgement: make reasonable assumptions, and continue working until the task is fully implemented in /workspace/repo. Do not ask further questions.

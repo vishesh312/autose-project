@@ -1,0 +1,3 @@
+**Title**: Add a `slugify` helper
+
+**Description**: Add a new module `textkit/slug.py` with a function `slugify(text, sep="-")` that lowercases the text, replaces every run of characters that are not ASCII letters or digits with `sep`, and strips leading/trailing separators. Example: `slugify("  Hello, World!! ")` returns `"hello-world"`, and `slugify("A B", sep="_")` returns `"a_b"`.

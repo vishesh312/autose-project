@@ -1,0 +1,19 @@
+diff --git a/tests/test_f5_slug.py b/tests/test_f5_slug.py
+new file mode 100644
+index 0000000..87d901b
+--- /dev/null
++++ b/tests/test_f5_slug.py
+@@ -0,0 +1,13 @@
++from textkit.slug import slugify
++
++
++def test_basic():
++    assert slugify("  Hello, World!! ") == "hello-world"
++
++
++def test_sep():
++    assert slugify("A B", sep="_") == "a_b"
++
++
++def test_empty():
++    assert slugify("!!!") == ""

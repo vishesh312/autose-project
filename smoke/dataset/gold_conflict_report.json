@@ -1,0 +1,129 @@
+{
+  "summary": {
+    "total_pairs": 15,
+    "conflicts": 2
+  },
+  "conflict_pairs": [
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 1,
+      "f2": 2,
+      "has_conflict": true
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 3,
+      "f2": 4,
+      "has_conflict": true
+    }
+  ],
+  "all_results": [
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 1,
+      "f2": 2,
+      "has_conflict": true
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 1,
+      "f2": 3,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 1,
+      "f2": 4,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 1,
+      "f2": 5,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 1,
+      "f2": 6,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 2,
+      "f2": 3,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 2,
+      "f2": 4,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 2,
+      "f2": 5,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 2,
+      "f2": 6,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 3,
+      "f2": 4,
+      "has_conflict": true
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 3,
+      "f2": 5,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 3,
+      "f2": 6,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 4,
+      "f2": 5,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 4,
+      "f2": 6,
+      "has_conflict": false
+    },
+    {
+      "repo": "toy_task",
+      "task_id": 1,
+      "f1": 5,
+      "f2": 6,
+      "has_conflict": false
+    }
+  ]
+}

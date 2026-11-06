@@ -1,0 +1,17 @@
+# Pipeline smoke test on the toy pool. Not for results.
+#   parbench run configs/experiments/toy_smoke.yaml --dry-run
+name: toy_smoke
+dataset: smoke/dataset
+pools: [toy_task/task1]
+k: [2, 3]
+bundles_per_pool: 2
+seed: 0
+strategies: [S0, S1, S2]            # add S4 for harnesses with subagents (opencode, claude, codex, agy)
+harnesses: [opencode]
+models: [qwen3.5-9b-ollama]
+repeats: 1
+agent_timeout_s: 900
+max_turns: 40
+max_nudges: 2
+max_parallel_runs: 1                # keep 1 when you care about timing
+merge: {modes: [naive, union, llm]}

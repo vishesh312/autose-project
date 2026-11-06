@@ -1,0 +1,15 @@
+diff --git a/textkit/core.py b/textkit/core.py
+index af4b9bf..cf0ed43 100644
+--- a/textkit/core.py
++++ b/textkit/core.py
+@@ -2,8 +2,8 @@
+ 
+ 
+ def word_count(text: str) -> int:
+-    """Number of whitespace-separated words."""
+-    return len(text.split())
++    """Number of whitespace-separated words. Tokens with no letter or digit (e.g. "--") are ignored."""
++    return len([w for w in text.split() if any(ch.isalnum() for ch in w)])
+ 
+ 
+ def char_count(text: str) -> int:

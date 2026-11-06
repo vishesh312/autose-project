@@ -1,0 +1,19 @@
+diff --git a/tests/test_f6_punct.py b/tests/test_f6_punct.py
+new file mode 100644
+index 0000000..d025419
+--- /dev/null
++++ b/tests/test_f6_punct.py
+@@ -0,0 +1,13 @@
++from textkit.core import run, word_count
++
++
++def test_punct_ignored():
++    assert word_count("hello -- world ...") == 2
++
++
++def test_apostrophes_kept():
++    assert word_count("it's 2 o'clock") == 3
++
++
++def test_via_run():
++    assert run("words", "a , b") == 2

@@ -1,0 +1,15 @@
+diff --git a/textkit/slug.py b/textkit/slug.py
+new file mode 100644
+index 0000000..6ad753c
+--- /dev/null
++++ b/textkit/slug.py
+@@ -0,0 +1,9 @@
++"""URL slugs."""
++
++import re
++
++
++def slugify(text: str, sep: str = "-") -> str:
++    """Lowercase, replace runs of non-alphanumeric characters with `sep`, strip leading/trailing `sep`."""
++    slug = re.sub(r"[^a-z0-9]+", sep, text.lower())
++    return slug.strip(sep)
