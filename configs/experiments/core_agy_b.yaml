@@ -1,0 +1,19 @@
+# Stage B of core_agy: the heavier pools (see core_agy_a.yaml for caveats).
+# be carried into a container): the repo is cloned out of the pool image into a temp dir, so the agent CANNOT run
+# the repo's tests (dependencies live in the image). Results are therefore not directly comparable with the
+# containerised OpenCode runs. Grading is in Docker. Stage B (heavier pools) is core_agy_b.yaml.
+name: core_agy
+dataset: external/CooperBench/dataset
+subset: core
+pools: [llama_index_task/task17244, openai_tiktoken_task/task0, react_hook_form_task/task153, dottxt_ai_outlines_task/task1655, typst_task/task6554]   # heavy images: needs Docker RAM >= 10 GB
+k: [2]
+seed: 0
+strategies: [S0, S1, S2, S4]        # agy cannot disable subagents, so S0/S1/S2 may use them; subagent_calls is logged
+harnesses: [agy]
+models: [gemini-flash-agy]
+repeats: 1
+agent_timeout_s: 1800
+max_nudges: 2
+max_parallel_runs: 1                # keep quota use low; S2 runs 2 agents at once
+grade_parallel: 1
+merge: {modes: [naive, union, llm]}
