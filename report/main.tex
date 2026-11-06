@@ -145,11 +145,18 @@ $n$ is tiny and each configuration has one repeat; confidence intervals are wide
 
 \textbf{Changes.} (1) \emph{Models}: the course encourages local models, so the main OpenCode runs use open models served with vLLM, while hosted Gemini and GPT-OSS through Antigravity act as a stronger reference. (2) \emph{Scale}: the full benchmark is not feasible (Section~6), so we evaluate the curated \texttt{core} subset first, with $k{=}2$, and move to $k$ up to 6 afterwards. (3) \emph{Optional items}: bundling SWE-smith bugs to add an adjustable conflict-density dial remains ``if time permits''. (4) \emph{Risk}: access to hosted models (quota, capacity, terms of use) turned out to be a schedule risk; we plan the final experiments around local models.
 
+\section{Planned Task Generation with SWE-smith}
+SWE-smith~\cite{swesmith} is an MIT-licensed toolkit that builds an execution environment for a repository and then synthesises task instances in it. Each instance is a bug patch that breaks previously passing tests and carries its FAIL\_TO\_PASS and PASS\_TO\_PASS test lists, a generated problem statement and the repository's shared Docker image. The authors report about 50k instances from 128 Python repositories, created by procedural code edits, LM modification or rewriting of functions, reverted pull requests, and combinations of validated bugs from the same file or module. Because all instances of one repository are patches on a single pinned commit, many tasks can be placed on one snapshot. This is what our benchmark needs and what CooperBench's 30 pools cannot provide at scale; it is also the ``adjustable conflict density'' option named in our proposal.
+
+\textbf{Plan.} (1) Take validated single-function bugs from repositories SWE-smith supports, preferring ones CooperBench also uses (jinja, click, dspy) so the two sources can be compared. (2) Index each bug's file, function and line range by parsing its patch, since instances do not store them separately. (3) Group $k$ bugs by overlap: different files, the same file in different functions, or the same function; the share of overlapping task pairs becomes the conflict-density dial. (4) Apply all $k$ patches to the clean commit, confirm that each task's failing tests still fail, and reject bundles whose patches do not apply or whose tests interfere. (5) Run every harness and strategy on the bundle and grade each task on its own FAIL\_TO\_PASS tests on the final tree with our existing grader. Step-by-step details with sources are in \texttt{docs/swesmith\_guide.md}.
+
+\textbf{Open questions.} SWE-smith's failing tests are visible to the agent, so we must decide whether to hide them at solve time; its combine step works only at file or module level, so same-function bundles need independently generated bugs; and we have not yet verified that its pinned commits match our pools, or that bundled bugs keep their individual test sets.
+
 \section{Remaining Work (to 30 November)}
 \begin{itemize}\itemsep0pt
 \item Finish the \texttt{core} runs (S4 and the heavy pools: outlines, typst, tiktoken, llama\_index, react-hook-form) and add repeats ($\ge$3) with confidence intervals.
 \item The main OpenCode experiments on the GPU machine with a stronger open model (Qwen3.8-27B, INT4, then a 35B-class model), since Qwen2.5-7B passes nothing.
-\item $k=3,4,6$ bundles and an analysis by conflict density using CooperBench's gold conflict report.
+\item $k=3,4,6$ bundles and an analysis by conflict density, using CooperBench's gold conflict report now and SWE-smith bundles with a controlled overlap next.
 \item Validate the Pi, Claude Code and Codex adapters on real output; cache S0 results across bundles.
 \item Our own contribution: a predict-then-schedule strategy (S3) that predicts each task's files, runs conflicting tasks one after another and the rest in parallel, evaluated with file-prediction recall and the cost saved.
 \item Report cost and resource use (tokens, GPU-hours) as in the proposal, and the final ACM-format report.
@@ -188,6 +195,6 @@ File & What was checked \\
 
 \begin{thebibliography}{9}
 \bibitem{cooperbench} CooperBench: benchmarking coding-agent cooperation. arXiv:2601.13295, 2026 (code: github.com/cooperbench/CooperBench).
-\end{thebibliography}
+\bibitem{swesmith} J.~Yang, K.~Lieret, C.~E.~Jimenez, A.~Wettig, K.~Khandpur, Y.~Zhang, B.~Hui, O.~Press, L.~Schmidt, and D.~Yang. SWE-smith: Scaling data for software engineering agents. arXiv:2504.21798, 2025 (NeurIPS 2025 Datasets and Benchmarks, per the project README; code: github.com/SWE-bench/SWE-smith).\end{thebibliography}
 
 \end{document}
