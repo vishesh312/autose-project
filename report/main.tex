@@ -13,11 +13,11 @@
 \begin{document}
 
 \title{\texttt{parbench}: Measuring How Coding-Agent Harnesses Handle $k$ Concurrent, Conflicting Tasks}
-\subtitle{Mid-Submission Progress Report (Phase 2)}
+\subtitle{Team \textit{vam} --- Mid-Submission Progress Report (Phase 2)}
 
 \author{Vishesh Saraswat}
-\author{[Teammate 2]}
-\author{[Teammate 3]}
+\author{Aviral Malhotra}
+\author{Manas Mittal}
 \affiliation{\institution{IIIT Hyderabad}\country{India}}
 \begin{abstract}
 Parallel coding agents waste compute when tasks touch the same files: they re-explore the same context, overwrite each other and produce changes that no longer merge. No benchmark measures this beyond two tasks. We are building \texttt{parbench}, a pipeline that bundles $k$ tasks from CooperBench into one repository snapshot, runs them under different orchestration strategies and harnesses, grades every task on the final tree, and logs tokens, time and conflicts. This report covers the architecture, the decisions made, the experiments run so far (Gemini and GPT-OSS through Antigravity, Qwen2.5-7B through OpenCode, a toy pool), the problems we hit, and the remaining work. Results are preliminary: small $n$, one repeat.
@@ -26,6 +26,9 @@ Parallel coding agents waste compute when tasks touch the same files: they re-ex
 
 \section{Problem and Motivation}
 Coding agents are now used on several tasks at once, by fanning out to subagents or by running one agent per task. When the tasks overlap, uncoordinated agents duplicate exploration, overwrite one another and produce patches that conflict at merge time. CooperBench~\cite{cooperbench} showed that two cooperating agents do worse than one agent doing both tasks, but it covers only pairs, one harness and a hand-built dataset. No benchmark lets us ask how orchestration strategy, harness and model affect \emph{correctness, cost and wasted effort} as the number of concurrent tasks $k$ grows. Our goal (Phase~1 proposal) is a benchmark and evaluation pipeline for exactly this, built on existing datasets and existing harnesses; we do not train a model or write a new agent framework.
+
+
+\textbf{Related work.} CooperBench~\cite{cooperbench} evaluates two agents cooperating on one task with a hand-written dataset and a single harness. NP-Bench compares uncoordinated agents with up-front planning but contains only nine hand-built scenarios. Other studies report hidden costs of parallelism, such as workers reconciling inconsistent outputs, yet existing benchmarks either force sequential work, fix the number of peers, or cannot scale past two tasks with a controllable amount of conflict. Our additions are the $k$-task bundling, several harnesses and models on the same bundles, and cost and waste measured next to correctness.
 
 \section{System and Architecture}
 \textbf{Vocabulary.} A \emph{task} is one CooperBench feature with hidden tests; a \emph{pool} is the set of tasks sharing one repository at one base commit (CooperBench calls the pool a ``task'' and our task a ``feature''); a \emph{bundle} is $k$ tasks from one pool in a fixed seeded order; a \emph{run} is bundle $\times$ strategy $\times$ harness $\times$ model $\times$ repeat. CooperBench has 30 pools, 199 tasks and 652 pairs; we use its curated \texttt{core} subset (10 pairs, 9 repositories, four languages).
@@ -64,14 +67,14 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 \item \textbf{Strategies first}: S0, S1, S2, S4. Teammates' literature notes are treated as guidance, not a specification.
 \item \textbf{Docker sandbox per agent} and agents may run the repository's tests; hidden tests are never visible.
 \item \textbf{Fully autonomous agents}: no human in the loop, resumed with a fixed nudge, up to two times.
-\item \textbf{Compute}: local Ollama on a 24~GB Mac for smoke tests; a GPU machine with vLLM for the main OpenCode runs (run by a teammate on another machine); Antigravity for hosted Gemini and GPT-OSS. The team accepted the terms-of-service risk of scripting \texttt{agy} on a personal account at low concurrency.
+\item \textbf{Compute}: local Ollama on a 24~GB Mac for smoke tests; a GPU machine with vLLM for the main OpenCode runs (run by Manas Mittal on another machine); Antigravity for hosted Gemini and GPT-OSS. The team accepted the terms-of-service risk of scripting \texttt{agy} on a personal account at low concurrency.
 \item \textbf{Fairness}: same model for agents, resolver and planner; same step limit; one seeded task order per bundle.
 \item \textbf{Everything is logged raw} (JSON from each harness), so parsers can be fixed and runs re-scored without re-running agents.
 \end{itemize}
 
 \section{Experimental Setup}
 \textbf{Datasets.} (a) A toy pool (6 features of a small Python package, known conflict structure) to check the pipeline. (b) CooperBench \texttt{core}: five Python/Go pools so far (dspy~8563, go\_chi~27, click~2800, jinja~1559 and~1621), $k{=}2$, one repeat. \textbf{Grader check.} For 41 real features in six pools, the tests fail on the base, the gold patch passes, and CooperBench's combined patch passes, on arm64 images; likewise for the six toy features.
-\textbf{Models and harnesses.} \texttt{agy} with Gemini~3.8~Flash (low) and GPT-OSS~120B; OpenCode with Qwen3.5-9B (Ollama, thinking off, 64K context) on the toy pool and with Qwen2.5-7B-Instruct (vLLM, one RTX~5000 Ada; teammate, partial) on the Python pools of \texttt{core}.
+\textbf{Models and harnesses.} \texttt{agy} with Gemini~3.8~Flash (low) and GPT-OSS~120B; OpenCode with Qwen3.5-9B (Ollama, thinking off, 64K context) on the toy pool and with Qwen2.5-7B-Instruct (vLLM, one RTX~5000 Ada; run by Manas Mittal, partial) on the Python pools of \texttt{core}.
 \textbf{Metrics.} Task pass rate, bundle success, retention versus S0, pairwise conflict rate, overlap, tokens, wall-clock and agent-busy time, effective parallelism, nudges, and a validity flag. No dollar cost is computed for subscription models.
 
 \section{Results (Preliminary)}
@@ -96,7 +99,7 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 
 \textbf{Per-pool view.} Table~\ref{tab:pool} shows the pattern behind the averages. With Gemini, the jinja~1621 pair passes both tasks in S0 and S1, while the dspy, go\_chi and click pairs pass exactly one of two in S0 and S1: one task per pair is consistently out of reach for this setup, whatever the strategy. We have not yet inspected which task fails or why. Because the agents could not run the repository tests on the host, some failures may be unverified mistakes, not missing capability.
 
-\textbf{OpenCode + Qwen2.5-7B (teammate, partial, Python pools).} Across S0, S1 and S2 ($n{=}11,11,9$) no task has passed (0.00, 95\% CI up to 0.15--0.18), with and without a ``small model'' prompt. We cannot yet tell whether the model is too weak for these tasks (CooperBench reports weak results for small open models) or whether part of the no-Docker setup is at fault; this is the first thing to investigate.
+\textbf{OpenCode + Qwen2.5-7B (Manas Mittal, partial, Python pools).} Across S0, S1 and S2 ($n{=}11,11,9$) no task has passed (0.00, 95\% CI up to 0.15--0.18), with and without a ``small model'' prompt. We cannot yet tell whether the model is too weak for these tasks (CooperBench reports weak results for small open models) or whether part of the no-Docker setup is at fault; this is the first thing to investigate.
 
 \section{Problems Faced}
 \begin{itemize}\itemsep0pt
@@ -113,6 +116,12 @@ Coding agents are now used on several tasks at once, by fanning out to subagents
 
 \section{Limitations}
 $n$ is tiny and each configuration has one repeat; confidence intervals are wide. \texttt{agy} runs on the host, so agents cannot run the repository's tests, which lowers absolute pass rates and makes them not directly comparable with containerised OpenCode runs; subagents cannot be disabled in \texttt{agy} S0--S2 apart from our custom agent. Model quotas and server capacity are outside our control. Only $k{=}2$ has been run, and only one harness has results on real pools with a model strong enough to pass tasks.
+
+
+\section{Milestones and Changes to the Proposal}
+\textbf{Achieved so far.} An end-to-end pipeline from bundle sampling to graded, logged runs; a $k$-task grader checked on 41 real CooperBench tasks and a toy pool; four strategies (S0, S1, S2 with three merge modes, S4) and prompt variants; six harness adapters, two verified on real output; a Docker sandbox and two no-Docker routes; first measurements with three harness/model setups; and tooling the proposal did not foresee: a web-use audit, a run-validity flag, automatic retry through quota errors, and raw-log redaction.
+
+\textbf{Changes.} (1) \emph{Models}: the course encourages local models, so the main OpenCode runs use open models served with vLLM, while hosted Gemini and GPT-OSS through Antigravity act as a stronger reference. (2) \emph{Scale}: the full benchmark is not feasible (Section~6), so we evaluate the curated \texttt{core} subset first, with $k{=}2$, and move to $k$ up to 6 afterwards. (3) \emph{Optional items}: bundling SWE-smith bugs to add an adjustable conflict-density dial remains ``if time permits''. (4) \emph{Risk}: access to hosted models (quota, capacity, terms of use) turned out to be a schedule risk; we plan the final experiments around local models.
 
 \section{Remaining Work (to 30 November)}
 \begin{itemize}\itemsep0pt
