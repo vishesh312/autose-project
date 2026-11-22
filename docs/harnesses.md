@@ -307,7 +307,7 @@ opencode run --standalone --auto --format json -m <provider>/<model>[#variant] [
 - A tool vanishes from the model's list when the LAST matching permission rule for its action is `resource:"*", effect:"deny"` (verified).
 - Disable subagents: `{"action":"subagent","resource":"*","effect":"deny"}`. Disable questions: `{"action":"question","resource":"*","effect":"deny"}`. Put both at top level AND under `agents.build.permissions` (built-in `build` agent re-allows questions after defaults; agent rules apply last).
 - If question stays on, `run` auto-cancels it with "Continue without an answer; make reasonable assumptions". A plain-text "should I...?" stop still needs the resume step.
-- Also deny `execute` (Code Mode) so tool calls aren't hidden in JS: `{"action":"execute","resource":"*","effect":"deny"}` (whether Code Mode is on by default UNVERIFIED).
+- Also deny `execute` (Code Mode) so tool calls aren't hidden in JS: `{"action":"execute","resource":"*","effect":"deny"}`. Code Mode is ON by default in 2.2.4 (verified 2026-11-23 with a request-logging proxy: with `execute` allowed the `opencode_*` tools move inside it; denied, they are offered directly). Web tools: deny `webfetch` and `websearch` (Code Mode's `fetch()` checks the `webfetch` permission too). Per-model request params go in `body`/`settings`, not `options` (ignored in 2.x).
 - Enable (harness-native): default on. Built-in subagents `general` (can't spawn) and `explore` (read-only); add via `agents.<id>` with `"mode":"subagent"` or `.opencode/agents/<id>.md`; nesting `experimental.subagent_depth` (default 1).
 
 ### 6. Step limit
