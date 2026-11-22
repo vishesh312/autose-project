@@ -125,13 +125,21 @@ def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat:
     ckw = {"memory": cfg.container_memory, "cpus": cfg.container_cpus}
     grades: dict[str, dict[int, dict]] = {}
     feats = {f.fid: f for f in bundle.features}
+    done: dict[tuple[str, tuple[int, ...]], dict] = {}  # identical (patch, tasks) are graded once (S1/S4 solo = final,
+                                                          # S2 merge modes without conflicts)
+
+    def grade_once(label: str, fids: list[int], patch: str) -> dict:
+        key = (patch, tuple(fids))
+        if key not in done:
+            g = grade(bundle.pool, [feats[f] for f in fids], patch, gdir, label, cfg.grade_parallel, ckw)
+            done[key] = {f: v.__dict__ for f, v in g.items()}
+        return done[key]
+
     # Each agent's own patch on its own task(s): S0 score, and "passes alone" for lost-in-merge.
     for name, fids, patch in res.worker_patches:
-        g = grade(bundle.pool, [feats[f] for f in fids], patch, gdir, f"own_{name}", cfg.grade_parallel, ckw)
-        grades[f"own_{name}"] = {f: v.__dict__ for f, v in g.items()}
+        grades[f"own_{name}"] = grade_once(f"own_{name}", fids, patch)
     for label, patch in res.finals.items():
-        g = grade(bundle.pool, bundle.features, patch, gdir, label, cfg.grade_parallel, ckw)
-        grades[label] = {f: v.__dict__ for f, v in g.items()}
+        grades[label] = grade_once(label, bundle.feature_ids, patch)
 
     record = build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_agents_done)
     tmp = run_dir / "run.json.tmp"  # run.json marks the run finished: never leave a half-written one
