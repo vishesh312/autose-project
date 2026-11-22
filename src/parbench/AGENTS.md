@@ -10,6 +10,7 @@ Read the root `AGENTS.md` first. This file covers the code.
 | `config.py` | `Usage` (token accounting), `ModelSpec` (+ list-price cost), `ExperimentConfig`, `.env` loader |
 | `dataset.py` | `Pool`, `Feature`, `Bundle`; loads the CooperBench layout (also used by the toy dataset); seeded k-subset sampling; `bundles_from_subset` (config `subset: core`, k>2 extends each curated pair from the same pool); gold conflict report |
 | `sandbox.py` | `Container` over the `docker` CLI: exec with in-container timeout, `docker cp` for files (no argv size limits), history scrub, `diff_against`. `HostWorkspace` is the same interface on the host (temp clone of the repo from the pool image; git isolated from your global config); used by `agy` and by harnesses listed in `host_harnesses` |
+| `sandbox_policy.py`, `landlock.py` | opt-in agent sandbox (`sandbox: on`): Docker internal network + socat forwarder, Landlock (Linux host), seatbelt (Mac host); mode recorded in `run.sandbox`. See `docs/sandboxing.md` |
 | `harnesses/base.py` | `Harness` interface, `ToolCall`, `ParsedRun`, question detection |
 | `harnesses/cli_agents.py` | one adapter per CLI: config files + env, headless command, JSON parser |
 | `agent_runner.py` | runs one agent: command, nudge loop, timing, usage, tool-call logs, `record.json` |

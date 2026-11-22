@@ -58,6 +58,7 @@ class Container:
         memory: str | None = None,
         cpus: str | None = None,
         labels: dict[str, str] | None = None,
+        sandbox=None,  # sandbox_policy.SandboxPolicy; None/off = unchanged behaviour
     ):
         self.image = image
         self.name = name or f"parbench-{uuid.uuid4().hex[:10]}"
@@ -69,15 +70,24 @@ class Container:
         self.started = False
         self.work = WORK  # scratch dir (prompts, harness config); outside the repo
         self.repo = REPO
+        self.sandbox = sandbox
+        self._egress = None
 
     # -- lifecycle -------------------------------------------------------
     def start(self) -> "Container":
         args = ["run", "-d", "--name", self.name, "--entrypoint", "", "-w", REPO]
-        if platform.system() == "Linux":
-            # Docker Desktop provides host.docker.internal; plain Linux docker needs this mapping.
-            args += ["--add-host", "host.docker.internal:host-gateway"]
-        if self.network:
-            args += ["--network", self.network]
+        if self.sandbox is not None and self.sandbox.enabled:
+            from .sandbox_policy import DockerEgress, describe
+
+            describe(self.sandbox, host=False)  # logs the mode
+            self._egress = DockerEgress(self.name, self.sandbox.allow, _docker)
+            args += self._egress.start()  # --internal network + --add-host <endpoint>:<forwarder>
+        else:
+            if platform.system() == "Linux":
+                # Docker Desktop provides host.docker.internal; plain Linux docker needs this mapping.
+                args += ["--add-host", "host.docker.internal:host-gateway"]
+            if self.network:
+                args += ["--network", self.network]
         if self.memory:
             args += ["--memory", self.memory]
         if self.cpus:
@@ -87,7 +97,12 @@ class Container:
         for k, v in self.env.items():
             args += ["-e", f"{k}={v}"]
         args += [self.image, "sleep", "infinity"]
-        _docker(*args)
+        try:
+            _docker(*args)
+        except Exception:
+            if self._egress:
+                self._egress.remove()
+            raise
         self.started = True
         self.exec(f"mkdir -p {WORK}")
         return self
@@ -96,6 +111,8 @@ class Container:
         if self.started:
             _docker("rm", "-f", self.name, check=False)
             self.started = False
+        if self._egress:
+            self._egress.remove()
 
     def __enter__(self) -> "Container":
         return self.start()
@@ -231,8 +248,9 @@ class HostWorkspace(Container):
     GIT_CONFIG_GLOBAL=/dev/null; nothing under $HOME is modified by us.
     """
 
-    def __init__(self, image: str, *, name=None, env=None, labels=None, **_ignored):
-        super().__init__(image, name=name or f"parbench-host-{uuid.uuid4().hex[:8]}", env=env, labels=labels)
+    def __init__(self, image: str, *, name=None, env=None, labels=None, sandbox=None, **_ignored):
+        super().__init__(image, name=name or f"parbench-host-{uuid.uuid4().hex[:8]}", env=env, labels=labels,
+                         sandbox=sandbox)
         import shutil
 
         self._shutil = shutil
@@ -275,7 +293,10 @@ class HostWorkspace(Container):
         out_f = open(stdout_path, "w") if stdout_path else subprocess.PIPE
         err_f = open(stderr_path, "w") if stderr_path else subprocess.PIPE
         started, timed_out = time.time(), False
-        proc = subprocess.Popen(["bash", "-c", cmd], cwd=workdir or self.repo, env=full_env, stdout=out_f,
+        from .sandbox_policy import wrap_host
+
+        argv, full_env = wrap_host(["bash", "-c", cmd], full_env, self.root, self.sandbox)
+        proc = subprocess.Popen(argv, cwd=workdir or self.repo, env=full_env, stdout=out_f,
                                 stderr=err_f, text=True, start_new_session=True)
         try:
             stdout, stderr = proc.communicate(timeout=timeout)
@@ -323,7 +344,10 @@ class HostWorkspace(Container):
 
 
 def cleanup_all() -> None:
-    """Remove every container we started (label parbench=1)."""
+    """Remove every container (and sandbox network) we started (label parbench=1)."""
     ids = _docker("ps", "-aq", "--filter", "label=parbench=1", check=False).stdout.split()
     if ids:
         _docker("rm", "-f", *ids, check=False)
+    nets = _docker("network", "ls", "-q", "--filter", "label=parbench=1", check=False).stdout.split()
+    if nets:  # sandbox networks (sandbox_policy.DockerEgress)
+        _docker("network", "rm", *nets, check=False)

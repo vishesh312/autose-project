@@ -108,6 +108,12 @@ class ExperimentConfig:
     pools: list[str] | None = None  # pool ids or repo names; None = all
     subset: str | None = None  # CooperBench subset name (dataset/subsets/<name>.json): core, flash_10, flash, lite, ...
     host_harnesses: list[str] = field(default_factory=list)  # run these harnesses on the host (no Docker); see sandbox.HostWorkspace
+    # Agent sandbox (docs/sandboxing.md): off = as before; on = best mode available, loud fallback; require = refuse
+    # unless network and files are enforced. sandbox_allow: extra "host:port" the agent may reach besides the model;
+    # sandbox_writable: extra paths writable in host mode.
+    sandbox: str = "off"
+    sandbox_allow: list[str] = field(default_factory=list)
+    sandbox_writable: list[str] = field(default_factory=list)
     k: list[int] = field(default_factory=lambda: [2])
     bundles_per_pool: int | None = 1
     seed: int = 0
