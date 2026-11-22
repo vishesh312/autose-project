@@ -151,9 +151,9 @@ def make_bundles(pools: dict[str, Pool], k: int, per_pool: int | None, seed: int
     """Sample up to `per_pool` k-subsets per pool (all if None). Order inside a bundle is shuffled by seed."""
     import random
 
-    rng = random.Random(f"{seed}-{k}")
     bundles = []
     for pool in pools.values():
+        rng = random.Random(f"{seed}-{k}")  # per pool: a pool's bundles must not depend on the other pools listed
         ids = sorted(pool.features)
         if len(ids) < k:
             continue
@@ -174,13 +174,13 @@ def bundles_from_subset(pools: dict[str, Pool], subset_file: Path, k: int, seed:
     """
     import random
 
-    rng = random.Random(f"{seed}-{k}-subset")
     data = json.loads(subset_file.read_text())
     out = []
     for entry in data["tasks"]:
         pool = pools.get(f"{entry['repo']}/task{entry['task_id']}")
         if pool is None:
             continue
+        rng = random.Random(f"{seed}-{k}-subset")  # per pool, as in make_bundles
         for pair in entry["pairs"]:
             ids = [f for f in pair if f in pool.features]
             if len(ids) != 2 or k < 2:
