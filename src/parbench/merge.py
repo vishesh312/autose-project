@@ -95,12 +95,16 @@ def merge_mode(
         if mode == "llm" and resolver is not None and files:
             rec = resolver(c, files, fids, log_dir / f"resolver_{name}")
             records.append(rec)
+            # The resolver is told it need not commit, so files it fixed may still be unstaged ("U" in the index):
+            # judge by conflict markers, not by `--diff-filter=U`. If it aborted the merge itself, the branch is lost.
             left = c.exec(
-                "git diff --name-only --diff-filter=U; "
-                + " ; ".join(f"grep -lE '^(<<<<<<<|>>>>>>>)( |$)' {shlex.quote(f)} 2>/dev/null" for f in files)
+                " ; ".join(f"grep -lE '^(<<<<<<<|>>>>>>>)( |$)' {shlex.quote(f)} 2>/dev/null" for f in files)
             ).stdout.split()
-            if not left:
-                c.sh("git add -A && { git commit -q --no-edit -m resolved || git commit -q -am resolved || git diff --cached --quiet; }")
+            merging = c.exec("git rev-parse -q --verify MERGE_HEAD").returncode == 0
+            merged = merging or c.exec(f"git merge-base --is-ancestor {name} HEAD").returncode == 0
+            if not left and merged:
+                if merging:
+                    c.sh("git add -A && git commit -q --no-verify --no-edit -m resolved")
                 step.outcome = "resolved"
             else:
                 c.exec("git merge --abort 2>/dev/null; git reset -q --hard")
