@@ -75,6 +75,7 @@ def merge_mode(
     mode: str,
     log_dir: Path,
     resolver: ResolverFn | None = None,
+    exclude: list[str] | None = None,
 ) -> tuple[ModeResult, list]:
     """Merge agent branches in the given (bundle) order. Returns (result, resolver agent records)."""
     attrs = f"{c.repo}/.git/info/attributes"
@@ -116,7 +117,7 @@ def merge_mode(
             lost += fids
         steps.append(step)
     c.exec(f"rm -f {attrs}")
-    final = c.diff_against(base_sha)
+    final = c.diff_against(base_sha, exclude=exclude)  # without the resolver's harness files
     res = ModeResult(mode, steps, final, lost)
     log_dir.mkdir(parents=True, exist_ok=True)
     (log_dir / f"{mode}.diff").write_text(final)

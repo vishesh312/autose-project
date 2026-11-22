@@ -206,7 +206,8 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
                 )
                 return rec
 
-            mres, recs = merge_mode(c, base, patches, mode, merge_dir, resolver if mode == "llm" else None)
+            mres, recs = merge_mode(c, base, patches, mode, merge_dir, resolver if mode == "llm" else None,
+                                    exclude=ctx.harness.repo_artifacts)
             res.agents += recs
             res.finals[mode] = mres.final_patch
             modes[mode] = {"lost_features": mres.lost_features, "steps": [s.__dict__ for s in mres.steps],
