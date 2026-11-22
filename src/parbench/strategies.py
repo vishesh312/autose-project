@@ -19,6 +19,7 @@ from pathlib import Path
 from .agent_runner import AgentRecord, run_agent
 from .config import ExperimentConfig, ModelSpec
 from .dataset import Bundle, Feature
+from .grader import filter_test_files
 from .harnesses.base import Harness, RunOptions
 from .merge import _branch_setup, merge_mode, overlap_lines, pairwise_conflicts
 from . import prompts
@@ -188,9 +189,12 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
     # ---- merge stage (same image, fresh container) ----
     merge_dir = ctx.run_dir / "merge"
     c, base = _container(ctx, "S2-merge")
+    # Merge without agent-written test files, as CooperBench does: grading drops them anyway, so a clash in a
+    # test file must not count as a conflict or make naive merge skip a branch.
+    patches = [(n, fids, filter_test_files(p)) for n, fids, p in res.worker_patches]
     try:
-        _branch_setup(c, base, res.worker_patches)
-        names = [n for n, _, _ in res.worker_patches]
+        _branch_setup(c, base, patches)
+        names = [n for n, _, _ in patches]
         pairs = pairwise_conflicts(c, base, names)
         modes = {}
         for mode in ctx.cfg.merge.modes:
@@ -202,7 +206,7 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
                 )
                 return rec
 
-            mres, recs = merge_mode(c, base, res.worker_patches, mode, merge_dir, resolver if mode == "llm" else None)
+            mres, recs = merge_mode(c, base, patches, mode, merge_dir, resolver if mode == "llm" else None)
             res.agents += recs
             res.finals[mode] = mres.final_patch
             modes[mode] = {"lost_features": mres.lost_features, "steps": [s.__dict__ for s in mres.steps],
@@ -211,7 +215,7 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
         res.merge = {
             "pairwise": pairs,
             "conflict_rate": (sum(p["conflict"] for p in pairs) / len(pairs)) if pairs else 0.0,
-            "overlap_lines": overlap_lines([p for _, _, p in res.worker_patches]),
+            "overlap_lines": overlap_lines([p for _, _, p in patches]),
             "modes": modes,
         }
     finally:
