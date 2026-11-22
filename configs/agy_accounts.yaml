@@ -1,0 +1,10 @@
+# Antigravity (agy) accounts that parbench cycles through (requested by the user on 2026-11-23; see AGENTS.md
+# rule 7 for the terms-of-service caveat). Each entry is a HOME directory for agy: agy reads its login from the
+# keychain under that HOME, so different entries are different logins. "~" is your normal login (account 1).
+# Set up account N (N >= 2) once with:  scripts/agy_login_account.sh N
+# Entries whose profile has not been set up are skipped. PARBENCH_AGY_ACCOUNTS (colon-separated) overrides this.
+# Run records store the 1-based position (`accounts` in agents/*/record.json), never the email.
+accounts:
+  - "~"
+  - ~/.parbench/agy_profiles/2
+  - ~/.parbench/agy_profiles/3

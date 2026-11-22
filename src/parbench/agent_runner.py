@@ -45,6 +45,7 @@ class AgentRecord:
     infra_retries: int = 0  # waits for quota/capacity errors (not nudges)
     infra_wait_s: float = 0.0
     infra_failed: bool = False  # ended on a service error after all retries: the run is not a valid measurement
+    accounts: list[int] = field(default_factory=list)  # agy accounts used, in order (1-based position in configs/agy_accounts.yaml)
     timed_out: bool = False
     returncode: int | None = None
     tool_calls: dict[str, int] = field(default_factory=dict)  # by kind
@@ -96,6 +97,8 @@ def run_agent(
     log_dir.mkdir(parents=True, exist_ok=True)
     rec = AgentRecord(agent_id, role, harness.name, model.id, feature_ids)
     harness_env = {**(env or {}), **harness.setup(c, model, opts)}
+    if "PARBENCH_AGY_ACCOUNT" in harness_env:
+        rec.accounts.append(int(harness_env["PARBENCH_AGY_ACCOUNT"]))
     (log_dir / "prompt.md").write_text(prompt)
 
     rec.started = time.time()
@@ -136,6 +139,27 @@ def run_agent(
         rec.timed_out = r.timed_out
         rec.subagent_calls += parsed.subagent_calls
         all_calls += parsed.tool_calls
+
+        # Quota or sign-in error on one of several accounts (agy; parbench/agy_accounts.py): move to a free
+        # account at once, without waiting. A conversation lives in its account's profile, so the new
+        # account starts a fresh session with the original prompt in the same (partly edited) repo.
+        switch = getattr(harness, "switch_account", None)
+        new_env = None
+        if switch and not r.timed_out and infra_retries < MAX_INFRA_RETRIES:
+            new_env = switch(harness_env, parsed.error or (r.stderr[-2000:] if r.returncode else None))
+        if new_env is not None:
+            infra_retries += 1
+            rec.infra_retries += 1
+            rec.attempts.append(
+                Attempt(i, r.started, r.ended, r.returncode, r.timed_out, parsed.usage.to_json(), parsed.num_turns,
+                        parsed.session_id, f"account_switch_to_{new_env.get('PARBENCH_AGY_ACCOUNT')}",
+                        parsed.final_text[-1500:], parsed.error)
+            )
+            harness_env = {**(env or {}), **new_env}
+            rec.accounts.append(int(new_env["PARBENCH_AGY_ACCOUNT"]))
+            session, current_prompt, prev_cum = None, prompt, Usage()
+            i += 1
+            continue
 
         # Retryable service problem (quota / capacity): wait, then resume. Does not use up a nudge, and the
         # waiting time does not count against the agent's own time limit.

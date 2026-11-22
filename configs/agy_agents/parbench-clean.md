@@ -6,11 +6,8 @@ tools:
   - ask_permission
   - command_status
   - find_by_name
-  - finish
-  - generate_image
   - grep_search
   - list_dir
-  - list_plugin_accounts
   - manage_task
   - multi_replace_file_content
   - notebook_edit
@@ -18,7 +15,6 @@ tools:
   - run_command
   - run_workflow
   - schedule
-  - search_marketplace
   - send_command_input
   - send_message
   - view_file
