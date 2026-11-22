@@ -189,17 +189,23 @@ class OpenCodeHarness(Harness):
         return cls._v1
 
     def _setup_v1(self, c, model, opts):
+        # Default build agent and tools, minus: network tools (no internet), question (headless), task unless S4.
+        # websearch/codesearch are off for non-opencode providers anyway; denied explicitly in case of EXA env vars.
+        no_net = {"webfetch": False, "websearch": False, "codesearch": False}
         cfg = {
             "$schema": "https://opencode.ai/config.json",
             "model": f"{self._prov(model)}/{self._key(model)}",
             "autoupdate": False, "snapshot": False,
-            "permission": {"edit": "allow", "bash": "allow", "webfetch": "deny", "external_directory": "deny"},
-            "tools": {"question": False},
+            "permission": {"edit": "allow", "bash": "allow", "external_directory": "deny",
+                           **{t: "deny" for t in no_net}},
+            "tools": {"question": False, **no_net},
             "agent": {"build": {"steps": opts.max_turns} if opts.max_turns else {}},
         }
         if not opts.subagents:
             cfg["tools"]["task"] = False
         if model.provider == "openai_compat":
+            mopts = {**({"temperature": model.temperature} if model.temperature is not None else {}),
+                     **({"reasoningEffort": model.reasoning_effort} if model.reasoning_effort else {})}
             cfg["provider"] = {"local": {
                 "npm": "@ai-sdk/openai-compatible", "name": "Local",
                 "options": {"baseURL": model.base_url.replace("host.docker.internal", "localhost"), "apiKey": "local"},
@@ -207,7 +213,7 @@ class OpenCodeHarness(Harness):
                     "name": model.model, "tool_call": True,
                     "limit": {"context": model.context, "output": model.max_output},
                     **({"temperature": True} if model.temperature is not None else {}),
-                    **({"options": {"temperature": model.temperature}} if model.temperature is not None else {})}}}}
+                    **({"options": mopts} if mopts else {})}}}}
         env = {"OPENCODE_DISABLE_AUTOUPDATE": "1", "OPENCODE_CONFIG_CONTENT": json.dumps(cfg)}
         for var, sub_dir in (("XDG_CONFIG_HOME", "xdg/config"), ("XDG_DATA_HOME", "xdg/data"),
                              ("XDG_STATE_HOME", "xdg/state")):
@@ -219,10 +225,13 @@ class OpenCodeHarness(Harness):
     def setup(self, c, model, opts):
         if self.is_v1():
             return self._setup_v1(c, model, opts)
-        rules = [{"action": "question", "resource": "*", "effect": "deny"}]
+        # Default build agent and tools, minus: question (headless), webfetch/websearch (no internet), execute
+        # (Code Mode: hides nested tool calls from the log and is not in 1.x; denying it exposes the same tools
+        # directly, verified via a request-logging proxy) and, unless S4, subagent.
+        rules = [{"action": a, "resource": "*", "effect": "deny"}
+                 for a in ("question", "webfetch", "websearch", "execute")]
         if not opts.subagents:
-            rules += [{"action": "subagent", "resource": "*", "effect": "deny"},
-                      {"action": "execute", "resource": "*", "effect": "deny"}]
+            rules.append({"action": "subagent", "resource": "*", "effect": "deny"})
         steps = {"steps": opts.max_turns} if opts.max_turns else {}
         cfg = {
             "model": f"{self._prov(model)}/{self._key(model)}",
@@ -231,13 +240,15 @@ class OpenCodeHarness(Harness):
             "agents": {"build": {"permissions": rules, **steps}},
         }
         if model.provider == "openai_compat":
+            # v2 model entries take settings/headers/body (not v1's `options`, which was silently ignored).
+            body = {**({"reasoning_effort": model.reasoning_effort} if model.reasoning_effort else {}),
+                    **({"temperature": model.temperature} if model.temperature is not None else {})}
             cfg["providers"] = {"local": {
                 "name": "Local", "package": "@opencode/ai/providers/openai-compatible",
                 "settings": {"baseURL": model.base_url, "apiKey": "local"},
                 "models": {self._key(model): {"modelID": model.model,
                                               "limit": {"context": model.context, "output": model.max_output},
-                                              **({"options": {"reasoningEffort": model.reasoning_effort}}
-                                                 if model.reasoning_effort else {})}}}}
+                                              **({"body": body} if body else {})}}}}
         env = {"OPENCODE_DISABLE_PROJECT_CONFIG": "1", "OPENCODE_DISABLE_AUTOUPDATE": "1", "PWD": c.repo}
         if isinstance(c, HostWorkspace):
             # No Docker: reach the model server on localhost, and keep OpenCode's config/data/cache out of $HOME
@@ -279,7 +290,7 @@ class OpenCodeHarness(Harness):
                 st = part.get("state", {}) or {}
                 tc = ToolCall(part.get("tool", ""), st.get("input", {}) or {}, st.get("status") == "completed")
                 run.tool_calls.append(tc)
-                if tc.name == "subagent":
+                if tc.name in ("subagent", "task"):  # 2.x / 1.x name
                     run.subagent_calls += 1
                 if tc.name in ("question", "ask"):
                     run.asked_question = True

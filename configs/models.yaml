@@ -58,11 +58,11 @@ models:
     model: "qwen3.8-27b-int4"
     provider: openai_compat
     base_url: http://localhost:8001/v1
-    context: 65536
-    max_output: 4096
-    temperature: 0.2
+    context: 65536                    # = MAX_LEN in scripts/serve/qwen38_27b.sh
+    max_output: 8192                  # 4096 can cut off a whole-file `write` tool call mid-JSON
+    temperature: 0.2                  # TODO(decision): drop to use the model's generation_config default (vllm.sh passes --generation-config auto; OpenCode sends none)
     price: {input: 0.10, output: 0.30}   # PLACEHOLDER reference price
-    notes: "RedHatAI/Qwen3.8-27B-INT4 on vLLM; start with scripts/serve/qwen38_27b.sh (THINK=0)"
+    notes: "RedHatAI/Qwen3.8-27B-INT4 on vLLM; start with scripts/serve/qwen38_27b.sh (THINK=0, qwen3_coder tool parser)"
 
   # ---------------- hosted open models via OpenRouter ----------------
   qwen3.6-35b-a3b-openrouter:
