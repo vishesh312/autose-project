@@ -24,18 +24,24 @@ def tasks_block(features: list[Feature]) -> str:
     return "\n\n".join(f"### Task {i}\n\n{f.description.strip()}" for i, f in enumerate(features, 1))
 
 
-def single_task(feature: Feature, extra: str | None = None, repo: str = "/workspace/repo") -> str:
+def _extras(extra: str | list[str] | None) -> str:
+    """Prompt snippets named by `+extra` in the strategy spec (all of them, in order)."""
+    names = [extra] if isinstance(extra, str) else (extra or [])
+    return "\n\n".join(template(n).strip() for n in names)
+
+
+def single_task(feature: Feature, extra: str | list[str] | None = None, repo: str = "/workspace/repo") -> str:
     task = feature.description.strip()
     if extra:
-        task += "\n\n" + template(extra).strip()
+        task += "\n\n" + _extras(extra)
     return render("single_task", task=task, repo=repo)
 
 
-def multi_task(features: list[Feature], name: str = "multi_task", extra: str | None = None,
+def multi_task(features: list[Feature], name: str = "multi_task", extra: str | list[str] | None = None,
                repo: str = "/workspace/repo") -> str:
     out = render(name, k=len(features), tasks=tasks_block(features), repo=repo)
     if extra:
-        out += "\n" + template(extra).strip() + "\n"
+        out += "\n" + _extras(extra) + "\n"
     return out
 
 
