@@ -70,6 +70,12 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
         if (run_dir / "run.json").exists():
             print(f"skip (done) {run_id}")
             return
+        stale = [p for p in run_dir.iterdir() if p.name != "_prev"] if run_dir.exists() else []
+        if stale:  # an earlier attempt failed or was interrupted: keep its logs aside so they don't mix with this one
+            prev = run_dir / "_prev" / time.strftime("%Y%m%d-%H%M%S")
+            prev.mkdir(parents=True)
+            for p in stale:
+                p.rename(prev / p.name)
         run_dir.mkdir(parents=True, exist_ok=True)
         try:
             execute_run(cfg, b, StrategySpec.parse(s), get_harness(h), models[m], r, run_dir)
@@ -128,7 +134,9 @@ def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat:
         grades[label] = {f: v.__dict__ for f, v in g.items()}
 
     record = build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_agents_done)
-    (run_dir / "run.json").write_text(json.dumps(record, indent=2, default=str))
+    tmp = run_dir / "run.json.tmp"  # run.json marks the run finished: never leave a half-written one
+    tmp.write_text(json.dumps(record, indent=2, default=str))
+    os.replace(tmp, run_dir / "run.json")
     return record
 
 
