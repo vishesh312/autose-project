@@ -11,6 +11,7 @@ import json
 import os
 import platform
 import re
+import threading
 import time
 import traceback
 from concurrent.futures import ThreadPoolExecutor
@@ -23,6 +24,9 @@ from .grader import grade
 from .harnesses import get_harness
 from .sandbox import Container, image_exists
 from .strategies import RunContext, StrategySpec, run_strategy
+
+
+_STOP = threading.Event()  # set on Ctrl-C
 
 
 def _slug(s: str) -> str:
@@ -67,6 +71,8 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
         b, s, h, m, r = args
         run_id = _slug(f"{s}__{h}__{m}__{b.id}__r{r}")
         run_dir = out / run_id
+        if _STOP.is_set():
+            return
         if (run_dir / "run.json").exists():
             print(f"skip (done) {run_id}")
             return
@@ -84,8 +90,20 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
             (run_dir / "error.txt").write_text(traceback.format_exc())
             print(f"FAILED {run_id}: {e}")
 
-    with ThreadPoolExecutor(max(1, cfg.max_parallel_runs)) as ex:
+    ids = [_slug(f"{s}__{h}__{m}__{b.id}__r{r}") for b, s, h, m, r in runs]
+    if len(set(ids)) != len(ids):  # two runs would share (and clobber) one directory
+        raise ValueError(f"duplicate run ids: {sorted({i for i in ids if ids.count(i) > 1})}")
+    _STOP.clear()
+    ex = ThreadPoolExecutor(max(1, cfg.max_parallel_runs))
+    try:
         list(ex.map(one, runs))
+    except KeyboardInterrupt:
+        # Start no new runs, and don't let runs whose agents were interrupted write run.json (they'd count as done).
+        _STOP.set()
+        print("interrupted: waiting for running agents to stop (Ctrl-C again to abandon; then `parbench cleanup`)")
+        ex.shutdown(wait=True, cancel_futures=True)
+        raise
+    ex.shutdown()
     return out
 
 
@@ -119,6 +137,8 @@ def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat:
     t0 = time.time()
     res = run_strategy(ctx, spec)
     t_agents_done = time.time()
+    if _STOP.is_set():
+        raise RuntimeError("experiment interrupted (Ctrl-C): agents may have been cut short; run not recorded")
 
     # ------------------------------------------------ grading
     gdir = run_dir / "grading"
