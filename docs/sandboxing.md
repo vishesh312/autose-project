@@ -55,7 +55,7 @@ host), so cooperative tools fail fast.
 | Test | Where | Result |
 |---|---|---|
 | `docker-egress`: `curl https://example.com` fails (no DNS), `pip download` fails, model `/v1/models` returns 200 through the forwarder, other host ports refused, network and forwarder removed afterwards | Docker Desktop 29.9, Mac arm64 | pass |
-| `parbench probe --toy --harness opencode --model qwen3.5-9b-ollama --sandbox on` (OpenCode 2.2.4 in Docker): see "OpenCode under the sandbox" below | Docker Desktop, Mac | see below |
+| `parbench probe --toy --harness opencode --model qwen3.5-9b-ollama --sandbox on` (a real agent in `docker-egress`) | Docker Desktop, Mac | **not completed**: the Docker Desktop VM became unreachable mid-probe (unrelated `no route to host` to the VM) and did not come back. Re-run this probe before making `on` the default; OpenCode may try to fetch its model catalog or provider package, which is now blocked |
 | `scripts/sandbox_selftest.sh` in `host-landlock` (Landlock ABI 8, as root): 11/11 PASS (internet blocked for curl and raw TCP, model port reachable, local test server, workspace writes, `$HOME`, `/tmp` and other dirs blocked, delete outside blocked; signals to PID 1 blocked) | Linux container on Docker Desktop (kernel 7.0) | pass |
 | `scripts/sandbox_selftest.sh` in `host-seatbelt`: 11/11 PASS | Mac host | pass |
 | Fallback logic (no Landlock -> `host-proxyenv`; ABI 3 -> files only; remote endpoint -> network "NOT enforced"; `require` raises when not fully enforced) | unit check with mocked ABI | pass |
