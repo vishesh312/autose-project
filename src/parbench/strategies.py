@@ -79,11 +79,16 @@ def _container(ctx: RunContext, role: str) -> tuple[Container, str]:
         memory=ctx.cfg.container_memory,
         cpus=ctx.cfg.container_cpus,
         labels={"parbench.role": role, "parbench.run": ctx.run_dir.name[:60]},
-    ).start()
-    c.scrub_history()
-    for host, dest in ctx.auth_files:
-        c.put_path(host, dest)
-    return c, c.base_sha()
+    )
+    try:
+        c.start()
+        c.scrub_history()
+        for host, dest in ctx.auth_files:
+            c.put_path(host, dest)
+        return c, c.base_sha()
+    except BaseException:
+        c.remove()  # don't leak the container / host clone when setup fails
+        raise
 
 
 def _opts(ctx: RunContext, subagents: bool) -> RunOptions:
@@ -165,7 +170,13 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
     t0 = time.time()
     # Start all containers first so the agents themselves start together.
     with ThreadPoolExecutor(len(feats)) as ex:
-        boxes = list(ex.map(lambda f: _container(ctx, "S2-worker"), feats))
+        futs = [ex.submit(_container, ctx, "S2-worker") for _ in feats]
+    if any(f.exception() for f in futs):  # one failed to start: remove the ones that did
+        for f in futs:
+            if not f.exception():
+                f.result()[0].remove()
+        next(f for f in futs if f.exception()).result()
+    boxes = [f.result() for f in futs]
     res.setup_s = time.time() - t0
     try:
         res.t_start = time.time()
