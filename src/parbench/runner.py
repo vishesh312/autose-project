@@ -23,6 +23,7 @@ from .dataset import Bundle, bundles_from_subset, load_gold_conflicts, load_pool
 from .grader import grade
 from .harnesses import get_harness
 from .sandbox import Container, image_exists
+from .sandbox_policy import record as sandbox_record
 from .strategies import RunContext, StrategySpec, run_strategy
 
 
@@ -217,6 +218,7 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
             "features": bundle.feature_ids, "strategy": spec.label, "strategy_id": spec.id,
             "harness": harness.name, "model": model.id, "repeat": repeat,
             "host": platform.node(), "arch": platform.machine(), "started": t0,
+            "sandbox": sandbox_record(cfg, harness, model),
         },
         "valid": not any(a.infra_failed for a in agents),  # False: an agent ended on a quota/capacity error
         "correctness": {"primary": primary, "by_final": finals, "own_pass": own_pass},

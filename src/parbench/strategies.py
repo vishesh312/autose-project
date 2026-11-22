@@ -24,6 +24,7 @@ from .harnesses.base import Harness, RunOptions
 from .merge import _branch_setup, merge_mode, overlap_lines, pairwise_conflicts
 from . import prompts
 from .sandbox import Container, HostWorkspace
+from .sandbox_policy import policy_for
 
 
 @dataclass
@@ -79,6 +80,7 @@ def _container(ctx: RunContext, role: str) -> tuple[Container, str]:
         memory=ctx.cfg.container_memory,
         cpus=ctx.cfg.container_cpus,
         labels={"parbench.role": role, "parbench.run": ctx.run_dir.name[:60]},
+        sandbox=policy_for(ctx.cfg, ctx.harness, ctx.model),
     )
     try:
         c.start()

@@ -16,7 +16,7 @@ def flatten(rec: dict) -> dict:
     u = cost["usage"]
     row = {
         "strategy": r["strategy"], "harness": r["harness"], "model": r["model"], "k": r["k"],
-        "bundle": r["bundle"], "repeat": r["repeat"],
+        "bundle": r["bundle"], "repeat": r["repeat"], "sandbox": (r.get("sandbox") or {}).get("mode", ""),
         "task_pass_rate": prim.get("task_pass_rate"), "bundle_success": int(bool(prim.get("bundle_success"))),
         "lost_in_merge": len(prim.get("lost_in_merge", [])),
         "tokens_in": u["input"], "tokens_cached": u["cached_input"], "tokens_out": u["output"],
