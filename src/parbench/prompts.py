@@ -15,7 +15,7 @@ def template(name: str) -> str:
 
 
 def render(name: str, **kw) -> str:
-    repo = kw.pop("repo", "/workspace/repo")
+    repo = kw.setdefault("repo", "/workspace/repo")  # keep it in kw: nudge, resolver and S4 templates use ${repo} too
     kw.setdefault("preamble", Template(template("preamble")).safe_substitute(repo=repo).strip())
     return Template(template(name)).safe_substitute(**{k: str(v) for k, v in kw.items()}).strip() + "\n"
 
