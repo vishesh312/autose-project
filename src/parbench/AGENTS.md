@@ -12,6 +12,7 @@ Read the root `AGENTS.md` first. This file covers the code.
 | `sandbox.py` | `Container` over the `docker` CLI: exec with in-container timeout, `docker cp` for files (no argv size limits), history scrub, `diff_against`. `HostWorkspace` is the same interface on the host (temp clone of the repo from the pool image; git isolated from your global config); used by `agy` and by harnesses listed in `host_harnesses` |
 | `harnesses/base.py` | `Harness` interface, `ToolCall`, `ParsedRun`, question detection |
 | `harnesses/cli_agents.py` | one adapter per CLI: config files + env, headless command, JSON parser |
+| `agy_accounts.py` | Antigravity account profiles (one `HOME` each), pick / mark-exhausted / switch on quota errors; config in `configs/agy_accounts.yaml` |
 | `agent_runner.py` | runs one agent: command, nudge loop, timing, usage, tool-call logs, `record.json` |
 | `prompts.py` | renders `prompts/*.md` (`string.Template`) |
 | `strategies.py` | S0, S1, S2, S4 and the `ID[@template][+extra]` spec syntax |

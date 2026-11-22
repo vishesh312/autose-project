@@ -13,6 +13,7 @@ import os
 import subprocess
 import uuid
 
+from .. import agy_accounts
 from ..config import ROOT, ModelSpec, Usage
 from ..sandbox import WORK, Container, HostWorkspace
 from .base import Harness, ParsedRun, RunOptions, ToolCall
@@ -361,14 +362,23 @@ class AgyHarness(Harness):
     forward_env = ["GEMINI_API_KEY"]
 
     def setup(self, c, model, opts):
+        # Account profile (configs/agy_accounts.yaml): HOME=<profile> selects the login; see agy_accounts.py.
+        return self._use_account(agy_accounts.pick())
+
+    def switch_account(self, env: dict, error: str | None) -> dict | None:
+        """On a quota or sign-in error: mark this account unusable, return env for a free other one (or None)."""
+        new = agy_accounts.on_error(int(env.get("PARBENCH_AGY_ACCOUNT", 1)) - 1, error)
+        return None if new is None else self._use_account(new)
+
+    def _use_account(self, idx: int) -> dict:
         # Custom agents (configs/agy_agents/*.md) that omit web/browser tools (they can leak the upstream change),
-        # ask_question and, unless S4, the subagent tools. Installed into ~/.gemini/config/agents, additively
-        # and only when the content differs (parallel processes may call this at the same time).
-        import os
+        # ask_question and, unless S4, the subagent tools. Installed into <profile>/.gemini/config/agents,
+        # additively and only when the content differs (parallel processes may call this at the same time).
         import shutil
         from pathlib import Path
 
-        dest = Path.home() / ".gemini" / "config" / "agents"
+        env = agy_accounts.env_for(idx)
+        dest = Path(env.get("HOME", str(Path.home()))) / ".gemini" / "config" / "agents"
         dest.mkdir(parents=True, exist_ok=True)
         for src in (ROOT / "configs" / "agy_agents").glob("*.md"):
             target = dest / src.name
@@ -376,7 +386,7 @@ class AgyHarness(Harness):
                 tmp = target.with_suffix(f".tmp{os.getpid()}")
                 shutil.copy2(src, tmp)
                 os.replace(tmp, target)
-        return {}
+        return env
 
     def command(self, prompt_file, model, opts, resume_session):
         # agy requires the prompt attached to -p (verified: `-p --output-format` mis-parses).
