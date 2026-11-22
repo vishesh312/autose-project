@@ -28,6 +28,8 @@ python3 scripts/check_endpoint.py --base-url http://localhost:8000/v1 --model <s
     --anthropic --responses --parallel 4 --max-tokens 512 --json-out runs/<id>/endpoint_check.json
 ```
 
+Step-by-step for the big OpenCode + Qwen3.8-27B runs on the NVIDIA box (serve, check, probe, trial, full run): [runbook_qwen_vllm.md](runbook_qwen_vllm.md).
+
 From inside an agent container the server is `http://host.docker.internal:<port>`. On Linux, start the container with `--add-host=host.docker.internal:host-gateway`, and the server must listen on `0.0.0.0`. All our scripts bind `0.0.0.0` by default.
 
 **Security.** Binding `0.0.0.0` exposes the server to your network. On a laptop on shared Wi-Fi, either pass `--api-key` (vLLM, llama.cpp) or keep `127.0.0.1`, which is enough on Docker Desktop for Mac. **[unverified]** Docker Desktop forwards `host.docker.internal` to services that listen only on the host's loopback; check this with `curl` from a container.

@@ -1,0 +1,23 @@
+# DRAFT, not launched: the big OpenCode + Qwen3.8-27B (vLLM, NVIDIA box, host mode) run on the Python pools of `core`.
+# Launch only after the one-bundle trial (qwen27b_click.yaml) passes at least one task; see docs/runbook_qwen_vllm.md.
+# Harness: OpenCode defaults except no web tools, no question tool, subagents only in S4 (OpenCodeHarness).
+name: qwen27b_core
+dataset: external/CooperBench/dataset
+subset: core
+k: [2]                              # TODO(decision): add 3 / 4 (k>2 extends each curated pair from the same pool)
+bundles_per_pool: 1                 # TODO(decision): 1 or 2 bundles per pool
+seed: 0
+strategies: [S0, S1, S2, S4]        # TODO(decision): +small_model prompt extra? S4@harness_native_worktrees?
+harnesses: [opencode]
+host_harnesses: [opencode]
+models: [qwen3.8-27b-vllm]
+repeats: 1                          # TODO(decision): repeats (3 gives CIs on pass rate; triples GPU hours)
+agent_timeout_s: 1800
+max_turns: 60
+max_nudges: 1
+max_parallel_runs: 2                # S2 runs k agents each: keep runs x k <= vLLM MAX_SEQS (4), else timings measure the queue
+grade_parallel: 2
+merge: {modes: [naive, union, llm]}
+# Python pools only (Go / Node / Rust toolchains are not set up on the box). TODO(decision): final pool subset.
+pools: [pallets_jinja_task/task1559, pallets_jinja_task/task1621, pallets_click_task/task2800, dspy_task/task8563,
+        openai_tiktoken_task/task0, llama_index_task/task17244, dottxt_ai_outlines_task/task1655]
