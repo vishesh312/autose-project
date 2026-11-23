@@ -125,6 +125,7 @@ class ExperimentConfig:
     max_turns: int | None = 100
     max_nudges: int = 2
     max_parallel_runs: int = 1  # >1 speeds up pass-rate runs but makes timing metrics unfair
+    retry_invalid: bool = True  # on relaunch, redo runs whose run.json has valid: false (old outputs go to _prev/)
     s0_parallel: int = 1  # S0 runs k isolated agents; how many at once
     grade_parallel: int = 2
     merge: MergeConfig = field(default_factory=MergeConfig)

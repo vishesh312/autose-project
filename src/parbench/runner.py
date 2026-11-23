@@ -74,16 +74,10 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
         run_dir = out / run_id
         if _STOP.is_set():
             return
-        if (run_dir / "run.json").exists():
+        if is_done(run_dir, cfg.retry_invalid):
             print(f"skip (done) {run_id}")
             return
-        stale = [p for p in run_dir.iterdir() if p.name != "_prev"] if run_dir.exists() else []
-        if stale:  # an earlier attempt failed or was interrupted: keep its logs aside so they don't mix with this one
-            prev = run_dir / "_prev" / time.strftime("%Y%m%d-%H%M%S")
-            prev.mkdir(parents=True)
-            for p in stale:
-                p.rename(prev / p.name)
-        run_dir.mkdir(parents=True, exist_ok=True)
+        prepare_run_dir(run_dir)
         try:
             execute_run(cfg, b, StrategySpec.parse(s), get_harness(h), models[m], r, run_dir)
             print(f"done {run_id}")
@@ -106,6 +100,32 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
         raise
     ex.shutdown()
     return out
+
+
+def is_done(run_dir: Path, retry_invalid: bool = True) -> bool:
+    """A run is done when run.json exists, unless it is invalid (quota/capacity) and invalid runs are retried."""
+    p = run_dir / "run.json"
+    if not p.exists():
+        return False
+    if not retry_invalid:
+        return True
+    try:
+        return json.loads(p.read_text()).get("valid", True) is not False
+    except (OSError, json.JSONDecodeError):
+        return False  # unreadable: redo it
+
+
+def prepare_run_dir(run_dir: Path) -> None:
+    """Move an earlier (failed, interrupted or invalid) attempt to _prev/<timestamp>/ so logs don't mix."""
+    stale = [p for p in run_dir.iterdir() if p.name != "_prev"] if run_dir.exists() else []
+    if stale:
+        prev = run_dir / "_prev" / time.strftime("%Y%m%d-%H%M%S")
+        while prev.exists():
+            prev = prev.with_name(prev.name + "_")
+        prev.mkdir(parents=True)
+        for p in stale:
+            p.rename(prev / p.name)
+    run_dir.mkdir(parents=True, exist_ok=True)
 
 
 def _env_for(cfg: ExperimentConfig, model, harness) -> dict[str, str]:
