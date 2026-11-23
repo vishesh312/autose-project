@@ -13,14 +13,17 @@ from pathlib import Path
 def flatten(rec: dict) -> dict:
     r, c, cost, t = rec["run"], rec["correctness"], rec["cost"], rec["time"]
     prim = c["by_final"].get(c["primary"], {})
-    u = cost["usage"]
+    u = cost["usage"]  # proxy (server-side) counts when token_source == "proxy"; older runs: harness-reported
+    h = cost.get("usage_harness") or u
     row = {
         "strategy": r["strategy"], "harness": r["harness"], "model": r["model"], "k": r["k"],
         "bundle": r["bundle"], "repeat": r["repeat"], "sandbox": (r.get("sandbox") or {}).get("mode", ""),
         "task_pass_rate": prim.get("task_pass_rate"), "bundle_success": int(bool(prim.get("bundle_success"))),
         "lost_in_merge": len(prim.get("lost_in_merge", [])),
         "tokens_in": u["input"], "tokens_cached": u["cached_input"], "tokens_out": u["output"],
-        "tokens_reasoning": u["reasoning"], "cost_usd": cost["cost_usd"],
+        "tokens_reasoning": u["reasoning"], "tokens_total": u["input"] + u["output"],
+        "token_source": cost.get("token_source", "harness"), "tokens_total_harness": h["input"] + h["output"],
+        "cost_usd": cost["cost_usd"],
         "cost_per_solved": cost["cost_per_solved_task"], "coord_overhead": cost["coordination_overhead"],
         "wasted_tokens": cost["wasted_tokens"], "repeated_reads": len(cost["repeated_reads"]),
         "wall_s": t["wall_clock_s"], "busy_s": t["agent_busy_s"], "parallelism": t["effective_parallelism"],
@@ -93,6 +96,10 @@ def report(exp_dir: Path) -> str:
             f"{statistics.median(r['parallelism'] for r in rs):.2f} | {sum(r['nudges'] for r in rs)} |"
         )
     md = "\n".join(lines)
+    src = defaultdict(int)
+    for r in rows:
+        src[r["token_source"]] += 1
+    md += "\n\nToken source (docs/metrics_tokens.md): " + ", ".join(f"{k} {v} runs" for k, v in sorted(src.items()))
     if invalid:
         md += f"\n\n{len(invalid)} runs excluded as invalid (an agent ended on a quota/capacity error): " + ", ".join(invalid[:12])
     if failed:

@@ -59,6 +59,8 @@ class ParsedRun:
     asked_question: bool = False  # harness-level signal that the agent asked the user something
     error: str | None = None
     subagent_calls: int = 0
+    usage_session_total: Usage | None = None  # harness's running total for the session (cross-check only)
+    subagent_usage: dict[str, Usage] = field(default_factory=dict)  # child session id -> its usage so far (cumulative)
 
 
 @dataclass

@@ -20,11 +20,13 @@ Read the root `AGENTS.md` first. This file covers the code.
 | `merge.py` | per-agent branches, pairwise trial merges, merge modes naive/union/llm, overlap and patch statistics |
 | `grader.py` | k-feature grading via the image's `runner.sh`; ported result parser and test-file filter |
 | `runner.py` | experiment expansion, execution, grading, `run.json` metrics |
+| `meter.py` | token meter: stdlib reverse proxy per run in front of OpenAI-compatible endpoints; per-request `meter.jsonl`, per-agent `usage_proxy` (docs/metrics_tokens.md) |
 | `report.py` | `runs.csv` and `summary.md` (Wilson CIs, retention vs. S0) |
 
 ## Conventions
 
 - **Usage normalisation.** `Usage.input` is *all* prompt tokens, cached ones included; `cached_input` is the cached subset. Harnesses report this differently (Claude, OpenCode and Pi exclude cache reads from `input`; Codex and Gemini include them), so each adapter converts. A new adapter must do the same.
+- **Token meter.** `meter.py` is a reverse proxy the runner puts in front of every `openai_compat` model; reports use its counts (`token_source: proxy`). Definitions and per-harness mapping: `docs/metrics_tokens.md`. `Usage.output` includes reasoning.
 - **Cumulative counters.** Set `usage_is_cumulative` or `cost_is_cumulative` on a harness whose JSON reports a session-level running total (Codex tokens, Claude cost) so resumed attempts aren't double counted.
 - **Metrics sit in `runner.build_record`.** Add a metric there, expose it in `report.flatten`, and document it in `docs/research/Task4_Metrics.md` if it's new.
 - **Strategy names are strings** (`S2+plan_first`, `S4@harness_native_worktrees`). A new strategy goes in `strategies.run_strategy`, and a prompt variant is a new file in `prompts/`.

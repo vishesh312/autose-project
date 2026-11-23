@@ -299,8 +299,13 @@ class OpenCodeHarness(Harness):
                 tk = part.get("tokens", {}) or {}
                 cache = tk.get("cache", {}) or {}
                 cr, cw = cache.get("read", 0), cache.get("write", 0)
+                # 2.x: input = non-cached input, output = visible output only (binary: nonCachedInputTokens,
+                # visibleOutputTokens), so generated tokens = output + reasoning. 1.x same shape (reasoning UNVERIFIED).
+                # Per step and per process: a resumed session (-s) does not replay earlier steps (checked).
+                # Child (subagent) sessions are NOT in the stream: S4 totals here are a lower bound; use the meter.
+                rs = tk.get("reasoning", 0) or 0
                 u = u + Usage(input=tk.get("input", 0) + cr + cw, cached_input=cr, cache_write=cw,
-                              output=tk.get("output", 0), reasoning=tk.get("reasoning", 0),
+                              output=(tk.get("output", 0) or 0) + rs, reasoning=rs,
                               cost_reported=part.get("cost"), calls=1)
             elif t == "error":
                 run.error = json.dumps(ev)[:300]
@@ -413,12 +418,29 @@ class AgyHarness(Harness):
         return f'{a} -p "$(cat {self.q(prompt_file)})"'
 
     def parse(self, stdout, stderr):
-        run, u = ParsedRun(), Usage()
+        # Tokens: `result.usage` is a running total for the whole CONVERSATION, so after a resume
+        # (`--conversation`) it includes all earlier attempts (verified on 223 attempts in results/core_agy*:
+        # result_k - result_{k-1} == sum of attempt k's step usages, always). We therefore count the per-step
+        # `step_update.usage` of this attempt (also present when the run is killed before `result`), and keep
+        # the running total in `usage_session_total` only as a cross-check. `input_tokens` excludes cache reads,
+        # `total_tokens` = input_tokens + output_tokens; thinking_tokens were 0 in every log so far, so whether
+        # output_tokens includes them is UNVERIFIED (Gemini API convention: it does not, so we add them).
+        # Subagents (S4) run in their own conversations whose tokens are NOT in this stream nor in result.usage
+        # (probe 2026-11-23); their per-step usage is in the transcript at subagent_info.log_uri, read below.
+        run, u, steps, sub_logs = ParsedRun(), Usage(), {}, {}
         for ev in self.jsonl(stdout):
             e = ev.get("event")
             if e == "step_update":
                 su = ev.get("step_update", {})
                 run.session_id = su.get("conversation_id") or run.session_id
+                if su.get("usage"):
+                    steps[(su.get("conversation_id"), su.get("step_index"))] = su["usage"]
+                for sa in (su.get("subagent_info") or {}).get("subagents", []):
+                    if sa.get("conversation_id") and sa.get("log_uri"):
+                        sub_logs[sa["conversation_id"]] = sa["log_uri"]
+                if su.get("step_type") == "subagent" and su.get("state") == "ACTIVE":  # no tool_info on these
+                    run.tool_calls.append(ToolCall(su.get("tool_name") or "invoke_subagent", {}))
+                    run.subagent_calls += 1
                 ti = su.get("tool_info")
                 if su.get("step_type") == "tool" and su.get("state") == "ACTIVE" and ti:
                     tc = ToolCall(ti.get("name", ""), ti.get("parameters", {}) or {})
@@ -432,18 +454,38 @@ class AgyHarness(Harness):
                 run.session_id = r.get("conversation_id") or run.session_id
                 run.final_text = r.get("response", "")
                 run.num_turns = r.get("num_turns")
-                x = r.get("usage") or {}
-                cr = x.get("cache_read_tokens", 0)
-                u = Usage(input=x.get("input_tokens", 0) + cr, cached_input=cr, output=x.get("output_tokens", 0),
-                          reasoning=x.get("thinking_tokens", 0), calls=r.get("num_turns") or 0)
+                run.usage_session_total = self._usage(r.get("usage") or {})
                 if r.get("status") == "WAITING":
                     run.asked_question = True
                 if r.get("status") not in ("SUCCESS", "WAITING"):
                     run.error = f'{r.get("status")}: {str(r.get("error", ""))[:300]}'
                 if r.get("denied_actions"):
                     run.error = (run.error or "") + f" denied_actions={r['denied_actions']}"
+        for x in steps.values():
+            u = u + self._usage(x, calls=1)
         run.usage = u
+        for conv, uri in sub_logs.items():  # cumulative per child conversation; agent_runner adds the deltas
+            run.subagent_usage[conv] = self._transcript_usage(uri)
         return run
+
+    @classmethod
+    def _transcript_usage(cls, uri: str) -> Usage:
+        u = Usage()
+        try:
+            with open(uri.removeprefix("file://")) as f:
+                for line in f:
+                    x = json.loads(line)
+                    if "input_tokens" in x:
+                        u = u + cls._usage(x, calls=1)
+        except (OSError, ValueError):
+            pass
+        return u
+
+    @staticmethod
+    def _usage(x: dict, calls: int = 0) -> Usage:
+        cr, th = x.get("cache_read_tokens", 0) or 0, x.get("thinking_tokens", 0) or 0
+        return Usage(input=(x.get("input_tokens", 0) or 0) + cr, cached_input=cr,
+                     output=(x.get("output_tokens", 0) or 0) + th, reasoning=th, calls=calls)
 
 
 # =============================================================== Gemini CLI (fallback for agy)
