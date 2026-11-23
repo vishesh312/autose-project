@@ -148,7 +148,7 @@ def _auth_files(cfg: ExperimentConfig, harness) -> list[tuple[Path, str]]:
 
 def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat: int, run_dir: Path) -> dict:
     harness.check_model(model)
-    host = harness.host_mode or harness.name in cfg.host_harnesses
+    host = harness.host_mode or harness.name in cfg.host_harnesses or bundle.pool.image.startswith("hostpool:")
     # Host mode only clones the repo out of the pool image, so the pool image itself is enough (no harness layer).
     agent_image = bundle.pool.image if host else agent_image_name(bundle.pool.image, cfg.agent_image_suffix)
     if not host and not image_exists(agent_image):

@@ -71,7 +71,8 @@ class StrategyResult:
 
 # ----------------------------------------------------------------- helpers
 def _container(ctx: RunContext, role: str) -> tuple[Container, str]:
-    want_host = ctx.harness.host_mode or ctx.harness.name in ctx.cfg.host_harnesses
+    want_host = (ctx.harness.host_mode or ctx.harness.name in ctx.cfg.host_harnesses
+                 or ctx.agent_image.startswith("hostpool:"))  # no-Docker pools are host workspaces
     if want_host and not ctx.harness.host_capable:
         raise ValueError(f"{ctx.harness.name} has no host mode yet (host-capable: opencode, agy)")
     cls = HostWorkspace if want_host else Container

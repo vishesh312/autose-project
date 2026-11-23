@@ -142,7 +142,8 @@ def describe(policy: SandboxPolicy | None, host: bool) -> dict:
 
 def record(cfg, harness, model) -> dict:
     """For runner.build_record: the sandbox mode this run used."""
-    host = harness.host_mode or harness.name in getattr(cfg, "host_harnesses", [])
+    host = (harness.host_mode or harness.name in getattr(cfg, "host_harnesses", [])
+            or bool(os.environ.get("PARBENCH_HOST_POOLS")))
     return describe(policy_for(cfg, harness, model), host)
 
 

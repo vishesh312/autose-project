@@ -113,7 +113,7 @@ def cmd_probe(args):
     cfg = ExperimentConfig(name="probe", copy_auth_files=args.copy_auth, sandbox=args.sandbox)
     prompt = Path(args.prompt_file).read_text() if args.prompt_file else args.prompt
     log_dir = ROOT / "results" / "_probes" / f"{args.harness}__{args.model.replace('/', '_')}__{int(time.time())}"
-    cls = HostWorkspace if (h.host_mode or args.host) else Container
+    cls = HostWorkspace if (h.host_mode or args.host or pool.image.startswith("hostpool:")) else Container
     with cls(agent_image_name(pool.image, args.suffix), env=_env_for(cfg, model, h),
              sandbox=policy_for(cfg, h, model)) as c:
         prompt = render("single_task", task=prompt, repo=c.repo)
