@@ -104,7 +104,7 @@ Set `PARBENCH_KEEP_CONTAINERS=1` to keep containers for debugging.
 As of 2026-11-23 (details in `docs/readiness.md`): mid-term results exist for `agy` (Gemini 3.8 Flash complete, GPT-OSS partial) and OpenCode + Qwen2.5-7B on 5 `core` pools, k=2. Before big runs, four audits fixed: orchestration bugs (S2 llm merge discarded unstaged resolutions; `${repo}` not substituted in nudge/resolver prompts; test files counted as conflicts; bundle order depended on the pool list), token accounting (agy double counted resumed attempts: GPT-OSS +79–123%; OpenCode missed child sessions and title calls), model params (all arbitrary constants removed), and host isolation. Mid-term token numbers must be recomputed with `scripts/recheck_tokens.py`.
 
 - [x] Pipeline: dataset/bundling, strategies S0/S1/S2/S4, merge modes, grader, metrics, report; 33 unit tests
-- [x] No-Docker host pools on the Mac: gold checks pass for click 2800, jinja 1559/1621, go_chi 26/27 (dspy 8563 pending setup)
+- [x] No-Docker host pools on the Mac: gold checks pass for click 2800, jinja 1559/1621, go_chi 26/27, dspy 8563
 - [x] OpenCode (1.19.5 and 2.2.4) and `agy` parsers checked against live output and a token proxy; Pi, Claude Code, Codex, Gemini CLI still UNVERIFIED
 - [x] `agy` 3-account cycling (accounts 2 and 3 need `scripts/agy_login_account.sh N` by the user)
 - [ ] Qwen3.8-27B on vLLM not yet run (GPU box: follow `docs/runbook_qwen_vllm.md`); `qwen27b_core_DRAFT.yaml` has open `TODO(decision)`s

@@ -7,6 +7,7 @@ set -uo pipefail
 ROOT="${PARBENCH_HOST_POOLS:-/scratch/manas/parbench/pools}"
 DS="$(cd "$(dirname "$0")/.." && pwd)/external/CooperBench/dataset"
 export PATH="$HOME/.cargo/bin:$PATH"
+export UV_HTTP_TIMEOUT="${UV_HTTP_TIMEOUT:-300}"  # the 30 s default timed out on large wheels
 mkdir -p "$ROOT"
 
 setup_one() {
@@ -26,8 +27,8 @@ setup_one() {
     dspy_task/*)        uv pip install -q --python "$py" -e ".[dev]" "litellm==1.77.1" ;;
     llama_index_task/*) uv pip install -q --python "$py" -r pyproject.toml || uv pip install -q --python "$py" -e . ;;
     *)                  uv pip install -q --python "$py" -e ".[test]" || uv pip install -q --python "$py" -e . ;;
-  esac
-  uv pip install -q --python "$py" pytest pytest-xdist pytest_mock regex hypothesis openai
+  esac || return 1  # a failed install must not produce a READY pool (seen: dspy, network timeout)
+  uv pip install -q --python "$py" pytest pytest-xdist pytest_mock regex hypothesis openai || return 1
   printf '*.egg-info/\nbuild/\n*.so\n__pycache__/\n.pytest_cache/\n.hypothesis/\ntarget/\n' >> "$out/repo/.git/info/exclude"  # editable-install artifacts must not enter agent diffs
   echo "[$pool] done" | tee "$out/READY"
 }

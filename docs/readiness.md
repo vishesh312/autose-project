@@ -9,7 +9,7 @@ Seven independent agents each checked or fixed one area: Antigravity accounts, O
 | `agy` (Gemini, GPT-OSS) on the Mac, no Docker | **Yes, after the to-dos** | Log in accounts 2 and 3. A probe on the click host pool worked. `agy` file tools can read the gold patches (no read guard possible): run `parbench audit-leak` on every `agy` experiment. |
 | OpenCode + Qwen3.8-27B on vLLM (GPU box) | **Ready for the one-bundle trial**, not yet the big run | Follow `docs/runbook_qwen_vllm.md` (start vLLM with `--enable-prompt-tokens-details`). The 27B model has not been run; the tool parser and whether 262144 context fits can only be checked on the box. Run `scripts/sandbox_selftest.sh` there (Landlock is UNVERIFIED on Linux). |
 | Token measurement | **Yes** | OpenCode: metering proxy matched every request to the token. `agy`: per-step sums; old results need `scripts/recheck_tokens.py`. |
-| Host pools on the Mac | **5 of 6** | Gold checks pass for click 2800, jinja 1559/1621, go_chi 26/27. dspy 8563 is still cloning. |
+| Host pools on the Mac | **Yes (6 of 6)** | Gold checks pass on the host for dspy 8563, click 2800, jinja 1559/1621, go_chi 26/27. |
 | Sandbox network/write limits | **Built, opt-in (`sandbox: off`)** | Gold hiding (`hide_gold`) is on by default regardless. |
 | Orchestration | **Yes** | 10 bugs fixed (below). |
 
