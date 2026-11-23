@@ -259,6 +259,14 @@ class HostWorkspace(Container):
         self.work = str(self.root / "work")
 
     def start(self) -> "HostWorkspace":
+        try:
+            (self.root / "owner.pid").write_text(str(os.getpid()))  # `cleanup --host-temp` skips live owners
+            return self._start()
+        except BaseException:
+            self.remove()  # don't leak the temp clone when setup fails
+            raise
+
+    def _start(self) -> "HostWorkspace":
         if self.image.startswith("hostpool:"):  # no-Docker mode (PARBENCH_HOST_POOLS), see scripts/host_setup_pools.sh
             pool = Path(os.environ["PARBENCH_HOST_POOLS"]) / self.image.split(":", 1)[1]
             self._shutil.copytree(pool / "repo", self.repo, symlinks=True)
@@ -278,9 +286,8 @@ class HostWorkspace(Container):
         return self
 
     def remove(self) -> None:
-        if self.started:
-            self._shutil.rmtree(self.root, ignore_errors=True)
-            self.started = False
+        self._shutil.rmtree(self.root, ignore_errors=True)  # also when start failed or never ran
+        self.started = False
 
     def exec(self, cmd, *, timeout=None, env=None, workdir=None, stdout_path=None, stderr_path=None) -> ExecResult:
         import signal
@@ -343,8 +350,56 @@ class HostWorkspace(Container):
         )
 
 
+def _parbench_jobs() -> list[str]:
+    """Command lines of running parbench jobs (run / probe / check-gold) other than this process."""
+    out = subprocess.run(["ps", "-axo", "pid=,command="], capture_output=True, text=True).stdout
+    jobs = []
+    for line in out.splitlines():
+        pid, _, cmd = line.strip().partition(" ")
+        words = cmd.split()
+        is_cli = any(os.path.basename(w) == "parbench" for w in words[:3]) or "-m parbench " in cmd
+        if pid.isdigit() and int(pid) != os.getpid() and is_cli and {"run", "probe", "check-gold"} & set(words):
+            jobs.append(cmd)
+    return jobs
+
+
+def _pid_alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def cleanup_host_temp(hours: float, tmpdir: str | None = None, jobs: list[str] | None = None) -> list[Path]:
+    """Remove `parbench-host-*` clones older than `hours`. Refuses while any parbench job runs, and never touches
+    a clone whose owner process (owner.pid) is alive. Returns the removed directories."""
+    import shutil
+
+    jobs = _parbench_jobs() if jobs is None else jobs
+    if jobs:
+        raise RuntimeError("parbench jobs are running; not removing host clones:\n  " + "\n  ".join(jobs[:5]))
+    cutoff = time.time() - hours * 3600
+    removed = []
+    for d in Path(tmpdir or tempfile.gettempdir()).glob("parbench-host-*"):
+        if d.is_symlink() or not d.is_dir() or d.stat().st_mtime > cutoff:
+            continue
+        pid = (d / "owner.pid").read_text().strip() if (d / "owner.pid").exists() else ""
+        if pid.isdigit() and _pid_alive(int(pid)):
+            continue
+        shutil.rmtree(d, ignore_errors=True)
+        removed.append(d)
+    return removed
+
+
 def cleanup_all() -> None:
     """Remove every container (and sandbox network) we started (label parbench=1)."""
+    import shutil
+
+    if not shutil.which("docker"):  # no-Docker machines (host pools): nothing to remove
+        return
     ids = _docker("ps", "-aq", "--filter", "label=parbench=1", check=False).stdout.split()
     if ids:
         _docker("rm", "-f", *ids, check=False)

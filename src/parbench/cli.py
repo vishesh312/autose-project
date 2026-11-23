@@ -140,9 +140,12 @@ def cmd_audit_web(args):
 
 
 def cmd_cleanup(args):
-    from .sandbox import cleanup_all
+    from .sandbox import cleanup_all, cleanup_host_temp
 
     cleanup_all()
+    if args.host_temp is not None:
+        removed = cleanup_host_temp(args.host_temp)
+        print(f"removed {len(removed)} parbench-host-* dirs older than {args.host_temp}h")
 
 
 def main(argv=None):
@@ -184,7 +187,10 @@ def main(argv=None):
     p = sub.add_parser("audit-web", help="flag runs where the agent used web search (possible answer leakage)")
     p.add_argument("exp_dir"); p.set_defaults(f=cmd_audit_web)
 
-    p = sub.add_parser("cleanup", help="remove all parbench containers"); p.set_defaults(f=cmd_cleanup)
+    p = sub.add_parser("cleanup", help="remove all parbench containers")
+    p.add_argument("--host-temp", type=float, metavar="HOURS", help="also remove parbench-host-* temp clones older "
+                   "than HOURS (refuses while a parbench job runs; skips clones whose owner is alive)")
+    p.set_defaults(f=cmd_cleanup)
 
     args = ap.parse_args(argv)
     args.f(args)
