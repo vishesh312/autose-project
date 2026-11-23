@@ -1,4 +1,4 @@
-# One-bundle trial of Qwen3.8-27B (INT4, thinking off) on the click pool: S1, S0, S2 with the small_model prompt extra.
+# One-bundle trial of Qwen3.8-27B (INT4, thinking on = model default) on the click pool: S1, S0, S2 with the small_model prompt extra.
 name: qwen27b_click
 dataset: external/CooperBench/dataset
 subset: core
