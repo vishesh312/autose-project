@@ -111,6 +111,33 @@ and would have to allow its writes to `~/.gemini` and the Keychain, so it adds l
 shell commands may write to `/tmp` and `$TMPDIR`, which is where the other runs' `parbench-host-*` clones live;
 moving host workspaces out of `$TMPDIR` would close it. Not done (it changes where clones live for all host runs).
 
+## Hiding the gold patches and hidden tests (host mode, `hide_gold: true`, the default)
+
+On the host the dataset sits next to the agent. With `hide_gold` (on by default, also with `sandbox: off`) every
+host-mode agent command runs under a read guard that denies reads of: the dataset (`feature.patch` = gold,
+`tests.patch` = hidden tests), the whole parbench checkout (other runs' `results/`, `.env`, `external/`, and the
+main checkout when parbench runs from a git worktree), and the system temp dir that holds every `parbench-host-*`
+workspace (other agents' clones and the host grader's clones, which contain `tests.patch`). The agent's own
+workspace, parbench's `.venv`, the harness's `XDG_*` dirs and `sandbox_writable` stay readable, and `TMPDIR` points
+into the workspace. Host pools (`PARBENCH_HOST_POOLS`) stay readable: they hold only the base repo and the venv.
+Each `run.json` records the result in `run.sandbox.gold`.
+
+| Where | How | Tested |
+|---|---|---|
+| macOS (OpenCode `--host`, host pools) | seatbelt: `(deny file-read* <hidden>)` then `(allow file-read* <workspace>...)` | `tests/test_hide_gold.py` (cat/ls of a hidden dataset dir and another workspace fail; own files, git, python temp files work), and a real OpenCode + qwen3.5:9b probe on the click host pool (see below) |
+| Linux (Landlock) | Landlock can only allow, so reads are allowed on every sibling of every ancestor of a hidden path (`landlock.read_allow_list`), plus the workspace | allow-list logic unit-tested; enforcement **UNVERIFIED** (no Linux host here): run `scripts/sandbox_selftest.sh` on the GPU box |
+| macOS, full `parbench run` without Docker (host pool click 2800, OpenCode + qwen3.5:9b, S0 k=1) | seatbelt guard with `sandbox: off` | 2026-11-23: workspace from `~/parbench_pools`, host grading, `run.sandbox.gold` = hidden, `audit-leak` clean |
+| `agy` | **not possible**: agy's shell already runs under `sandbox-exec`, and sandbox-exec cannot nest (tested: `sandbox_apply: Operation not permitted`); agy's file tools read anywhere | post-hoc only: `parbench audit-leak results/<exp>` |
+| Docker | the dataset is not in the container | n/a |
+
+Residual risks: with Landlock, files created later directly in an ancestor dir of a hidden path (e.g. new entries
+in `$HOME` when the checkout is under `$HOME`) are unreadable for the agent, which is harmless but surprising;
+symlinks the agent creates cannot bypass either mechanism (both check the real path). `agy` runs can read the
+gold patches; `audit-leak` flags any tool call that mentions the dataset, `feature.patch`/`tests.patch`, the
+checkout path or `results/`, and any network attempt (web tools, and shell `curl`/`wget`/`pip install|download`/
+`git clone|fetch|pull`/non-local URLs, which `audit-web` missed). It reads `tool_calls.jsonl`, or the raw logs for
+unfinished agents (may over-report).
+
 ## Recommendation
 
 - Docker: make `sandbox: on` the default once one real-pool OpenCode run passes with it (the forwarder adds about

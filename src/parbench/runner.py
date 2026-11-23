@@ -75,16 +75,10 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
         run_dir = out / run_id
         if _STOP.is_set():
             return
-        if (run_dir / "run.json").exists():
+        if is_done(run_dir, cfg.retry_invalid):
             print(f"skip (done) {run_id}")
             return
-        stale = [p for p in run_dir.iterdir() if p.name != "_prev"] if run_dir.exists() else []
-        if stale:  # an earlier attempt failed or was interrupted: keep its logs aside so they don't mix with this one
-            prev = run_dir / "_prev" / time.strftime("%Y%m%d-%H%M%S")
-            prev.mkdir(parents=True)
-            for p in stale:
-                p.rename(prev / p.name)
-        run_dir.mkdir(parents=True, exist_ok=True)
+        prepare_run_dir(run_dir)
         try:
             execute_run(cfg, b, StrategySpec.parse(s), get_harness(h), models[m], r, run_dir)
             print(f"done {run_id}")
@@ -109,6 +103,32 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
     return out
 
 
+def is_done(run_dir: Path, retry_invalid: bool = True) -> bool:
+    """A run is done when run.json exists, unless it is invalid (quota/capacity) and invalid runs are retried."""
+    p = run_dir / "run.json"
+    if not p.exists():
+        return False
+    if not retry_invalid:
+        return True
+    try:
+        return json.loads(p.read_text()).get("valid", True) is not False
+    except (OSError, json.JSONDecodeError):
+        return False  # unreadable: redo it
+
+
+def prepare_run_dir(run_dir: Path) -> None:
+    """Move an earlier (failed, interrupted or invalid) attempt to _prev/<timestamp>/ so logs don't mix."""
+    stale = [p for p in run_dir.iterdir() if p.name != "_prev"] if run_dir.exists() else []
+    if stale:
+        prev = run_dir / "_prev" / time.strftime("%Y%m%d-%H%M%S")
+        while prev.exists():
+            prev = prev.with_name(prev.name + "_")
+        prev.mkdir(parents=True)
+        for p in stale:
+            p.rename(prev / p.name)
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+
 def _env_for(cfg: ExperimentConfig, model, harness) -> dict[str, str]:
     names = set(cfg.forward_env) | set(getattr(harness, "forward_env", []))
     if model.api_key_env:
@@ -129,7 +149,7 @@ def _auth_files(cfg: ExperimentConfig, harness) -> list[tuple[Path, str]]:
 
 def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat: int, run_dir: Path) -> dict:
     harness.check_model(model)
-    host = harness.host_mode or harness.name in cfg.host_harnesses
+    host = harness.host_mode or harness.name in cfg.host_harnesses or bundle.pool.image.startswith("hostpool:")
     # Host mode only clones the repo out of the pool image, so the pool image itself is enough (no harness layer).
     agent_image = bundle.pool.image if host else agent_image_name(bundle.pool.image, cfg.agent_image_suffix)
     if not host and not image_exists(agent_image):
@@ -177,6 +197,16 @@ def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat:
     return record
 
 
+def _union_s(intervals: list[tuple[float, float]]) -> float:
+    """Total length covered by the intervals (overlaps counted once)."""
+    total, end = 0.0, float("-inf")
+    for s, e in sorted(intervals):
+        if e > end:
+            total += e - max(s, end)
+            end = e
+    return total
+
+
 def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_agents_done) -> dict:
     agents = res.agents
     # Token source: the meter's server-side counts when every agent has complete ones, else harness-reported.
@@ -189,7 +219,10 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
     workers = [a for a in agents if a.role != "resolver"]
     coord = sum((a.best_usage for a in agents if a.role == "resolver"), Usage())
     busy = sum(a.busy_s for a in agents)
-    wall = max(res.t_end - res.t_start, 1e-9)
+    # Wall-clock, the same for every strategy (docs/research/Task4_Metrics.md): time during which at least one
+    # worker agent ran (union of their intervals), plus S2's merge stage. Setup and grading are separate fields.
+    agents_wall = _union_s([(a.started, a.ended) for a in workers])
+    wall = max(agents_wall + res.merge_s, 1e-9)
     cost_list = model.list_cost(usage)
     cost_rep = usage.cost_reported
 
@@ -253,6 +286,9 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
         },
         "time": {
             "wall_clock_s": wall,
+            "agents_wall_s": agents_wall,
+            "merge_s": res.merge_s,
+            "strategy_span_s": res.t_end - res.t_start,  # the old wall_clock_s (S0 included its container setup)
             "agent_busy_s": busy,
             "effective_parallelism": busy / wall,
             "container_setup_s": res.setup_s,

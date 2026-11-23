@@ -29,7 +29,10 @@ root = Path(tempfile.mkdtemp(prefix="parbench-sbxtest-"))
 outside = Path(tempfile.mkdtemp(prefix="parbench-sbxtest-outside-"))
 home_probe = Path.home() / ".parbench_sbx_selftest"
 tmp_probe = Path("/tmp") / f"parbench_sbx_selftest_{os.getpid()}"
-pol = SandboxPolicy("on", [_hostport(url)])
+hidden = outside / "dataset"  # stands in for the CooperBench dataset (hide_gold)
+hidden.mkdir()
+(hidden / "feature.patch").write_text("gold")
+pol = SandboxPolicy("on", [_hostport(url)], hide=[str(hidden)])
 print("== mode")
 info = describe(pol, host=True)
 for k, v in info.items():
@@ -56,6 +59,9 @@ checks = [  # (name, command, should succeed)
      "socket.create_connection(s.getsockname(), 5)\"", True),
     ("write inside workspace allowed", "echo x > inside.txt && mkdir d && mv inside.txt d/ && rm -r d", True),
     ("temp files (TMPDIR) allowed", "python3 -c 'import tempfile; tempfile.mkstemp()'", True),
+    ("read of hidden dataset blocked (gold patch)", f"cat {hidden}/feature.patch", False),
+    ("listing of hidden dataset blocked", f"ls {hidden}", False),
+    ("read outside the hidden paths allowed", f"cat {outside}/keep && cat /etc/hosts >/dev/null", True),
     ("write outside workspace blocked", f"echo x > {outside}/f", False),
     ("delete outside workspace blocked", f"touch {outside}/keep 2>/dev/null; rm -f {outside}/keep", False),
     ("write in $HOME blocked", f"touch {home_probe}", False),

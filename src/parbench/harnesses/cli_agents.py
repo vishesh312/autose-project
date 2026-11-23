@@ -408,7 +408,7 @@ class AgyHarness(Harness):
         for src in (ROOT / "configs" / "agy_agents").glob("*.md"):
             target = dest / src.name
             if not target.exists() or target.read_text() != src.read_text():
-                tmp = target.with_suffix(f".tmp{os.getpid()}")
+                tmp = target.with_suffix(f".tmp{uuid.uuid4().hex}")  # unique per call: parallel runs are threads
                 shutil.copy2(src, tmp)
                 os.replace(tmp, target)
         return env

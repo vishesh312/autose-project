@@ -114,6 +114,9 @@ class ExperimentConfig:
     sandbox: str = "off"
     sandbox_allow: list[str] = field(default_factory=list)
     sandbox_writable: list[str] = field(default_factory=list)
+    # Host mode: agents cannot read the dataset (gold patches, hidden tests), the parbench checkout or other
+    # workspaces (Landlock / seatbelt; also with sandbox: off). Not possible for agy (see docs/sandboxing.md).
+    hide_gold: bool = True
     k: list[int] = field(default_factory=lambda: [2])
     bundles_per_pool: int | None = 1
     seed: int = 0
@@ -125,6 +128,7 @@ class ExperimentConfig:
     max_turns: int | None = 100
     max_nudges: int = 2
     max_parallel_runs: int = 1  # >1 speeds up pass-rate runs but makes timing metrics unfair
+    retry_invalid: bool = True  # on relaunch, redo runs whose run.json has valid: false (old outputs go to _prev/)
     s0_parallel: int = 1  # S0 runs k isolated agents; how many at once
     grade_parallel: int = 2
     merge: MergeConfig = field(default_factory=MergeConfig)

@@ -113,7 +113,7 @@ def cmd_probe(args):
     cfg = ExperimentConfig(name="probe", copy_auth_files=args.copy_auth, sandbox=args.sandbox)
     prompt = Path(args.prompt_file).read_text() if args.prompt_file else args.prompt
     log_dir = ROOT / "results" / "_probes" / f"{args.harness}__{args.model.replace('/', '_')}__{int(time.time())}"
-    cls = HostWorkspace if (h.host_mode or args.host) else Container
+    cls = HostWorkspace if (h.host_mode or args.host or pool.image.startswith("hostpool:")) else Container
     from . import meter
     m, model = meter.start_for(model, cls is HostWorkspace)  # token meter in front of the model (if openai_compat)
     with cls(agent_image_name(pool.image, args.suffix), env=_env_for(cfg, model, h),
@@ -143,10 +143,19 @@ def cmd_audit_web(args):
     print(audit_web(Path(args.exp_dir)))
 
 
+def cmd_audit_leak(args):
+    from .report import audit_leak
+
+    print(audit_leak(Path(args.exp_dir)))
+
+
 def cmd_cleanup(args):
-    from .sandbox import cleanup_all
+    from .sandbox import cleanup_all, cleanup_host_temp
 
     cleanup_all()
+    if args.host_temp is not None:
+        removed = cleanup_host_temp(args.host_temp)
+        print(f"removed {len(removed)} parbench-host-* dirs older than {args.host_temp}h")
 
 
 def main(argv=None):
@@ -187,8 +196,14 @@ def main(argv=None):
 
     p = sub.add_parser("audit-web", help="flag runs where the agent used web search (possible answer leakage)")
     p.add_argument("exp_dir"); p.set_defaults(f=cmd_audit_web)
+    p = sub.add_parser("audit-leak", help="flag runs where an agent touched the dataset/gold/hidden tests or tried "
+                       "the network (incl. shell curl/wget/pip)")
+    p.add_argument("exp_dir"); p.set_defaults(f=cmd_audit_leak)
 
-    p = sub.add_parser("cleanup", help="remove all parbench containers"); p.set_defaults(f=cmd_cleanup)
+    p = sub.add_parser("cleanup", help="remove all parbench containers")
+    p.add_argument("--host-temp", type=float, metavar="HOURS", help="also remove parbench-host-* temp clones older "
+                   "than HOURS (refuses while a parbench job runs; skips clones whose owner is alive)")
+    p.set_defaults(f=cmd_cleanup)
 
     args = ap.parse_args(argv)
     args.f(args)

@@ -146,3 +146,58 @@ def audit_web(exp_dir: Path) -> str:
     for name, calls, leaky in rows:
         out.append(f"| {name} | {calls} | {len(leaky)}{(': ' + leaky[0]) if leaky else ''} |")
     return "\n".join(out) if rows else "no web tool use found"
+
+
+def _leak_re():
+    import re
+
+    from .config import ROOT
+
+    return re.compile("|".join([r"CooperBench", r"/dataset/", r"feature\.patch", r"tests\.patch", r"combined\.patch",
+                                r"_gold_checks", r"\bresults/", re.escape(str(ROOT))]), re.I)
+
+
+_NET = (r"\b(?:curl|wget|aria2c|nc|ncat|telnet)\s|\bpip3?\s+(?:download|install)\b|\buv\s+(?:pip\s+install|add|sync)\b"
+        r"|\bgit\s+(?:clone|fetch|pull|ls-remote)\b|\bnpm\s+(?:i|install)\b|https?://(?!localhost|127\.0\.0\.1)")
+
+
+def scan_calls(calls: list[dict]) -> tuple[list[str], list[str]]:
+    """(calls touching the dataset / gold / hidden tests / parbench checkout, network attempts incl. shell curl)."""
+    import re
+
+    leak_re, net_re = _leak_re(), re.compile(_NET, re.I)
+    leaks, net = [], []
+    for c in calls:
+        text = json.dumps(c.get("args", {}))
+        if leak_re.search(text):
+            leaks.append(f"{c.get('name')}: {text[:120]}")
+        if c.get("kind") == "web" or net_re.search(text):
+            net.append(f"{c.get('name')}: {text[:120]}")
+    return leaks, net
+
+
+def audit_leak(exp_dir: Path) -> str:
+    """Runs whose agents touched the dataset (gold feature.patch, hidden tests.patch) or the parbench checkout, or
+    tried the network (web tools, shell curl/wget/pip/git clone). Reads agents/*/tool_calls.jsonl; for agents that
+    did not finish, the raw attempt logs are searched as text (may over-report). `agy` cannot be stopped from
+    reading files outside its workspace, so run this on every agy experiment."""
+    rows = []
+    for run in sorted(p for p in exp_dir.iterdir() if p.is_dir()):
+        leaks, net = [], []
+        for agent in sorted((run / "agents").glob("*")):
+            tc = agent / "tool_calls.jsonl"
+            if tc.exists():
+                calls = [json.loads(line) for line in tc.read_text(errors="replace").splitlines() if line.strip()]
+            else:  # unfinished agent: treat every raw log line as one call's arguments
+                calls = [{"name": f"{agent.name}/raw", "args": {"line": line[:2000]}}
+                         for f in sorted(agent.glob("attempt*.stdout.jsonl"))
+                         for line in f.read_text(errors="replace").splitlines()]
+            lk, nt = scan_calls(calls)
+            leaks += [f"{agent.name} {x}" for x in lk]
+            net += [f"{agent.name} {x}" for x in nt]
+        if leaks or net:
+            rows.append((run.name, leaks, net))
+    out = ["| run | dataset/gold access | network attempts | first example |", "|---|---|---|---|"]
+    for name, leaks, net in rows:
+        out.append(f"| {name} | {len(leaks)} | {len(net)} | {(leaks or net)[0].replace('|', '/')} |")
+    return "\n".join(out) if rows else "no dataset access or network attempts found"

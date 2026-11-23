@@ -14,10 +14,20 @@ from pathlib import Path
 
 from .dataset import Feature, Pool
 import os
+import shutil
 
 from .sandbox import Container, HostWorkspace
 
 TEST_TIMEOUT_S = 900
+# `timeout DURATION CMD...` for hosts without coreutils (macOS): perl's alarm, whole seconds only (else no limit;
+# the runner as a whole is still bounded by TEST_TIMEOUT_S).
+_TIMEOUT_SHIM = """#!/bin/sh
+while [ "${1#-}" != "$1" ]; do case "$1" in -k|-s) shift 2 ;; *) shift ;; esac; done
+d="$1"; shift
+case "$d" in *[!0-9]*|'') exec "$@" ;; esac
+_T="$d" exec perl -e '$SIG{ALRM} = sub { kill "TERM", $pid; exit 124 }; $pid = fork;
+if (!$pid) { exec @ARGV; exit 127 } alarm $ENV{_T}; waitpid $pid, 0; exit($? >> 8)' "$@"
+"""
 
 
 @dataclass
@@ -83,6 +93,9 @@ def _work_host(pool: Pool, chunk: list[Feature], patch: str, log_dir: Path, labe
         for n in ("pip", "uv"):
             (shims / n).write_text("#!/bin/sh\nexit 0\n")
             (shims / n).chmod(0o755)
+        if not shutil.which("timeout"):  # macOS has no timeout(1); Go runners call `timeout 300 go test`
+            (shims / "timeout").write_text(_TIMEOUT_SHIM)
+            (shims / "timeout").chmod(0o755)
         pdir = Path(c.work) / "patches"
         pdir.mkdir(exist_ok=True)
         script = (pool.dir / "runner.sh").read_text()
