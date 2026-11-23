@@ -5,10 +5,12 @@ from __future__ import annotations
 import json
 import re
 import time
+import uuid
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from .config import ModelSpec, Usage
+from . import meter
 from .harnesses.base import Harness, ParsedRun, RunOptions, looks_like_question
 from .prompts import render
 from .sandbox import Container
@@ -27,6 +29,7 @@ class Attempt:
     nudge_reason: str | None  # why the NEXT attempt was triggered (None = finished)
     final_text_tail: str
     error: str | None
+    proxy_usage: dict | None = None  # meter (server-side) usage of this attempt's requests
 
 
 @dataclass
@@ -39,7 +42,13 @@ class AgentRecord:
     started: float = 0.0
     ended: float = 0.0
     busy_s: float = 0.0  # sum of attempt durations (excludes container setup)
-    usage: Usage = field(default_factory=Usage)
+    usage: Usage = field(default_factory=Usage)  # harness-reported (all attempts, failed ones included)
+    usage_subagents: Usage = field(default_factory=Usage)  # part of `usage` from child sessions read from their logs (agy)
+    usage_failed_attempts: Usage = field(default_factory=Usage)  # part of `usage` spent in attempts that ended on a
+                                                                 # quota/capacity error or account switch
+    usage_proxy: Usage | None = None  # from the metering proxy (parbench/meter.py), if one was in front of the model
+    meter: dict | None = None  # proxy request counts: total, failed, usage_missing, by kind
+    token_source: str = "harness"  # "proxy" when usage_proxy is complete (no request without usage)
     cost_list: float | None = None
     nudges: int = 0
     infra_retries: int = 0  # waits for quota/capacity errors (not nudges)
@@ -59,8 +68,14 @@ class AgentRecord:
 
     def to_json(self) -> dict:
         d = asdict(self)
-        d["usage"] = self.usage.to_json()
+        for k in ("usage", "usage_subagents", "usage_failed_attempts", "usage_proxy"):
+            d[k] = getattr(self, k).to_json() if getattr(self, k) is not None else None
         return d
+
+    @property
+    def best_usage(self) -> Usage:
+        """The usage metrics should use: proxy when complete, else harness-reported."""
+        return self.usage_proxy if self.token_source == "proxy" and self.usage_proxy is not None else self.usage
 
 
 MAX_INFRA_RETRIES = 8
@@ -96,6 +111,10 @@ def run_agent(
 ) -> AgentRecord:
     log_dir.mkdir(parents=True, exist_ok=True)
     rec = AgentRecord(agent_id, role, harness.name, model.id, feature_ids)
+    (log_dir / "meter.jsonl").unlink(missing_ok=True)
+    tag = f"{agent_id}-{uuid.uuid4().hex[:8]}"
+    m, model = meter.for_agent(model, tag, log_dir / "meter.jsonl")  # per-agent URL on the run's meter, if any
+    n_req = 0
     harness_env = {**(env or {}), **harness.setup(c, model, opts)}
     if "PARBENCH_AGY_ACCOUNT" in harness_env:
         rec.accounts.append(int(harness_env["PARBENCH_AGY_ACCOUNT"]))
@@ -106,6 +125,7 @@ def run_agent(
     current_prompt = prompt
     all_calls = []
     prev_cum = Usage()
+    sub_seen: dict[str, Usage] = {}
     deadline = rec.started + opts.timeout_s
     i, nudges_used, infra_retries = 0, 0, 0
     while True:
@@ -123,14 +143,20 @@ def run_agent(
             stderr_path=log_dir / f"attempt{i}.stderr.log",
         )
         parsed: ParsedRun = harness.parse(r.stdout, r.stderr)
+        resumed = session
         session = parsed.session_id or session
         delta = parsed.usage
         if harness.usage_is_cumulative:
+            if parsed.session_id and parsed.session_id != resumed:
+                prev_cum = Usage()  # a new session starts its running total at zero
             delta, prev_cum = parsed.usage - prev_cum, parsed.usage
         if harness.cost_is_cumulative and parsed.usage.cost_reported is not None:
             # reported cost is a running total: keep the latest as the record's total, tokens still add up
             cost_total = parsed.usage.cost_reported
             delta = Usage(delta.input, delta.cached_input, delta.cache_write, delta.output, delta.reasoning, None, delta.calls)
+        for conv, cu in parsed.subagent_usage.items():  # child sessions (agy S4): add what is new since last attempt
+            new = cu - sub_seen.get(conv, Usage())
+            delta, rec.usage_subagents, sub_seen[conv] = delta + new, rec.usage_subagents + new, cu
         rec.usage = rec.usage + delta
         if harness.cost_is_cumulative and parsed.usage.cost_reported is not None:
             rec.usage.cost_reported = cost_total
@@ -138,6 +164,10 @@ def run_agent(
         rec.returncode = r.returncode
         rec.timed_out = r.timed_out
         rec.subagent_calls += parsed.subagent_calls
+        proxy_att = None
+        if m:
+            pu, n_req = m.usage_of(tag, n_req)
+            proxy_att = pu.to_json()
         all_calls += parsed.tool_calls
 
         # Quota or sign-in error on one of several accounts (agy; parbench/agy_accounts.py): move to a free
@@ -151,10 +181,11 @@ def run_agent(
             infra_retries += 1
             rec.infra_retries += 1
             rec.attempts.append(
-                Attempt(i, r.started, r.ended, r.returncode, r.timed_out, parsed.usage.to_json(), parsed.num_turns,
+                Attempt(i, r.started, r.ended, r.returncode, r.timed_out, delta.to_json(), parsed.num_turns,
                         parsed.session_id, f"account_switch_to_{new_env.get('PARBENCH_AGY_ACCOUNT')}",
-                        parsed.final_text[-1500:], parsed.error)
+                        parsed.final_text[-1500:], parsed.error, proxy_att)
             )
+            rec.usage_failed_attempts = rec.usage_failed_attempts + delta
             harness_env = {**(env or {}), **new_env}
             rec.accounts.append(int(new_env["PARBENCH_AGY_ACCOUNT"]))
             session, current_prompt, prev_cum = None, prompt, Usage()
@@ -168,9 +199,10 @@ def run_agent(
             infra_retries += 1
             rec.infra_retries += 1
             rec.attempts.append(
-                Attempt(i, r.started, r.ended, r.returncode, r.timed_out, parsed.usage.to_json(), parsed.num_turns,
-                        parsed.session_id, f"infra_retry_in_{wait}s", parsed.final_text[-1500:], parsed.error)
+                Attempt(i, r.started, r.ended, r.returncode, r.timed_out, delta.to_json(), parsed.num_turns,
+                        parsed.session_id, f"infra_retry_in_{wait}s", parsed.final_text[-1500:], parsed.error, proxy_att)
             )
+            rec.usage_failed_attempts = rec.usage_failed_attempts + delta
             rec.infra_wait_s += wait
             time.sleep(wait)
             deadline += wait
@@ -185,8 +217,8 @@ def run_agent(
             if reason and not session:
                 reason = f"{reason} (no session id; cannot resume)"
         rec.attempts.append(
-            Attempt(i, r.started, r.ended, r.returncode, r.timed_out, parsed.usage.to_json(), parsed.num_turns,
-                    parsed.session_id, reason, parsed.final_text[-1500:], parsed.error)
+            Attempt(i, r.started, r.ended, r.returncode, r.timed_out, delta.to_json(), parsed.num_turns,
+                    parsed.session_id, reason, parsed.final_text[-1500:], parsed.error, proxy_att)
         )
         if parsed.error and not rec.error:
             rec.error = parsed.error
@@ -199,7 +231,12 @@ def run_agent(
         i += 1
 
     rec.ended = time.time()
-    rec.cost_list = model.list_cost(rec.usage)
+    if m:
+        ms = m.summary(tag)
+        rec.usage_proxy, rec.meter = Usage(**ms.pop("usage")), ms
+        # proxy is the ground truth unless some model response carried no usage (then it is a lower bound too)
+        rec.token_source = "proxy" if not ms["requests_usage_missing"] else "harness"
+    rec.cost_list = model.list_cost(rec.best_usage)
     for tc in all_calls:
         rec.tool_calls[tc.kind] = rec.tool_calls.get(tc.kind, 0) + 1
         if tc.kind == "read":

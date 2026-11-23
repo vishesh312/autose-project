@@ -114,6 +114,8 @@ def cmd_probe(args):
     prompt = Path(args.prompt_file).read_text() if args.prompt_file else args.prompt
     log_dir = ROOT / "results" / "_probes" / f"{args.harness}__{args.model.replace('/', '_')}__{int(time.time())}"
     cls = HostWorkspace if (h.host_mode or args.host) else Container
+    from . import meter
+    m, model = meter.start_for(model, cls is HostWorkspace)  # token meter in front of the model (if openai_compat)
     with cls(agent_image_name(pool.image, args.suffix), env=_env_for(cfg, model, h),
              sandbox=policy_for(cfg, h, model)) as c:
         prompt = render("single_task", task=prompt, repo=c.repo)
@@ -126,8 +128,10 @@ def cmd_probe(args):
                         timeout_s=args.timeout), log_dir, agent_id="probe", role="probe", feature_ids=[],
                         max_nudges=args.max_nudges, base_sha=base)
         diff = c.diff_against(base, exclude=h.repo_artifacts)
+    if m:
+        m.close()
     (log_dir / "patch.diff").write_text(diff)
-    print(json.dumps({k: rec.to_json()[k] for k in ("usage", "cost_list", "busy_s", "nudges", "timed_out",
+    print(json.dumps({k: rec.to_json()[k] for k in ("usage", "usage_proxy", "meter", "token_source", "cost_list", "busy_s", "nudges", "timed_out",
                       "returncode", "tool_calls", "files_read", "files_edited", "error")}, indent=2))
     print(f"--- diff ({len(diff.splitlines())} lines) ---\n{diff[:3000]}")
     print(f"logs: {log_dir}")

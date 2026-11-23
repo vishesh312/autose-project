@@ -20,6 +20,7 @@ from pathlib import Path
 
 from .config import ROOT, ExperimentConfig, Usage, load_dotenv, load_models
 from .dataset import Bundle, bundles_from_subset, load_gold_conflicts, load_pools, make_bundles
+from . import meter
 from .grader import grade
 from .harnesses import get_harness
 from .sandbox import Container, image_exists
@@ -133,10 +134,17 @@ def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat:
     agent_image = bundle.pool.image if host else agent_image_name(bundle.pool.image, cfg.agent_image_suffix)
     if not host and not image_exists(agent_image):
         raise RuntimeError(f"agent image {agent_image} missing; run `parbench build-images` first")
-    ctx = RunContext(bundle, harness, model, cfg, run_dir, agent_image, _env_for(cfg, model, harness),
+    # Token meter (parbench/meter.py): every agent of this run talks to the model through it. The sandbox policy
+    # is derived from ctx.model, so it allows the meter's port (the meter itself runs unsandboxed on the host).
+    m, agent_model = meter.start_for(model, host)
+    ctx = RunContext(bundle, harness, agent_model, cfg, run_dir, agent_image, _env_for(cfg, model, harness),
                      _auth_files(cfg, harness))
     t0 = time.time()
-    res = run_strategy(ctx, spec)
+    try:
+        res = run_strategy(ctx, spec)
+    finally:
+        if m:
+            m.close()
     t_agents_done = time.time()
     if _STOP.is_set():
         raise RuntimeError("experiment interrupted (Ctrl-C): agents may have been cut short; run not recorded")
@@ -171,9 +179,15 @@ def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat:
 
 def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_agents_done) -> dict:
     agents = res.agents
-    usage = sum((a.usage for a in agents), Usage())
+    # Token source: the meter's server-side counts when every agent has complete ones, else harness-reported.
+    sources = {a.token_source for a in agents}
+    token_source = sources.pop() if len(sources) == 1 else "mixed"
+    usage = sum((a.best_usage for a in agents), Usage())
+    usage_harness = sum((a.usage for a in agents), Usage())
+    usage_proxy = (sum((a.usage_proxy for a in agents), Usage())
+                   if agents and all(a.usage_proxy is not None for a in agents) else None)
     workers = [a for a in agents if a.role != "resolver"]
-    coord = sum((a.usage for a in agents if a.role == "resolver"), Usage())
+    coord = sum((a.best_usage for a in agents if a.role == "resolver"), Usage())
     busy = sum(a.busy_s for a in agents)
     wall = max(res.t_end - res.t_start, 1e-9)
     cost_list = model.list_cost(usage)
@@ -210,7 +224,7 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
     if spec.id == "S2" and primary in finals:
         for a in workers:
             if any(f in finals[primary]["lost_in_merge"] for f in a.feature_ids):
-                wasted = wasted + a.usage
+                wasted = wasted + a.best_usage
 
     return {
         "run": {
@@ -223,7 +237,11 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
         "valid": not any(a.infra_failed for a in agents),  # False: an agent ended on a quota/capacity error
         "correctness": {"primary": primary, "by_final": finals, "own_pass": own_pass},
         "cost": {
-            "usage": usage.to_json(),
+            "usage": usage.to_json(),  # = usage_proxy when token_source == "proxy"
+            "token_source": token_source,
+            "usage_harness": usage_harness.to_json(),
+            "usage_proxy": usage_proxy.to_json() if usage_proxy else None,
+            "usage_failed_attempts": sum((a.usage_failed_attempts for a in agents), Usage()).to_json(),
             "cost_usd": cost,
             "cost_reported_usd": cost_rep,
             "cost_list_usd": cost_list,
