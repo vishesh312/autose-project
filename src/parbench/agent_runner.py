@@ -45,6 +45,7 @@ class AgentRecord:
     infra_retries: int = 0  # waits for quota/capacity errors (not nudges)
     infra_wait_s: float = 0.0
     infra_failed: bool = False  # ended on a service error after all retries: the run is not a valid measurement
+    context_exceeded: bool = False  # an attempt ended on a context-length error (valid outcome, not infra)
     accounts: list[int] = field(default_factory=list)  # agy accounts used, in order (1-based position in configs/agy_accounts.yaml)
     timed_out: bool = False
     returncode: int | None = None
@@ -64,13 +65,34 @@ class AgentRecord:
 
 
 MAX_INFRA_RETRIES = 8
+# Service problems, not agent outcomes: quota/capacity (agy), and a model server that is down or failing (OpenCode
+# + vLLM/Ollama, checked live with OpenCode 2.2.4: `provider.transport` "ECONNREFUSED: Unable to connect", and
+# `provider.internal` with "status":502 from a server answering 502).
 _INFRA = re.compile(
-    r"RESOURCE_EXHAUSTED|UNAVAILABLE|quota reached|No capacity|high traffic|overloaded|rate.?limit|\b(?:429|503)\b", re.I)
+    r"RESOURCE_EXHAUSTED|UNAVAILABLE|quota reached|No capacity|high traffic|overloaded|rate.?limit"
+    r"|ECONNREFUSED|ECONNRESET|connection refused|Unable to connect|provider\.transport|bad gateway"
+    r"|service unavailable|gateway time-?out|\b(?:429|500|502|503|504)\b", re.I)
+# Context overflow is a model/harness outcome (valid run), only recorded. OpenCode 2.x reports a vLLM
+# "maximum context length" 400 as `compaction.failed` after trying to compact (checked live).
+_CONTEXT = re.compile(r"maximum context length|context.length.exceeded|context window|compaction\.failed|"
+                      r"prompt is too long|too many tokens", re.I)
+
+
+_CONN = re.compile(r"ECONNREFUSED|connection refused|Unable to connect", re.I)
+
+
+def service_error(parsed: ParsedRun, r) -> str | None:
+    """The error text to check for infra problems: the parsed error, else a connection error on the stderr of a
+    failed command (only connection patterns there: stderr is free text, a bare "500" could be anything)."""
+    if parsed.error:
+        return parsed.error
+    tail = r.stderr[-2000:] if r.returncode and not r.timed_out else ""
+    return tail if _CONN.search(tail) else None
 
 
 def infra_wait_s(error: str | None, retry_no: int) -> int | None:
     """Seconds to wait if `error` is a retryable service problem (quota, capacity, rate limit), else None."""
-    if not error or not _INFRA.search(error):
+    if not error or not _INFRA.search(error) or _CONTEXT.search(error):
         return None
     m = re.search(r"[Rr]esets? in (?:(\d+)h)?\s*(?:(\d+)m)?\s*(?:(\d+)s)?", error)
     if m and any(m.groups()):
@@ -163,13 +185,14 @@ def run_agent(
 
         # Retryable service problem (quota / capacity): wait, then resume. Does not use up a nudge, and the
         # waiting time does not count against the agent's own time limit.
-        wait = None if r.timed_out else infra_wait_s(parsed.error, infra_retries + 1)
+        err = service_error(parsed, r)
+        wait = None if r.timed_out else infra_wait_s(err, infra_retries + 1)
         if wait is not None and infra_retries < MAX_INFRA_RETRIES:
             infra_retries += 1
             rec.infra_retries += 1
             rec.attempts.append(
                 Attempt(i, r.started, r.ended, r.returncode, r.timed_out, parsed.usage.to_json(), parsed.num_turns,
-                        parsed.session_id, f"infra_retry_in_{wait}s", parsed.final_text[-1500:], parsed.error)
+                        parsed.session_id, f"infra_retry_in_{wait}s", parsed.final_text[-1500:], err)
             )
             rec.infra_wait_s += wait
             time.sleep(wait)
@@ -188,9 +211,10 @@ def run_agent(
             Attempt(i, r.started, r.ended, r.returncode, r.timed_out, parsed.usage.to_json(), parsed.num_turns,
                     parsed.session_id, reason, parsed.final_text[-1500:], parsed.error)
         )
-        if parsed.error and not rec.error:
-            rec.error = parsed.error
-        rec.infra_failed = infra_wait_s(parsed.error, 1) is not None  # still a service error after all retries
+        if err and not rec.error:
+            rec.error = err
+        rec.infra_failed = infra_wait_s(err, 1) is not None  # still a service error after all retries
+        rec.context_exceeded |= bool(err and _CONTEXT.search(err))  # a valid outcome, recorded only
         if not reason or not session:
             break
         nudges_used += 1
