@@ -48,7 +48,7 @@ The other fixes are robustness fixes: Ctrl-C handling, container cleanup on setu
 - Host-mode agents can read the dataset's gold patches on the host filesystem; nothing hides them yet.
 - Runs that fail on quota or capacity are left out of reports but never retried automatically.
 - Wall-clock time is measured slightly differently per strategy (S0 includes container setup; S2 includes merging).
-- S4 token counts for OpenCode are a lower bound, because child sessions are not in the JSON output.
+- S4 token counts for OpenCode were a lower bound (child sessions are not in the JSON output); the token meter now counts them (`docs/metrics_tokens.md`). agy token counts in `results/core_agy` are inflated by resumed attempts (GPT-OSS +79% to +123% per strategy); run `scripts/recheck_tokens.py`.
 - `agy` copies its agent files into the profiles without a lock (possible race, unverified).
 - 50 stale `parbench-host-*` directories sit in `$TMPDIR`; safe to delete when nothing is running.
 - S3 is not implemented.
