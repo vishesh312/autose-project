@@ -65,7 +65,8 @@ class StrategyResult:
     merge: dict | None = None
     t_start: float = 0.0
     t_end: float = 0.0
-    setup_s: float = 0.0
+    setup_s: float = 0.0  # container/workspace setup, summed over all containers (not part of wall-clock time)
+    merge_s: float = 0.0  # S2: merging in the merge container, LLM resolver included (part of wall-clock time)
 
 
 # ----------------------------------------------------------------- helpers
@@ -147,8 +148,12 @@ def run_single_session(ctx: RunContext, spec: StrategySpec, *, subagents: bool, 
 def run_s0(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
     res = StrategyResult()
 
+    setup = []
+
     def one(f: Feature):
+        t0 = time.time()
         c, base = _container(ctx, "S0")
+        setup.append(time.time() - t0)
         try:
             prompt = prompts.single_task(f, extra=spec.extras, repo=c.repo)
             rec = _agent(ctx, c, base, prompt, agent_id=f"f{f.fid}", role="worker", fids=[f.fid])
@@ -163,6 +168,7 @@ def run_s0(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
             res.agents.append(rec)
             res.worker_patches.append((f"f{f.fid}", [f.fid], patch))
     res.t_end = time.time()
+    res.setup_s = sum(setup)
     return res
 
 
@@ -201,7 +207,10 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
 
     # ---- merge stage (same image, fresh container) ----
     merge_dir = ctx.run_dir / "merge"
+    t0 = time.time()
     c, base = _container(ctx, "S2-merge")
+    t_merge = time.time()
+    res.setup_s += t_merge - t0
     # Merge without agent-written test files, as CooperBench does: grading drops them anyway, so a clash in a
     # test file must not count as a conflict or make naive merge skip a branch.
     patches = [(n, fids, filter_test_files(p)) for n, fids, p in res.worker_patches]
@@ -226,6 +235,7 @@ def run_s2(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
             modes[mode] = {"lost_features": mres.lost_features, "steps": [s.__dict__ for s in mres.steps],
                            "resolver_agents": [r.agent_id for r in recs]}
         res.t_end = time.time()
+        res.merge_s = res.t_end - t_merge
         res.merge = {
             "pairwise": pairs,
             "conflict_rate": (sum(p["conflict"] for p in pairs) / len(pairs)) if pairs else 0.0,

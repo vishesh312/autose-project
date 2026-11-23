@@ -56,6 +56,14 @@ We use one fixed price list because prices change over time and differ between p
 | **Speedup** | Is parallel actually faster? | wall-clock time (S1) ÷ wall-clock time (strategy) |
 | **Waiting time** | Time lost that isn't the strategy's fault | retries, rate-limit waits and server queueing. Report it separately |
 
+**As implemented (`runner.build_record`, 2026-11-23).** `time.wall_clock_s` is the same for every strategy: the
+time during which at least one worker agent was running (union of the agents' start-to-end intervals, so S0 run
+one after another counts the sum, S0/S2 in parallel count the overlap once), plus `merge_s` for S2 (merge stage
+including the LLM resolver, without starting the merge container). It never includes container or workspace setup
+(`container_setup_s`, summed over all containers) or grading (`grading_s`). `agents_wall_s` is the agent part alone,
+and `strategy_span_s` keeps the old measure (S0 included setup, S2 included merge-container setup). Infra waits
+(quota/server retries) are inside an agent's interval; they are also in `agents[].infra_wait_s`.
+
 ### Planning quality (S3 only)
 
 | Metric | What it tells us | How to compute it |

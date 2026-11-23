@@ -189,13 +189,26 @@ def execute_run(cfg, bundle: Bundle, spec: StrategySpec, harness, model, repeat:
     return record
 
 
+def _union_s(intervals: list[tuple[float, float]]) -> float:
+    """Total length covered by the intervals (overlaps counted once)."""
+    total, end = 0.0, float("-inf")
+    for s, e in sorted(intervals):
+        if e > end:
+            total += e - max(s, end)
+            end = e
+    return total
+
+
 def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_agents_done) -> dict:
     agents = res.agents
     usage = sum((a.usage for a in agents), Usage())
     workers = [a for a in agents if a.role != "resolver"]
     coord = sum((a.usage for a in agents if a.role == "resolver"), Usage())
     busy = sum(a.busy_s for a in agents)
-    wall = max(res.t_end - res.t_start, 1e-9)
+    # Wall-clock, the same for every strategy (docs/research/Task4_Metrics.md): time during which at least one
+    # worker agent ran (union of their intervals), plus S2's merge stage. Setup and grading are separate fields.
+    agents_wall = _union_s([(a.started, a.ended) for a in workers])
+    wall = max(agents_wall + res.merge_s, 1e-9)
     cost_list = model.list_cost(usage)
     cost_rep = usage.cost_reported
 
@@ -255,6 +268,9 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
         },
         "time": {
             "wall_clock_s": wall,
+            "agents_wall_s": agents_wall,
+            "merge_s": res.merge_s,
+            "strategy_span_s": res.t_end - res.t_start,  # the old wall_clock_s (S0 included its container setup)
             "agent_busy_s": busy,
             "effective_parallelism": busy / wall,
             "container_setup_s": res.setup_s,
