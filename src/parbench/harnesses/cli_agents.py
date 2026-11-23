@@ -204,18 +204,20 @@ class OpenCodeHarness(Harness):
         }
         if not opts.subagents:
             cfg["tools"]["task"] = False
+        # In host mode 1.x also put the host user's ~/.claude/CLAUDE.md and ~/.claude/skills into the system prompt
+        # (seen via the proxy); these flags make it the same as on a clean machine.
+        env = {"OPENCODE_DISABLE_AUTOUPDATE": "1", "OPENCODE_DISABLE_CLAUDE_CODE_PROMPT": "1",
+               "OPENCODE_DISABLE_CLAUDE_CODE_SKILLS": "1"}
         if model.provider == "openai_compat":
-            mopts = {**({"temperature": model.temperature} if model.temperature is not None else {}),
-                     **({"reasoningEffort": model.reasoning_effort} if model.reasoning_effort else {})}
+            # No sampling or thinking settings: the server applies the model's own defaults (generation_config /
+            # Modelfile). 1.x sends `temperature` only for models with `temperature: true`, so none is sent.
             cfg["provider"] = {"local": {
                 "npm": "@ai-sdk/openai-compatible", "name": "Local",
                 "options": {"baseURL": model.base_url.replace("host.docker.internal", "localhost"), "apiKey": "local"},
-                "models": {self._key(model): {
-                    "name": model.model, "tool_call": True,
-                    "limit": {"context": model.context, "output": model.max_output},
-                    **({"temperature": True} if model.temperature is not None else {}),
-                    **({"options": mopts} if mopts else {})}}}}
-        env = {"OPENCODE_DISABLE_AUTOUPDATE": "1", "OPENCODE_CONFIG_CONTENT": json.dumps(cfg)}
+                "models": {self._key(model): {"name": model.model, "tool_call": True, "limit": self._limit(model)}}}}
+            # 1.x sends max_tokens = min(limit.output, 32000 or this env var); lift the 32000 cap.
+            env["OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX"] = str(self._limit(model)["output"])
+        env["OPENCODE_CONFIG_CONTENT"] = json.dumps(cfg)
         for var, sub_dir in (("XDG_CONFIG_HOME", "xdg/config"), ("XDG_DATA_HOME", "xdg/data"),
                              ("XDG_STATE_HOME", "xdg/state")):
             env[var] = f"{c.work}/{sub_dir}"
@@ -241,16 +243,13 @@ class OpenCodeHarness(Harness):
             "agents": {"build": {"permissions": rules, **steps}},
         }
         if model.provider == "openai_compat":
-            # v2 model entries take settings/headers/body (not v1's `options`, which was silently ignored).
-            body = {**({"reasoning_effort": model.reasoning_effort} if model.reasoning_effort else {}),
-                    **({"temperature": model.temperature} if model.temperature is not None else {})}
+            # No sampling or thinking settings (the server's model defaults apply), see _setup_v1.
             cfg["providers"] = {"local": {
                 "name": "Local", "package": "@opencode/ai/providers/openai-compatible",
                 "settings": {"baseURL": model.base_url, "apiKey": "local"},
-                "models": {self._key(model): {"modelID": model.model,
-                                              "limit": {"context": model.context, "output": model.max_output},
-                                              **({"body": body} if body else {})}}}}
-        env = {"OPENCODE_DISABLE_PROJECT_CONFIG": "1", "OPENCODE_DISABLE_AUTOUPDATE": "1", "PWD": c.repo}
+                "models": {self._key(model): {"modelID": model.model, "limit": self._limit(model)}}}}
+        env = {"OPENCODE_DISABLE_PROJECT_CONFIG": "1", "OPENCODE_DISABLE_AUTOUPDATE": "1", "PWD": c.repo,
+               "OPENCODE_DISABLE_CLAUDE_CODE_SKILLS": "1"}  # else host ~/.claude/skills enter the prompt (see 1.x)
         if isinstance(c, HostWorkspace):
             # No Docker: reach the model server on localhost, and keep OpenCode's config/data/cache out of $HOME
             # so your own OpenCode setup and sessions are neither used nor modified.
@@ -262,6 +261,16 @@ class OpenCodeHarness(Harness):
         c.put_file(f"{c.work}/opencode.json", json.dumps(cfg, indent=2))
         env["OPENCODE_CONFIG_CONTENT"] = json.dumps(cfg)
         return env
+
+    @staticmethod
+    def _limit(model):
+        """OpenCode token limits. Without `max_output` the output limit is the whole context: vLLM >= 0.33 and
+        Ollama cap max_tokens at what is left after the prompt, so no request fails and no output is cut early;
+        `input` = context keeps OpenCode's compaction point at context - 20000 instead of context - output.
+        Set `max_output` for servers that reject prompt + max_tokens > context (vLLM 0.8.5)."""
+        if model.max_output:
+            return {"context": model.context, "output": model.max_output}
+        return {"context": model.context, "input": model.context, "output": model.context}
 
     @staticmethod
     def _key(model):
@@ -323,7 +332,7 @@ class PiHarness(Harness):
             models["providers"]["local"] = {
                 "baseUrl": model.base_url, "api": "openai-completions", "apiKey": "local",
                 "compat": {"supportsDeveloperRole": False, "supportsReasoningEffort": False},
-                "models": [{"id": model.model, "contextWindow": model.context, "maxTokens": model.max_output}]}
+                "models": [{"id": model.model, "contextWindow": model.context, "maxTokens": model.max_output or model.context}]}
         c.put_file(f"{WORK}/pi/models.json", json.dumps(models, indent=2))
         self._sid = uuid.uuid4().hex
         return env

@@ -1,4 +1,6 @@
-# Model registry. `id` (the key) is what experiment configs refer to.
+# Model registry. No sampling parameters (temperature, top_p, thinking) on purpose: servers apply the model's own
+# defaults (vLLM --generation-config auto, Ollama Modelfile). max_output: omit = up to the context (OpenCodeHarness._limit).
+# `id` (the key) is what experiment configs refer to.
 #   provider: openai_compat (any OpenAI-style server) | anthropic | openai | google | antigravity | openrouter
 #   base_url: as reachable FROM INSIDE the container (host.docker.internal = your machine).
 #   price: $/1M tokens. For self-hosted models put a reference API price so cost is comparable across runs;
@@ -12,8 +14,7 @@ models:
     base_url: http://host.docker.internal:11435/v1
     anthropic_base_url: http://host.docker.internal:11435      # lets Claude Code use it
     responses_api: true
-    context: 32768
-    reasoning_effort: none            # Ollama only honours reasoning_effort=none for turning thinking off
+    context: 32768                    # = OLLAMA_CONTEXT_LENGTH of the server; thinking on (model default)
     price: {input: 0.0, output: 0.0}
     notes: "2B: for pipeline smoke tests only, not for results"
   qwen3.5-9b-ollama:
@@ -22,8 +23,7 @@ models:
     base_url: http://host.docker.internal:11435/v1
     anthropic_base_url: http://host.docker.internal:11435
     responses_api: true
-    context: 65536
-    reasoning_effort: none            # thinking ON took 5+ min per call on the M5 (5k+ thinking tokens); TODO(decision): keep off for baselines?
+    context: 65536                    # thinking on (model default): 5+ min per call on the M5, see docs/findings.md
     price: {input: 0.0, output: 0.0}
     notes: "start server with OLLAMA_CONTEXT_LENGTH>=65536; see docs/serving_models.md"
 
@@ -41,7 +41,6 @@ models:
     provider: openai_compat
     base_url: http://host.docker.internal:8000/v1
     context: 131072
-    temperature: 0.15
     price: {input: 0.10, output: 0.30}   # PLACEHOLDER: not on OpenRouter
 
   qwen2.5-7b-vllm:                    # NVIDIA box, GPU 0, no-Docker host mode (localhost)
@@ -49,20 +48,18 @@ models:
     provider: openai_compat
     base_url: http://localhost:8000/v1
     context: 32768
-    max_output: 4096
-    temperature: 0.2
+    max_output: 8192                  # model-card max generation; vLLM 0.8.5 rejects prompt + max_tokens > context
     price: {input: 0.05, output: 0.15}   # PLACEHOLDER reference price
     notes: "Qwen2.5-7B-Instruct bf16, vLLM 0.8.5, hermes tool parser, no thinking mode"
 
-  qwen3.8-27b-vllm:                   # NVIDIA box, INT4 (compressed-tensors W4A16), thinking off, port 8001
+  qwen3.8-27b-vllm:                   # NVIDIA box, INT4 (compressed-tensors W4A16), thinking on (default), port 8001
     model: "qwen3.8-27b-int4"
     provider: openai_compat
     base_url: http://localhost:8001/v1
-    context: 65536                    # = MAX_LEN in scripts/serve/qwen38_27b.sh
-    max_output: 8192                  # 4096 can cut off a whole-file `write` tool call mid-JSON
-    temperature: 0.2                  # TODO(decision): drop to use the model's generation_config default (vllm.sh passes --generation-config auto; OpenCode sends none)
+    context: 262144                   # = MAX_LEN in scripts/serve/qwen38_27b.sh (native length; lower both if KV does not fit)
+                                      # no max_output: output may use the whole context (vLLM 0.33 clamps max_tokens)
     price: {input: 0.10, output: 0.30}   # PLACEHOLDER reference price
-    notes: "RedHatAI/Qwen3.8-27B-INT4 on vLLM; start with scripts/serve/qwen38_27b.sh (THINK=0, qwen3_coder tool parser)"
+    notes: "RedHatAI/Qwen3.8-27B-INT4 on vLLM; start with scripts/serve/qwen38_27b.sh (qwen3_coder tool parser)"
 
   # ---------------- hosted open models via OpenRouter ----------------
   qwen3.6-35b-a3b-openrouter:

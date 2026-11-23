@@ -12,7 +12,7 @@
 #   KV_DTYPE=auto  (fp8 halves KV memory; on Turing it is a storage-only format - test it)
 #   TOOL_PARSER / REASONING_PARSER: auto-picked from MODEL name below; set to override,
 #                                   REASONING_PARSER=none to disable.
-#   THINK=1  (THINK=0 -> --default-chat-template-kwargs '{"enable_thinking": false}')
+#   THINK=1  model default (THINK=0 -> --default-chat-template-kwargs '{"enable_thinking": false}', opt-out only)
 # Prints the exact command it runs; keep that line in the run log.
 set -euo pipefail
 : "${MODEL:?set MODEL=<hf repo or local path>}"
@@ -43,7 +43,7 @@ ARGS=(serve "$MODEL" --served-model-name "$SERVED_NAME" --host "$HOST" --port "$
       --max-model-len "$MAX_LEN" --max-num-seqs "$MAX_SEQS" --gpu-memory-utilization "$GPU_UTIL"
       --tensor-parallel-size "$TP" --dtype "$DTYPE" --kv-cache-dtype "$KV_DTYPE"
       --enable-prefix-caching --enable-auto-tool-choice --tool-call-parser "$TOOL_PARSER"
-      --generation-config auto)
+      --generation-config auto)  # vLLM's default (0.8.5 and 0.33 source): sampling defaults from the model's generation_config.json
 [ "$REASONING_PARSER" != none ] && ARGS+=(--reasoning-parser "$REASONING_PARSER")
 [ -n "${QUANT:-}" ] && ARGS+=(--quantization "$QUANT")
 [ "$THINK" = 0 ] && ARGS+=(--default-chat-template-kwargs '{"enable_thinking": false}')

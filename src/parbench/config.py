@@ -67,7 +67,7 @@ class ModelSpec:
     responses_api: bool = False  # server supports /v1/responses (Codex needs it)
     api_key_env: str | None = None  # host env var holding the key; forwarded into containers
     context: int = 65536
-    max_output: int = 8192
+    max_output: int | None = None  # None = up to the context (see OpenCodeHarness._limit)
     reasoning_effort: str | None = None
     temperature: float | None = None
     # $ per 1M tokens. For self-hosted models use a reference API price (e.g. OpenRouter) so cost is comparable.
