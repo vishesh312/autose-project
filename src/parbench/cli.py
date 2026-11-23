@@ -139,6 +139,12 @@ def cmd_audit_web(args):
     print(audit_web(Path(args.exp_dir)))
 
 
+def cmd_audit_leak(args):
+    from .report import audit_leak
+
+    print(audit_leak(Path(args.exp_dir)))
+
+
 def cmd_cleanup(args):
     from .sandbox import cleanup_all, cleanup_host_temp
 
@@ -186,6 +192,9 @@ def main(argv=None):
 
     p = sub.add_parser("audit-web", help="flag runs where the agent used web search (possible answer leakage)")
     p.add_argument("exp_dir"); p.set_defaults(f=cmd_audit_web)
+    p = sub.add_parser("audit-leak", help="flag runs where an agent touched the dataset/gold/hidden tests or tried "
+                       "the network (incl. shell curl/wget/pip)")
+    p.add_argument("exp_dir"); p.set_defaults(f=cmd_audit_leak)
 
     p = sub.add_parser("cleanup", help="remove all parbench containers")
     p.add_argument("--host-temp", type=float, metavar="HOURS", help="also remove parbench-host-* temp clones older "

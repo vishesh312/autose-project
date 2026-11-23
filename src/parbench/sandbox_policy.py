@@ -50,6 +50,8 @@ class SandboxPolicy:
     allow: list[tuple[str, int]] = field(default_factory=list)  # (host, port) the agent may connect to
     writable: list[str] = field(default_factory=list)  # extra writable paths (host modes)
     native: str | None = None
+    hide: list[str] = field(default_factory=list)  # paths host-mode agents must not read (gold patches, tests, results)
+    hide_keep: list[str] = field(default_factory=list)  # readable exceptions inside them (parbench's own .venv)
 
     @property
     def enabled(self) -> bool:
@@ -72,7 +74,25 @@ def policy_for(cfg, harness, model) -> SandboxPolicy:
     if not urls and model.provider in PROVIDER_ENDPOINTS:
         urls = [PROVIDER_ENDPOINTS[model.provider]]
     allow = list(dict.fromkeys(_hostport(u) for u in [*urls, *getattr(cfg, "sandbox_allow", [])]))
-    return SandboxPolicy(level, allow, list(getattr(cfg, "sandbox_writable", [])), NATIVE.get(harness.name))
+    hide, keep = hidden_paths(cfg) if getattr(cfg, "hide_gold", True) else ([], [])
+    return SandboxPolicy(level, allow, list(getattr(cfg, "sandbox_writable", [])), NATIVE.get(harness.name),
+                         hide, keep)
+
+
+def hidden_paths(cfg) -> tuple[list[str], list[str]]:
+    """What a host-mode agent must not read: the dataset (feature.patch = gold, tests.patch = hidden tests), the
+    whole parbench checkout (results/ of other runs, .env, external/, worktrees), and the temp dir that holds every
+    host workspace, including grading clones with tests.patch applied (the agent's own workspace is re-allowed in
+    wrap_host). parbench's .venv stays readable (its python may be on PATH)."""
+    import tempfile
+
+    from .config import ROOT
+
+    hide = [str(cfg.dataset_path()), str(ROOT), tempfile.gettempdir()]
+    git = ROOT / ".git"
+    if git.is_file() and "/.git/" in git.read_text():  # ROOT is a git worktree: hide the main checkout too
+        hide.append(git.read_text().split("gitdir:", 1)[-1].strip().split("/.git/")[0])
+    return list(dict.fromkeys(os.path.realpath(p) for p in hide)), [str(ROOT / ".venv")]
 
 
 def _announce(info: dict) -> None:
@@ -133,6 +153,14 @@ def describe(policy: SandboxPolicy | None, host: bool) -> dict:
         info = {"mode": "host-proxyenv", "network": "advisory (dead HTTP_PROXY)", "files": "NOT enforced"}
     info["level"] = p.level
     info["allow"] = allow
+    if not host:
+        info["gold"] = "not in the container"
+    elif p.native:
+        info["gold"] = "NOT hidden (agy file tools read anywhere; check with `parbench audit-leak`)"
+    elif p.hide and _read_guard():
+        info["gold"] = f"hidden ({_read_guard()}): dataset, parbench checkout, other workspaces"
+    else:
+        info["gold"] = "NOT hidden" + ("" if p.hide else " (hide_gold: false)")
     if p.level == "require" and info["mode"] not in ("docker-egress", "agy-native") and (
             info["files"] == "NOT enforced" or info["network"].startswith(("NOT", "advisory"))):
         raise RuntimeError(f"sandbox: require, but only {info} is available here")
@@ -148,10 +176,41 @@ def record(cfg, harness, model) -> dict:
 
 
 # ------------------------------------------------------------------ host modes
+def _read_guard() -> str | None:
+    """The mechanism that can hide paths from a host-mode agent here, if any."""
+    if platform.system() == "Linux" and landlock_abi() >= 1:
+        return "landlock"
+    if platform.system() == "Darwin" and shutil.which("sandbox-exec"):
+        return "seatbelt"
+    return None
+
+
+def _hide_only(argv: list[str], env: dict[str, str], root: Path, policy: SandboxPolicy):
+    """`sandbox: off` still hides the gold paths (reads only; writes and network unchanged)."""
+    guard = _read_guard() if policy.hide else None
+    if not guard:
+        return argv, env
+    tmp = root / "tmp"  # the real temp dir is hidden, so temp files go into the workspace
+    tmp.mkdir(exist_ok=True)
+    env = {**env, "TMPDIR": str(tmp), "TMP": str(tmp), "TEMP": str(tmp)}
+    keep = [str(root), *policy.hide_keep, *policy.writable,
+            *(v for k, v in env.items() if k.startswith("XDG_") and k.endswith("_HOME") and v)]
+    if guard == "landlock":
+        args = [sys.executable, str(LANDLOCK_PY)]
+        for h in policy.hide:
+            args += ["--deny-read", h]
+        for k in keep:
+            args += ["--keep-read", k]
+        return [*args, "--", *argv], env
+    return ["sandbox-exec", "-p", seatbelt_profile(None, False, policy.hide, keep), *argv], env
+
+
 def wrap_host(argv: list[str], env: dict[str, str], root: Path, policy: SandboxPolicy | None):
     """Return (argv, env) to run `argv` confined to `root` according to the active host mode."""
-    if policy is None or not policy.enabled or policy.native:
+    if policy is None or policy.native:  # agy: its shell already runs under sandbox-exec, which cannot nest (tested)
         return argv, env
+    if not policy.enabled:
+        return _hide_only(argv, env, root, policy)
     info = describe(policy, host=True)
     tmp = root / "tmp"
     tmp.mkdir(exist_ok=True)
@@ -171,23 +230,35 @@ def wrap_host(argv: list[str], env: dict[str, str], root: Path, policy: SandboxP
             args += ["--rw", w]
         for port in sorted({port for _, port in policy.allow}):
             args += ["--connect-port", str(port)]
+        for h in policy.hide:
+            args += ["--deny-read", h]
+        for k in policy.hide_keep:
+            args += ["--keep-read", k]
         lo, hi = _ephemeral_range()
         return [*args, "--connect-range", f"{lo}-{hi}", "--", *argv], env
     if info["mode"] == "host-seatbelt":
-        return ["sandbox-exec", "-p", seatbelt_profile(writable, loopback_only=not info["network"].startswith("NOT")),
-                *argv], env
+        return ["sandbox-exec", "-p", seatbelt_profile(writable, not info["network"].startswith("NOT"), policy.hide,
+                                                      [*writable, *policy.hide_keep]), *argv], env
     return argv, env
 
 
-def seatbelt_profile(writable: list[str], loopback_only: bool) -> str:
+def seatbelt_profile(writable: list[str] | None, loopback_only: bool, hide: list[str] = (),
+                     keep: list[str] = ()) -> str:
+    """Seatbelt rules: writes only under `writable` (None: writes unrestricted), no reads under `hide` except under
+    `keep`. Later rules win, so the `keep` allowance comes after the `hide` denial."""
     def q(p: str) -> str:
         return '"' + os.path.realpath(p).replace("\\", "\\\\").replace('"', '\\"') + '"'
 
-    subpaths = " ".join(f"(subpath {q(w)})" for w in writable)
-    rules = ["(version 1)", "(allow default)",
-             "(deny file-write*)",
-             f'(allow file-write* {subpaths} (literal "/dev/null") (literal "/dev/zero") (literal "/dev/dtracehelper") '
-             '(regex #"^/dev/tty") (regex #"^/dev/fd/"))']
+    subpaths = " ".join(f"(subpath {q(w)})" for w in writable or [])
+    rules = ["(version 1)", "(allow default)"]
+    if writable is not None:
+        rules += ["(deny file-write*)",
+                  f'(allow file-write* {subpaths} (literal "/dev/null") (literal "/dev/zero") '
+                  '(literal "/dev/dtracehelper") (regex #"^/dev/tty") (regex #"^/dev/fd/"))']
+    if hide:
+        rules.append("(deny file-read* " + " ".join(f"(subpath {q(h)})" for h in hide) + ")")
+        if keep:
+            rules.append("(allow file-read* " + " ".join(f"(subpath {q(k)})" for k in keep) + ")")
     if loopback_only:
         rules += ["(deny network-outbound)", '(allow network-outbound (remote ip "localhost:*"))',
                   f"(allow network-outbound {subpaths})"]  # unix sockets inside the workspace

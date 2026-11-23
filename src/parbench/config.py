@@ -114,6 +114,9 @@ class ExperimentConfig:
     sandbox: str = "off"
     sandbox_allow: list[str] = field(default_factory=list)
     sandbox_writable: list[str] = field(default_factory=list)
+    # Host mode: agents cannot read the dataset (gold patches, hidden tests), the parbench checkout or other
+    # workspaces (Landlock / seatbelt; also with sandbox: off). Not possible for agy (see docs/sandboxing.md).
+    hide_gold: bool = True
     k: list[int] = field(default_factory=lambda: [2])
     bundles_per_pool: int | None = 1
     seed: int = 0
