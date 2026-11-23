@@ -126,6 +126,7 @@ Each `run.json` records the result in `run.sandbox.gold`.
 |---|---|---|
 | macOS (OpenCode `--host`, host pools) | seatbelt: `(deny file-read* <hidden>)` then `(allow file-read* <workspace>...)` | `tests/test_hide_gold.py` (cat/ls of a hidden dataset dir and another workspace fail; own files, git, python temp files work), and a real OpenCode + qwen3.5:9b probe on the click host pool (see below) |
 | Linux (Landlock) | Landlock can only allow, so reads are allowed on every sibling of every ancestor of a hidden path (`landlock.read_allow_list`), plus the workspace | allow-list logic unit-tested; enforcement **UNVERIFIED** (no Linux host here): run `scripts/sandbox_selftest.sh` on the GPU box |
+| macOS, full `parbench run` without Docker (host pool click 2800, OpenCode + qwen3.5:9b, S0 k=1) | seatbelt guard with `sandbox: off` | 2026-11-23: workspace from `~/parbench_pools`, host grading, `run.sandbox.gold` = hidden, `audit-leak` clean |
 | `agy` | **not possible**: agy's shell already runs under `sandbox-exec`, and sandbox-exec cannot nest (tested: `sandbox_apply: Operation not permitted`); agy's file tools read anywhere | post-hoc only: `parbench audit-leak results/<exp>` |
 | Docker | the dataset is not in the container | n/a |
 

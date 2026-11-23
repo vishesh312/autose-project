@@ -97,6 +97,7 @@ def hidden_paths(cfg) -> tuple[list[str], list[str]]:
 
 def _announce(info: dict) -> None:
     line = (f"[parbench] SANDBOX MODE: {info['mode']} | network: {info['network']} | files: {info['files']}"
+            + (f" | gold: {info['gold']}" if info.get("gold") else "")
             + (f" | {info['note']}" if info.get("note") else ""))
     if line not in _announced:
         _announced.add(line)
