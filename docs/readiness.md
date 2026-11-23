@@ -43,14 +43,23 @@ The other fixes are robustness fixes: Ctrl-C handling, container cleanup on setu
 4. Teammate on the GPU box: follow the runbook, run `scripts/sandbox_selftest.sh http://localhost:8000/v1/models`, then the `qwen27b_click` trial.
 5. Fill the `TODO(decision)` lines in `configs/experiments/qwen27b_core_DRAFT.yaml`: k, bundles per pool, repeats, prompt extras and temperature.
 
-## Known gaps (not fixed)
+## Known gaps
 
-- Host-mode agents can read the dataset's gold patches on the host filesystem; nothing hides them yet.
-- Runs that fail on quota or capacity are left out of reports but never retried automatically.
-- Wall-clock time is measured slightly differently per strategy (S0 includes container setup; S2 includes merging).
+Fixed 2026-11-23:
+- Gold patches / hidden tests: host-mode agents (OpenCode, host pools) now run under a read guard (seatbelt on the
+  Mac, tested with a real OpenCode probe; Landlock on Linux, UNVERIFIED) that hides the dataset, the parbench
+  checkout and other workspaces (`hide_gold`, default on; docs/sandboxing.md). **agy cannot be guarded** (nested
+  sandbox-exec fails); run `parbench audit-leak results/<exp>` on agy experiments.
+- Invalid (quota/capacity/server-down) runs are retried on relaunch (`retry_invalid`, default on); old outputs in `_prev/`.
+- Model server down / 5xx counts as infra (retry with backoff, then `infra_failed`); context overflow stays valid
+  and is recorded as `agents[].context_exceeded`.
+- Every prompt sent is logged (`agents/<id>/attemptN.prompt.md`).
+- Wall-clock time is defined the same for all strategies (docs/research/Task4_Metrics.md).
+- `agy` agent-file install uses a unique temp name per call (threads shared one before).
+- Stale clones: `parbench cleanup --host-temp HOURS` (refuses while a parbench job runs; skips live owners).
+
+Still open:
 - S4 token counts for OpenCode are a lower bound, because child sessions are not in the JSON output.
-- `agy` copies its agent files into the profiles without a lock (possible race, unverified).
-- 50 stale `parbench-host-*` directories sit in `$TMPDIR`; safe to delete when nothing is running.
 - S3 is not implemented.
 
 ## Minimal code to review (~200 lines total)
