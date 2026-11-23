@@ -15,6 +15,10 @@ Read the root `AGENTS.md` first.
 | `findings.md` | live findings, measured timings and tokens, and sizing of the full benchmark | dated; update the tables when experiments finish |
 | `core_subset_plan.md` | plan and readiness checklist for OpenCode on the CooperBench `core` subset, including running on another machine | updated as items are checked off |
 | `agy_quota.md` | Antigravity (`agy`) quota, how to see it, and terms-of-service caveats for batch use | mostly from docs; the ToS reading is an inference, re-read the primary pages before relying on it |
+| `readiness.md` | **start here**: big-run readiness, decisions with rationale, user to-dos, known gaps, minimal review list | 2026-11-23 |
+| `runbook_qwen_vllm.md` | GPU box: serve Qwen on vLLM, check endpoint, probe, trial, full run | 27B not yet run |
+| `metrics_tokens.md` | token definitions, per-harness mapping, token meter | verified with a proxy on Ollama and with agy logs |
+| `sandboxing.md` | sandbox modes (Docker egress, Landlock, seatbelt, agy native), `hide_gold`, self-test | Mac verified; Linux UNVERIFIED |
 | `serving_models.md` | serving open models on a Mac, NVIDIA GPUs and SLURM; which engine speaks which API | checked against local Ollama only |
 
 ## Rules for editing docs

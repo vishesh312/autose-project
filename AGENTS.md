@@ -25,10 +25,12 @@ Metrics are defined in `docs/research/Task4_Metrics.md`, strategies in `docs/res
 
 1. **The research docs in `docs/research/` are guidance, not a spec.** The user said so explicitly. Deviate when there is a reason, and say why.
 2. **Ask the user before making real design decisions** (models, compute, strategies, metric definitions, anything that costs money). Don't pick silently. Use the question tool or leave a clearly marked `TODO(decision)`.
-3. **Agents run in Docker containers by default.** Host mode (no Docker) exists only for OpenCode and `agy`: set `host_harnesses: [opencode]` in an experiment config or pass `--host` to `probe`; `agy` always runs on the host because its login cannot be carried into a container. On the host the agent is NOT isolated by Docker; use it for toy runs, never with a permission-bypass flag.
-   `sandbox: on` in a config (default off) also cuts agents off from everything but the model endpoint and, in host mode, blocks writes outside the workspace; see `docs/sandboxing.md` and run `scripts/sandbox_selftest.sh` on a new host.
+3. **Big runs use the no-Docker host-pool mode** (user decision 2026-11-23: "do without docker"; the GPU box has no Docker either). Set `PARBENCH_HOST_POOLS=<root>` and prepare pools once with `scripts/host_setup_pools.sh <pool>...` (Mac pools live at `~/parbench_pools`). Agents and grading then run on the host; only OpenCode and `agy` are host-capable. Docker containers remain supported but are no longer the main path.
+   On the host, `hide_gold` (default on) blocks agents from reading the dataset, the parbench checkout and other workspaces (seatbelt on Mac, Landlock on Linux). `agy` cannot be guarded this way, so run `parbench audit-leak results/<exp>` on every `agy` experiment. `sandbox: on` (default off) additionally limits network to the model endpoint and writes to the workspace; see `docs/sandboxing.md` and run `scripts/sandbox_selftest.sh` on a new host.
    Container rule: The permission-bypass flags used by the adapters (`--dangerously-skip-permissions`, `bypassPermissions`, `--approval-mode yolo`, `-s danger-full-access`) are acceptable *only* in the throwaway containers that `src/parbench/sandbox.py` starts. Never run an agent CLI with those flags on the host. For host-side probing use `agy` with `--sandbox`, in a scratch directory.
-4. **Never commit secrets or results.** API keys go in `.env` (git-ignored), never in configs. `results/` is git-ignored.
+4. **Never commit secrets.** API keys go in `.env` (git-ignored), never in configs. `results/` IS tracked (user decision before the mid-term): scan new logs for tokens/env dumps before committing them, and restore tracked `results/*/bundles.json`/`experiment.json` that a `--dry-run` rewrites.
+10. **Measure what the harness does by default.** (User, 2026-11-23.) Pass no sampling or thinking parameters (no temperature, top_p, `reasoning_effort`); the server applies the model card's `generation_config.json`. Output limits are as high as the model/server allow. Disabling tools (web, `ask_question`, subagents outside S4) must not change the system prompt: verify with a request log after any harness/config change (`docs/readiness.md` lists the remaining known diffs).
+11. **Tokens are the main result, so measure them from the source.** OpenAI-compatible models go through the token meter (`src/parbench/meter.py`), and reports use its counts (`token_source: proxy`). For `agy`, sum per-step usage (`result.usage` is a running total for the conversation). Definitions: `docs/metrics_tokens.md`. Any parser change needs a check against a proxy log or raw stream.
 5. **Don't edit `external/CooperBench/`.** It is a pinned submodule. Copy code out (keeping the MIT attribution comment) instead. Port notes are in `docs/cooperbench_guide.md`.
 6. **Mark what you did not verify.** If a fact about a CLI, model or dataset comes from docs and not from a run, say `UNVERIFIED`. Report failing tests or skipped steps plainly.
 7. **`agy` (Antigravity) terms of service.** Google's FAQ allows `agy -p` for scripting, but says wrapping it in third-party tools is unsupported on consumer plans and can lead to suspension. The user was told (`docs/agy_quota.md`) and chose to keep using it at low concurrency. On 2026-11-23 the user explicitly asked for cycling across their own 3 accounts (`configs/agy_accounts.yaml`, `src/parbench/agy_accounts.py`), knowing the FAQ calls automated account rotation unsupported and that it can lead to suspension. Don't add more accounts or raise concurrency without asking.
@@ -50,15 +52,23 @@ scripts/serve/             start Ollama / vLLM / llama.cpp / SLURM vLLM
 scripts/check_endpoint.py  verify an endpoint (chat, tools, Anthropic, Responses, parallel)
 docs/                      proposal, guides, findings.md with measured numbers (see docs/AGENTS.md)
 external/CooperBench/      pinned submodule with the dataset and gold patches
-results/                   run outputs (git-ignored)
+results/                   run outputs (tracked; redact before committing)
+configs/agy_accounts.yaml  Antigravity account profiles for cycling (login: scripts/agy_login_account.sh N)
+scripts/host_setup_pools.sh  prepare no-Docker pools (repo at base commit + venv)
+scripts/sandbox_selftest.sh  check network/write/gold isolation on a host
+scripts/recheck_tokens.py  recompute agy tokens of old runs (double-count fix)
+tests/                     pytest unit tests (no Docker, no models)
 ```
+
+Start with `docs/readiness.md` (what is ready, decisions with rationale, open items) and `docs/runbook_qwen_vllm.md` (GPU box).
 
 ## Setup
 
 ```bash
 git submodule update --init            # CooperBench dataset (~10 MB)
 uv venv && uv pip install -e '.[dev]'  # installs the `parbench` command into .venv
-open -a Docker                         # Docker Desktop must be running
+export PARBENCH_HOST_POOLS=~/parbench_pools && scripts/host_setup_pools.sh pallets_click_task/task2800   # no-Docker pools
+pytest -q tests                        # unit tests
 ```
 
 Typical flow (see `docs/` for details):
@@ -72,7 +82,9 @@ parbench probe --toy --harness opencode --model qwen3.5-9b-ollama   # one agent,
 parbench check-gold --pools toy_task/task1          # grader sanity check (no agents)
 parbench run configs/experiments/<file>.yaml [--dry-run]
 parbench report results/<experiment>
-parbench cleanup                                    # remove stray containers
+parbench cleanup [--host-temp HOURS]                # stray containers; stale host clones (refuses while a job runs)
+parbench audit-web results/<exp>                    # web tool use
+parbench audit-leak results/<exp>                   # reads of gold/tests/dataset, shell network attempts
 ```
 
 Set `PARBENCH_KEEP_CONTAINERS=1` to keep containers for debugging.
@@ -89,23 +101,26 @@ Set `PARBENCH_KEEP_CONTAINERS=1` to keep containers for debugging.
 
 ## Current status (update this when it changes)
 
-Partly validated (details and numbers in `docs/findings.md`): the toy pool runs end to end with OpenCode + a local 9B and with `agy`; grading is verified on go_chi task26 (real CooperBench, arm64). **No agent has run on a real CooperBench pool yet.** Parsing for OpenCode and `agy` is checked against live output; Pi, Claude Code, Codex and Gemini CLI parsing is still based on docs (`docs/harnesses.md`).
+As of 2026-11-23 (details in `docs/readiness.md`): mid-term results exist for `agy` (Gemini 3.8 Flash complete, GPT-OSS partial) and OpenCode + Qwen2.5-7B on 5 `core` pools, k=2. Before big runs, four audits fixed: orchestration bugs (S2 llm merge discarded unstaged resolutions; `${repo}` not substituted in nudge/resolver prompts; test files counted as conflicts; bundle order depended on the pool list), token accounting (agy double counted resumed attempts: GPT-OSS +79–123%; OpenCode missed child sessions and title calls), model params (all arbitrary constants removed), and host isolation. Mid-term token numbers must be recomputed with `scripts/recheck_tokens.py`.
 
-- [x] Dataset loading, bundling, k-feature grader, merge modes, strategies S0/S1/S2/S4, metrics, report
-- [x] Adapters for OpenCode, Pi, Claude Code, Codex, agy, Gemini CLI (UNVERIFIED parsing except agy)
-- [x] Toy dataset generator + image; serving guide and scripts
-- [~] Toy end-to-end run: OpenCode + local 9B S0 passed; S1/S2 and the merge modes still running (`configs/experiments/toy_smoke.yaml`); agy + Gemini Flash S0/S1 passed (`toy_agy.yaml`, host mode)
-- [~] `check-gold` on real CooperBench pools: go_chi task26 passes (4/4); the other 29 pools are not checked (arm64 ~28 GB for all 30)
-- [ ] S2 `llm` merge mode port check; S3 (plan-then-schedule) not implemented
-- [ ] Open decisions: which models for the real baselines, repeats and budget. The main OpenCode runs will happen on a different machine (see `docs/core_subset_plan.md`); this Mac is for validating the pipeline
+- [x] Pipeline: dataset/bundling, strategies S0/S1/S2/S4, merge modes, grader, metrics, report; 33 unit tests
+- [x] No-Docker host pools on the Mac: gold checks pass for click 2800, jinja 1559/1621, go_chi 26/27 (dspy 8563 pending setup)
+- [x] OpenCode (1.19.5 and 2.2.4) and `agy` parsers checked against live output and a token proxy; Pi, Claude Code, Codex, Gemini CLI still UNVERIFIED
+- [x] `agy` 3-account cycling (accounts 2 and 3 need `scripts/agy_login_account.sh N` by the user)
+- [ ] Qwen3.8-27B on vLLM not yet run (GPU box: follow `docs/runbook_qwen_vllm.md`); `qwen27b_core_DRAFT.yaml` has open `TODO(decision)`s
+- [ ] Sandbox `on` mode not yet used with a real run; Landlock path UNVERIFIED on Linux
+- [ ] S3 (plan-then-schedule) not implemented (planner rules in `s3_planner_rules.md`)
 
 ## Known pitfalls
 
 - **Web search can leak the answer, so `agy` runs use a restricted custom agent.** `agy` has a `search_web` tool that works headless and cannot be switched off with deny rules (tested); in the first `core_agy` runs Gemini searched for the upstream PR (`site:github.com/pallets/click/pull/2800`) and for `"cooperbench"`. Fix: `configs/agy_agents/parbench-clean.md` (no subagents) and `parbench-clean-sub.md` (S4) list every `agy` tool except the web/browser tools, `ask_question` and, in the first, the subagent tools. `AgyHarness.setup` copies them into `~/.gemini/config/agents/` (additive, only when changed) and the command passes `--agent`. Verified: `search_web` is unavailable and normal coding works. Only necessary tools are disabled; shell `curl` and similar are not blocked. `parbench audit-web results/<exp>` still lists any run with web calls (runs from before the fix are in `results/core_agy_web_contaminated/`, kept as evidence, not part of results). Names in an agent file must be real registry names (`agy` rejects unknown ones; `sed_file`, `wait_5_seconds` and a few others are not).
-- `agy` + GPT-OSS 120B returns `503 No capacity available for model gpt-oss-120b-medium` (Google-side, retryable) under load; the nudge loop resumes the agent but spends a nudge each time.
-- Never delete `parbench-host-*` temp directories (under `$TMPDIR`) while a host-mode job runs: they are live repo clones (this crashed a probe once). `parbench cleanup` only removes containers.
+- `agy` + GPT-OSS 120B returns `503 No capacity available for model gpt-oss-120b-medium` (Google-side, retryable) under load; the runner waits and resumes without spending a nudge, and does NOT switch accounts (capacity is global). Per-account quota errors switch to the next account (fresh session on the partly edited repo).
+- `agy --agent` replaces part of the default system prompt; the custom agents carry the default sections verbatim. Remaining diffs (section order, tool-derived text) are listed in `docs/readiness.md`. Never leave extra agent files in `~/.gemini/config/agents/`: S4 offers them as subagents.
+- OpenCode in host mode used to load the host user's `~/.claude` skills and `CLAUDE.md` into its system prompt; the adapter now disables that. Re-check after OpenCode upgrades.
+- vLLM reports cached tokens only with `--enable-prompt-tokens-details`.
+- Never delete `parbench-host-*` temp directories (under `$TMPDIR`) by hand while a host-mode job runs: they are live repo clones (this crashed a probe once). Use `parbench cleanup --host-temp HOURS`, which refuses while a job runs.
 - Don't run extra probes against the model server while an experiment is running: Ollama serves one request at a time, so they slow the experiment and skew its timings.
-- Docker Desktop defaults to little RAM (3.8 GB here); raise it to 10 GB or more before real pools.
+- Docker Desktop on the Mac stopped starting on 2026-11-23; use host pools. If you use Docker, give it 10 GB or more of RAM.
 - Local server defaults silently ruin runs: Ollama's default context is small (set `OLLAMA_CONTEXT_LENGTH`), thinking models can burn the whole token budget, and a wrong tool-call parser fails silently. Run `scripts/check_endpoint.py` first. See `docs/serving_models.md`.
 - Ollama on Apple Silicon serves parallel requests one at a time here, so S2 timing on a Mac measures the queue, not the strategy. Use `max_parallel_runs: 1` and read time metrics with that in mind.
 - Don't compare architectures: CooperBench's arm64 and amd64 images can differ in dependencies. Keep a comparison on one architecture.
@@ -136,10 +151,14 @@ A condensed record of how the repo got here, so a teammate or agent can pick up 
 
 - Verified: the toy pool end to end with OpenCode + local `qwen3.5:9b` (S0, S1, S2 all pass; merge modes all graded; no real conflict exercised yet) and with `agy`; grading verified on 37 real CooperBench features across 5 `core` pools (dspy 8563, go_chi 26/27, click 2800, jinja 1559/1621) on arm64.
 - First real agent result: `agy` + Gemini Flash, S0 on dspy 8563 pair f1+f4: 1 of 2 tasks passed, 27 minutes, about 7.4M input tokens (higher than the 0.8 to 2.1M per task we estimated).
-- Experiments are launched per pool from `configs/experiments/core_agy_<pool>.yaml` (Gemini Flash) and `core_agy_gptoss_<pool>.yaml` (GPT-OSS 120B); all write to `results/core_agy` (git-ignored), one process per pool so pools run in parallel. Finished runs are skipped on relaunch. `parbench report results/core_agy` aggregates them.
+- Experiments are launched per pool from `configs/experiments/core_agy_<pool>.yaml` (Gemini Flash) and `core_agy_gptoss_<pool>.yaml` (GPT-OSS 120B); all write to `results/core_agy`, one process per pool so pools run in parallel. Finished runs are skipped on relaunch. `parbench report results/core_agy` aggregates them.
 - Not done: any agent run on a real pool with OpenCode; S3; S0 caching across bundles; Pi/Claude/Codex/Gemini-CLI adapters checked against live output; the conflict path of the LLM resolver; host vs Docker speed comparison; the `agy` quota cost of a real task.
 
 ### Gotchas that cost time this session
 
-- OpenCode 2.x needs an explicit `models` map for custom providers. Thinking models on Ollama need `reasoning_effort: none`. `agy -p` needs its prompt attached to the flag, cannot log in inside a container, and cannot disable subagents. Details in `docs/findings.md`.
+- OpenCode 2.x needs an explicit `models` map for custom providers. Thinking models on Ollama are slow (we used `reasoning_effort: none` then; since 2026-11-23 no such parameter is passed, see rule 10). `agy -p` needs its prompt attached to the flag, cannot log in inside a container, and cannot disable subagents. Details in `docs/findings.md`.
 - Don't kill processes with a broad `pkill -f` pattern that can match the watcher's own command line, and don't delete host-mode temp clones while jobs run.
+
+## Project history: readiness session for big runs (2026-11-23)
+
+User requests and decisions: prepare big runs with Qwen (vLLM + OpenCode, GPU box) and `agy`; cycle through the user's 3 Antigravity accounts; harnesses in their default behaviour except internet tools; sandbox if feasible; then "do without docker"; tokens must be measured correctly ("otherwise there's no point of this study"); no arbitrary model parameters, output limits as high as possible; the system prompt must not change when tools are disabled; minimal code for the user to review. Independent agents audited and fixed each area; results, decisions with rationale and open items are in `docs/readiness.md`. Key outcomes: `agy` token double counting fixed (old GPT-OSS numbers inflated), token meter added for OpenAI-compatible models, 10 orchestration bugs fixed, host-pool mode completed on macOS with gold hiding, `agy` multi-account profiles via per-process `HOME`.

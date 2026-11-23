@@ -1,14 +1,16 @@
 # Readiness for big runs (2026-11-23)
 
-Four independent agents each checked one area: Antigravity, OpenCode with vLLM, sandboxing, and the orchestration audit. All four branches are merged into `main`; compile, `pytest tests/` (7 tests) and dry runs of `toy_agy`, `toy_smoke`, `qwen27b_core_DRAFT` and `core_agy_click` pass.
+Seven independent agents each checked or fixed one area: Antigravity accounts, OpenCode with vLLM, sandboxing, an orchestration audit, token measurement, model defaults and system prompts, and the remaining gaps. Everything is merged into `main`; `pytest tests/` (33 tests) and dry runs of `toy_agy`, `toy_smoke`, `qwen27b_core_DRAFT` and `core_agy_click` pass. **Docker is not used** (user decision): agents and grading run on the host from prepared host pools (`PARBENCH_HOST_POOLS`).
 
 ## Verdict
 
 | Path | Ready? | Blocking items |
 |---|---|---|
-| `agy` (Gemini, GPT-OSS) on the Mac | **Yes, after the to-dos** | Log in accounts 2 and 3. Docker must be up (host clones are made from the pool images). Run one toy probe on the merged code. |
-| OpenCode + Qwen3.8-27B on vLLM (GPU box) | **Ready for the one-bundle trial**, not yet the big run | Follow `docs/runbook_qwen_vllm.md`. The 27B model has not been run; the tool parser and whether `MAX_LEN` 262144 fits can only be checked on the box. |
-| Sandbox | **Built, opt-in (`sandbox: off` by default)** | No real agent has run inside it yet (Docker went down mid-test). Linux box: run `scripts/sandbox_selftest.sh` first. |
+| `agy` (Gemini, GPT-OSS) on the Mac, no Docker | **Yes, after the to-dos** | Log in accounts 2 and 3. A probe on the click host pool worked. `agy` file tools can read the gold patches (no read guard possible): run `parbench audit-leak` on every `agy` experiment. |
+| OpenCode + Qwen3.8-27B on vLLM (GPU box) | **Ready for the one-bundle trial**, not yet the big run | Follow `docs/runbook_qwen_vllm.md` (start vLLM with `--enable-prompt-tokens-details`). The 27B model has not been run; the tool parser and whether 262144 context fits can only be checked on the box. Run `scripts/sandbox_selftest.sh` there (Landlock is UNVERIFIED on Linux). |
+| Token measurement | **Yes** | OpenCode: metering proxy matched every request to the token. `agy`: per-step sums; old results need `scripts/recheck_tokens.py`. |
+| Host pools on the Mac | **5 of 6** | Gold checks pass for click 2800, jinja 1559/1621, go_chi 26/27. dspy 8563 is still cloning. |
+| Sandbox network/write limits | **Built, opt-in (`sandbox: off`)** | Gold hiding (`hide_gold`) is on by default regardless. |
 | Orchestration | **Yes** | 10 bugs fixed (below). |
 
 ## Decisions and rationale
@@ -32,6 +34,12 @@ Four independent agents each checked one area: Antigravity, OpenCode with vLLM, 
 | Sandbox: Landlock on the GPU box | Works without root, unlike bubblewrap on Ubuntu 24.04 (AppArmor) and firejail (setuid). It blocks writes outside the workspace and, on ABI ≥4, TCP except the model port. |
 | Sandbox: rely on `agy --sandbox` on the Mac | `agy` needs Google's API, so wrapping it adds little. Its seatbelt already blocks network and `$HOME` writes per shell command. |
 | S2 conflicts are now measured on patches without agent-written test files | CooperBench does the same; test-only clashes made naive merges drop real work. **Changes conflict numbers vs the mid-term report.** |
+| Token meter (reverse proxy) for OpenAI-compatible models; reports use its counts | The server's own `usage` is ground truth and includes subagent child sessions, title and compaction calls that OpenCode's JSON omits (16% of input in a subagent probe). The proxy never changes requests and never estimates missing usage. |
+| `agy` tokens = sum of per-step usage, plus each subagent's transcript | `result.usage` is a running total for the conversation (checked on all 223 logged attempts), so adding it per attempt double counted every resume. |
+| Tokens of failed/retried attempts are counted, and also reported separately | They are real cost; separating them keeps strategy comparisons readable. |
+| `hide_gold` on by default in host mode, hiding the dataset, the whole checkout and other clones | Host mode is now the only path; results of other runs and grading clones leak answers too. |
+| Relaunch retries invalid (quota/capacity/server-down) runs | Otherwise those bundles silently drop out of the comparison. |
+| Wall-clock = time any agent ran (+ S2 merge), excluding setup and grading | The old measure included setup for S0 but not S1/S4. |
 | Bundles are seeded per pool | Before, a pool's task order depended on which other pools a config listed, so harnesses ran different bundles. |
 
 ## Bugs fixed that affect earlier numbers
@@ -43,11 +51,11 @@ The other fixes are robustness fixes: Ctrl-C handling, container cleanup on setu
 
 ## To-dos for the user
 
-1. Restart Docker Desktop. It returns HTTP 500 at the moment.
-2. Run `scripts/agy_login_account.sh 2` and then `3`, signing in with the second and third Google accounts.
-3. Done: the 5 default `agy` system-prompt sections are now in the custom agents. Remove the probe agents `parbench-probe-*.md` from `~/.gemini/config/agents/`, otherwise S4 lists them as subagents. Old note: `--agent` drops them, including "work efficiently"; with them restored, `agy` behaves as by default minus web.
-4. Teammate on the GPU box: follow the runbook, run `scripts/sandbox_selftest.sh http://localhost:8000/v1/models`, then the `qwen27b_click` trial.
-5. Fill the `TODO(decision)` lines in `configs/experiments/qwen27b_core_DRAFT.yaml`: k, bundles per pool, repeats and prompt extras (temperature is no longer set: model defaults).
+1. Run `scripts/agy_login_account.sh 2` and then `3`, signing in with the second and third Google accounts.
+2. Decide whether S4 on `agy` gets the default `swarm` tool (recommended: yes, it is a default tool).
+3. Teammate on the GPU box: follow the runbook, run `scripts/sandbox_selftest.sh http://localhost:8000/v1/models`, then the `qwen27b_click` trial.
+4. Fill the `TODO(decision)` lines in `configs/experiments/qwen27b_core_DRAFT.yaml`: k, bundles per pool, repeats and prompt extras.
+5. Recompute mid-term token numbers with `scripts/recheck_tokens.py` before reusing them (GPT-OSS was inflated by 79–123%).
 
 ## Known gaps
 
@@ -69,12 +77,14 @@ Still open:
 - agy can still read gold patches through its file tools (no read guard possible); `parbench audit-leak` checks it after the fact.
 - S3 is not implemented.
 
-## Minimal code to review (~200 lines total)
+## Minimal code to review (~250 lines total)
 
 | Area | What to read |
 |---|---|
-| Account cycling | `src/parbench/agy_accounts.py` `pick`, `on_error`, `env_for`; the account-switch block in `agent_runner.py` (before the infra-wait block) |
-| OpenCode tools | `git show c6516a6 -- src/parbench/harnesses/cli_agents.py` (~30 lines) |
-| Merge fix | `src/parbench/merge.py` resolved check (~l.94–106) |
-| Measurement changes | `strategies.py` `patches = [... filter_test_files ...]`; `dataset.py` the two `rng =` lines |
-| Sandbox | `sandbox_policy.py` `describe()` and the `require` check; `landlock.py` `restrict()` |
+| Token meter | `src/parbench/meter.py` `_handle`, `usage_from_body`, `start_for` |
+| Token accounting | `agent_runner.py` the delta/subagent block (~l.170–185); `cli_agents.py` `AgyHarness.parse`, `_transcript_usage`, OpenCode `step_finish` branch |
+| Model params and limits | `git diff b349dd2 -- configs/models.yaml`; `cli_agents.py` `_setup_v1`, `_limit()`; `scripts/serve/qwen38_27b.sh` l.5–13 |
+| Account cycling | `src/parbench/agy_accounts.py` `pick`, `on_error`, `env_for`; the account-switch block in `agent_runner.py` |
+| Gold hiding | `sandbox_policy.py` `hidden_paths`, `wrap_host`, `seatbelt_profile`; `landlock.py` `read_allow_list` |
+| Service errors | `agent_runner.py` `_INFRA`, `_CONTEXT`, `service_error` |
+| Merge fix and measurement changes | `merge.py` resolved check (~l.94–106); `strategies.py` `filter_test_files` line; `dataset.py` the two `rng =` lines |
