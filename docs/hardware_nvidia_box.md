@@ -16,6 +16,6 @@ Models served (vLLM, a single GPU each time):
 | Model | Precision | vLLM | Context | Notes |
 |---|---|---|---|---|
 | Qwen2.5-7B-Instruct | bf16 | 0.8.5 | 32768 | hermes tool parser; used for the core subset runs (S0/S1/S2) |
-| Qwen3.8-27B (RedHatAI INT4 build) | 4-bit | 0.33.0 | 65536 | thinking off, fp8 KV cache; one-bundle trial (click task2800); status: not yet run |
+| Qwen3.8-27B (RedHatAI INT4 build) | 4-bit | 0.33.0 | 262144 (native; fit unchecked) | thinking on (model default), fp8 KV cache; one-bundle trial (click task2800); status: not yet run |
 
 Harness: OpenCode 1.19.5, run directly on the host.
