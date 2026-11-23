@@ -133,6 +133,7 @@ def run_agent(
     while True:
         prompt_file = f"{c.work}/{agent_id}.prompt{i}.md"
         c.put_file(prompt_file, current_prompt)
+        (log_dir / f"attempt{i}.prompt.md").write_text(current_prompt)  # initial prompt, nudge or retry message
         remaining = max(60, int(deadline - time.time()))
         step_opts = RunOptions(opts.subagents, opts.max_turns, remaining)
         cmd = harness.command(prompt_file, model, step_opts, resume_session=session)

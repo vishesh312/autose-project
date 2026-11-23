@@ -82,6 +82,9 @@ def no_sleep(monkeypatch):
 def test_recovers_after_server_comes_back(tmp_path):
     rec = _run(tmp_path, ["ERR" + REFUSED, "ERR" + BAD_GW, "ok"])
     assert rec.infra_retries == 2 and not rec.infra_failed and rec.attempts[-1].nudge_reason is None
+    # every prompt sent is logged per attempt: the task, then the resume messages after each service error
+    assert (tmp_path / "attempt0.prompt.md").read_text() == "do it"
+    assert "temporary service error" in (tmp_path / "attempt2.prompt.md").read_text()
 
 
 def test_server_down_for_good_is_infra_failed(tmp_path):
