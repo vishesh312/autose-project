@@ -4,7 +4,7 @@
 | S1 | opencode | qwen3.8-27b-pi-vllm | 2 | 2 | 0.50 (0.15-0.85) | 0.00 | 0.67 |  | 0.118 | 1,137,667 | 1366 | 1.00 | 0 |
 | S2 | opencode | qwen3.8-27b-pi-vllm | 2 | 2 | 0.50 (0.15-0.85) | 0.00 | 0.67 | 0.50 | 0.202 | 1,959,792 | 1543 | 1.21 | 0 |
 | S3 | opencode | qwen3.8-27b-pi-vllm | 2 | 2 | 0.50 (0.15-0.85) | 0.00 | 0.67 |  | 0.152 | 1,441,322 | 2188 | 1.00 | 2 |
-| S3@oracle | opencode | qwen3.8-27b-pi-vllm | 2 | 1 | 0.50 (0.09-0.91) | 0.00 | 0.50 |  | 0.451 | 4,395,774 | 3317 | 1.00 | 0 |
+| S3@oracle | opencode | qwen3.8-27b-pi-vllm | 2 | 2 | 0.50 (0.15-0.85) | 0.00 | 0.67 |  | 0.245 | 2,387,018 | 1841 | 1.00 | 0 |
 | S4 | opencode | qwen3.8-27b-pi-vllm | 2 | 1 | 0.50 (0.09-0.91) | 0.00 | 0.50 |  | 0.071 | 699,047 | 411 | 1.00 | 0 |
 
-Token source (docs/metrics_tokens.md): proxy 10 runs
+Token source (docs/metrics_tokens.md): proxy 11 runs
