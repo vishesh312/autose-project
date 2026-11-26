@@ -2,7 +2,12 @@
   "name": "qwen27b_core_pi",
   "dataset": "external/CooperBench/dataset",
   "pools": [
-    "pallets_click_task/task2800"
+    "pallets_click_task/task2800",
+    "pallets_jinja_task/task1559",
+    "pallets_jinja_task/task1621",
+    "dspy_task/task8563",
+    "openai_tiktoken_task/task0",
+    "llama_index_task/task17244"
   ],
   "subset": "core",
   "host_harnesses": [

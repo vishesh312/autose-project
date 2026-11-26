@@ -1,0 +1,120 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-pi-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795715650.810975,
+  "ended": 1795716241.733683,
+  "busy_s": 590.8027276992798,
+  "usage": {
+    "input": 417530,
+    "cached_input": 365344,
+    "cache_write": 0,
+    "output": 10522,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 13
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 418775,
+    "cached_input": 365344,
+    "cache_write": 0,
+    "output": 10530,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 14
+  },
+  "meter": {
+    "requests": 14,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 14
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.0450365,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 10,
+    "edit": 2,
+    "shell": 4
+  },
+  "files_read": [
+    "/scratch/manas_ase/tmp/parbench-host-qnpsra0d/repo",
+    "dspy/adapters/base.py",
+    "dspy/adapters/types/audio.py",
+    "dspy/adapters/types/base_type.py",
+    "dspy/adapters/types/code.py",
+    "dspy/adapters/types/image.py",
+    "dspy/adapters/types/tool.py",
+    "tests/adapters/test_tool.py"
+  ],
+  "files_edited": [
+    "dspy/adapters/types/tool.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795715650.8119664,
+      "ended": 1795716241.614694,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 417530,
+        "cached_input": 365344,
+        "cache_write": 0,
+        "output": 10522,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 13
+      },
+      "num_turns": 13,
+      "session_id": "ses_de701a6d2ffeK3Ca0l1yyxltni",
+      "nudge_reason": null,
+      "final_text_tail": "The implementation is complete and all tests pass.\n\n## Summary\n\nAdded a flexible `validate_input` method to `ToolCalls` in `dspy/adapters/types/tool.py` that normalizes varied LM output formats into the canonical `tool_calls` structure.\n\n**Changes:**\n1. Added `import json` and `import pydantic` to the imports.\n2. Added a `validate_input` classmethod (a `@pydantic.model_validator(mode=\"before\")`) to `ToolCalls` that handles:\n   - **Canonical form** \u2013 dict with `tool_calls` key \u2192 returned as-is\n   - **Single object** \u2013 dict with `name`/`args` (no `tool_calls`) \u2192 wrapped into `{\"tool_calls\": [data]}`\n   - **Bare list** \u2013 list of dicts \u2192 wrapped into `{\"tool_calls\": data}`\n   - **JSON strings** \u2013 parsed via `json.loads`; if it parses to a dict/list, the result is normalized through the same logic above\n   - **Non-JSON strings** \u2013 returned unchanged\n\nThe method returns plain Python structures (dict/list/string), never a `ToolCalls` instance, per the spec \u2014 consistent with the `validate_input` pattern already used by `Code`, `Audio`, and `Image`.\n\nAll 88 existing adapter tests pass (26 in `test_tool.py` specifically).",
+      "error": null,
+      "proxy_usage": {
+        "input": 418775,
+        "cached_input": 365344,
+        "cache_write": 0,
+        "output": 10530,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 14
+      }
+    }
+  ],
+  "error": null
+}

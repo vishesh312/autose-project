@@ -1,0 +1,56 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..e2c79046 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,5 +1,7 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+@@ -16,6 +18,23 @@ if TYPE_CHECKING:
+ _TYPE_MAPPING = {"string": str, "integer": int, "number": float, "boolean": bool, "array": list, "object": dict}
+ 
+ 
++def _canonicalize_args(args: Any) -> Any:
++    """Recursively canonicalize args for fingerprinting.
++
++    Sorts dict keys, converts tuples to lists, and trims leading/trailing
++    whitespace from string values. Numeric and boolean types are preserved.
++    """
++    if isinstance(args, dict):
++        return {k: _canonicalize_args(v) for k, v in sorted(args.items(), key=lambda item: str(item[0]))}
++    if isinstance(args, tuple):
++        return [_canonicalize_args(item) for item in args]
++    if isinstance(args, list):
++        return [_canonicalize_args(item) for item in args]
++    if isinstance(args, str):
++        return args.strip()
++    return args
++
++
+ class Tool(Type):
+     """Tool class.
+ 
+@@ -258,6 +277,19 @@ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        model_config = {"protected_namespaces": ()}
++
++        def __init__(self, **data):
++            super().__init__(**data)
++            canonical_args = _canonicalize_args(self.args)
++            canonical = {"name": self.name, "args": canonical_args}
++            serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++            digest = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++            self.fingerprint = digest
++            self.id = digest[:8]
+ 
+     tool_calls: list[ToolCall]
+ 

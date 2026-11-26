@@ -1,4 +1,66 @@
 {
+  "dspy_task/task8563/k2/f1-f4": {
+    "id": "dspy_task/task8563/k2/f1-f4",
+    "pool": "dspy_task/task8563",
+    "image": "hostpool:dspy_task/task8563",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "gold_files": {
+      "1": [
+        "dspy/adapters/types/tool.py"
+      ],
+      "4": [
+        "dspy/adapters/types/tool.py"
+      ]
+    },
+    "gold_conflict_pairs": []
+  },
+  "llama_index_task/task17244/k2/f5-f6": {
+    "id": "llama_index_task/task17244/k2/f5-f6",
+    "pool": "llama_index_task/task17244",
+    "image": "hostpool:llama_index_task/task17244",
+    "k": 2,
+    "features": [
+      5,
+      6
+    ],
+    "gold_files": {
+      "5": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ],
+      "6": [
+        "llama-index-core/llama_index/core/base/llms/types.py"
+      ]
+    },
+    "gold_conflict_pairs": []
+  },
+  "openai_tiktoken_task/task0/k2/f4-f8": {
+    "id": "openai_tiktoken_task/task0/k2/f4-f8",
+    "pool": "openai_tiktoken_task/task0",
+    "image": "hostpool:openai_tiktoken_task/task0",
+    "k": 2,
+    "features": [
+      4,
+      8
+    ],
+    "gold_files": {
+      "4": [
+        "tiktoken/core.py"
+      ],
+      "8": [
+        "tiktoken/core.py"
+      ]
+    },
+    "gold_conflict_pairs": [
+      [
+        4,
+        8
+      ]
+    ]
+  },
   "pallets_click_task/task2800/k2/f1-f4": {
     "id": "pallets_click_task/task2800/k2/f1-f4",
     "pool": "pallets_click_task/task2800",
@@ -18,5 +80,48 @@
       ]
     },
     "gold_conflict_pairs": []
+  },
+  "pallets_jinja_task/task1559/k2/f5-f8": {
+    "id": "pallets_jinja_task/task1559/k2/f5-f8",
+    "pool": "pallets_jinja_task/task1559",
+    "image": "hostpool:pallets_jinja_task/task1559",
+    "k": 2,
+    "features": [
+      5,
+      8
+    ],
+    "gold_files": {
+      "5": [
+        "src/jinja2/ext.py"
+      ],
+      "8": [
+        "src/jinja2/ext.py"
+      ]
+    },
+    "gold_conflict_pairs": []
+  },
+  "pallets_jinja_task/task1621/k2/f6-f10": {
+    "id": "pallets_jinja_task/task1621/k2/f6-f10",
+    "pool": "pallets_jinja_task/task1621",
+    "image": "hostpool:pallets_jinja_task/task1621",
+    "k": 2,
+    "features": [
+      6,
+      10
+    ],
+    "gold_files": {
+      "6": [
+        "src/jinja2/loaders.py"
+      ],
+      "10": [
+        "src/jinja2/loaders.py"
+      ]
+    },
+    "gold_conflict_pairs": [
+      [
+        6,
+        10
+      ]
+    ]
   }
 }
