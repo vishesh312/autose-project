@@ -1,0 +1,114 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..eea73b2d 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,9 +1,12 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import pydantic
+ from jsonschema import ValidationError, validate
+-from pydantic import BaseModel, TypeAdapter, create_model
++from pydantic import BaseModel, Field, TypeAdapter, create_model
+ 
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+@@ -258,6 +261,21 @@ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = Field(frozen=True)
++        id: str = Field(frozen=True)
++
++        def __init__(self, name: str, args: dict[str, Any], **data: Any):
++            """Initialize the ToolCall and compute its deterministic fingerprint.
++
++            The fingerprint is the SHA-256 hex digest of the tool name and the canonicalized args
++            (sorted dict keys, tuples converted to lists, trimmed string values). It is computed once at
++            creation time and stored read-only for deduplication, caching, and debugging. The `id` is the
++            first 8 characters of the fingerprint.
++            """
++            data.pop("fingerprint", None)
++            data.pop("id", None)
++            digest = _compute_tool_call_fingerprint(name, args)
++            super().__init__(name=name, args=args, fingerprint=digest, id=digest[:8], **data)
+ 
+     tool_calls: list[ToolCall]
+ 
+@@ -284,6 +302,43 @@ class ToolCalls(Type):
+         tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
+         return cls(tool_calls=tool_calls)
+ 
++    @pydantic.model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Validate and normalize the input data for ToolCalls.
++
++        Language models may return tool calls in various formats. This method normalizes them into the canonical
++        `{"tool_calls": [...]}` structure expected by the model, supporting:
++
++        - A dict with a `tool_calls` key: `{"tool_calls": [{"name": ..., "args": ...}]}`
++        - A single tool-call dict without the `tool_calls` key: `{"name": ..., "args": ...}`
++        - A bare list of tool-call dicts: `[{"name": ..., "args": ...}]`
++        - A JSON string of any of the formats above.
++
++        Returns the normalized Python structure (dict/list/string), not a ToolCalls instance. For strings that
++        cannot be parsed as JSON, the original string is returned unchanged.
++        """
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                data = json.loads(data)
++            except json.JSONDecodeError:
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            return {"tool_calls": data}
++
++        return data
++
+     @classmethod
+     def description(cls) -> str:
+         return (
+@@ -310,6 +365,29 @@ class ToolCalls(Type):
+         ]
+ 
+ 
++def _canonicalize_args(args: Any) -> Any:
++    """Recursively canonicalize tool call args for fingerprinting.
++
++    Dict keys are sorted, tuples are converted to lists, and surrounding whitespace is stripped from string
++    values. Numbers, booleans, and all other values are left unchanged, so the semantics of the args are
++    preserved.
++    """
++    if isinstance(args, dict):
++        return {key: _canonicalize_args(args[key]) for key in sorted(args)}
++    if isinstance(args, (list, tuple)):
++        return [_canonicalize_args(item) for item in args]
++    if isinstance(args, str):
++        return args.strip()
++    return args
++
++
++def _compute_tool_call_fingerprint(name: str, args: dict[str, Any]) -> str:
++    """Compute the SHA-256 fingerprint of a tool call from its name and canonicalized args."""
++    canonical = {"name": name, "args": _canonicalize_args(args)}
++    serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++
++
+ def _resolve_json_schema_reference(schema: dict) -> dict:
+     """Recursively resolve json model schema, expanding all references."""
+ 

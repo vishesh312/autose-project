@@ -1,0 +1,129 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795732305.8114898,
+  "ended": 1795734358.4976416,
+  "busy_s": 2052.6461703777313,
+  "usage": {
+    "input": 2037678,
+    "cached_input": 1923936,
+    "cache_write": 0,
+    "output": 35042,
+    "reasoning": 24234,
+    "cost_reported": 0.0,
+    "calls": 38
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 2038960,
+    "cached_input": 1923936,
+    "cache_write": 0,
+    "output": 35313,
+    "reasoning": 24496,
+    "cost_reported": null,
+    "calls": 39
+  },
+  "meter": {
+    "requests": 39,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 39
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.21448989999999998,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 20,
+    "shell": 23,
+    "edit": 3
+  },
+  "files_read": [
+    "/scratch/manas_ase/tmp/parbench-host-hd1l97io/repo",
+    "dspy",
+    "dspy/adapters",
+    "dspy/adapters/base.py",
+    "dspy/adapters/chat_adapter.py",
+    "dspy/adapters/json_adapter.py",
+    "dspy/adapters/two_step_adapter.py",
+    "dspy/adapters/types/audio.py",
+    "dspy/adapters/types/base_type.py",
+    "dspy/adapters/types/code.py",
+    "dspy/adapters/types/image.py",
+    "dspy/adapters/types/tool.py",
+    "dspy/adapters/utils.py",
+    "dspy/adapters/xml_adapter.py",
+    "tests/adapters/test_json_adapter.py",
+    "tests/adapters/test_tool.py"
+  ],
+  "files_edited": [
+    "/scratch/manas_ase/tmp/parbench-host-hd1l97io/tmp/opencode/test_toolcalls.py",
+    "dspy/adapters/types/tool.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795732305.8125846,
+      "ended": 1795734358.458755,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 2037678,
+        "cached_input": 1923936,
+        "cache_write": 0,
+        "output": 35042,
+        "reasoning": 24234,
+        "cost_reported": 0.0,
+        "calls": 38
+      },
+      "num_turns": 38,
+      "session_id": "ses_de603840bffet8VBng9IYjHApl",
+      "nudge_reason": null,
+      "final_text_tail": "model_validator(mode=\"before\")` (following the same pattern as `Code`/`Image`/`Audio` in the codebase), plus `import json` and `import pydantic`:\n\n- **Canonical form** \u2014 dict with a `tool_calls` key \u2192 passed through unchanged (existing behavior preserved)\n- **Single object** \u2014 dict with `name`/`args` but no `tool_calls` \u2192 wrapped into `{\"tool_calls\": [data]}`\n- **Bare list** \u2014 list of `{name, args}` dicts \u2192 wrapped into `{\"tool_calls\": data}`\n- **JSON strings** \u2014 parsed with `json.loads`, then normalized per the rules above; unparseable strings are returned unchanged (so pydantic raises a proper validation error)\n- Returns plain Python structures (dict/list/string), never a `ToolCalls` instance; existing `ToolCalls` instances pass through\n\nSince all adapter parse paths (`ChatAdapter`, `JSONAdapter`, `XMLAdapter`, `TwoStepAdapter`) funnel through `parse_value` \u2192 `TypeAdapter(ToolCalls).validate_python(...)`, this single hook normalizes every varied LM output format.\n\n**Verification**:\n- Direct `validate_input` checks for all 6 input shapes, `TypeAdapter`/`parse_value` end-to-end construction, and full mocked-LM adapter runs for canonical/single-object/bare-list formats \u2014 all pass\n- `tests/adapters/` (88 passed) and the full suite pass; the only 2 failures (`tests/clients/test_lm.py` retry tests) are pre-existing environment issues (litellm `APIConnectionError`) that fail identically on the clean tree\n- `ruff check`/`format` clean (the single F811 warning pre-exists the change)",
+      "error": null,
+      "proxy_usage": {
+        "input": 2038960,
+        "cached_input": 1923936,
+        "cache_write": 0,
+        "output": 35313,
+        "reasoning": 24496,
+        "cost_reported": null,
+        "calls": 39
+      }
+    }
+  ],
+  "error": null
+}
