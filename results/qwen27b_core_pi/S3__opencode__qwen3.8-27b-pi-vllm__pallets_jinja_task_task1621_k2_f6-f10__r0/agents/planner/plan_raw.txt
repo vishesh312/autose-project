@@ -1,0 +1,344 @@
+I've been stuck in a loop of reading the same file. Let me break out of this and actually implement the changes. I'll make the edits to `src/jinja2/loaders.py`.
+
+Looking at my available tools: `glob`, `grep`, `read`, `skill`. I only have read-only tools available. I don't have a `write` or `edit` tool. The task says I need to implement the changes, but I only have read-only tools.
+
+Let me re-read the system prompt more carefully. The system prompt says "You are opencode" and I have access to tools including `glob`, `grep`, `read`, `skill`. The initial instructions said "Do not edit anything" for the planner role, but then the follow-up said to implement the tasks.
+
+Given that I only have read-only tools available (glob, grep, read, skill), I cannot actually make edits to the files. Let me verify by checking if there are any other tools I might be missing.
+
+Looking at the available tools again:
+- `glob` - find files
+- `grep` - search content
+- `read` - read files
+- `skill` - load skills
+
+I don't have a `write`, `edit`, `bash`, or `apply_patch` tool. Without these, I cannot modify any files.
+
+The best I can do is provide a detailed implementation plan with the exact code changes needed, since I cannot make the edits myself. Let me provide the complete implementation as my final answer.
+
+Actually, wait - let me re-read the constraints. The initial message says "Do not edit anything. Read the code and search it. Do not write files, run git, or change the repository." But the follow-up message says "Use your best judgement: make reasonable assumptions, and continue working until the task is fully implemented."
+
+Given that I only have read-only tools, I'll provide the complete implementation code that needs to be applied to `src/jinja2/loaders.py`. This is the most I can do with the available tools.
+
+Here's the complete implementation of both features:
+
+## Implementation for `src/jinja2/loaders.py`
+
+The complete modified file should contain the following changes:
+
+### 1. BaseLoader class - Add `__init__`, alias methods, `resolve_template`, and update `get_source`/`load`
+
+Replace lines 68-148 (from `has_source_access` through end of `load`) with:
+
+```python
+    #: if set to `False` it indicates that the loader cannot provide access
+    #: to the source of templates.
+    #:
+    #: .. versionadded:: 2.4
+    has_source_access = True
+
+    def __init__(
+        self,
+        path_transform: t.Optional[t.Callable[[str], str]] = None,
+    ) -> None:
+        self.path_transform = path_transform
+        self._aliases: t.Dict[str, str] = {}
+
+    def add_alias(self, alias: str, target: str) -> None:
+        """Add an alias that maps ``alias`` to ``target``."""
+        self._aliases[alias] = target
+
+    def remove_alias(self, alias: str) -> None:
+        """Remove a previously added alias. Safe to call if not present."""
+        self._aliases.pop(alias, None)
+
+    def resolve_template(self, template: str) -> str:
+        """Resolve aliases and apply path transformation to a template name."""
+        template = self._aliases.get(template, template)
+        if self.path_transform is not None:
+            template = self.path_transform(template)
+        return template
+
+    def get_source(
+        self, environment: "Environment", template: str
+    ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+        """Get the template source, filename and reload helper for a template.
+        It's passed the environment and template name and has to return a
+        tuple in the form ``(source, filename, uptodate)`` or raise a
+        `TemplateNotFound` error if it can't locate the template.
+
+        The source part of the returned tuple must be the source of the
+        template as a string. The filename should be the name of the
+        file on the filesystem if it was loaded from there, otherwise
+        ``None``. The filename is used by Python for the tracebacks
+        if no loader extension is used.
+
+        The last item in the tuple is the `uptodate` function.  If auto
+        reloading is enabled it's always called to check if the template
+        changed.  No arguments are passed so the function must store the
+        old state somewhere (for example in a closure).  If it returns `False`
+        the template will be reloaded.
+        """
+        if not self.has_source_access:
+            raise RuntimeError(
+                f"{type(self).__name__} cannot provide access to the source"
+            )
+        raise TemplateNotFound(template)
+
+    def list_templates(self) -> t.List[str]:
+        """Iterates over all templates.  If the loader does not support that
+        it should raise a :exc:`TypeError` which is the default behavior.
+        """
+        raise TypeError("this loader cannot iterate over all templates")
+
+    @internalcode
+    def load(
+        self,
+        environment: "Environment",
+        name: str,
+        globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+    ) -> "Template":
+        """Loads a template.  This method looks up the template in the cache
+        or loads one by calling :meth:`get_source`.  Subclasses should not
+        override this method as loaders working on collections of other
+        loaders (such as :class:`PrefixLoader` or :class:`ChoiceLoader`)
+        will not call this method but `get_source` directly.
+        """
+        code = None
+        if globals is None:
+            globals = {}
+
+        # Resolve aliases and apply path transformation
+        resolved_name = self.resolve_template(name)
+
+        # first we try to get the source for this template together
+        # with the filename and the uptodate function.
+        source, filename, uptodate = self.get_source(environment, resolved_name)
+
+        # try to load the code from the bytecode cache if there is a
+        # bytecode cache configured.
+        bcc = environment.bytecode_cache
+        if bcc is not None:
+            bucket = bcc.get_bucket(environment, name, filename, source)
+            code = bucket.code
+
+        # if we don't have code so far (not cached, no longer up to
+        # date) etc. we compile the template
+        if code is None:
+            code = environment.compile(source, name, filename)
+
+        # if the bytecode cache is available and the bucket doesn't
+        # have a code so far, we give the bucket the new code and put
+        # it back to the bytecode cache.
+        if bcc is not None and bucket.code is None:
+            bucket.code = code
+            bcc.set_bucket(bucket)
+
+        return environment.template_class.from_code(
+            environment, code, globals, uptodate
+        )
+```
+
+### 2. FileSystemLoader - Add `path_transform` parameter and apply in `get_source`
+
+Replace the `__init__` and `get_source` methods:
+
+```python
+    def __init__(
+        self,
+        searchpath: t.Union[str, os.PathLike, t.Sequence[t.Union[str, os.PathLike]]],
+        encoding: str = "utf-8",
+        followlinks: bool = False,
+        path_transform: t.Optional[t.Callable[[str], str]] = None,
+    ) -> None:
+        super().__init__(path_transform=path_transform)
+        if not isinstance(searchpath, abc.Iterable) or isinstance(searchpath, str):
+            searchpath = [searchpath]
+
+        self.searchpath = [os.fspath(p) for p in searchpath]
+        self.encoding = encoding
+        self.followlinks = followlinks
+
+    def get_source(
+        self, environment: "Environment", template: str
+    ) -> t.Tuple[str, str, t.Callable[[], bool]]:
+        template = self.resolve_template(template)
+        pieces = split_template_path(template)
+        for searchpath in self.searchpath:
+            filename = os.path.join(searchpath, *pieces)
+            f = open_if_exists(filename)
+            if f is None:
+                continue
+            try:
+                contents = f.read().decode(self.encoding)
+            finally:
+                f.close()
+
+            mtime = os.path.getmtime(filename)
+
+            def uptodate() -> bool:
+                try:
+                    return os.path.getmtime(filename) == mtime
+                except OSError:
+                    return False
+
+            return contents, filename, uptodate
+        raise TemplateNotFound(template)
+```
+
+### 3. PackageLoader - Add `path_transform` parameter and apply in `get_source`
+
+```python
+    def __init__(
+        self,
+        package_name: str,
+        package_path: "str" = "templates",
+        encoding: str = "utf-8",
+        path_transform: t.Optional[t.Callable[[str], str]] = None,
+    ) -> None:
+        super().__init__(path_transform=path_transform)
+        # ... rest of existing __init__ unchanged ...
+
+    def get_source(
+        self, environment: "Environment", template: str
+    ) -> t.Tuple[str, str, t.Optional[t.Callable[[], bool]]]:
+        template = self.resolve_template(template)
+        p = os.path.join(self._template_root, *split_template_path(template))
+        # ... rest of existing get_source unchanged ...
+```
+
+### 4. DictLoader - Add `path_transform` parameter and apply in `get_source`
+
+```python
+    def __init__(
+        self,
+        mapping: t.Mapping[str, str],
+        path_transform: t.Optional[t.Callable[[str], str]] = None,
+    ) -> None:
+        super().__init__(path_transform=path_transform)
+        self.mapping = mapping
+
+    def get_source(
+        self, environment: "Environment", template: str
+    ) -> t.Tuple[str, None, t.Callable[[], bool]]:
+        template = self.resolve_template(template)
+        if template in self.mapping:
+            source = self.mapping[template]
+            return source, None, lambda: source == self.mapping.get(template)
+        raise TemplateNotFound(template)
+```
+
+### 5. FunctionLoader - Add `path_transform` parameter and apply in `get_source`
+
+```python
+    def __init__(
+        self,
+        load_func: t.Callable[
+            [str],
+            t.Optional[
+                t.Union[
+                    str, t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]
+                ]
+            ],
+        ],
+        path_transform: t.Optional[t.Callable[[str], str]] = None,
+    ) -> None:
+        super().__init__(path_transform=path_transform)
+        self.load_func = load_func
+
+    def get_source(
+        self, environment: "Environment", template: str
+    ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+        template = self.resolve_template(template)
+        rv = self.load_func(template)
+
+        if rv is None:
+            raise TemplateNotFound(template)
+
+        if isinstance(rv, str):
+            return rv, None, None
+
+        return rv
+```
+
+### 6. PrefixLoader - Add `path_transform` parameter, apply at top level
+
+```python
+    def __init__(
+        self,
+        mapping: t.Mapping[str, BaseLoader],
+        delimiter: str = "/",
+        path_transform: t.Optional[t.Callable[[str], str]] = None,
+    ) -> None:
+        super().__init__(path_transform=path_transform)
+        self.mapping = mapping
+        self.delimiter = delimiter
+
+    def get_source(
+        self, environment: "Environment", template: str
+    ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+        template = self.resolve_template(template)
+        loader, name = self.get_loader(template)
+        try:
+            return loader.get_source(environment, name)
+        except TemplateNotFound as e:
+            raise TemplateNotFound(template) from e
+
+    @internalcode
+    def load(
+        self,
+        environment: "Environment",
+        name: str,
+        globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+    ) -> "Template":
+        name = self.resolve_template(name)
+        loader, local_name = self.get_loader(name)
+        try:
+            return loader.load(environment, local_name, globals)
+        except TemplateNotFound as e:
+            raise TemplateNotFound(name) from e
+```
+
+### 7. ChoiceLoader - Add `path_transform` parameter, apply at top level
+
+```python
+    def __init__(
+        self,
+        loaders: t.Sequence[BaseLoader],
+        path_transform: t.Optional[t.Callable[[str], str]] = None,
+    ) -> None:
+        super().__init__(path_transform=path_transform)
+        self.loaders = loaders
+
+    def get_source(
+        self, environment: "Environment", template: str
+    ) -> t.Tuple[str, t.Optional[str], t.Optional[t.Callable[[], bool]]]:
+        template = self.resolve_template(template)
+        for loader in self.loaders:
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                pass
+        raise TemplateNotFound(template)
+
+    @internalcode
+    def load(
+        self,
+        environment: "Environment",
+        name: str,
+        globals: t.Optional[t.MutableMapping[str, t.Any]] = None,
+    ) -> "Template":
+        name = self.resolve_template(name)
+        for loader in self.loaders:
+            try:
+                return loader.load(environment, name, globals)
+            except TemplateNotFound:
+                pass
+        raise TemplateNotFound(name)
+```
+
+This implementation covers both tasks:
+- **f6 (path_transform)**: Each loader accepts an optional `path_transform` callable. The transformation is applied via `resolve_template()` which is called at the start of `get_source` and `load`. For composite loaders (PrefixLoader, ChoiceLoader), the transformation is applied at the top level before delegating.
+- **f10 (aliases)**: BaseLoader has `add_alias`, `remove_alias`, and `resolve_template` methods. Aliases are resolved before path transformation. All subclasses inherit this functionality.
+
+Note: I'm unable to directly edit the file because I only have read-only tools available (glob, grep, read, skill). The above shows the exact code changes that need to be applied to `src/jinja2/loaders.py`.

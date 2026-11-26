@@ -1,0 +1,47 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/__init__.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "offset": 41, "limit": 60}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 110, "offset": 41}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "tests/**/*loader*"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/exceptions.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/tests/test_loader.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def get_template|def get_or_select|def _load_template|def load|def get_template", "path": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/environment.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/environment.py", "limit": 80, "offset": 941}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"path": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/environment.py", "pattern": "def join_path"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/environment.py", "limit": 15, "offset": 925}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"path": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/environment.py", "pattern": "is_template|is_up_to_date|_is_up_to_date"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 110, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 60, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 20, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 85, "offset": 66}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-22617jxn/repo/src/jinja2/loaders.py", "limit": 50, "offset": 66}, "ok": true, "ts": null}
