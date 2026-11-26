@@ -1,0 +1,42 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..e83efe0 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -82,7 +82,8 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        return_repeated_pattern: bool = False,
++    ) -> list[int] | tuple[list[int], dict[tuple[int, int], int]]:
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -121,7 +122,7 @@ class Encoding:
+                 raise_disallowed_special_token(match.group())
+ 
+         try:
+-            return self._core_bpe.encode(text, allowed_special)
++            tokens = self._core_bpe.encode(text, allowed_special)
+         except UnicodeEncodeError:
+             # BPE operates on bytes, but the regex operates on unicode. If we pass a str that is
+             # invalid UTF-8 to Rust, it will rightfully complain. Here we do a quick and dirty
+@@ -130,7 +131,17 @@ class Encoding:
+             # string, but given that this is input we want to support, maybe that's okay.
+             # Also we use errors="replace" to handle weird things like lone surrogates.
+             text = text.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
+-            return self._core_bpe.encode(text, allowed_special)
++            tokens = self._core_bpe.encode(text, allowed_special)
++
++        if not return_repeated_pattern:
++            return tokens
++
++        pair_counts: dict[tuple[int, int], int] = {}
++        for a, b in zip(tokens, tokens[1:]):
++            pair = (a, b)
++            pair_counts[pair] = pair_counts.get(pair, 0) + 1
++        top_pairs = dict(sorted(pair_counts.items(), key=lambda item: item[1], reverse=True)[:3])
++        return tokens, top_pairs
+ 
+     def encode_to_numpy(
+         self,

@@ -1,0 +1,88 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..09bc9bb 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -82,7 +82,14 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++        return_repeated_pattern: bool = False,
++    ) -> (
++        list[int]
++        | tuple[list[int], dict[tuple[int, int], int]]
++        | list[list[int]]
++        | list[tuple[list[int], dict[tuple[int, int], int]]]
++    ):
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,6 +104,19 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        The `chunk_size` parameter optionally splits `text` into smaller segments of at most
++        `chunk_size` characters each before tokenization, which is useful for processing long
++        documents within downstream context limits. When `chunk_size` is provided, the return
++        value is a list of token lists, one per chunk, instead of a single list of tokens. Each
++        chunk is tokenized independently, so `allowed_special` and `disallowed_special` are applied
++        per chunk.
++
++        The `return_repeated_pattern` parameter optionally tracks adjacent token pairs during
++        encoding. When `return_repeated_pattern` is True, the return value is a tuple of the
++        encoded tokens and a dictionary of the top 3 most frequent token pairs with their
++        occurrence counts. When both `chunk_size` and `return_repeated_pattern` are set, the
++        return value is a list of such tuples, one per chunk.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
+@@ -110,6 +130,19 @@ class Encoding:
+         [27, 91, 437, 1659, 5239, 91, 29]
+         ```
+         """
++        if chunk_size is not None:
++            if chunk_size <= 0:
++                raise ValueError("chunk_size must be a positive integer")
++            return [
++                self.encode(
++                    text[i : i + chunk_size],
++                    allowed_special=allowed_special,
++                    disallowed_special=disallowed_special,
++                    return_repeated_pattern=return_repeated_pattern,
++                )
++                for i in range(0, len(text), chunk_size)
++            ]
++
+         if allowed_special == "all":
+             allowed_special = self.special_tokens_set
+         if disallowed_special == "all":
+@@ -121,7 +154,7 @@ class Encoding:
+                 raise_disallowed_special_token(match.group())
+ 
+         try:
+-            return self._core_bpe.encode(text, allowed_special)
++            tokens = self._core_bpe.encode(text, allowed_special)
+         except UnicodeEncodeError:
+             # BPE operates on bytes, but the regex operates on unicode. If we pass a str that is
+             # invalid UTF-8 to Rust, it will rightfully complain. Here we do a quick and dirty
+@@ -130,7 +163,17 @@ class Encoding:
+             # string, but given that this is input we want to support, maybe that's okay.
+             # Also we use errors="replace" to handle weird things like lone surrogates.
+             text = text.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
+-            return self._core_bpe.encode(text, allowed_special)
++            tokens = self._core_bpe.encode(text, allowed_special)
++
++        if not return_repeated_pattern:
++            return tokens
++
++        pair_counts: dict[tuple[int, int], int] = {}
++        for a, b in zip(tokens, tokens[1:]):
++            pair = (a, b)
++            pair_counts[pair] = pair_counts.get(pair, 0) + 1
++        top_pairs = dict(sorted(pair_counts.items(), key=lambda item: item[1], reverse=True)[:3])
++        return tokens, top_pairs
+ 
+     def encode_to_numpy(
+         self,
