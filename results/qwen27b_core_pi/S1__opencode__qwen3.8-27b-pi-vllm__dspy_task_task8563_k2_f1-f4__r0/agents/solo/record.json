@@ -1,0 +1,121 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-pi-vllm",
+  "feature_ids": [
+    1,
+    4
+  ],
+  "started": 1795715650.71513,
+  "ended": 1795717594.800895,
+  "busy_s": 1944.0441615581512,
+  "usage": {
+    "input": 1546219,
+    "cached_input": 1453536,
+    "cache_write": 0,
+    "output": 30629,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 32
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 1548270,
+    "cached_input": 1453536,
+    "cache_write": 0,
+    "output": 30636,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 33
+  },
+  "meter": {
+    "requests": 33,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 33
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.1640178,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 10,
+    "shell": 17,
+    "edit": 5
+  },
+  "files_read": [
+    "/scratch/manas_ase/tmp/parbench-host-zc6dbyrt/repo",
+    "dspy/adapters/json_adapter.py",
+    "dspy/adapters/types/audio.py",
+    "dspy/adapters/types/base_type.py",
+    "dspy/adapters/types/code.py",
+    "dspy/adapters/types/tool.py",
+    "tests/adapters/test_code.py",
+    "tests/adapters/test_tool.py"
+  ],
+  "files_edited": [
+    "dspy/adapters/types/tool.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795715650.71622,
+      "ended": 1795717594.7603815,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 1546219,
+        "cached_input": 1453536,
+        "cache_write": 0,
+        "output": 30629,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 32
+      },
+      "num_turns": 32,
+      "session_id": "ses_de701a701ffeHDoP93YbHq2ehy",
+      "nudge_reason": null,
+      "final_text_tail": "ngle `{\"name\", \"args\"}` dict \u2192 wrapped into `{\"tool_calls\": [dict]}`\n- Bare list of `{\"name\", \"args\"}` dicts \u2192 wrapped into `{\"tool_calls\": list}`\n- JSON string \u2192 parsed, then normalized\n- Non-JSON string \u2192 returned unchanged\n- Returns normalized Python structures (dict/list/string), not a `ToolCalls` instance\n\n**Task 2 \u2014 Deterministic fingerprinting**\n- Added `_canonicalize_args` helper: recursively sorts dict keys, converts tuples\u2192lists, trims string whitespace, preserves numeric/boolean/`None` types (no type coercion)\n- Added `fingerprint` (64-char SHA-256 hex) and `id` (first 8 chars) fields to `ToolCall`\n- Fingerprint computed in `ToolCall.__init__` by hashing the canonical representation `{\"name\": name, \"args\": canonicalized_args}` serialized with `json.dumps(sort_keys=True, separators=(\",\",\":\"))`\n- Name is included in the hash but NOT canonicalized (only args are); fingerprint computed once at creation, not auto-updated\n\n**Verification:**\n- All 195 tests in `tests/adapters/`, `tests/signatures/`, `tests/primitives/` pass\n- `ruff format` clean; the single `ruff check` warning (F811 `Type` redefinition) is pre-existing\n- One pre-existing network test failure (`test_retry_made_on_system_errors`, a litellm `APIConnectionError`) is unrelated to these changes\n- Manually verified: key-order invariance, tuple\u2192list + whitespace-trim equivalence, name sensitivity, bool/number preservation, `model_copy`/`deepcopy`/`model_validate` behavior, and edge cases (empty args, extra keys)",
+      "error": null,
+      "proxy_usage": {
+        "input": 1548270,
+        "cached_input": 1453536,
+        "cache_write": 0,
+        "output": 30636,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 33
+      }
+    }
+  ],
+  "error": null
+}
