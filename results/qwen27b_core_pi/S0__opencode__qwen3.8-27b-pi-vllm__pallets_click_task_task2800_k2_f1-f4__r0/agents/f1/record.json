@@ -1,0 +1,114 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-pi-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795706819.3865695,
+  "ended": 1795707321.5823448,
+  "busy_s": 502.15428948402405,
+  "usage": {
+    "input": 573574,
+    "cached_input": 525280,
+    "cache_write": 0,
+    "output": 9423,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 23
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 574695,
+    "cached_input": 525280,
+    "cache_write": 0,
+    "output": 9430,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 24
+  },
+  "meter": {
+    "requests": 24,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 24
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.0602985,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 8,
+    "edit": 1,
+    "shell": 13
+  },
+  "files_read": [
+    "src/click/core.py",
+    "src/click/shell_completion.py"
+  ],
+  "files_edited": [
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795706819.388184,
+      "ended": 1795707321.5424736,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 573574,
+        "cached_input": 525280,
+        "cache_write": 0,
+        "output": 9423,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 23
+      },
+      "num_turns": 23,
+      "session_id": "ses_de7886847ffehnqUZA5GTX1WXm",
+      "nudge_reason": null,
+      "final_text_tail": "The task is complete. I fixed the resource leak in shell completion by properly closing file contexts in the `_resolve_context` function in `src/click/shell_completion.py`.\n\n## Summary\n\n**Problem**: Click was not properly closing file options during shell completion, causing `ResourceWarning` messages when CLI commands used `click.File()` with shell completion enabled. The contexts created during shell completion were never closed because `__exit__` was never called.\n\n**Solution**: Wrapped all context creation calls in `_resolve_context` with proper `with` statements to ensure automatic cleanup:\n\n1. Main context: `with cli.make_context(...) as ctx:`\n2. Sub-context for non-chained groups: `with cmd.make_context(...) as sub_ctx:`\n3. Sub-context for chained groups: `with cmd.make_context(...) as sub_sub_ctx:`\n\nThis ensures all file handles and resources managed by contexts are properly cleaned up during shell completion.\n\n**Files Modified**:\n- `src/click/shell_completion.py` - Updated `_resolve_context` function (lines 547-590)\n\n**Verification**:\n- All 40 shell completion tests pass\n- Custom resource leak tests confirm no `ResourceWarning` for simple commands, groups, nested groups, and chained groups with file options\n- 558 tests pass overall (excluding `test_basic.py` which has a pre-existing pytest compatibility issue unrelated to this change)",
+      "error": null,
+      "proxy_usage": {
+        "input": 574695,
+        "cached_input": 525280,
+        "cache_write": 0,
+        "output": 9430,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 24
+      }
+    }
+  ],
+  "error": null
+}
