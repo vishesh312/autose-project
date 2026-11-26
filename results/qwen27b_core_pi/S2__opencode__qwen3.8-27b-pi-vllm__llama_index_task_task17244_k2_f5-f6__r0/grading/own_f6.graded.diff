@@ -1,0 +1,22 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf..1da527c 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -55,6 +55,7 @@ class ImageBlock(BaseModel):
+     url: AnyUrl | str | None = None
+     image_mimetype: str | None = None
+     detail: str | None = None
++    encoding: str = "base64"
+ 
+     @field_validator("url", mode="after")
+     @classmethod
+@@ -79,6 +80,9 @@ class ImageBlock(BaseModel):
+             guess = filetype.guess(self.image)
+             self.image_mimetype = guess.mime if guess else None
+ 
++        if self.encoding == "raw":
++            return self
++
+         self.image = base64.b64encode(self.image)
+ 
+         return self
