@@ -1,0 +1,65 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf..0d28f43 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -55,6 +55,7 @@ class ImageBlock(BaseModel):
+     url: AnyUrl | str | None = None
+     image_mimetype: str | None = None
+     detail: str | None = None
++    encoding: Literal["base64", "raw"] = "base64"
+ 
+     @field_validator("url", mode="after")
+     @classmethod
+@@ -71,18 +72,38 @@ class ImageBlock(BaseModel):
+         In case the model was built passing image data but without a mimetype,
+         we try to guess it using the filetype library. To avoid resource-intense
+         operations, we won't load the path or the URL to guess the mimetype.
++
++        If the `encoding` field is set to "raw", the image is kept as raw
++        bytes and no base64 encoding is performed.
+         """
+         if not self.image:
+             return self
+ 
+-        if not self.image_mimetype:
+-            guess = filetype.guess(self.image)
+-            self.image_mimetype = guess.mime if guess else None
++        self.get_image_mimetype()
++
++        if self.encoding == "raw":
++            return self
+ 
+         self.image = base64.b64encode(self.image)
+ 
+         return self
+ 
++    def get_image_mimetype(self) -> str | None:
++        """Get the image mimetype, resolving and caching it lazily.
++
++        If the mimetype is already set, it is returned as-is. Otherwise the
++        mimetype is guessed using the filetype library when the image bytes
++        are available and the result is cached for future accesses.
++        """
++        if self.image_mimetype:
++            return self.image_mimetype
++
++        if self.image:
++            guess = filetype.guess(self.image)
++            self.image_mimetype = guess.mime if guess else None
++
++        return self.image_mimetype
++
+     def resolve_image(self, as_base64: bool = False) -> BytesIO:
+         """Resolve an image such that PIL can read it.
+ 
+@@ -91,6 +112,10 @@ class ImageBlock(BaseModel):
+         """
+         if self.image is not None:
+             if as_base64:
++                if self.encoding == "raw":
++                    return BytesIO(base64.b64encode(self.image))
++                return BytesIO(self.image)
++            if self.encoding == "raw":
+                 return BytesIO(self.image)
+             return BytesIO(base64.b64decode(self.image))
+         elif self.path is not None:
