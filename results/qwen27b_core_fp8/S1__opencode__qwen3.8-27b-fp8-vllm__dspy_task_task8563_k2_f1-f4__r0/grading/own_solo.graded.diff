@@ -1,0 +1,119 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..4aeecfe9 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,7 +1,10 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import pydantic
+ from jsonschema import ValidationError, validate
+ from pydantic import BaseModel, TypeAdapter, create_model
+ 
+@@ -254,13 +257,103 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_tool_call_args(args: Any) -> Any:
++    """Recursively canonicalize tool call arguments for stable fingerprinting.
++
++    - Sorts the keys of every dict.
++    - Converts tuples to lists.
++    - Strips leading/trailing whitespace from string values.
++    - Leaves all other values (numbers, booleans, None, ...) unchanged, so their
++      types are preserved.
++    """
++    if isinstance(args, dict):
++        try:
++            keys = sorted(args.keys())
++        except TypeError:
++            # Fall back to string-based ordering when keys are not mutually comparable.
++            keys = sorted(args.keys(), key=str)
++        return {key: _canonicalize_tool_call_args(args[key]) for key in keys}
++    if isinstance(args, (list, tuple)):
++        return [_canonicalize_tool_call_args(item) for item in args]
++    if isinstance(args, str):
++        return args.strip()
++    return args
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        def __init__(self, /, **data: Any):
++            super().__init__(**data)
++            if not self.fingerprint:
++                canonical_args = _canonicalize_tool_call_args(self.args)
++                canonical = {"name": self.name, "args": canonical_args}
++                payload = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++                digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()
++                # Computed once at creation time; treat `fingerprint` and `id` as read-only.
++                self.fingerprint = digest
++                self.id = digest[:8]
+ 
+     tool_calls: list[ToolCall]
+ 
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Normalize raw `ToolCalls` data into one of the recognized structures.
++
++        LMs produce `ToolCalls` in a few different formats. This method parses and recognizes
++        them without changing their shape:
++
++        - A dict with the outer `tool_calls` key is returned as is.
++        - A single `{"name": ..., "args": ...}` dict (without the `tool_calls` key) is returned
++          as is.
++        - A list of tool-call dicts is returned as is.
++        - A JSON string is parsed, and the resulting dict/list is returned.
++        - A string that is not valid JSON is returned unchanged.
++
++        Returns:
++            The normalized Python structure (dict/list/string), never a `ToolCalls` instance.
++        """
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                parsed = json.loads(data)
++            except ValueError:
++                return data
++            if isinstance(parsed, (dict, list)):
++                return parsed
++            return data
++
++        return data
++
++    @pydantic.model_validator(mode="before")
++    @classmethod
++    def _normalize_input(cls, data: Any) -> Any:
++        """Normalize the varied LM output formats into the internal `{"tool_calls": [...]}` form."""
++        data = cls.validate_input(data)
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                tool_calls = data["tool_calls"]
++                if isinstance(tool_calls, dict):
++                    data = {**data, "tool_calls": [tool_calls]}
++                return data
++            if "name" in data and "args" in data:
++                # A single tool-call object without the outer `tool_calls` key.
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            # A bare list of tool-call objects.
++            return {"tool_calls": data}
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.

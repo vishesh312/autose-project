@@ -1,0 +1,284 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_fp8",
+    "bundle": "dspy_task/task8563/k2/f1-f4",
+    "pool": "dspy_task/task8563",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-fp8-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795730657.9744515,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8001"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          4
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "4": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 1301281,
+      "cached_input": 1207360,
+      "cache_write": 0,
+      "output": 29227,
+      "reasoning": 20216,
+      "cost_reported": null,
+      "calls": 27
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 1299195,
+      "cached_input": 1207360,
+      "cache_write": 0,
+      "output": 28907,
+      "reasoning": 19907,
+      "cost_reported": 0.0,
+      "calls": 26
+    },
+    "usage_proxy": {
+      "input": 1301281,
+      "cached_input": 1207360,
+      "cache_write": 0,
+      "output": 29227,
+      "reasoning": 20216,
+      "cost_reported": null,
+      "calls": 27
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.13889620000000003,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.13889620000000003,
+    "cost_per_solved_task": 0.13889620000000003,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 1632.5529828071594,
+    "agents_wall_s": 1632.5529828071594,
+    "merge_s": 0.0,
+    "strategy_span_s": 1633.106837272644,
+    "agent_busy_s": 1632.5068221092224,
+    "effective_parallelism": 0.999971724839302,
+    "container_setup_s": 1.7133374214172363,
+    "grading_s": 10.433478832244873,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        1,
+        4
+      ],
+      "started": 1795730660.138643,
+      "ended": 1795732292.6916258,
+      "busy_s": 1632.5068221092224,
+      "usage": {
+        "input": 1299195,
+        "cached_input": 1207360,
+        "cache_write": 0,
+        "output": 28907,
+        "reasoning": 19907,
+        "cost_reported": 0.0,
+        "calls": 26
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 1301281,
+        "cached_input": 1207360,
+        "cache_write": 0,
+        "output": 29227,
+        "reasoning": 20216,
+        "cost_reported": null,
+        "calls": 27
+      },
+      "meter": {
+        "requests": 27,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 27
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.13889620000000003,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 17,
+        "shell": 16,
+        "edit": 3
+      },
+      "files_read": [
+        "dspy",
+        "dspy/adapters/base.py",
+        "dspy/adapters/chat_adapter.py",
+        "dspy/adapters/json_adapter.py",
+        "dspy/adapters/two_step_adapter.py",
+        "dspy/adapters/types/audio.py",
+        "dspy/adapters/types/base_type.py",
+        "dspy/adapters/types/code.py",
+        "dspy/adapters/types/image.py",
+        "dspy/adapters/types/tool.py",
+        "dspy/adapters/utils.py",
+        "tests",
+        "tests/adapters/test_chat_adapter.py",
+        "tests/adapters/test_json_adapter.py",
+        "tests/adapters/test_tool.py"
+      ],
+      "files_edited": [
+        "/scratch/manas_ase/tmp/parbench-host-dgivrcvz/tmp/opencode/check_toolcalls.py",
+        "dspy/adapters/types/tool.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 93,
+      "patch_files": [
+        "dspy/adapters/types/tool.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795730660.1395912,
+          "ended": 1795732292.6464133,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 1299195,
+            "cached_input": 1207360,
+            "cache_write": 0,
+            "output": 28907,
+            "reasoning": 19907,
+            "cost_reported": 0.0,
+            "calls": 26
+          },
+          "num_turns": 26,
+          "session_id": "ses_de61ca096ffeODaTIItYyh1cDU",
+          "nudge_reason": null,
+          "final_text_tail": "re-existing litellm issues, verified against unmodified code), ruff format is clean (the one lint warning is pre-existing).\n\n**Changes in `dspy/adapters/types/tool.py`:**\n\n*Task 1 \u2014 flexible parsing:*\n- `ToolCalls.validate_input(data)` (tool.py:303): classmethod returning normalized Python structures, never a `ToolCalls` instance \u2014 dict with `tool_calls` as-is, single `{\"name\", \"args\"}` dict as-is, bare list as-is, JSON strings parsed to their dict/list, non-JSON strings returned unchanged.\n- `_normalize_input` (tool.py:334): pydantic `model_validator(mode=\"before\")` that calls `validate_input` then wraps single objects and bare lists into `{\"tool_calls\": [...]}` so `ToolCalls` instances construct correctly from every format (including a single dict nested under `tool_calls`). This makes all adapter parse paths work end-to-end.\n\n*Task 2 \u2014 deterministic fingerprinting:*\n- `_canonicalize_tool_call_args` (tool.py:260): recursively sorts dict keys, converts tuples to lists, strips string whitespace, leaves numbers/booleans/None untouched.\n- `ToolCall` (tool.py:284): new `fingerprint: str` and `id: str` fields, computed once in `__init__` (tool.py:290) as SHA-256 hex of `json.dumps({\"name\": ..., \"args\": <canonicalized>}, sort_keys=True, separators=(\",\", \":\"))`; `id` is the first 8 chars. Verified stable across key order, whitespace, and tuple/list differences, and sensitive to `name`/arg changes; works via `from_dict_list`, direct construction, `model_validate`, and `TypeAdapter`.",
+          "error": null,
+          "proxy_usage": {
+            "input": 1301281,
+            "cached_input": 1207360,
+            "cache_write": 0,
+            "output": 29227,
+            "reasoning": 20216,
+            "cost_reported": null,
+            "calls": 27
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 45,
+        "tests_failed": 5,
+        "duration_s": 10.062833786010742,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 59,
+        "tests_failed": 0,
+        "duration_s": 5.035797357559204,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 45,
+        "tests_failed": 5,
+        "duration_s": 10.062833786010742,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 59,
+        "tests_failed": 0,
+        "duration_s": 5.035797357559204,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    }
+  }
+}
