@@ -1,0 +1,39 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..566ec6f 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -82,9 +82,15 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++    ) -> list[int] | list[list[int]]:
+         """Encodes a string into tokens.
+ 
++        If `chunk_size` is a positive integer, the input text is first split into
++        consecutive chunks of at most `chunk_size` characters, and the function
++        returns a list of token lists, one per chunk. This is useful for processing
++        long documents that may exceed context limits of downstream applications.
++
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+         such as fill-in-the-middle. So we want to be careful about accidentally encoding special
+         tokens, since they can be used to trick a model into doing something we don't want it to do.
+@@ -120,6 +126,17 @@ class Encoding:
+             if match := _special_token_regex(disallowed_special).search(text):
+                 raise_disallowed_special_token(match.group())
+ 
++        if chunk_size is not None:
++            if chunk_size <= 0:
++                raise ValueError(f"chunk_size must be a positive integer, got {chunk_size!r}")
++            text_chunks = [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
++            return [self._encode_chunk(chunk, allowed_special) for chunk in text_chunks]
++
++        return self._encode_chunk(text, allowed_special)
++
++    def _encode_chunk(
++        self, text: str, allowed_special: Literal["all"] | AbstractSet[str]
++    ) -> list[int]:
+         try:
+             return self._core_bpe.encode(text, allowed_special)
+         except UnicodeEncodeError:
