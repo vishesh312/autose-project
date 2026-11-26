@@ -1,0 +1,187 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..cc8513b 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -228,6 +228,12 @@ class Context:
+         value is not set, it defaults to the value from the parent
+         context. ``Command.show_default`` overrides this default for the
+         specific command.
++    :param cleanup_timeout: maximum time, in seconds, to wait for
++        cleanup operations (registered with :meth:`call_on_close` and
++        :meth:`with_resource`) to complete when :meth:`close` is called.
++        If the timeout is exceeded, cleanup is interrupted to prevent
++        hanging teardown. A value of ``None`` (the default) disables the
++        timeout. Must be a positive number when specified.
+ 
+     .. versionchanged:: 8.2
+         The ``protected_args`` attribute is deprecated and will be removed in
+@@ -280,6 +286,7 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+@@ -427,6 +434,19 @@ class Context:
+         #: Show option default values when formatting help text.
+         self.show_default: bool | None = show_default
+ 
++        if cleanup_timeout is None and parent is not None:
++            cleanup_timeout = parent.cleanup_timeout
++
++        if cleanup_timeout is not None and cleanup_timeout <= 0:
++            raise ValueError(
++                f"cleanup_timeout must be a positive value, got {cleanup_timeout!r}."
++            )
++
++        #: The maximum time in seconds to wait for cleanup operations to
++        #: complete in :meth:`close`, or ``None`` for no timeout. When not
++        #: set explicitly, it is inherited from the parent context.
++        self.cleanup_timeout: float | None = cleanup_timeout
++
+         self._close_callbacks: list[t.Callable[[], t.Any]] = []
+         self._depth = 0
+         self._parameter_source: dict[str, ParameterSource] = {}
+@@ -606,8 +626,42 @@ class Context:
+         """Invoke all close callbacks registered with
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
++
++        If a ``cleanup_timeout`` was set, the cleanup is performed in a
++        separate thread and interrupted once the timeout is exceeded, so
++        a hanging cleanup cannot block the process indefinitely. When the
++        timeout is hit a warning is logged and the pending cleanup is
++        abandoned; if the cleanup finished but raised, the error is
++        re-raised.
+         """
+-        self._exit_stack.close()
++        if self.cleanup_timeout is None:
++            self._exit_stack.close()
++        else:
++            import logging
++            import threading
++
++            exit_stack = self._exit_stack
++            errors: list[BaseException] = []
++
++            def run() -> None:
++                try:
++                    exit_stack.close()
++                except BaseException as e:  # noqa: BLE001
++                    errors.append(e)
++
++            worker = threading.Thread(target=run, daemon=True)
++            worker.start()
++            worker.join(self.cleanup_timeout)
++
++            if worker.is_alive():
++                logging.getLogger("click").warning(
++                    "Context cleanup timed out after %s seconds; aborting "
++                    "pending cleanup operations.",
++                    self.cleanup_timeout,
++                )
++            elif errors:
++                raise errors[0]
++
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..82410aa 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -27,7 +27,10 @@ def shell_complete(
+ 
+     :param cli: Command being called.
+     :param ctx_args: Extra arguments to pass to
+-        ``cli.make_context``.
++        ``cli.make_context``. These are forwarded to the
++        :class:`~click.Context` constructor, so settings such as
++        ``cleanup_timeout`` are respected when the temporary contexts
++        used for completion are torn down.
+     :param prog_name: Name of the executable in the shell.
+     :param complete_var: Name of the environment variable that holds
+         the completion instruction.
+@@ -544,44 +547,50 @@ def _resolve_context(
+     :param args: List of complete args before the incomplete value.
+     """
+     ctx_args["resilient_parsing"] = True
+-    ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
+-    args = ctx._protected_args + ctx.args
++    with cli.make_context(prog_name, args.copy(), **ctx_args) as ctx:
++        args = ctx._protected_args + ctx.args
+ 
+-    while args:
+-        command = ctx.command
++        while args:
++            command = ctx.command
+ 
+-        if isinstance(command, Group):
+-            if not command.chain:
+-                name, cmd, args = command.resolve_command(ctx, args)
+-
+-                if cmd is None:
+-                    return ctx
+-
+-                ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
+-                args = ctx._protected_args + ctx.args
+-            else:
+-                sub_ctx = ctx
+-
+-                while args:
++            if isinstance(command, Group):
++                if not command.chain:
+                     name, cmd, args = command.resolve_command(ctx, args)
+ 
+                     if cmd is None:
+                         return ctx
+ 
+-                    sub_ctx = cmd.make_context(
+-                        name,
+-                        args,
+-                        parent=ctx,
+-                        allow_extra_args=True,
+-                        allow_interspersed_args=False,
+-                        resilient_parsing=True,
+-                    )
+-                    args = sub_ctx.args
+-
+-                ctx = sub_ctx
+-                args = [*sub_ctx._protected_args, *sub_ctx.args]
+-        else:
+-            break
++                    with cmd.make_context(
++                        name, args, parent=ctx, resilient_parsing=True
++                    ) as sub_ctx:
++                        args = sub_ctx._protected_args + sub_ctx.args
++
++                    ctx = sub_ctx
++                else:
++                    sub_ctx = ctx
++
++                    while args:
++                        name, cmd, args = command.resolve_command(ctx, args)
++
++                        if cmd is None:
++                            return ctx
++
++                        with cmd.make_context(
++                            name,
++                            args,
++                            parent=ctx,
++                            allow_extra_args=True,
++                            allow_interspersed_args=False,
++                            resilient_parsing=True,
++                        ) as sub_sub_ctx:
++                            args = sub_sub_ctx.args
++
++                        sub_ctx = sub_sub_ctx
++
++                    ctx = sub_ctx
++                    args = [*sub_ctx._protected_args, *sub_ctx.args]
++            else:
++                break
+ 
+     return ctx
+ 
