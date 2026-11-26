@@ -1,0 +1,45 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..4590e2b 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import functools
++from collections import Counter
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import TYPE_CHECKING, AbstractSet, Collection, Literal, NoReturn, Sequence
+ 
+@@ -82,7 +83,14 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++        return_repeated_pattern: bool = False,
++    ) -> (
++        list[int]
++        | list[list[int]]
++        | tuple[list[int], dict[tuple[int, int], int]]
++        | list[tuple[list[int], dict[tuple[int, int], int]]]
++    ):
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,6 +105,16 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        Additionally, two optional features are available:
++        - Setting `chunk_size` to a positive integer will split the input text into chunks of
++          that many characters before encoding, which is useful for processing long documents
++          within context limits. When set, the return value becomes a list, with one entry per
++          chunk (a list of tokens, or a `(tokens, patterns)` tuple if `return_repeated_pattern`
++          is also set).
++        - Setting `return_repeated_pattern` to True will additionally analyse the encoded
++          tokens and return, alongside the tokens, a dictionary of the top 3 most frequent
++          adjacent token pairs and their occurrence counts.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
