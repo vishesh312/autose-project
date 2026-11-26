@@ -1,0 +1,93 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..7c5e2c3 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import functools
++from collections import Counter
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import TYPE_CHECKING, AbstractSet, Collection, Literal, NoReturn, Sequence
+ 
+@@ -82,9 +83,25 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++        return_repeated_pattern: bool = False,
++    ) -> list[int] | list[list[int]] | tuple[list[int], dict[tuple[int, int], int]]:
+         """Encodes a string into tokens.
+ 
++        Args:
++            text: The string to encode.
++            allowed_special: Special tokens to allow. Defaults to no special tokens.
++            disallowed_special: Special tokens to raise an error on. Defaults to "all".
++            chunk_size: If set, the input text is split into chunks of at most this many
++                characters before tokenization. The return value becomes a list of token
++                lists, one per chunk.
++            return_repeated_pattern: If True, returns a tuple of the encoded tokens and a
++                dictionary of the top 3 most frequent adjacent token pairs with their counts.
++
++        When both `chunk_size` and `return_repeated_pattern` are set, the pattern analysis is
++        performed over the concatenated sequence of all chunks and the return value is a tuple of
++        a list of token lists and a dictionary of patterns.
++
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+         such as fill-in-the-middle. So we want to be careful about accidentally encoding special
+         tokens, since they can be used to trick a model into doing something we don't want it to do.
+@@ -120,17 +137,42 @@ class Encoding:
+             if match := _special_token_regex(disallowed_special).search(text):
+                 raise_disallowed_special_token(match.group())
+ 
+-        try:
+-            return self._core_bpe.encode(text, allowed_special)
+-        except UnicodeEncodeError:
+-            # BPE operates on bytes, but the regex operates on unicode. If we pass a str that is
+-            # invalid UTF-8 to Rust, it will rightfully complain. Here we do a quick and dirty
+-            # fixup for any surrogate pairs that may have sneaked their way into the text.
+-            # Technically, this introduces a place where encode + decode doesn't roundtrip a Python
+-            # string, but given that this is input we want to support, maybe that's okay.
+-            # Also we use errors="replace" to handle weird things like lone surrogates.
+-            text = text.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
+-            return self._core_bpe.encode(text, allowed_special)
++        def _core_encode(t: str) -> list[int]:
++            try:
++                return self._core_bpe.encode(t, allowed_special)
++            except UnicodeEncodeError:
++                # BPE operates on bytes, but the regex operates on unicode. If we pass a str that is
++                # invalid UTF-8 to Rust, it will rightfully complain. Here we do a quick and dirty
++                # fixup for any surrogate pairs that may have sneaked their way into the text.
++                # Technically, this introduces a place where encode + decode doesn't roundtrip a Python
++                # string, but given that this is input we want to support, maybe that's okay.
++                # Also we use errors="replace" to handle weird things like lone surrogates.
++                t = t.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
++                return self._core_bpe.encode(t, allowed_special)
++
++        # Handle chunking of long documents
++        if chunk_size is not None:
++            chunks = [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
++            token_lists = [_core_encode(chunk) for chunk in chunks]
++            if return_repeated_pattern:
++                all_tokens = [t for tokens in token_lists for t in tokens]
++                patterns = Counter(
++                    (all_tokens[i], all_tokens[i + 1])
++                    for i in range(len(all_tokens) - 1)
++                )
++                top_patterns = dict(patterns.most_common(3))
++                return token_lists, top_patterns
++            return token_lists
++
++        tokens = _core_encode(text)
++        if return_repeated_pattern:
++            patterns = Counter(
++                (tokens[i], tokens[i + 1])
++                for i in range(len(tokens) - 1)
++            )
++            top_patterns = dict(patterns.most_common(3))
++            return tokens, top_patterns
++        return tokens
+ 
+     def encode_to_numpy(
+         self,
