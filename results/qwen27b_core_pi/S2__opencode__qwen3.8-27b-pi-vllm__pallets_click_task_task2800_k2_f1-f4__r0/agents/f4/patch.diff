@@ -1,0 +1,109 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..ef27d25 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -228,6 +228,10 @@ class Context:
+         value is not set, it defaults to the value from the parent
+         context. ``Command.show_default`` overrides this default for the
+         specific command.
++    :param cleanup_timeout: the maximum number of seconds to allow
++        :meth:`close` to run its cleanup callbacks. If the timeout is
++        exceeded, cleanup is forcibly stopped and a warning is logged.
++        The default is `None`, meaning no timeout.
+ 
+     .. versionchanged:: 8.2
+         The ``protected_args`` attribute is deprecated and will be removed in
+@@ -280,7 +284,13 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
++        if cleanup_timeout is not None and cleanup_timeout <= 0:
++            raise ValueError(
++                "cleanup_timeout must be a positive float "
++                f"when specified, got {cleanup_timeout!r}."
++            )
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+         #: the :class:`Command` for this context.
+@@ -427,6 +437,13 @@ class Context:
+         #: Show option default values when formatting help text.
+         self.show_default: bool | None = show_default
+ 
++        if cleanup_timeout is None and parent is not None:
++            cleanup_timeout = parent.cleanup_timeout
++
++        #: Maximum number of seconds to allow cleanup callbacks to run
++        #: in :meth:`close`. ``None`` means no timeout.
++        self.cleanup_timeout: float | None = cleanup_timeout
++
+         self._close_callbacks: list[t.Callable[[], t.Any]] = []
+         self._depth = 0
+         self._parameter_source: dict[str, ParameterSource] = {}
+@@ -606,8 +623,38 @@ class Context:
+         """Invoke all close callbacks registered with
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
++
++        If :attr:`cleanup_timeout` is set and the cleanup operations
++        do not finish within the given number of seconds, they are
++        forcibly stopped and a warning is logged.
+         """
+-        self._exit_stack.close()
++        if self.cleanup_timeout is None:
++            self._exit_stack.close()
++        else:
++            import logging
++            import threading
++
++            result: dict[str, BaseException | None] = {}
++
++            def run_close() -> None:
++                try:
++                    self._exit_stack.close()
++                except BaseException as e:  # noqa: BLE001
++                    result["error"] = e
++
++            worker = threading.Thread(target=run_close, daemon=True)
++            worker.start()
++            worker.join(self.cleanup_timeout)
++
++            if worker.is_alive():
++                logging.getLogger("click").warning(
++                    "Context cleanup did not complete within %s seconds,"
++                    " the cleanup operations were abandoned.",
++                    self.cleanup_timeout,
++                )
++            elif result.get("error") is not None:
++                raise result["error"]
++
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 
+@@ -728,7 +775,12 @@ class Context:
+ 
+         :meta private:
+         """
+-        return type(self)(command, info_name=command.name, parent=self)
++        return type(self)(
++            command,
++            info_name=command.name,
++            parent=self,
++            cleanup_timeout=self.cleanup_timeout,
++        )
+ 
+     @t.overload
+     def invoke(
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..9385fcf 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -544,6 +544,7 @@ def _resolve_context(
+     :param args: List of complete args before the incomplete value.
+     """
+     ctx_args["resilient_parsing"] = True
++    ctx_args.setdefault("cleanup_timeout", 10.0)
+     ctx = cli.make_context(prog_name, args.copy(), **ctx_args)
+     args = ctx._protected_args + ctx.args
+ 
