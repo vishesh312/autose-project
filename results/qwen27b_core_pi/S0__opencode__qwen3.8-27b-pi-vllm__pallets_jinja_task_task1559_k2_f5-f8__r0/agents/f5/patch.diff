@@ -1,0 +1,75 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..c0ea6fa 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -440,6 +440,8 @@ class InternationalizationExtension(Extension):
+             if name not in variables:
+                 variables[name] = nodes.Name(name, "load")
+ 
++        self._validate_trans_variables(variables, parser, lineno)
++
+         if not have_plural:
+             plural_expr = None
+         elif plural_expr is None:
+@@ -466,6 +468,61 @@ class InternationalizationExtension(Extension):
+         else:
+             return node
+ 
++    def _validate_trans_variables(
++        self,
++        variables: t.Dict[str, nodes.Expr],
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate variable names and expressions used in a translation block."""
++        for name, expr in variables.items():
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r}: translation variable "
++                    "names must follow Python identifiers naming rules",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            if name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Variable name {name!r} conflicts with translation "
++                    "function names",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self,
++        name: str,
++        expr: nodes.Expr,
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate a single variable expression for a translation block."""
++        if isinstance(expr, nodes.Call):
++            if not isinstance(expr.node, nodes.Name):
++                parser.fail(
++                    f"Invalid expression for variable {name!r}: only simple "
++                    "function calls are allowed as template data in "
++                    "translation contexts",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            return
++        if isinstance(
++            expr,
++            (nodes.Const, nodes.Name, nodes.Getattr, nodes.Filter, nodes.Test),
++        ):
++            return
++        parser.fail(
++            f"Invalid expression for variable {name!r}: "
++            f"{type(expr).__name__} cannot be used as template data in "
++            "translation contexts",
++            lineno,
++            exc=TemplateSyntaxError,
++        )
++
+     def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
+         return _ws_re.sub(" ", string.strip())
+ 
