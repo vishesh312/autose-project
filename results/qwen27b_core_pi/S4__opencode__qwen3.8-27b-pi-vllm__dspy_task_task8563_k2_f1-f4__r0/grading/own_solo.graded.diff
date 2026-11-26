@@ -1,0 +1,130 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..4abc5cd5 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,5 +1,7 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+@@ -254,13 +256,117 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_args(value: Any) -> Any:
++    """Recursively canonicalize a value for deterministic fingerprinting.
++
++    - Sorts the keys of dictionaries.
++    - Converts tuples to lists.
++    - Strips leading/trailing whitespace from string values.
++    - Leaves numeric, boolean, and other scalar values unchanged (no type coercion).
++    """
++    if isinstance(value, dict):
++        return {key: _canonicalize_args(val) for key, val in sorted(value.items(), key=lambda item: str(item[0]))}
++    if isinstance(value, (list, tuple)):
++        return [_canonicalize_args(item) for item in value]
++    if isinstance(value, str):
++        return value.strip()
++    return value
++
++
++def _compute_tool_call_fingerprint(name: Any, args: Any) -> tuple[str, str]:
++    """Compute a stable SHA-256 fingerprint for a single tool call.
++
++    The fingerprint is derived from the tool ``name`` and the canonicalized
++    ``args``. It is computed once at creation time and is deterministic, so that
++    identical calls (ignoring harmless differences such as argument order or
++    extra whitespace) always produce the same fingerprint.
++
++    Args:
++        name: The name of the tool.
++        args: The arguments of the tool call.
++
++    Returns:
++        A tuple of ``(fingerprint, short_id)`` where ``fingerprint`` is the full
++        64-character hexadecimal SHA-256 digest and ``short_id`` is the first
++        8 characters of the digest, suitable for logging/debugging.
++    """
++    canonical = {"name": name, "args": _canonicalize_args(args) if args is not None else {}}
++    serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++    digest = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++    return digest, digest[:8]
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str
++        id: str
++
++        def __init__(self, **data):
++            name = data.get("name")
++            args = data.get("args")
++            if args is None:
++                args = {}
++            fingerprint, short_id = _compute_tool_call_fingerprint(name, args)
++            data["fingerprint"] = fingerprint
++            data["id"] = short_id
++            super().__init__(**data)
+ 
+     tool_calls: list[ToolCall]
+ 
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Normalize varied LM output formats for tool calls.
++
++        Language models often return tool calls in alternative formats that
++        deviate from the canonical structure. This method normalizes those
++        variations into a consistent internal representation. It returns
++        normalized Python structures (dict/list/string), NOT a ``ToolCalls``
++        instance.
++
++        Behavior:
++        - A string that parses as JSON into a dict or list is returned as the
++          parsed structure; a string that cannot be parsed as JSON is returned
++          unchanged.
++        - A dict that already contains a ``tool_calls`` key is returned as-is
++          (existing behavior preserved).
++        - A single ``{"name": ..., "args": ...}`` dict (without ``tool_calls``)
++          is wrapped into a list under the ``tool_calls`` key.
++        - A list of tool-call dicts is wrapped in a ``{"tool_calls": [...]}``
++          container.
++
++        Args:
++            data: The raw LM output to normalize.
++
++        Returns:
++            The normalized Python structure (a dict, list, or string).
++        """
++        if isinstance(data, str):
++            try:
++                parsed = json.loads(data)
++            except (json.JSONDecodeError, TypeError):
++                # Non-JSON string that cannot be parsed: return unchanged.
++                return data
++            if isinstance(parsed, (dict, list)):
++                return parsed
++            return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                # Existing behavior preserved.
++                return data
++            if "name" in data and "args" in data:
++                # Single-object normalization: wrap into a list under tool_calls.
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            # List normalization: wrap the list in a tool_calls container.
++            return {"tool_calls": data}
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.
