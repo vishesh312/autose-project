@@ -1,0 +1,93 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..6670c0d 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -280,7 +280,10 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
++        if cleanup_timeout is not None and cleanup_timeout <= 0:
++            raise ValueError("cleanup_timeout must be a positive float value.")
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+         #: the :class:`Command` for this context.
+@@ -427,6 +430,11 @@ class Context:
+         #: Show option default values when formatting help text.
+         self.show_default: bool | None = show_default
+ 
++        #: The maximum time (in seconds) to allow cleanup operations to
++        #: run before they are forcibly terminated. ``None`` means no
++        #: timeout.
++        self.cleanup_timeout: float | None = cleanup_timeout
++
+         self._close_callbacks: list[t.Callable[[], t.Any]] = []
+         self._depth = 0
+         self._parameter_source: dict[str, ParameterSource] = {}
+@@ -606,8 +614,40 @@ class Context:
+         """Invoke all close callbacks registered with
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
++
++        If :attr:`cleanup_timeout` is set, the cleanup is bounded by that
++        many seconds. When the deadline is exceeded the remaining cleanup
++        is aborted and a warning is logged so teardown cannot hang
++        indefinitely.
+         """
+-        self._exit_stack.close()
++        if self.cleanup_timeout is None:
++            self._exit_stack.close()
++        else:
++            import logging
++
++            import threading
++            import time
++
++            finished = threading.Event()
++
++            def _run_cleanup() -> None:
++                try:
++                    self._exit_stack.close()
++                finally:
++                    finished.set()
++
++            worker = threading.Thread(target=_run_cleanup, daemon=True)
++            worker.start()
++            worker.join(self.cleanup_timeout)
++
++            if not finished.is_set():
++                logging.getLogger(__name__).warning(
++                    "Context cleanup did not complete within %s seconds; "
++                    "abandoning remaining cleanup callbacks.",
++                    self.cleanup_timeout,
++                )
++                self._exit_stack = ExitStack()
++
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..0f7b0f8 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -557,7 +557,10 @@ def _resolve_context(
+                 if cmd is None:
+                     return ctx
+ 
+-                ctx = cmd.make_context(name, args, parent=ctx, resilient_parsing=True)
++                ctx = cmd.make_context(
++                    name, args, parent=ctx, resilient_parsing=True,
++                    cleanup_timeout=ctx.cleanup_timeout,
++                )
+                 args = ctx._protected_args + ctx.args
+             else:
+                 sub_ctx = ctx
+@@ -575,6 +578,7 @@ def _resolve_context(
+                         allow_extra_args=True,
+                         allow_interspersed_args=False,
+                         resilient_parsing=True,
++                        cleanup_timeout=ctx.cleanup_timeout,
+                     )
+                     args = sub_ctx.args
+ 
