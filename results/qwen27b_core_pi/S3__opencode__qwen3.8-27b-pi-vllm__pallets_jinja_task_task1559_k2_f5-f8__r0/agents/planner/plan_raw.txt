@@ -1,0 +1,40 @@
+I have read-only tools only (glob, grep, read, skill) — no file editing capability. I'm the planner role. My job is to identify which files will change. Let me provide the final JSON answer.
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f5",
+      "files": [
+        {
+          "path": "src/jinja2/ext.py",
+          "functions": [
+            "InternationalizationExtension.parse",
+            "InternationalizationExtension._validate_trans_variables",
+            "InternationalizationExtension._validate_trans_expression"
+          ],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f8",
+      "files": [
+        {
+          "path": "src/jinja2/ext.py",
+          "functions": [
+            "ConditionalI18nExtension",
+            "ConditionalI18nExtension.__init__",
+            "ConditionalI18nExtension.parse",
+            "ConditionalI18nExtension._parse_block",
+            "ConditionalI18nExtension._trim_whitespace",
+            "ConditionalI18nExtension._make_conditional_node",
+            "conditional_i18n"
+          ],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```
