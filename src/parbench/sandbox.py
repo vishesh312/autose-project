@@ -7,6 +7,7 @@ import platform
 import shlex
 import subprocess
 import tempfile
+import threading
 import time
 import uuid
 from dataclasses import dataclass
@@ -14,6 +15,31 @@ from pathlib import Path
 
 REPO = "/workspace/repo"
 WORK = "/parbench"  # scratch dir inside the container (prompts, harness output); outside the repo
+
+# Host-mode processes run in their own session (start_new_session), so a Ctrl-C or `kill` of parbench does not
+# reach them. The runner calls stop_host_processes() on interrupt: kill every live group and refuse new ones.
+_LIVE_PGIDS: set[int] = set()
+_LIVE_LOCK = threading.Lock()
+_STOPPING = threading.Event()
+
+
+def stop_host_processes() -> int:
+    """Kill all running host-mode process groups and make further HostWorkspace.exec calls raise. Returns #killed."""
+    import signal
+
+    _STOPPING.set()
+    with _LIVE_LOCK:
+        pgids = list(_LIVE_PGIDS)
+    for g in pgids:
+        try:
+            os.killpg(g, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    return len(pgids)
+
+
+def reset_host_stop() -> None:
+    _STOPPING.clear()
 
 
 @dataclass
@@ -303,8 +329,12 @@ class HostWorkspace(Container):
         from .sandbox_policy import wrap_host
 
         argv, full_env = wrap_host(["bash", "-c", cmd], full_env, self.root, self.sandbox)
-        proc = subprocess.Popen(argv, cwd=workdir or self.repo, env=full_env, stdout=out_f,
-                                stderr=err_f, text=True, start_new_session=True)
+        with _LIVE_LOCK:
+            if _STOPPING.is_set():
+                raise RuntimeError("parbench is stopping: not starting a host process")
+            proc = subprocess.Popen(argv, cwd=workdir or self.repo, env=full_env, stdout=out_f,
+                                    stderr=err_f, text=True, start_new_session=True)
+            _LIVE_PGIDS.add(proc.pid)
         try:
             stdout, stderr = proc.communicate(timeout=timeout)
         except subprocess.TimeoutExpired:
@@ -312,9 +342,13 @@ class HostWorkspace(Container):
             os.killpg(proc.pid, signal.SIGKILL)
             stdout, stderr = proc.communicate()
         finally:
+            with _LIVE_LOCK:
+                _LIVE_PGIDS.discard(proc.pid)
             for f in (out_f, err_f):
                 if hasattr(f, "close"):
                     f.close()
+        if _STOPPING.is_set():  # killed by stop_host_processes(): don't let the caller retry or nudge
+            raise RuntimeError("parbench was stopped while this host process ran")
         if stdout_path:
             stdout = Path(stdout_path).read_text(errors="replace")
         if stderr_path:

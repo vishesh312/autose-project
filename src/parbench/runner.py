@@ -11,6 +11,7 @@ import json
 import os
 import platform
 import re
+import signal
 import threading
 import time
 import traceback
@@ -23,7 +24,7 @@ from .dataset import Bundle, bundles_from_subset, load_gold_conflicts, load_pool
 from . import meter
 from .grader import grade
 from .harnesses import get_harness
-from .sandbox import Container, image_exists
+from .sandbox import Container, image_exists, reset_host_stop, stop_host_processes
 from .sandbox_policy import record as sandbox_record
 from .strategies import RunContext, StrategySpec, run_strategy
 
@@ -90,15 +91,29 @@ def run_experiment(cfg: ExperimentConfig, dry_run: bool = False) -> Path:
     if len(set(ids)) != len(ids):  # two runs would share (and clobber) one directory
         raise ValueError(f"duplicate run ids: {sorted({i for i in ids if ids.count(i) > 1})}")
     _STOP.clear()
+    reset_host_stop()
+
+    def _on_term(signum, frame):  # `kill <pid>` stops like Ctrl-C (SIGHUP is left alone: nohup ignores it)
+        raise KeyboardInterrupt
+
+    old_term = None
+    if threading.current_thread() is threading.main_thread():
+        old_term = signal.signal(signal.SIGTERM, _on_term)
     ex = ThreadPoolExecutor(max(1, cfg.max_parallel_runs))
     try:
         list(ex.map(one, runs))
     except KeyboardInterrupt:
         # Start no new runs, and don't let runs whose agents were interrupted write run.json (they'd count as done).
+        # Host-mode agents run in their own session, so kill them here; their runs are redone on relaunch.
         _STOP.set()
-        print("interrupted: waiting for running agents to stop (Ctrl-C again to abandon; then `parbench cleanup`)")
+        n = stop_host_processes()
+        print(f"interrupted: killed {n} host process group(s); finishing up (finished runs are kept, "
+              f"re-launch the same command to resume)", flush=True)
         ex.shutdown(wait=True, cancel_futures=True)
         raise
+    finally:
+        if old_term is not None:
+            signal.signal(signal.SIGTERM, old_term)
     ex.shutdown()
     return out
 
