@@ -1,0 +1,22 @@
+{
+  "pallets_click_task/task2800/k2/f1-f4": {
+    "id": "pallets_click_task/task2800/k2/f1-f4",
+    "pool": "pallets_click_task/task2800",
+    "image": "hostpool:pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "gold_files": {
+      "1": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "4": [
+        "src/click/core.py"
+      ]
+    },
+    "gold_conflict_pairs": []
+  }
+}
