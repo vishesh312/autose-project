@@ -1,0 +1,138 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..e46aaa52 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,9 +1,12 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import json_repair
+ from jsonschema import ValidationError, validate
+-from pydantic import BaseModel, TypeAdapter, create_model
++from pydantic import BaseModel, TypeAdapter, create_model, model_validator
+ 
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+@@ -254,13 +257,91 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_args(args: Any) -> Any:
++    """Recursively canonicalize a value for stable fingerprinting.
++
++    - Sorts dict keys
++    - Converts tuples to lists
++    - Strips leading/trailing whitespace from strings
++    - Leaves numeric and boolean values unchanged (no type coercion)
++    """
++    if isinstance(args, dict):
++        return {k: _canonicalize_args(v) for k, v in sorted(args.items())}
++    if isinstance(args, (list, tuple)):
++        return [_canonicalize_args(item) for item in args]
++    if isinstance(args, str):
++        return args.strip()
++    return args
++
++
++def _compute_tool_call_fingerprint(name: str, args: dict[str, Any]) -> tuple[str, str]:
++    """Compute a stable SHA-256 fingerprint for a tool call from its name and canonicalized args."""
++    canonical = {"name": name, "args": _canonicalize_args(args)}
++    serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++    digest = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++    return digest, digest[:8]
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str | None = None
++        id: str | None = None
++
++        def __init__(self, name: str, args: dict[str, Any], **data):
++            super().__init__(name=name, args=args, **data)
++            fingerprint, short_id = _compute_tool_call_fingerprint(self.name, self.args)
++            self.fingerprint = fingerprint
++            self.id = short_id
+ 
+     tool_calls: list[ToolCall]
+ 
++    @model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Normalize the various tool-call formats LMs may emit into the canonical structure.
++
++        LMs frequently return tool calls in shapes that deviate from the expected
++        ``{"tool_calls": [...]}`` container. This normalizes them so downstream tool
++        execution can rely on a single internal format:
++
++        - A dict that already contains a ``tool_calls`` key is returned unchanged.
++        - A single ``{"name": ..., "args": ...}`` object (with no ``tool_calls`` key)
++          is wrapped into ``{"tool_calls": [obj]}``.
++        - A list of ``{"name": ..., "args": ...}`` objects is wrapped into
++          ``{"tool_calls": [...]}``.
++        - A JSON string is parsed first and then normalized using the rules above.
++        - A non-JSON string that cannot be parsed is returned unchanged.
++
++        Returns a normalized Python structure (dict/list/str), not a ``ToolCalls``
++        instance.
++        """
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            parsed = _parse_json_lenient(data)
++            if parsed is data:
++                # Not parseable as a JSON structure; return the original string unchanged.
++                return data
++            data = parsed
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                # Existing behavior preserved.
++                return data
++            if "name" in data and "args" in data:
++                # Single-object normalization: wrap into the canonical container.
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            # List normalization: wrap the list in the canonical container.
++            return {"tool_calls": data}
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.
+@@ -310,6 +391,27 @@ class ToolCalls(Type):
+         ]
+ 
+ 
++def _parse_json_lenient(data: str) -> Any:
++    """Parse a JSON string, falling back to ``json_repair`` for slightly malformed input.
++
++    Returns the parsed object (dict/list/str/etc.), or the original string unchanged if it
++    cannot be parsed into a JSON structure.
++    """
++    try:
++        return json.loads(data)
++    except (json.JSONDecodeError, ValueError):
++        pass
++    try:
++        repaired = json_repair.loads(data)
++    except Exception:
++        return data
++    # ``json_repair`` may return a plain string for non-JSON input (e.g. ""); only accept
++    # dict/list results as meaningful JSON structures, otherwise treat as unparseable.
++    if isinstance(repaired, (dict, list)):
++        return repaired
++    return data
++
++
+ def _resolve_json_schema_reference(schema: dict) -> dict:
+     """Recursively resolve json model schema, expanding all references."""
+ 

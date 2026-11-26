@@ -1,0 +1,56 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..fddb5fc5 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,5 +1,7 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+@@ -254,10 +256,43 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_args(args: Any) -> Any:
++    """Recursively canonicalize a value for stable fingerprinting.
++
++    - Sorts dict keys
++    - Converts tuples to lists
++    - Strips leading/trailing whitespace from strings
++    - Leaves numeric and boolean values unchanged (no type coercion)
++    """
++    if isinstance(args, dict):
++        return {k: _canonicalize_args(v) for k, v in sorted(args.items())}
++    if isinstance(args, (list, tuple)):
++        return [_canonicalize_args(item) for item in args]
++    if isinstance(args, str):
++        return args.strip()
++    return args
++
++
++def _compute_tool_call_fingerprint(name: str, args: dict[str, Any]) -> tuple[str, str]:
++    """Compute a stable SHA-256 fingerprint for a tool call from its name and canonicalized args."""
++    canonical = {"name": name, "args": _canonicalize_args(args)}
++    serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++    digest = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++    return digest, digest[:8]
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str | None = None
++        id: str | None = None
++
++        def __init__(self, name: str, args: dict[str, Any], **data):
++            super().__init__(name=name, args=args, **data)
++            fingerprint, short_id = _compute_tool_call_fingerprint(self.name, self.args)
++            self.fingerprint = fingerprint
++            self.id = short_id
+ 
+     tool_calls: list[ToolCall]
+ 
