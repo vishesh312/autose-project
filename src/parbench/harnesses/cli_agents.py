@@ -173,6 +173,7 @@ class OpenCodeHarness(Harness):
     name = "opencode"
     host_capable = True
     supports_subagents = True
+    supports_read_only = True
     providers = ("openai_compat", "anthropic", "openai", "google", "openrouter")
     repo_artifacts = [".opencode", "opencode.json", "opencode.jsonc"]
 
@@ -204,6 +205,10 @@ class OpenCodeHarness(Harness):
         }
         if not opts.subagents:
             cfg["tools"]["task"] = False
+        if opts.read_only:  # S3 planner: read/grep/glob only (tools removed, and denied in case one slips through)
+            for t in ("edit", "write", "bash", "patch", "multiedit", "todowrite"):
+                cfg["tools"][t] = False
+            cfg["permission"].update({"edit": "deny", "bash": "deny"})
         # In host mode 1.x also put the host user's ~/.claude/CLAUDE.md and ~/.claude/skills into the system prompt
         # (seen via the proxy); these flags make it the same as on a clean machine.
         env = {"OPENCODE_DISABLE_AUTOUPDATE": "1", "OPENCODE_DISABLE_CLAUDE_CODE_PROMPT": "1",
@@ -235,6 +240,8 @@ class OpenCodeHarness(Harness):
                  for a in ("question", "webfetch", "websearch", "execute")]
         if not opts.subagents:
             rules.append({"action": "subagent", "resource": "*", "effect": "deny"})
+        if opts.read_only:  # S3 planner. 2.x action names UNVERIFIED (1.x path checked)
+            rules += [{"action": a, "resource": "*", "effect": "deny"} for a in ("edit", "write", "shell")]
         steps = {"steps": opts.max_turns} if opts.max_turns else {}
         cfg = {
             "model": f"{self._prov(model)}/{self._key(model)}",

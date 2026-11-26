@@ -68,11 +68,13 @@ class RunOptions:
     subagents: bool = False
     max_turns: int | None = None
     timeout_s: int = 1800
+    read_only: bool = False  # S3 planner: no edit/write/shell tools (enforced only where supports_read_only)
 
 
 class Harness(ABC):
     name: str = "base"
     supports_subagents: bool = False
+    supports_read_only: bool = False  # RunOptions.read_only removes the edit/write/shell tools (else prompt-only)
     # Paths (relative to repo root) the harness may create that must not count as agent changes.
     repo_artifacts: list[str] = []
     # Model providers this harness can drive.

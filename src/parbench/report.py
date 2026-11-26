@@ -29,6 +29,11 @@ def flatten(rec: dict) -> dict:
         "wall_s": t["wall_clock_s"], "busy_s": t["agent_busy_s"], "parallelism": t["effective_parallelism"],
         "nudges": t["nudges"], "timeouts": t["timeouts"],
     }
+    s3 = rec.get("s3")
+    if s3:
+        pq = s3.get("planning") or {}
+        row.update(s3_fallback=int(bool(s3.get("fallback"))), s3_groups=len(s3.get("groups") or []),
+                   plan_file_recall=pq.get("file_recall"), plan_file_precision=pq.get("file_precision"))
     m = rec.get("merge")
     if m:
         row["conflict_rate"] = m["conflict_rate"]

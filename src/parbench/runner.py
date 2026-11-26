@@ -232,7 +232,7 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
     usage_proxy = (sum((a.usage_proxy for a in agents), Usage())
                    if agents and all(a.usage_proxy is not None for a in agents) else None)
     workers = [a for a in agents if a.role != "resolver"]
-    coord = sum((a.best_usage for a in agents if a.role == "resolver"), Usage())
+    coord = sum((a.best_usage for a in agents if a.role in ("resolver", "planner")), Usage())  # S3 planner too
     busy = sum(a.busy_s for a in agents)
     # Wall-clock, the same for every strategy (docs/research/Task4_Metrics.md): time during which at least one
     # worker agent ran (union of their intervals), plus S2's merge stage. Setup and grading are separate fields.
@@ -250,7 +250,8 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
     for label in res.finals:
         g = grades[label]
         passed = [f for f in bundle.feature_ids if g.get(f, {}).get("passed")]
-        lost = [f for f in bundle.feature_ids if own_pass.get(f) and f not in passed] if spec.id == "S2" else []
+        lost = ([f for f in bundle.feature_ids if own_pass.get(f) and f not in passed]
+                if spec.id in ("S2", "S3") else [])
         finals[label] = {
             "task_pass_rate": len(passed) / bundle.k,
             "bundle_success": len(passed) == bundle.k,
@@ -269,7 +270,7 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
     reads = [set(a.files_read) for a in workers]
     repeated = sorted({f for a, b in combinations(reads, 2) for f in a & b}) if len(reads) > 1 else []
     wasted = Usage()
-    if spec.id == "S2" and primary in finals:
+    if spec.id in ("S2", "S3") and primary in finals:
         for a in workers:
             if any(f in finals[primary]["lost_in_merge"] for f in a.feature_ids):
                 wasted = wasted + a.best_usage
@@ -312,6 +313,7 @@ def build_record(cfg, bundle, spec, harness, model, repeat, res, grades, t0, t_a
             "timeouts": sum(a.timed_out for a in agents),
         },
         "merge": res.merge,
+        "s3": res.s3,
         "agents": [a.to_json() for a in agents],
         "grades": grades,
     }

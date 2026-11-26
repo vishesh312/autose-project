@@ -52,3 +52,9 @@ def resolver(features: list[Feature], conflict_files: list[str], repo: str = "/w
         tasks=tasks_block(features),
         conflict_files="\n".join(f"- {f}" for f in conflict_files),
     )
+
+
+def planner(features: list[Feature], repo: str = "/workspace/repo") -> str:
+    """S3 planner: tasks are labelled by feature id (f1, f4, ...) so the plan can name them unambiguously."""
+    tasks = "\n\n".join(f"### Task f{f.fid}\n\n{f.description.strip()}" for f in features)
+    return render("planner", repo=repo, k=len(features), tasks=tasks, ids=", ".join(f"f{f.fid}" for f in features))
