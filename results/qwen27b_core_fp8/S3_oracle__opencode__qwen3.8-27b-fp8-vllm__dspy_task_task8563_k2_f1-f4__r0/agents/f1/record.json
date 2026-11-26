@@ -1,0 +1,123 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795734396.6957662,
+  "ended": 1795735870.8977666,
+  "busy_s": 1474.163803577423,
+  "usage": {
+    "input": 1262246,
+    "cached_input": 1177568,
+    "cache_write": 0,
+    "output": 25050,
+    "reasoning": 19857,
+    "cost_reported": 0.0,
+    "calls": 27
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 1263528,
+    "cached_input": 1177568,
+    "cache_write": 0,
+    "output": 25260,
+    "reasoning": 20058,
+    "cost_reported": null,
+    "calls": 28
+  },
+  "meter": {
+    "requests": 28,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 28
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.1339308,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 13,
+    "shell": 15,
+    "edit": 2
+  },
+  "files_read": [
+    "dspy",
+    "dspy/adapters/base.py",
+    "dspy/adapters/json_adapter.py",
+    "dspy/adapters/types/audio.py",
+    "dspy/adapters/types/base_type.py",
+    "dspy/adapters/types/code.py",
+    "dspy/adapters/types/image.py",
+    "dspy/adapters/types/tool.py",
+    "dspy/adapters/utils.py",
+    "tests",
+    "tests/adapters/test_tool.py"
+  ],
+  "files_edited": [
+    "dspy/adapters/types/tool.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795734396.6961255,
+      "ended": 1795735870.859929,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 1262246,
+        "cached_input": 1177568,
+        "cache_write": 0,
+        "output": 25050,
+        "reasoning": 19857,
+        "cost_reported": 0.0,
+        "calls": 27
+      },
+      "num_turns": 27,
+      "session_id": "ses_de5e39c88ffesQCxSzuN0mVPRj",
+      "nudge_reason": null,
+      "final_text_tail": "@pydantic.model_validator(mode=\"before\")` classmethod (matching the existing `Code`/`Image`/`Audio` pattern) that normalizes the varied LM output formats into the canonical internal structure:\n\n- **Canonical** `{\"tool_calls\": [...]}` \u2192 returned unchanged (existing behavior preserved)\n- **Single object** `{\"name\": ..., \"args\": ...}` \u2192 wrapped into `{\"tool_calls\": [<dict>]}`\n- **Bare list** `[{...}, ...]` \u2192 wrapped into `{\"tool_calls\": <list>}`\n- **JSON strings** \u2192 parsed first, then normalized as above; non-JSON / unparseable strings returned unchanged\n- **Existing `ToolCalls` instance** \u2192 converted to a plain dict (the base-class `model_dump()` returns a tagged string, so I build the dict from the inner `ToolCall`s)\n\nIt returns normalized Python structures (dict/list/string), not a `ToolCalls` instance, so Pydantic builds the model from the result \u2014 and it's directly callable as `ToolCalls.validate_input(data)` per the clarification.\n\n**Verification:**\n- All input variants (dict/list/string, canonical/single/bare-list, edge cases like empty list and JSON scalars) normalize correctly via direct calls, `TypeAdapter`, and the real adapter path (`parse_value`).\n- `tests/adapters/` \u2192 88/88 pass; full suite \u2192 393 pass. The only 2 failures (`test_lm.py` retry tests) are pre-existing litellm environment issues, confirmed by re-running on the stashed (original) code.\n- Lint: no new errors introduced.\n\nChanges left in the working tree (uncommitted), scoped to the single file specified.",
+      "error": null,
+      "proxy_usage": {
+        "input": 1263528,
+        "cached_input": 1177568,
+        "cache_write": 0,
+        "output": 25260,
+        "reasoning": 20058,
+        "cost_reported": null,
+        "calls": 28
+      }
+    }
+  ],
+  "error": null
+}
