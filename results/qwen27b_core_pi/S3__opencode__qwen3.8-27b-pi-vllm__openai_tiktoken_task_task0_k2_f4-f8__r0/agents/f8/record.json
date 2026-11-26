@@ -1,0 +1,116 @@
+{
+  "agent_id": "f8",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-pi-vllm",
+  "feature_ids": [
+    8
+  ],
+  "started": 1795720560.4003668,
+  "ended": 1795720817.779342,
+  "busy_s": 257.34532833099365,
+  "usage": {
+    "input": 219330,
+    "cached_input": 197568,
+    "cache_write": 0,
+    "output": 2864,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 14
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 220361,
+    "cached_input": 197568,
+    "cache_write": 0,
+    "output": 2872,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 15
+  },
+  "meter": {
+    "requests": 15,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 15
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.0228977,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 3,
+    "read": 4,
+    "edit": 5,
+    "other": 1
+  },
+  "files_read": [
+    "tests",
+    "tests/test_encoding.py",
+    "tiktoken/core.py"
+  ],
+  "files_edited": [
+    "tiktoken/core.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795720560.4006329,
+      "ended": 1795720817.7459612,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 219330,
+        "cached_input": 197568,
+        "cache_write": 0,
+        "output": 2864,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 14
+      },
+      "num_turns": 14,
+      "session_id": "ses_de6b6bd40ffecP10Vn57CpfcvX",
+      "nudge_reason": null,
+      "final_text_tail": "The `test_hyp_roundtrip` failure is a pre-existing flaky hypothesis test unrelated to my changes \u2014 it uses `st.text()` which can generate special token text like `'",
+      "error": null,
+      "proxy_usage": {
+        "input": 220361,
+        "cached_input": 197568,
+        "cache_write": 0,
+        "output": 2872,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 15
+      }
+    }
+  ],
+  "error": null
+}
