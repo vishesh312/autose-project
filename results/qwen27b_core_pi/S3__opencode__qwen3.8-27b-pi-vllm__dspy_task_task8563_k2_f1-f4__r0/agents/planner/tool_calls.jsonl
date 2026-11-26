@@ -1,0 +1,7 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-jsi1y4yu/repo/dspy/adapters/types/tool.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-jsi1y4yu/repo/dspy/adapters/types/base_type.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "validate_input|from_string|ToolCalls"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-jsi1y4yu/repo/dspy/adapters/types/code.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-jsi1y4yu/repo/dspy/adapters/types/tool.py", "offset": 257, "limit": 60}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-jsi1y4yu/repo/dspy/adapters/base.py", "offset": 370, "limit": 40}, "ok": true, "ts": null}
+{"name": "invalid", "kind": "other", "args": {"tool": "edit", "error": "Model tried to call unavailable tool 'edit'. Available tools: glob, grep, invalid, read, skill."}, "ok": true, "ts": null}
