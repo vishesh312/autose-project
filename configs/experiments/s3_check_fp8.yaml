@@ -1,0 +1,18 @@
+# S3 check on the click bundle (same settings as the trial): planner-based S3 and the oracle-plan upper bound.
+name: s3_check_fp8
+dataset: external/CooperBench/dataset
+subset: core
+k: [2]
+seed: 0
+strategies: [S3+small_model, S3@oracle+small_model]
+harnesses: [opencode]
+host_harnesses: [opencode]
+models: [qwen3.8-27b-fp8-vllm]
+repeats: 1
+agent_timeout_s: 1800
+max_turns: 60
+max_nudges: 1
+max_parallel_runs: 3
+grade_parallel: 2
+merge: {modes: [naive, union, llm]}
+pools: [pallets_click_task/task2800]

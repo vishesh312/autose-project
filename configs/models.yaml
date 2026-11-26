@@ -61,6 +61,20 @@ models:
     price: {input: 0.10, output: 0.30}   # PLACEHOLDER reference price
     notes: "RedHatAI/Qwen3.8-27B-INT4 on vLLM; start with scripts/serve/qwen38_27b.sh (qwen3_coder tool parser)"
 
+  qwen3.8-27b-fp8-vllm:               # pkgpu2 GPU 1 (one server at a time), /scratch/ase/Qwen3.8-27B-FP8, thinking on (model default), port 8001
+    model: "qwen3.8-27b-fp8"
+    provider: openai_compat
+    base_url: http://localhost:8001/v1
+    context: 131072                   # = MAX_LEN of the serve command
+    price: {input: 0.10, output: 0.30}   # PLACEHOLDER reference price
+  qwen3.8-27b-pi-vllm:                # pkgpu2, FP8 base + LoRA /scratch/ase/Qwen3.8-27B-pi-adapted, GPU 1, thinking off (adapter card), port 8002
+    model: "qwen3.8-pi"
+    provider: openai_compat
+    base_url: http://localhost:8002/v1
+    context: 131072
+    price: {input: 0.10, output: 0.30}   # PLACEHOLDER reference price
+    notes: "LoRA trained for the pi harness (BF16 base); here applied to the FP8 base"
+
   # ---------------- hosted open models via OpenRouter ----------------
   qwen3.6-35b-a3b-openrouter:
     model: "qwen/qwen3.6-35b-a3b"

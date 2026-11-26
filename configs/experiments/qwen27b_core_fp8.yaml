@@ -1,0 +1,21 @@
+# Final core experiment, Qwen3.8-27B fp8 (vLLM on GPU 1, host mode), OpenCode with its default prompt (no prompt extras).
+# Decisions (2026-11-26): k=2, 1 bundle per pool, 1 repeat, all implemented strategies, budget 100 steps / 80 min per agent.
+name: qwen27b_core_fp8
+dataset: external/CooperBench/dataset
+subset: core
+k: [2]
+bundles_per_pool: 1
+seed: 0
+strategies: [S0, S1, S2, S3, S3@oracle, S4]
+harnesses: [opencode]
+host_harnesses: [opencode]
+models: [qwen3.8-27b-fp8-vllm]
+repeats: 1
+agent_timeout_s: 4800
+max_turns: 100
+max_nudges: 1
+max_parallel_runs: 2   # S2/S3 use 2 agents each: keep runs x k <= vLLM MAX_SEQS (4)
+grade_parallel: 2
+merge: {modes: [naive, union, llm]}
+pools: [pallets_jinja_task/task1559, pallets_jinja_task/task1621, pallets_click_task/task2800, dspy_task/task8563,
+        openai_tiktoken_task/task0, llama_index_task/task17244, dottxt_ai_outlines_task/task1655]
