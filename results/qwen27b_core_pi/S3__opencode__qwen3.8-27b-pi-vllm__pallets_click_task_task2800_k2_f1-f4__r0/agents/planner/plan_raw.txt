@@ -1,0 +1,20 @@
+```json
+{
+  "tasks": [
+    {
+      "id": "f1",
+      "files": [
+        {"path": "src/click/shell_completion.py", "functions": ["_resolve_context"], "confidence": "high"},
+        {"path": "src/click/core.py", "functions": ["Context.__init__", "Context.close"], "confidence": "low"}
+      ]
+    },
+    {
+      "id": "f4",
+      "files": [
+        {"path": "src/click/core.py", "functions": ["Context.__init__", "Context.close"], "confidence": "high"},
+        {"path": "src/click/shell_completion.py", "functions": ["_resolve_context"], "confidence": "low"}
+      ]
+    }
+  ]
+}
+```

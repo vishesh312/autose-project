@@ -1,0 +1,5 @@
+{"name": "grep", "kind": "read", "args": {"pattern": "_resolve_context", "path": "/scratch/manas_ase/tmp/parbench-host-4zingp6u/repo"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def close|class Context", "path": "/scratch/manas_ase/tmp/parbench-host-4zingp6u/repo/src/click/core.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-4zingp6u/repo/src/click/shell_completion.py", "offset": 520, "limit": 80}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-4zingp6u/repo/src/click/core.py", "offset": 161, "limit": 120}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-4zingp6u/repo/src/click/core.py", "limit": 50, "offset": 595}, "ok": true, "ts": null}
