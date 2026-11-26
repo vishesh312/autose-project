@@ -1,0 +1,29 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf..cb6acc3 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -83,6 +83,24 @@ class ImageBlock(BaseModel):
+ 
+         return self
+ 
++    def get_image_mimetype(self) -> str | None:
++        """Return the MIME type of the image, guessing it lazily if needed."""
++        if self.image_mimetype is None:
++            img_bytes = None
++            if self.image is not None:
++                img_bytes = base64.b64decode(self.image)
++            elif self.path is not None:
++                img_bytes = self.path.read_bytes()
++            elif self.url is not None:
++                response = requests.get(str(self.url))
++                img_bytes = response.content
++
++            if img_bytes is not None:
++                guess = filetype.guess(img_bytes)
++                self.image_mimetype = guess.mime if guess else None
++
++        return self.image_mimetype
++
+     def resolve_image(self, as_base64: bool = False) -> BytesIO:
+         """Resolve an image such that PIL can read it.
+ 
