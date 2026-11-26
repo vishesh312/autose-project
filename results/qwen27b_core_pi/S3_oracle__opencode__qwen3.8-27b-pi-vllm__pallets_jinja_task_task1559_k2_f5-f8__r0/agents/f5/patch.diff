@@ -1,0 +1,98 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..406f7ef 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -440,6 +440,8 @@ class InternationalizationExtension(Extension):
+             if name not in variables:
+                 variables[name] = nodes.Name(name, "load")
+ 
++        self._validate_trans_variables(variables, parser, lineno)
++
+         if not have_plural:
+             plural_expr = None
+         elif plural_expr is None:
+@@ -466,6 +468,84 @@ class InternationalizationExtension(Extension):
+         else:
+             return node
+ 
++    def _validate_trans_variables(
++        self,
++        variables: t.Dict[str, nodes.Expr],
++        parser: "Parser",
++        lineno: t.Optional[int],
++    ) -> None:
++        """Validate the variable names and expressions used in a
++        translatable block.
++
++        Variable names must be valid Python identifiers and must not
++        conflict with the core translation function names.  The value of
++        every variable is additionally checked by
++        :meth:`_validate_trans_expression` to make sure it can be used in
++        a translation context.
++        """
++        for name, expr in variables.items():
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r} in translatable block: "
++                    f"variable names must be valid Python identifiers",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            if name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Variable name {name!r} in translatable block conflicts "
++                    f"with translation function names; choose a different "
++                    f"variable name",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self,
++        name: str,
++        expr: nodes.Expr,
++        parser: "Parser",
++        lineno: t.Optional[int],
++    ) -> None:
++        """Validate a single expression used as a translation variable."""
++        # literal values and plain variable references are always fine
++        if isinstance(expr, (nodes.Const, nodes.Name)):
++            return
++        # simple function calls are allowed as long as the function
++        # itself is a plain name
++        if isinstance(expr, nodes.Call):
++            if not isinstance(expr.node, nodes.Name):
++                parser.fail(
++                    f"Variable {name!r} in translatable block uses a complex "
++                    f"nested expression instead of template data, which is "
++                    f"not compatible with translation contexts",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            return
++        # attribute access, filters and tests are allowed
++        if isinstance(expr, (nodes.Getattr, nodes.Filter, nodes.Test)):
++            return
++        # template data and output nodes can never be used as
++        # translation variables
++        if isinstance(expr, (nodes.TemplateData, nodes.Output)):
++            parser.fail(
++                f"Variable {name!r} in translatable block uses template data, "
++                f"which is not compatible with translation contexts",
++                lineno,
++                exc=TemplateSyntaxError,
++            )
++        # anything else is a complex nested expression that cannot be
++        # serialized for translation
++        parser.fail(
++            f"Variable {name!r} in translatable block uses a complex nested "
++            f"expression instead of template data, which is not compatible "
++            f"with translation contexts",
++            lineno,
++            exc=TemplateSyntaxError,
++        )
++
+     def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
+         return _ws_re.sub(" ", string.strip())
+ 
