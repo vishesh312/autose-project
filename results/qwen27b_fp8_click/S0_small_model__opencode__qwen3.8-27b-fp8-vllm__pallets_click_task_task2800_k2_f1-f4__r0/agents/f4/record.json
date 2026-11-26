@@ -1,0 +1,117 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    4
+  ],
+  "started": 1795702519.812782,
+  "ended": 1795703172.2062435,
+  "busy_s": 652.3512153625488,
+  "usage": {
+    "input": 765228,
+    "cached_input": 702464,
+    "cache_write": 0,
+    "output": 14201,
+    "reasoning": 9540,
+    "cost_reported": 0.0,
+    "calls": 25
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 766567,
+    "cached_input": 702464,
+    "cache_write": 0,
+    "output": 14446,
+    "reasoning": 9778,
+    "cost_reported": null,
+    "calls": 26
+  },
+  "meter": {
+    "requests": 26,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 26
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.08099050000000002,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 10,
+    "read": 9,
+    "edit": 8
+  },
+  "files_read": [
+    "/scratch/manas_ase/tmp/parbench-host-d9ad12r2/repo",
+    "src/click/core.py",
+    "src/click/shell_completion.py",
+    "tests/test_imports.py"
+  ],
+  "files_edited": [
+    "src/click/core.py",
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795702519.813125,
+      "ended": 1795703172.1643403,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 765228,
+        "cached_input": 702464,
+        "cache_write": 0,
+        "output": 14201,
+        "reasoning": 9540,
+        "cost_reported": 0.0,
+        "calls": 25
+      },
+      "num_turns": 25,
+      "session_id": "ses_de7ca039effeB9jprnR250IbEi",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nDone. Added `cleanup_timeout` to `Context` (core.py:284, validated as positive, stored at core.py:440) with `close()` now bounding cleanup in a daemon thread and logging/abandoning overruns (core.py:617-664), and shell completion now closes its resolved context chain through the same timeout-protected `close()` (shell_completion.py:273-291); all 558 runnable tests pass (the `test_basic.py` collection error is a pre-existing pytest version incompatibility).",
+      "error": null,
+      "proxy_usage": {
+        "input": 766567,
+        "cached_input": 702464,
+        "cache_write": 0,
+        "output": 14446,
+        "reasoning": 9778,
+        "cost_reported": null,
+        "calls": 26
+      }
+    }
+  ],
+  "error": null
+}

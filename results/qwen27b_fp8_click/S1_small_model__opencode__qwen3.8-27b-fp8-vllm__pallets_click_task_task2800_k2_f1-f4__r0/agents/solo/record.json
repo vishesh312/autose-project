@@ -1,0 +1,121 @@
+{
+  "agent_id": "solo",
+  "role": "solo",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1,
+    4
+  ],
+  "started": 1795700719.9987907,
+  "ended": 1795702519.110255,
+  "busy_s": 1799.107780456543,
+  "usage": {
+    "input": 1506353,
+    "cached_input": 1406496,
+    "cache_write": 0,
+    "output": 29316,
+    "reasoning": 22257,
+    "cost_reported": 0.0,
+    "calls": 31
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 1508140,
+    "cached_input": 1406496,
+    "cache_write": 0,
+    "output": 29906,
+    "reasoning": 22837,
+    "cost_reported": null,
+    "calls": 32
+  },
+  "meter": {
+    "requests": 32,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 32
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.15978579999999998,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": true,
+  "returncode": 124,
+  "tool_calls": {
+    "shell": 12,
+    "read": 17,
+    "edit": 8
+  },
+  "files_read": [
+    "src/click",
+    "src/click/core.py",
+    "src/click/shell_completion.py",
+    "src/click/types.py",
+    "tests",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "/scratch/manas_ase/tmp/parbench-host-x415jyl_/tmp/opencode/verify_tasks.py",
+    "src/click/core.py",
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795700719.9997625,
+      "ended": 1795702519.107543,
+      "returncode": 124,
+      "timed_out": true,
+      "usage": {
+        "input": 1506353,
+        "cached_input": 1406496,
+        "cache_write": 0,
+        "output": 29316,
+        "reasoning": 22257,
+        "cost_reported": 0.0,
+        "calls": 31
+      },
+      "num_turns": 31,
+      "session_id": "ses_de7e57a06ffeEbzqZYLr5GRhWX",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nAll checks pass (the logged warning proves the timeout path fired). Let me properly measure the wall time of the `with` block exit to confirm the ~0.2s cutoff:\n\n",
+      "error": null,
+      "proxy_usage": {
+        "input": 1508140,
+        "cached_input": 1406496,
+        "cache_write": 0,
+        "output": 29906,
+        "reasoning": 22837,
+        "cost_reported": null,
+        "calls": 32
+      }
+    }
+  ],
+  "error": null
+}

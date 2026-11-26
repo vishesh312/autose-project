@@ -1,0 +1,379 @@
+{
+  "run": {
+    "experiment": "qwen27b_fp8_click",
+    "bundle": "pallets_click_task/task2800/k2/f1-f4",
+    "pool": "pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S0+small_model",
+    "strategy_id": "S0",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-fp8-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795700719.0938823,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8001"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "isolated",
+    "by_final": {
+      "isolated": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          1
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": true,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 1884947,
+      "cached_input": 1727936,
+      "cache_write": 0,
+      "output": 45987,
+      "reasoning": 36816,
+      "cost_reported": null,
+      "calls": 62
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 1882232,
+      "cached_input": 1727936,
+      "cache_write": 0,
+      "output": 45596,
+      "reasoning": 36442,
+      "cost_reported": 0.0,
+      "calls": 60
+    },
+    "usage_proxy": {
+      "input": 1884947,
+      "cached_input": 1727936,
+      "cache_write": 0,
+      "output": 45987,
+      "reasoning": 36816,
+      "cost_reported": null,
+      "calls": 62
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.20229080000000002,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.20229080000000002,
+    "cost_per_solved_task": 0.20229080000000002,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "src/click/core.py",
+      "src/click/shell_completion.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 2451.498331785202,
+    "agents_wall_s": 2451.498331785202,
+    "merge_s": 0.0,
+    "strategy_span_s": 2453.310101747513,
+    "agent_busy_s": 2451.4540219306946,
+    "effective_parallelism": 0.9999819253988742,
+    "container_setup_s": 0.770439624786377,
+    "grading_s": 2.763031482696533,
+    "nudges": 0,
+    "timeouts": 1
+  },
+  "merge": null,
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1795700720.0020983,
+      "ended": 1795702519.1069686,
+      "busy_s": 1799.1028065681458,
+      "usage": {
+        "input": 1117004,
+        "cached_input": 1025472,
+        "cache_write": 0,
+        "output": 31395,
+        "reasoning": 26902,
+        "cost_reported": 0.0,
+        "calls": 35
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 1118380,
+        "cached_input": 1025472,
+        "cache_write": 0,
+        "output": 31541,
+        "reasoning": 27038,
+        "cost_reported": null,
+        "calls": 36
+      },
+      "meter": {
+        "requests": 36,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 36
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.12130030000000001,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": true,
+      "returncode": 124,
+      "tool_calls": {
+        "read": 25,
+        "edit": 1,
+        "shell": 9
+      },
+      "files_read": [
+        "CHANGES.rst",
+        "src/click",
+        "src/click/core.py",
+        "src/click/globals.py",
+        "src/click/shell_completion.py",
+        "src/click/types.py",
+        "testing",
+        "tests/test_shell_completion.py"
+      ],
+      "files_edited": [
+        "src/click/shell_completion.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 68,
+      "patch_files": [
+        "src/click/shell_completion.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795700720.0024617,
+          "ended": 1795702519.1052682,
+          "returncode": 124,
+          "timed_out": true,
+          "usage": {
+            "input": 1117004,
+            "cached_input": 1025472,
+            "cache_write": 0,
+            "output": 31395,
+            "reasoning": 26902,
+            "cost_reported": 0.0,
+            "calls": 35
+          },
+          "num_turns": 35,
+          "session_id": "ses_de7e579fcffefVIjvVOtYJz0gy",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nLet me examine the `Command.shell_complete` and `Group.shell_complete` methods in core.py to be thorough about the completion path.\n\n",
+          "error": null,
+          "proxy_usage": {
+            "input": 1118380,
+            "cached_input": 1025472,
+            "cache_write": 0,
+            "output": 31541,
+            "reasoning": 27038,
+            "cost_reported": null,
+            "calls": 36
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f4",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        4
+      ],
+      "started": 1795702519.812782,
+      "ended": 1795703172.2062435,
+      "busy_s": 652.3512153625488,
+      "usage": {
+        "input": 765228,
+        "cached_input": 702464,
+        "cache_write": 0,
+        "output": 14201,
+        "reasoning": 9540,
+        "cost_reported": 0.0,
+        "calls": 25
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 766567,
+        "cached_input": 702464,
+        "cache_write": 0,
+        "output": 14446,
+        "reasoning": 9778,
+        "cost_reported": null,
+        "calls": 26
+      },
+      "meter": {
+        "requests": 26,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 26
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.08099050000000002,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 10,
+        "read": 9,
+        "edit": 8
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-d9ad12r2/repo",
+        "src/click/core.py",
+        "src/click/shell_completion.py",
+        "tests/test_imports.py"
+      ],
+      "files_edited": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 82,
+      "patch_files": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795702519.813125,
+          "ended": 1795703172.1643403,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 765228,
+            "cached_input": 702464,
+            "cache_write": 0,
+            "output": 14201,
+            "reasoning": 9540,
+            "cost_reported": 0.0,
+            "calls": 25
+          },
+          "num_turns": 25,
+          "session_id": "ses_de7ca039effeB9jprnR250IbEi",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nDone. Added `cleanup_timeout` to `Context` (core.py:284, validated as positive, stored at core.py:440) with `close()` now bounding cleanup in a daemon thread and logging/abandoning overruns (core.py:617-664), and shell completion now closes its resolved context chain through the same timeout-protected `close()` (shell_completion.py:273-291); all 558 runnable tests pass (the `test_basic.py` collection error is a pre-existing pytest version incompatibility).",
+          "error": null,
+          "proxy_usage": {
+            "input": 766567,
+            "cached_input": 702464,
+            "cache_write": 0,
+            "output": 14446,
+            "reasoning": 9778,
+            "cost_reported": null,
+            "calls": 26
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 68,
+        "tests_failed": 0,
+        "duration_s": 0.6268055438995361,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_fp8_click/S0_small_model__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f4": {
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 76,
+        "tests_failed": 1,
+        "duration_s": 2.0399575233459473,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_fp8_click/S0_small_model__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_f4.f4.log"
+      }
+    }
+  }
+}

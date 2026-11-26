@@ -1,0 +1,120 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795700719.9888601,
+  "ended": 1795702519.0963123,
+  "busy_s": 1799.103431224823,
+  "usage": {
+    "input": 1649788,
+    "cached_input": 1546048,
+    "cache_write": 0,
+    "output": 30975,
+    "reasoning": 23825,
+    "cost_reported": 0.0,
+    "calls": 38
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 1651162,
+    "cached_input": 1546048,
+    "cache_write": 0,
+    "output": 31193,
+    "reasoning": 24035,
+    "cost_reported": null,
+    "calls": 39
+  },
+  "meter": {
+    "requests": 39,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 39
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.1744741,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": true,
+  "returncode": 124,
+  "tool_calls": {
+    "shell": 17,
+    "read": 26,
+    "edit": 2
+  },
+  "files_read": [
+    "src/click",
+    "src/click/core.py",
+    "src/click/globals.py",
+    "src/click/shell_completion.py",
+    "src/click/types.py",
+    "src/click/utils.py",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "/scratch/manas_ase/tmp/parbench-host-5ttgcxei/tmp/opencode/repro.py",
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795700719.989266,
+      "ended": 1795702519.0926971,
+      "returncode": 124,
+      "timed_out": true,
+      "usage": {
+        "input": 1649788,
+        "cached_input": 1546048,
+        "cache_write": 0,
+        "output": 30975,
+        "reasoning": 23825,
+        "cost_reported": 0.0,
+        "calls": 38
+      },
+      "num_turns": 38,
+      "session_id": "ses_de7e57a40ffe1Q74FrQOSu3mBJ",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nLet me check if a newer click is installed anywhere on the system for reference:\n\n",
+      "error": null,
+      "proxy_usage": {
+        "input": 1651162,
+        "cached_input": 1546048,
+        "cache_write": 0,
+        "output": 31193,
+        "reasoning": 24035,
+        "cost_reported": null,
+        "calls": 39
+      }
+    }
+  ],
+  "error": null
+}

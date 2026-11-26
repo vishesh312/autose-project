@@ -1,0 +1,120 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    4
+  ],
+  "started": 1795700720.0064332,
+  "ended": 1795701897.0911913,
+  "busy_s": 1177.044112443924,
+  "usage": {
+    "input": 1407742,
+    "cached_input": 1324960,
+    "cache_write": 0,
+    "output": 19942,
+    "reasoning": 12732,
+    "cost_reported": 0.0,
+    "calls": 38
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 1409082,
+    "cached_input": 1324960,
+    "cache_write": 0,
+    "output": 20062,
+    "reasoning": 12845,
+    "cost_reported": null,
+    "calls": 39
+  },
+  "meter": {
+    "requests": 39,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 39
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.14692680000000002,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 19,
+    "read": 17,
+    "edit": 9
+  },
+  "files_read": [
+    "scratch/manas_ase/tmp/parbench-host-9w2lxj09/repo/src/click",
+    "src/click",
+    "src/click/core.py",
+    "src/click/shell_completion.py",
+    "tests/test_context.py",
+    "tests/test_imports.py",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "src/click/core.py",
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795700720.006835,
+      "ended": 1795701897.0509474,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 1407742,
+        "cached_input": 1324960,
+        "cache_write": 0,
+        "output": 19942,
+        "reasoning": 12732,
+        "cost_reported": 0.0,
+        "calls": 38
+      },
+      "num_turns": 38,
+      "session_id": "ses_de7e57a0cffeKAVZH5U4kh6MIj",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nAdded `cleanup_timeout` to `Context.__init__` (validated positive, stored as `self.cleanup_timeout`) with `close()` running cleanup in a daemon thread bounded by the timeout and logging a warning on abandon, and made `ShellComplete.get_completions` close the resolved context so completion cleanup respects the timeout; all 558 runnable tests pass (test_basic.py has a pre-existing pytest 9.2 parametrize collection error unrelated to these changes).",
+      "error": null,
+      "proxy_usage": {
+        "input": 1409082,
+        "cached_input": 1324960,
+        "cache_write": 0,
+        "output": 20062,
+        "reasoning": 12845,
+        "cost_reported": null,
+        "calls": 39
+      }
+    }
+  ],
+  "error": null
+}

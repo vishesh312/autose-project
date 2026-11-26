@@ -1,0 +1,120 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795700720.0020983,
+  "ended": 1795702519.1069686,
+  "busy_s": 1799.1028065681458,
+  "usage": {
+    "input": 1117004,
+    "cached_input": 1025472,
+    "cache_write": 0,
+    "output": 31395,
+    "reasoning": 26902,
+    "cost_reported": 0.0,
+    "calls": 35
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 1118380,
+    "cached_input": 1025472,
+    "cache_write": 0,
+    "output": 31541,
+    "reasoning": 27038,
+    "cost_reported": null,
+    "calls": 36
+  },
+  "meter": {
+    "requests": 36,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 36
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.12130030000000001,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": true,
+  "returncode": 124,
+  "tool_calls": {
+    "read": 25,
+    "edit": 1,
+    "shell": 9
+  },
+  "files_read": [
+    "CHANGES.rst",
+    "src/click",
+    "src/click/core.py",
+    "src/click/globals.py",
+    "src/click/shell_completion.py",
+    "src/click/types.py",
+    "testing",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795700720.0024617,
+      "ended": 1795702519.1052682,
+      "returncode": 124,
+      "timed_out": true,
+      "usage": {
+        "input": 1117004,
+        "cached_input": 1025472,
+        "cache_write": 0,
+        "output": 31395,
+        "reasoning": 26902,
+        "cost_reported": 0.0,
+        "calls": 35
+      },
+      "num_turns": 35,
+      "session_id": "ses_de7e579fcffefVIjvVOtYJz0gy",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nLet me examine the `Command.shell_complete` and `Group.shell_complete` methods in core.py to be thorough about the completion path.\n\n",
+      "error": null,
+      "proxy_usage": {
+        "input": 1118380,
+        "cached_input": 1025472,
+        "cache_write": 0,
+        "output": 31541,
+        "reasoning": 27038,
+        "cost_reported": null,
+        "calls": 36
+      }
+    }
+  ],
+  "error": null
+}
