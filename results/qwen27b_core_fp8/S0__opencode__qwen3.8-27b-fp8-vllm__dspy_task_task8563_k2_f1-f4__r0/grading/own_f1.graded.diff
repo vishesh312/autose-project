@@ -1,0 +1,60 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..4feb0bc8 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,9 +1,10 @@
+ import asyncio
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+-from pydantic import BaseModel, TypeAdapter, create_model
++from pydantic import BaseModel, TypeAdapter, create_model, model_validator
+ 
+ from dspy.adapters.types.base_type import Type
+ from dspy.dsp.utils.settings import settings
+@@ -291,6 +292,43 @@ class ToolCalls(Type):
+             "Arguments must be provided in JSON format."
+         )
+ 
++    @model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any):
++        """Normalize the input to the canonical `{"tool_calls": [...]}` format.
++
++        LMs may return tool calls in different formats:
++        1. Canonical: `{"tool_calls": [{"name": ..., "args": ...}, ...]}`
++        2. A single tool call object: `{"name": ..., "args": ...}`
++        3. A bare list of tool call objects: `[{"name": ..., "args": ...}, ...]`
++        4. A JSON string of any of the above.
++
++        All of these are normalized into the canonical format so that the model can be constructed.
++        """
++        if isinstance(data, cls):
++            return {"tool_calls": [tool_call.model_dump() for tool_call in data.tool_calls]}
++
++        if isinstance(data, str):
++            try:
++                data = json.loads(data)
++            except json.JSONDecodeError:
++                # Return the original string unchanged if it is not a valid JSON string.
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                # Wrap a single tool call object into a list under the `tool_calls` key.
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            # Wrap a bare list of tool call objects into the `tool_calls` key.
++            return {"tool_calls": data}
++
++        return data
++
+     def format(self) -> list[dict[str, Any]]:
+         # The tool_call field is compatible with OpenAI's tool calls schema.
+         return [

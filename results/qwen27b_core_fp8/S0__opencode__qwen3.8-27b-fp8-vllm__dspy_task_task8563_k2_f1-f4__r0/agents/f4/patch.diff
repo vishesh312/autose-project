@@ -1,0 +1,123 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..f65c900b 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,5 +1,7 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+@@ -254,10 +256,35 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_tool_call_args(args: Any) -> Any:
++    """Recursively canonicalize tool call arguments for stable fingerprinting.
++
++    Dict keys are sorted recursively, tuples are converted to lists, and leading/trailing whitespace is
++    stripped from string values. Numeric and boolean values are preserved as-is, so no semantic type
++    coercion is performed.
++    """
++    if isinstance(args, dict):
++        return {key: _canonicalize_tool_call_args(value) for key, value in sorted(args.items())}
++    if isinstance(args, (list, tuple)):
++        return [_canonicalize_tool_call_args(item) for item in args]
++    if isinstance(args, str):
++        return args.strip()
++    return args
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        def __init__(self, **data: Any) -> None:
++            super().__init__(**data)
++            canonical = {"name": self.name, "args": _canonicalize_tool_call_args(self.args)}
++            payload = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++            self.fingerprint = hashlib.sha256(payload.encode("utf-8")).hexdigest()
++            self.id = self.fingerprint[:8]
+ 
+     tool_calls: list[ToolCall]
+ 
+diff --git a/tests/adapters/test_tool.py b/tests/adapters/test_tool.py
+index 18571453..00a287a1 100644
+--- a/tests/adapters/test_tool.py
++++ b/tests/adapters/test_tool.py
+@@ -457,3 +457,70 @@ def test_tool_calls_format_from_dict_list():
+     assert len(result[0]["tool_calls"]) == 2
+     assert result[0]["tool_calls"][0]["function"]["name"] == "search"
+     assert result[0]["tool_calls"][1]["function"]["name"] == "translate"
++
++
++def test_tool_call_fingerprint_format():
++    """Test fingerprint is a 64-char sha256 hex string and id is its first 8 chars."""
++    tool_call = ToolCalls.ToolCall(name="search", args={"query": "hello"})
++
++    assert len(tool_call.fingerprint) == 64
++    assert all(c in "0123456789abcdef" for c in tool_call.fingerprint)
++    assert tool_call.id == tool_call.fingerprint[:8]
++    assert len(tool_call.id) == 8
++
++
++def test_tool_call_fingerprint_is_stable():
++    """Test identical calls with harmless differences produce the same fingerprint."""
++    base = ToolCalls.ToolCall(name="search", args={"query": "hello", "limit": 10})
++
++    different_key_order = ToolCalls.ToolCall(name="search", args={"limit": 10, "query": "hello"})
++    extra_whitespace = ToolCalls.ToolCall(name="search", args={"query": "  hello ", "limit": 10})
++
++    assert different_key_order.fingerprint == base.fingerprint
++    assert extra_whitespace.fingerprint == base.fingerprint
++
++    tuple_instead_of_list = ToolCalls.ToolCall(name="search", args={"query": "hello", "tags": ("a", "b")})
++    list_equivalent = ToolCalls.ToolCall(name="search", args={"query": "hello", "tags": ["a", "b"]})
++
++    assert tuple_instead_of_list.fingerprint == list_equivalent.fingerprint
++    assert tuple_instead_of_list.fingerprint != base.fingerprint
++
++
++def test_tool_call_fingerprint_includes_name_and_args():
++    """Test the fingerprint depends on both the tool name and the args."""
++    base = ToolCalls.ToolCall(name="search", args={"query": "hello"})
++
++    assert ToolCalls.ToolCall(name="search2", args={"query": "hello"}).fingerprint != base.fingerprint
++    assert ToolCalls.ToolCall(name="search", args={"query": "world"}).fingerprint != base.fingerprint
++    assert ToolCalls.ToolCall(name="search", args={}).fingerprint != base.fingerprint
++
++
++def test_tool_call_fingerprint_preserves_types():
++    """Test numbers and booleans are not coerced during canonicalization."""
++    assert ToolCalls.ToolCall(name="f", args={"a": True}).fingerprint != ToolCalls.ToolCall(
++        name="f", args={"a": 1}
++    ).fingerprint
++    assert ToolCalls.ToolCall(name="f", args={"a": "true"}).fingerprint != ToolCalls.ToolCall(
++        name="f", args={"a": True}
++    ).fingerprint
++    assert ToolCalls.ToolCall(name="f", args={"a": 1}).fingerprint != ToolCalls.ToolCall(
++        name="f", args={"a": "1"}
++    ).fingerprint
++
++
++def test_tool_call_fingerprint_from_dict_list():
++    """Test fingerprints are computed for ToolCalls created via from_dict_list."""
++    tool_calls = ToolCalls.from_dict_list(
++        [
++            {"name": "search", "args": {"query": "hello"}},
++            {"name": "search", "args": {"query": "hello"}},
++            {"name": "search", "args": {"query": "other"}},
++        ]
++    )
++
++    first, second, third = tool_calls.tool_calls
++    for tool_call in (first, second, third):
++        assert len(tool_call.fingerprint) == 64
++        assert tool_call.id == tool_call.fingerprint[:8]
++    assert first.fingerprint == second.fingerprint
++    assert first.fingerprint != third.fingerprint

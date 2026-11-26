@@ -1,0 +1,398 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_fp8",
+    "bundle": "dspy_task/task8563/k2/f1-f4",
+    "pool": "dspy_task/task8563",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S0",
+    "strategy_id": "S0",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-fp8-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795730657.974788,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8001"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "isolated",
+    "by_final": {
+      "isolated": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          4
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": false,
+      "4": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 3615081,
+      "cached_input": 3429216,
+      "cache_write": 0,
+      "output": 56402,
+      "reasoning": 37930,
+      "cost_reported": null,
+      "calls": 77
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 3612287,
+      "cached_input": 3429216,
+      "cache_write": 0,
+      "output": 55387,
+      "reasoning": 36932,
+      "cost_reported": 0.0,
+      "calls": 75
+    },
+    "usage_proxy": {
+      "input": 3615081,
+      "cached_input": 3429216,
+      "cache_write": 0,
+      "output": 56402,
+      "reasoning": 37930,
+      "cost_reported": null,
+      "calls": 77
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.3784287,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.3784287,
+    "cost_per_solved_task": 0.3784287,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "dspy",
+      "dspy/adapters/base.py",
+      "dspy/adapters/json_adapter.py",
+      "dspy/adapters/types/base_type.py",
+      "dspy/adapters/types/tool.py",
+      "tests/adapters/test_tool.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 3161.612433195114,
+    "agents_wall_s": 3161.612433195114,
+    "merge_s": 0.0,
+    "strategy_span_s": 3165.9424641132355,
+    "agent_busy_s": 3161.5215060710907,
+    "effective_parallelism": 0.9999712402687095,
+    "container_setup_s": 3.3493518829345703,
+    "grading_s": 11.087798118591309,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": null,
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1795730660.0265443,
+      "ended": 1795732434.9205697,
+      "busy_s": 1774.84681224823,
+      "usage": {
+        "input": 2558090,
+        "cached_input": 2447648,
+        "cache_write": 0,
+        "output": 30630,
+        "reasoning": 19926,
+        "cost_reported": 0.0,
+        "calls": 45
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 2559369,
+        "cached_input": 2447648,
+        "cache_write": 0,
+        "output": 31194,
+        "reasoning": 20481,
+        "cost_reported": null,
+        "calls": 46
+      },
+      "meter": {
+        "requests": 46,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 46
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.26529510000000006,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 23,
+        "shell": 26,
+        "edit": 5
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-ieheu6ty/repo",
+        "dspy",
+        "dspy/adapters/base.py",
+        "dspy/adapters/chat_adapter.py",
+        "dspy/adapters/json_adapter.py",
+        "dspy/adapters/types/base_type.py",
+        "dspy/adapters/types/code.py",
+        "dspy/adapters/types/image.py",
+        "dspy/adapters/types/tool.py",
+        "dspy/adapters/utils.py",
+        "dspy/adapters/utils/__init__.py",
+        "dspy/signatures/signature.py",
+        "tests/adapters/test_code.py",
+        "tests/adapters/test_json_adapter.py",
+        "tests/adapters/test_tool.py"
+      ],
+      "files_edited": [
+        "dspy/adapters/types/tool.py",
+        "tests/adapters/test_tool.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 117,
+      "patch_files": [
+        "dspy/adapters/types/tool.py",
+        "tests/adapters/test_tool.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795730660.0275211,
+          "ended": 1795732434.8743334,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 2558090,
+            "cached_input": 2447648,
+            "cache_write": 0,
+            "output": 30630,
+            "reasoning": 19926,
+            "cost_reported": 0.0,
+            "calls": 45
+          },
+          "num_turns": 45,
+          "session_id": "ses_de61ca0efffeLQJHYRKOINhXq0",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nThe task is complete. Summary of changes:\n\n**`dspy/adapters/types/tool.py`** \u2014 added a `@model_validator(mode=\"before\")` `validate_input` classmethod to `ToolCalls` (dspy/adapters/types/tool.py:295) that normalizes varied LM output formats into the canonical structure:\n- **Single object** `{\"name\": ..., \"args\": ...}` (no `tool_calls`) \u2192 wrapped into `{\"tool_calls\": [...]}`\n- **Bare list** of tool-call dicts \u2192 wrapped into `{\"tool_calls\": <list>}`\n- **Canonical** dict with `tool_calls` key \u2192 passed through unchanged (existing behavior preserved)\n- **JSON strings** \u2192 parsed via `json.loads` and normalized; non-JSON strings returned unchanged\n- **`ToolCalls` instances** \u2192 converted to a plain canonical dict (returns a Python structure, not an instance \u2014 also avoids the base `Type` custom serializer which would stringify via `model_dump()`)\n\n**`tests/adapters/test_tool.py`** \u2014 appended new tests (existing tests untouched): parametrized `validate_input` cases for all formats, a check that an instance input returns a plain dict, and construction tests for single-dict, bare-list, and JSON-string inputs.\n\n**Verification**: all 99 adapter tests pass; full suite 404 passed with only 2 pre-existing litellm failures in `tests/clients/test_lm.py` (confirmed failing on the clean tree too); end-to-end `JSONAdapter` flow verified with mocked LM responses in each format; `ruff check`/`ruff format` clean (the one F811 warning is pre-existing).",
+          "error": null,
+          "proxy_usage": {
+            "input": 2559369,
+            "cached_input": 2447648,
+            "cache_write": 0,
+            "output": 31194,
+            "reasoning": 20481,
+            "cost_reported": null,
+            "calls": 46
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f4",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        4
+      ],
+      "started": 1795732436.88958,
+      "ended": 1795733823.6079879,
+      "busy_s": 1386.6746938228607,
+      "usage": {
+        "input": 1054197,
+        "cached_input": 981568,
+        "cache_write": 0,
+        "output": 24757,
+        "reasoning": 17006,
+        "cost_reported": 0.0,
+        "calls": 30
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 1055712,
+        "cached_input": 981568,
+        "cache_write": 0,
+        "output": 25208,
+        "reasoning": 17449,
+        "cost_reported": null,
+        "calls": 31
+      },
+      "meter": {
+        "requests": 31,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 31
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.11313359999999999,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 16,
+        "shell": 17,
+        "edit": 4
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-3ovqm973/repo",
+        "dspy",
+        "dspy/adapters/base.py",
+        "dspy/adapters/json_adapter.py",
+        "dspy/adapters/types/base_type.py",
+        "dspy/adapters/types/tool.py",
+        "tests",
+        "tests/adapters/test_chat_adapter.py",
+        "tests/adapters/test_tool.py"
+      ],
+      "files_edited": [
+        "dspy/adapters/types/tool.py",
+        "tests/adapters/test_tool.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 94,
+      "patch_files": [
+        "dspy/adapters/types/tool.py",
+        "tests/adapters/test_tool.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795732436.8898737,
+          "ended": 1795733823.5645676,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 1054197,
+            "cached_input": 981568,
+            "cache_write": 0,
+            "output": 24757,
+            "reasoning": 17006,
+            "cost_reported": 0.0,
+            "calls": 30
+          },
+          "num_turns": 30,
+          "session_id": "ses_de60183d5ffewUwfhS7SN65g7U",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nTask complete. The diff is minimal and the full suite is green (336 passed; skips/xfails are pre-existing environmental ones).\n\n**Changes** (`dspy/adapters/types/tool.py`):\n- `_canonicalize_tool_call_args` (dspy/adapters/types/tool.py:259) \u2014 recursively sorts dict keys, converts tuples\u2192lists, trims string whitespace, preserves numeric/boolean types (no coercion).\n- `ToolCall` now has `fingerprint: str` and `id: str` fields (dspy/adapters/types/tool.py:279-280). Its `__init__` (dspy/adapters/types/tool.py:282) canonicalizes `args` only, builds `{\"name\": ..., \"args\": canonical}` from the validated fields, serializes with `json.dumps(..., sort_keys=True, separators=(\",\", \":\"))`, hashes with SHA-256 \u2192 64-hex-char `.fingerprint`, and stores `.id = fingerprint[:8]` \u2014 computed once at creation, so it's stable for identical calls (any key order / whitespace / tuple-vs-list differences) and always covers `ToolCalls.from_dict_list`, which builds via `ToolCall(**item)`.\n\nVerified: identical calls dedupe to one fingerprint, different names/args/types (`True` vs `1` vs `\"true\"`) differ, `format()` and equality behavior are unchanged, the new fields never leak into LM-facing schemas, and `model_validate`/nested validation paths also trigger `__init__` (pydantic 2.14), so all construction routes get a fingerprint. Added 5 tests to `tests/adapters/test_tool.py` covering format, stability, name/args dependence, type preservation, and `from_dict_list`.",
+          "error": null,
+          "proxy_usage": {
+            "input": 1055712,
+            "cached_input": 981568,
+            "cache_write": 0,
+            "output": 25208,
+            "reasoning": 17449,
+            "cost_reported": null,
+            "calls": 31
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 45,
+        "tests_failed": 5,
+        "duration_s": 5.133469343185425,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S0__opencode__qwen3.8-27b-fp8-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f4": {
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 59,
+        "tests_failed": 0,
+        "duration_s": 5.386720657348633,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S0__opencode__qwen3.8-27b-fp8-vllm__dspy_task_task8563_k2_f1-f4__r0/grading/own_f4.f4.log"
+      }
+    }
+  }
+}
