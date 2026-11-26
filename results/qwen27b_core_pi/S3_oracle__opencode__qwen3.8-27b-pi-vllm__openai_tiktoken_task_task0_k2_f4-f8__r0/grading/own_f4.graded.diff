@@ -1,0 +1,42 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..aafc075 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -82,7 +82,8 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++    ) -> list[int] | list[list[int]]:
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,6 +98,10 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        If `chunk_size` is set, the text is split into chunks of at most `chunk_size`
++        characters and each chunk is encoded separately; a list of token lists is
++        returned, one per chunk.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
+@@ -110,6 +115,16 @@ class Encoding:
+         [27, 91, 437, 1659, 5239, 91, 29]
+         ```
+         """
++        if chunk_size is not None:
++            return [
++                self.encode(
++                    text[i : i + chunk_size],
++                    allowed_special=allowed_special,
++                    disallowed_special=disallowed_special,
++                )
++                for i in range(0, len(text), chunk_size)
++            ]
++
+         if allowed_special == "all":
+             allowed_special = self.special_tokens_set
+         if disallowed_special == "all":
