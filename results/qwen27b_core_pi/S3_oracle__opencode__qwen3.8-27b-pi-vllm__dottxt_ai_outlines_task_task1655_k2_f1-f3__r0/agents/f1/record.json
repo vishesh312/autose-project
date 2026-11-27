@@ -1,0 +1,113 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-pi-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795784760.4922245,
+  "ended": 1795784911.9787736,
+  "busy_s": 151.41729950904846,
+  "usage": {
+    "input": 56552,
+    "cached_input": 40768,
+    "cache_write": 0,
+    "output": 2661,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 6
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 57901,
+    "cached_input": 40768,
+    "cache_write": 0,
+    "output": 2674,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 7
+  },
+  "meter": {
+    "requests": 7,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 7
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.006592300000000001,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 1,
+    "edit": 2,
+    "shell": 2
+  },
+  "files_read": [
+    "outlines/types/__init__.py"
+  ],
+  "files_edited": [
+    "outlines/types/__init__.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795784760.4925973,
+      "ended": 1795784911.9098969,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 56552,
+        "cached_input": 40768,
+        "cache_write": 0,
+        "output": 2661,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 6
+      },
+      "num_turns": 6,
+      "session_id": "ses_de2e31e6bffeDTs8f7Pvl8WLiF",
+      "nudge_reason": null,
+      "final_text_tail": "All three types added and validated:\n\n- `hex_str` \u2014 `Regex(r\"(0x)?[0-9a-fA-F]+\")`: optional `0x` prefix, at least one hex digit, case-insensitive\n- `uuid4` \u2014 version digit `4` and variant `[89abAB]`, via string concatenation\n- `ipv4` \u2014 each octet `0-255` via `25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9]`, exactly 4 octets",
+      "error": null,
+      "proxy_usage": {
+        "input": 57901,
+        "cached_input": 40768,
+        "cache_write": 0,
+        "output": 2674,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 7
+      }
+    }
+  ],
+  "error": null
+}
