@@ -1,0 +1,11 @@
+{
+  "5": {
+    "fid": 5,
+    "passed": false,
+    "exit_code": 1,
+    "tests_passed": 54,
+    "tests_failed": 3,
+    "duration_s": 0.806647777557373,
+    "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3__opencode__qwen3.8-27b-fp8-vllm__pallets_jinja_task_task1559_k2_f5-f8__r0/grading/own_f5.f5.log"
+  }
+}

@@ -1,0 +1,5 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-sw1qe41l/repo/src/jinja2/ext.py"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "ls /scratch/manas_ase/tmp/parbench-host-sw1qe41l/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "ls /scratch/manas_ase/tmp/parbench-host-sw1qe41l/repo/tests/"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "validate|Invalid variable|conflicts with translation|template data|translation contexts", "path": "/scratch/manas_ase/tmp/parbench-host-sw1qe41l/repo/tests"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-sw1qe41l/repo/tests/test_ext.py"}, "ok": true, "ts": null}

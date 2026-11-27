@@ -1,0 +1,18 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "src/jinja2/ext.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/ext.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/__init__.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "InternationalizationExtension|conditional_i18n|ctrans", "path": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "ctrans|_validate_trans|expected 'fallback'|ConditionalI18n|conditional_i18n|conflicts with translation function names", "path": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "tests/*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/tests/test_ext.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def fail|def parse_expression|def parse_statements|def expect|def skip_if", "path": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/parser.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "class (If|Output|Mod|MarkSafeIfAutoescape|Assign|Keyword|Pair|Dict|Name|Const|Call|Getattr|Filter|Test|TemplateData)\\b", "path": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/nodes.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/parser.py", "offset": 40, "limit": 190}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/nodes.py", "offset": 295, "limit": 75}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/nodes.py", "offset": 1085, "limit": 45}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/nodes.py", "offset": 440, "limit": 40}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/parser.py", "offset": 505, "limit": 60}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "\\{%-?\\s*trans|\\{%-?\\s*pluralize", "path": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/tests"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "ext.i18n.trimmed|DEFAULT_POLICIES", "path": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "import_string|_load_extensions", "path": "/scratch/manas_ase/tmp/parbench-host-31jza0dc/repo/src/jinja2/environment.py"}, "ok": true, "ts": null}

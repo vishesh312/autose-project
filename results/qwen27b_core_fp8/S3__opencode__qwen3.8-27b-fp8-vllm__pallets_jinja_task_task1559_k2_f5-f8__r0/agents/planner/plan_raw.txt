@@ -1,0 +1,16 @@
+
+
+I've completed verification. Both features are self-contained in `src/jinja2/ext.py`: f5 extends `InternationalizationExtension.parse()` (src/jinja2/ext.py:354) with two new validation helpers, and f8 adds a new `ConditionalI18nExtension` class plus module-level aliases (string extensions resolve via `import_string` on attributes of `jinja2.ext`, so no other registration point exists; `src/jinja2/__init__.py` doesn't export extensions, and `defaults.py` already provides the `ext.i18n.trimmed` policy key).
+
+```json
+{
+  "tasks": [
+    {"id": "f5", "files": [
+      {"path": "src/jinja2/ext.py", "functions": ["InternationalizationExtension.parse", "InternationalizationExtension._validate_trans_variables", "InternationalizationExtension._validate_trans_expression"], "confidence": "high"}
+    ]},
+    {"id": "f8", "files": [
+      {"path": "src/jinja2/ext.py", "functions": ["ConditionalI18nExtension", "ConditionalI18nExtension.parse", "ConditionalI18nExtension._parse_block", "ConditionalI18nExtension._trim_whitespace", "ConditionalI18nExtension._make_conditional_node", "conditional_i18n"], "confidence": "high"}
+    ]}
+  ]
+}
+```
