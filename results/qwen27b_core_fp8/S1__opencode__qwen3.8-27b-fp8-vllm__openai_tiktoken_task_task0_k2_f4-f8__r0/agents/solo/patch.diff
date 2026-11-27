@@ -1,0 +1,205 @@
+diff --git a/_verify_features.py b/_verify_features.py
+new file mode 100644
+index 0000000..d92aaea
+--- /dev/null
++++ b/_verify_features.py
+@@ -0,0 +1,93 @@
++import sys
++
++sys.path.insert(0, "/scratch/manas_ase/tmp/parbench-host-fnf6sgll/repo")
++
++import tiktoken
++from collections import Counter
++
++EOT = chr(60) + "/s" + chr(62)
++
++enc = tiktoken.get_encoding("cl100k_base")
++
++# --- Task 1: chunk_size ---
++text = "hello world hello world hello world"
++cs = 11
++manual = [enc.encode(text[i:i+cs]) for i in range(0, len(text), cs)]
++res = enc.encode(text, chunk_size=cs)
++assert res == manual, (res, manual)
++print("chunking basic OK:", res)
++
++# chunk_size larger than text -> single chunk
++assert enc.encode("hi", chunk_size=100) == [enc.encode("hi")]
++# empty text -> []
++assert enc.encode("", chunk_size=5) == []
++# invalid chunk_size
++for bad in (0, -3):
++    try:
++        enc.encode("abc", chunk_size=bad)
++        raise AssertionError("should have raised")
++    except ValueError as e:
++        print("ValueError OK:", e)
++
++# decode roundtrip of chunks
++assert "".join(enc.decode(t) for t in res) == text
++print("roundtrip OK")
++
++# --- Task 2: return_repeated_pattern ---
++t = "the cat sat on the mat and the cat ate the rat"
++tokens, patterns = enc.encode(t, return_repeated_pattern=True)
++assert tokens == enc.encode(t)
++full = Counter(zip(tokens, tokens[1:]))
++expected = dict(full.most_common(3))
++assert patterns == expected, (patterns, expected)
++assert len(patterns) <= 3
++print("patterns OK:", patterns)
++# every value is a positive int count, keys are 2-tuples of ints
++assert all(isinstance(k, tuple) and len(k) == 2 and isinstance(v, int) and v > 0
++           for k, v in patterns.items())
++
++# single token -> empty dict
++tok1, pat1 = enc.encode("hi", return_repeated_pattern=True)
++assert tok1 == enc.encode("hi") and pat1 == {}
++# empty -> empty tokens, empty dict
++tok0, pat0 = enc.encode("", return_repeated_pattern=True)
++assert tok0 == [] and pat0 == {}
++print("pattern edge cases OK")
++
++# --- combined ---
++res2 = enc.encode(text, chunk_size=cs, return_repeated_pattern=True)
++assert isinstance(res2, tuple) and len(res2) == 2
++tok_lists, pat_lists = res2
++assert tok_lists == manual
++assert len(pat_lists) == len(manual)
++for toks, pats in zip(tok_lists, pat_lists):
++    exp = dict(Counter(zip(toks, toks[1:])).most_common(3))
++    assert pats == exp
++print("combined OK:", tok_lists, pat_lists)
++
++# --- feature interplay with special tokens ---
++enc2 = tiktoken.get_encoding("gpt2")
++s = "hi " + EOT
++assert enc2.encode(s, allowed_special="all", chunk_size=3) == [
++    enc2.encode(s[i:i+3], allowed_special="all") for i in range(0, len(s), 3)
++]
++# disallowed special token still raises with chunking
++try:
++    enc2.encode("hello " + EOT + " world", chunk_size=5)
++    raise AssertionError("should have raised")
++except ValueError:
++    print("disallowed special with chunking OK")
++# allowed_special works per chunk, combined with patterns
++toks, pats = enc2.encode("a " + EOT + " b " + EOT + " c", allowed_special="all",
++                         chunk_size=4, return_repeated_pattern=True)
++eot = enc2.eot_token
++assert eot in [t for chunk in toks for t in chunk]
++assert all(isinstance(p, dict) for p in pats)
++print("special tokens + combined OK")
++
++# --- defaults unchanged ---
++assert enc.encode("hello world") == [15339, 1917]
++assert isinstance(enc.encode("hello world"), list)
++print("default behavior OK")
++
++print("ALL CHECKS PASSED")
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..7a831a6 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import functools
++from collections import Counter
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import TYPE_CHECKING, AbstractSet, Collection, Literal, NoReturn, Sequence
+ 
+@@ -82,7 +83,14 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++        return_repeated_pattern: bool = False,
++    ) -> (
++        list[int]
++        | list[list[int]]
++        | tuple[list[int], dict[tuple[int, int], int]]
++        | tuple[list[list[int]], list[dict[tuple[int, int], int]]]
++    ):
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,6 +105,17 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        If `chunk_size` is set, the text is first split into chunks of at most `chunk_size`
++        characters, each chunk is encoded independently, and the return value is a list of
++        token lists, one per chunk. This is useful for processing long documents within the
++        context limits of downstream applications.
++
++        If `return_repeated_pattern` is True, adjacent token pairs are tracked during encoding
++        and the return value is a tuple of the encoded tokens and a dictionary mapping the top 3
++        most frequent token pairs to their occurrence counts. When combined with `chunk_size`,
++        each chunk is processed independently and the return value is a tuple of a list of token
++        lists and a list of pattern dictionaries, one per chunk.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
+@@ -110,13 +129,42 @@ class Encoding:
+         [27, 91, 437, 1659, 5239, 91, 29]
+         ```
+         """
++        if chunk_size is not None and chunk_size <= 0:
++            raise ValueError(f"chunk_size must be a positive integer, got {chunk_size}")
++        if chunk_size is None:
++            chunks = [text]
++        else:
++            chunks = [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
++
+         if allowed_special == "all":
+             allowed_special = self.special_tokens_set
+         if disallowed_special == "all":
+             disallowed_special = self.special_tokens_set - allowed_special
++        if not isinstance(disallowed_special, frozenset):
++            disallowed_special = frozenset(disallowed_special)
++
++        encoded_chunks = [
++            self._encode_chunk(chunk, allowed_special, disallowed_special) for chunk in chunks
++        ]
++
++        if return_repeated_pattern:
++            patterns = [self._repeated_patterns(tokens) for tokens in encoded_chunks]
++            if chunk_size is None:
++                return encoded_chunks[0], patterns[0]
++            return encoded_chunks, patterns
++
++        if chunk_size is None:
++            return encoded_chunks[0]
++        return encoded_chunks
++
++    def _encode_chunk(
++        self,
++        text: str,
++        allowed_special: AbstractSet[str],
++        disallowed_special: frozenset[str],
++    ) -> list[int]:
++        """Encodes a single chunk of text into tokens."""
+         if disallowed_special:
+-            if not isinstance(disallowed_special, frozenset):
+-                disallowed_special = frozenset(disallowed_special)
+             if match := _special_token_regex(disallowed_special).search(text):
+                 raise_disallowed_special_token(match.group())
+ 
+@@ -132,6 +180,14 @@ class Encoding:
+             text = text.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
+             return self._core_bpe.encode(text, allowed_special)
+ 
++    @staticmethod
++    def _repeated_patterns(tokens: Sequence[int]) -> dict[tuple[int, int], int]:
++        """Returns the top 3 most frequent adjacent token pairs with their counts."""
++        if len(tokens) < 2:
++            return {}
++        counter = Counter(zip(tokens, tokens[1:]))
++        return dict(counter.most_common(3))
++
+     def encode_to_numpy(
+         self,
+         text: str,
