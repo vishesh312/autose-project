@@ -1,0 +1,11 @@
+{
+  "5": {
+    "fid": 5,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 13,
+    "tests_failed": 0,
+    "duration_s": 5.0107505321502686,
+    "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3_oracle__opencode__qwen3.8-27b-fp8-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/own_f5.f5.log"
+  }
+}

@@ -1,0 +1,74 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf..e37e6df 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -55,6 +55,7 @@ class ImageBlock(BaseModel):
+     url: AnyUrl | str | None = None
+     image_mimetype: str | None = None
+     detail: str | None = None
++    encoding: Literal["base64", "raw"] = "base64"
+ 
+     @field_validator("url", mode="after")
+     @classmethod
+@@ -64,6 +65,24 @@ class ImageBlock(BaseModel):
+             return url
+         return AnyUrl(url=url)
+ 
++    def get_image_mimetype(self) -> str | None:
++        """Get the image mimetype, lazily guessing and caching it when needed.
++
++        If the mimetype is already set, it is returned as-is. Otherwise, it is
++        guessed from the image bytes using the filetype library and cached on
++        the block for future accesses. To avoid resource-intense operations,
++        the path or the URL are not loaded to guess the mimetype.
++
++        Returns:
++            The image mimetype, or None if it could not be determined.
++        """
++        if not self.image_mimetype:
++            if self.image is not None:
++                guess = filetype.guess(self.image)
++                self.image_mimetype = guess.mime if guess else None
++
++        return self.image_mimetype
++
+     @model_validator(mode="after")
+     def image_to_base64(self) -> Self:
+         """Store the image as base64 and guess the mimetype when possible.
+@@ -71,15 +90,17 @@ class ImageBlock(BaseModel):
+         In case the model was built passing image data but without a mimetype,
+         we try to guess it using the filetype library. To avoid resource-intense
+         operations, we won't load the path or the URL to guess the mimetype.
++
++        If the `encoding` field is set to "raw", the image bytes are kept as-is
++        and no base64 encoding is performed.
+         """
+         if not self.image:
+             return self
+ 
+-        if not self.image_mimetype:
+-            guess = filetype.guess(self.image)
+-            self.image_mimetype = guess.mime if guess else None
++        self.get_image_mimetype()
+ 
+-        self.image = base64.b64encode(self.image)
++        if self.encoding == "base64":
++            self.image = base64.b64encode(self.image)
+ 
+         return self
+ 
+@@ -91,8 +112,12 @@ class ImageBlock(BaseModel):
+         """
+         if self.image is not None:
+             if as_base64:
+-                return BytesIO(self.image)
+-            return BytesIO(base64.b64decode(self.image))
++                if self.encoding == "base64":
++                    return BytesIO(self.image)
++                return BytesIO(base64.b64encode(self.image))
++            if self.encoding == "base64":
++                return BytesIO(base64.b64decode(self.image))
++            return BytesIO(self.image)
+         elif self.path is not None:
+             img_bytes = self.path.read_bytes()
+             if as_base64:
