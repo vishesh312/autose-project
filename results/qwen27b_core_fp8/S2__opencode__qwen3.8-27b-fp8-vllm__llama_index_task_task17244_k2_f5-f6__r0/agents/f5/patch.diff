@@ -1,0 +1,51 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf..52a95cc 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -76,13 +76,44 @@ class ImageBlock(BaseModel):
+             return self
+ 
+         if not self.image_mimetype:
+-            guess = filetype.guess(self.image)
+-            self.image_mimetype = guess.mime if guess else None
++            self.image_mimetype = self.get_image_mimetype()
+ 
+         self.image = base64.b64encode(self.image)
+ 
+         return self
+ 
++    def get_image_mimetype(self) -> str | None:
++        """Get the image's mimetype, guessing it lazily if not already set.
++
++        If the mimetype was not provided at construction, it is inferred from
++        the image data using the filetype library. The inferred value is
++        cached on the block, so the guess is only performed once, even if
++        this method is called multiple times.
++
++        Returns:
++            The image's mimetype (e.g. "image/png") or None if it cannot be
++            determined.
++        """
++        if self.image_mimetype:
++            return self.image_mimetype
++
++        if self.image:
++            data = self.image
++            try:
++                # After the model validator runs, `image` is base64-encoded;
++                # decode it before guessing so the mimetype can be resolved
++                # lazily as well.
++                data = base64.b64decode(data, validate=True)
++            except ValueError:
++                # Not base64 data (e.g. raw bytes); guess directly.
++                pass
++
++            guess = filetype.guess(data)
++            if guess:
++                self.image_mimetype = guess.mime
++
++        return self.image_mimetype
++
+     def resolve_image(self, as_base64: bool = False) -> BytesIO:
+         """Resolve an image such that PIL can read it.
+ 

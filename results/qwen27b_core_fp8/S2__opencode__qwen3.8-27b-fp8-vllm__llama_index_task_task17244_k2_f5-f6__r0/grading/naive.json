@@ -1,0 +1,20 @@
+{
+  "5": {
+    "fid": 5,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 13,
+    "tests_failed": 0,
+    "duration_s": 5.395622491836548,
+    "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S2__opencode__qwen3.8-27b-fp8-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/naive.f5.log"
+  },
+  "6": {
+    "fid": 6,
+    "passed": true,
+    "exit_code": 0,
+    "tests_passed": 14,
+    "tests_failed": 0,
+    "duration_s": 125.4104437828064,
+    "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S2__opencode__qwen3.8-27b-fp8-vllm__llama_index_task_task17244_k2_f5-f6__r0/grading/naive.f6.log"
+  }
+}
