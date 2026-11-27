@@ -1,0 +1,44 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..24fb7552 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,7 +1,9 @@
+ import asyncio
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import pydantic
+ from jsonschema import ValidationError, validate
+ from pydantic import BaseModel, TypeAdapter, create_model
+ 
+@@ -291,6 +293,29 @@ class ToolCalls(Type):
+             "Arguments must be provided in JSON format."
+         )
+ 
++    @pydantic.model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                return json.loads(data)
++            except json.JSONDecodeError:
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++
++        if isinstance(data, list):
++            return {"tool_calls": data}
++
++        return data
++
+     def format(self) -> list[dict[str, Any]]:
+         # The tool_call field is compatible with OpenAI's tool calls schema.
+         return [

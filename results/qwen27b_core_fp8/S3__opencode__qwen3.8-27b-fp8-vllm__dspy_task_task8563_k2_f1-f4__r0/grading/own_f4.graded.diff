@@ -1,0 +1,83 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..71ce9b49 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,7 +1,10 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import pydantic
+ from jsonschema import ValidationError, validate
+ from pydantic import BaseModel, TypeAdapter, create_model
+ 
+@@ -254,10 +257,37 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize(value: Any) -> Any:
++    """Recursively canonicalize a JSON-compatible value.
++
++    Dict keys are sorted, tuples are converted to lists, and surrounding
++    whitespace is stripped from strings. Numbers and booleans are preserved
++    as-is, so no semantics are changed.
++    """
++    if isinstance(value, dict):
++        return {key: _canonicalize(item) for key, item in sorted(value.items())}
++    if isinstance(value, (list, tuple)):
++        return [_canonicalize(item) for item in value]
++    if isinstance(value, str):
++        return value.strip()
++    return value
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        def __init__(self, **data: Any):
++            super().__init__(**data)
++            if not self.fingerprint:
++                canonical = {"name": self.name, "args": _canonicalize(self.args)}
++                canonical_str = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++                digest = hashlib.sha256(canonical_str.encode("utf-8")).hexdigest()
++                self.fingerprint = digest
++                self.id = digest[:8]
+ 
+     tool_calls: list[ToolCall]
+ 
+@@ -291,6 +321,29 @@ class ToolCalls(Type):
+             "Arguments must be provided in JSON format."
+         )
+ 
++    @pydantic.model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                return json.loads(data)
++            except json.JSONDecodeError:
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++
++        if isinstance(data, list):
++            return {"tool_calls": data}
++
++        return data
++
+     def format(self) -> list[dict[str, Any]]:
+         # The tool_call field is compatible with OpenAI's tool calls schema.
+         return [
