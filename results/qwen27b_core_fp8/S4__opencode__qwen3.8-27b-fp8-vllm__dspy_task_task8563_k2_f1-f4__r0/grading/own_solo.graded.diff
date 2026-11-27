@@ -1,0 +1,98 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..fdcb033e 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,7 +1,10 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import pydantic
+ from jsonschema import ValidationError, validate
+ from pydantic import BaseModel, TypeAdapter, create_model
+ 
+@@ -254,13 +257,82 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_args(value: Any) -> Any:
++    """Recursively canonicalize a value for stable fingerprinting.
++
++    Dict keys are sorted, tuples are converted to lists, and leading/trailing whitespace is stripped from
++    string values. Numbers, booleans, and other values are returned unchanged, so semantics are preserved.
++    """
++    if isinstance(value, dict):
++        return {key: _canonicalize_args(val) for key, val in sorted(value.items(), key=lambda item: str(item[0]))}
++    if isinstance(value, (list, tuple)):
++        return [_canonicalize_args(item) for item in value]
++    if isinstance(value, str):
++        return value.strip()
++    return value
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        def __init__(self, /, **data):
++            super().__init__(**data)
++            canonical = {"name": self.name, "args": _canonicalize_args(self.args)}
++            serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++            self.fingerprint = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
++            self.id = self.fingerprint[:8]
+ 
+     tool_calls: list[ToolCall]
+ 
++    @pydantic.model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Normalize varied LM output formats into the canonical ``tool_calls`` structure.
++
++        Accepts the canonical dict with a ``tool_calls`` key, a single tool-call dict
++        (``{"name": ..., "args": ...}``), a bare list of tool-call dicts, or a JSON string of any of
++        those forms, and returns a plain Python structure (dict/list/string), never a ``ToolCalls``
++        instance, ready for Pydantic validation.
++        """
++        if isinstance(data, cls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                parsed = json.loads(data)
++            except ValueError:
++                # Non-JSON strings are returned unchanged.
++                return data
++            if not isinstance(parsed, (dict, list)):
++                return data
++            data = parsed
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                # Already in the canonical format, process as before.
++                return data
++            if "name" in data:
++                # Single tool-call object, wrap it into a list under `tool_calls`.
++                tool_call = dict(data)
++                tool_call.setdefault("args", {})
++                return {"tool_calls": [tool_call]}
++            return data
++
++        if isinstance(data, list) and all(isinstance(item, dict) for item in data):
++            # Bare list of tool-call objects, wrap it in a `tool_calls` container.
++            tool_calls = []
++            for item in data:
++                tool_call = dict(item)
++                tool_call.setdefault("args", {})
++                tool_calls.append(tool_call)
++            return {"tool_calls": tool_calls}
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.
