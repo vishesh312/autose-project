@@ -1,0 +1,278 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_fp8",
+    "bundle": "pallets_click_task/task2800/k2/f1-f4",
+    "pool": "pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S4",
+    "strategy_id": "S4",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-fp8-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795756912.3851807,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8001"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          1
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": true,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 3315814,
+      "cached_input": 3181472,
+      "cache_write": 0,
+      "output": 45191,
+      "reasoning": 34458,
+      "cost_reported": null,
+      "calls": 53
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 3314221,
+      "cached_input": 3181472,
+      "cache_write": 0,
+      "output": 44586,
+      "reasoning": 33863,
+      "cost_reported": 0.0,
+      "calls": 52
+    },
+    "usage_proxy": {
+      "input": 3315814,
+      "cached_input": 3181472,
+      "cache_write": 0,
+      "output": 45191,
+      "reasoning": 34458,
+      "cost_reported": null,
+      "calls": 53
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.3451387,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.3451387,
+    "cost_per_solved_task": 0.3451387,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 2237.8139481544495,
+    "agents_wall_s": 2237.8139481544495,
+    "merge_s": 0.0,
+    "strategy_span_s": 2237.8670325279236,
+    "agent_busy_s": 2237.76957988739,
+    "effective_parallelism": 0.9999801733888128,
+    "container_setup_s": 0.37667012214660645,
+    "grading_s": 2.099569797515869,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        1,
+        4
+      ],
+      "started": 1795756912.762731,
+      "ended": 1795759150.5766792,
+      "busy_s": 2237.76957988739,
+      "usage": {
+        "input": 3314221,
+        "cached_input": 3181472,
+        "cache_write": 0,
+        "output": 44586,
+        "reasoning": 33863,
+        "cost_reported": 0.0,
+        "calls": 52
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 3315814,
+        "cached_input": 3181472,
+        "cache_write": 0,
+        "output": 45191,
+        "reasoning": 34458,
+        "cost_reported": null,
+        "calls": 53
+      },
+      "meter": {
+        "requests": 53,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 53
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.3451387,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 34,
+        "read": 13,
+        "edit": 13
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-725g037d/repo",
+        "pyproject.toml",
+        "src/click/core.py",
+        "src/click/globals.py",
+        "src/click/shell_completion.py",
+        "src/click/types.py",
+        "tests/test_imports.py",
+        "tests/test_shell_completion.py"
+      ],
+      "files_edited": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 133,
+      "patch_files": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795756912.7631838,
+          "ended": 1795759150.5327637,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 3314221,
+            "cached_input": 3181472,
+            "cache_write": 0,
+            "output": 44586,
+            "reasoning": 33863,
+            "cost_reported": 0.0,
+            "calls": 52
+          },
+          "num_turns": 52,
+          "session_id": "ses_de48c0b5bffe2aM4x0tPguTqm9",
+          "nudge_reason": null,
+          "final_text_tail": "s, and file/choice/option completions.\n\n**Task 2 \u2014 `cleanup_timeout`** (`src/click/core.py`):\n- `Context.__init__` accepts `cleanup_timeout: float | None = None` (default `None` = no timeout); non-numeric, zero, negative, and NaN values raise `ValueError` with a descriptive message; value is inherited from the parent context like `color`/`show_default`, so it also flows through `context_settings` into contexts created during shell completion.\n- `close()` with a timeout runs the exit-stack cleanup in a daemon thread and waits at most `cleanup_timeout` seconds; on timeout it logs a warning via `logging` and returns without blocking (graceful degradation); if cleanup finishes in time, callback exceptions still propagate as before. The no-timeout path is byte-for-byte the original behavior.\n\nVerification: full suite passes (`558 passed, 21 skipped, 1 xfailed`; `tests/test_basic.py` has a pre-existing collection error from pytest 9 vs the repo's `filterwarnings=error`, present on the clean tree too), plus targeted checks: validation matrix, non-hanging close (0.301s for a 5s blocker), timeout log emission, exception propagation, context reuse, and integration through `ShellComplete`/`_resolve_context`.\n\nAssumptions: Python can't kill a stuck thread, so \"forcibly terminated\" means the cleanup is detached from the caller (daemon thread abandoned), and the timeout event is logged with the `logging` module rather than `warnings.warn` (which the repo's pytest config turns into errors).",
+          "error": null,
+          "proxy_usage": {
+            "input": 3315814,
+            "cached_input": 3181472,
+            "cache_write": 0,
+            "output": 45191,
+            "reasoning": 34458,
+            "cost_reported": null,
+            "calls": 53
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 68,
+        "tests_failed": 0,
+        "duration_s": 0.6427822113037109,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S4__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 76,
+        "tests_failed": 1,
+        "duration_s": 2.0372390747070312,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S4__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 68,
+        "tests_failed": 0,
+        "duration_s": 0.6427822113037109,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S4__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 76,
+        "tests_failed": 1,
+        "duration_s": 2.0372390747070312,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S4__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    }
+  }
+}

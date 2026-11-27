@@ -5,6 +5,6 @@
 | S2 | opencode | qwen3.8-27b-fp8-vllm | 2 | 4 | 0.50 (0.22-0.78) | 0.25 | 0.80 | 0.25 | 0.355 | 2,734,182 | 1998 | 1.59 | 1 |
 | S3 | opencode | qwen3.8-27b-fp8-vllm | 2 | 4 | 0.50 (0.22-0.78) | 0.00 | 0.80 |  | 0.215 | 2,017,626 | 3294 | 1.00 | 5 |
 | S3@oracle | opencode | qwen3.8-27b-fp8-vllm | 2 | 4 | 0.75 (0.41-0.93) | 0.50 | 1.20 |  | 0.138 | 1,812,494 | 2154 | 1.00 | 0 |
-| S4 | opencode | qwen3.8-27b-fp8-vllm | 2 | 3 | 0.50 (0.19-0.81) | 0.33 | 0.75 |  | 0.087 | 886,094 | 1380 | 1.00 | 0 |
+| S4 | opencode | qwen3.8-27b-fp8-vllm | 2 | 4 | 0.50 (0.22-0.78) | 0.25 | 0.80 |  | 0.093 | 1,212,192 | 1723 | 1.00 | 0 |
 
-Token source (docs/metrics_tokens.md): proxy 23 runs
+Token source (docs/metrics_tokens.md): proxy 24 runs
