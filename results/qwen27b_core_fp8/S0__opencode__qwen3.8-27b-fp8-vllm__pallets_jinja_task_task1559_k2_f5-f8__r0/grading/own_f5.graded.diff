@@ -1,0 +1,81 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..a851385 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -440,6 +440,8 @@ class InternationalizationExtension(Extension):
+             if name not in variables:
+                 variables[name] = nodes.Name(name, "load")
+ 
++        self._validate_trans_variables(variables, parser, lineno)
++
+         if not have_plural:
+             plural_expr = None
+         elif plural_expr is None:
+@@ -466,6 +468,67 @@ class InternationalizationExtension(Extension):
+         else:
+             return node
+ 
++    def _validate_trans_variables(
++        self,
++        variables: t.Dict[str, nodes.Expr],
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate all variables of a translation block.
++
++        Variable names must be valid Python identifiers and must not
++        conflict with the translation function names installed by this
++        extension.  The expressions assigned to the variables are checked
++        by :meth:`_validate_trans_expression`.
++        """
++        for name, expr in variables.items():
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r} in translatable section,"
++                    " variable names must be valid Python identifiers.",
++                    lineno,
++                )
++            if name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Variable name {name!r} in translatable section conflicts"
++                    " with translation function names and cannot be used as a"
++                    " translatable variable.",
++                    lineno,
++                )
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self,
++        name: str,
++        expr: nodes.Expr,
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate the expression assigned to a translation block variable.
++
++        Only literals, variable references, simple function calls,
++        attribute access, filters and tests can be used in translation
++        contexts.
++        """
++        if isinstance(
++            expr, (nodes.Const, nodes.Name, nodes.Getattr, nodes.Filter, nodes.Test)
++        ):
++            return
++        if isinstance(expr, nodes.Call) and isinstance(expr.node, nodes.Name):
++            return
++        if isinstance(expr, (nodes.TemplateData, nodes.Output)):
++            parser.fail(
++                f"Variable {name!r} in translatable section uses template"
++                " data, which is not supported in translation contexts.",
++                lineno,
++            )
++        parser.fail(
++            f"Variable {name!r} in translatable section uses an expression"
++            " with template data that cannot be serialized for translation"
++            " contexts.",
++            lineno,
++        )
++
+     def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
+         return _ws_re.sub(" ", string.strip())
+ 
