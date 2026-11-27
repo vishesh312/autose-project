@@ -1,0 +1,29 @@
+diff --git a/outlines/types/__init__.py b/outlines/types/__init__.py
+index 85af9ad..8d00ff9 100644
+--- a/outlines/types/__init__.py
++++ b/outlines/types/__init__.py
+@@ -48,6 +48,24 @@ char = Regex(r"\w")
+ newline = Regex(r"(\r\n|\r|\n)")  # Matched new lines on Linux, Windows & MacOS
+ whitespace = Regex(r"\s")
+ 
++# Hexadecimal string with an optional "0x" prefix
++hex_str = Regex(r"(0x)?[0-9a-fA-F]+")
++
++# UUID version 4
++uuid4 = Regex(
++    r"[0-9a-fA-F]{8}-"
++    r"[0-9a-fA-F]{4}-"
++    r"4[0-9a-fA-F]{3}-"
++    r"[89aAbB][0-9a-fA-F]{3}-"
++    r"[0-9a-fA-F]{12}"
++)
++
++# IPv4 address with each octet between 0 and 255
++ipv4 = Regex(
++    r"(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])"
++    r"(\.(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])){3}"
++)
++
+ # Document-specific types
+ sentence = Regex(r"[A-Z].*\s*[.!?]")
+ paragraph = Regex(rf"{sentence.pattern}(?:\s+{sentence.pattern})*\n+")
