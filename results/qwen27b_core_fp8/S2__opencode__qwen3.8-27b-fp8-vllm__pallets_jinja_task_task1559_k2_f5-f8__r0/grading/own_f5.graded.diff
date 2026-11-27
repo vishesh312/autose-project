@@ -1,0 +1,98 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..703a46f 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -247,6 +247,15 @@ class InternationalizationExtension(Extension):
+ 
+     tags = {"trans"}
+ 
++    #: expression node types that are safe to use as translation variables
++    _allowed_trans_expressions: t.Tuple[t.Type[nodes.Expr], ...] = (
++        nodes.Const,
++        nodes.Name,
++        nodes.Getattr,
++        nodes.Filter,
++        nodes.Test,
++    )
++
+     # TODO: the i18n extension is currently reevaluating values in a few
+     # situations.  Take this example:
+     #   {% trans count=something() %}{{ count }} foo{% pluralize
+@@ -440,6 +449,8 @@ class InternationalizationExtension(Extension):
+             if name not in variables:
+                 variables[name] = nodes.Name(name, "load")
+ 
++        self._validate_trans_variables(variables, parser, lineno)
++
+         if not have_plural:
+             plural_expr = None
+         elif plural_expr is None:
+@@ -466,6 +477,68 @@ class InternationalizationExtension(Extension):
+         else:
+             return node
+ 
++    def _validate_trans_variables(
++        self,
++        variables: t.Dict[str, nodes.Expr],
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate all variables used in a translation block.
++
++        Variable names must follow Python identifier rules and must not
++        conflict with the translation functions installed by this
++        extension.  The expressions bound to the variables must be
++        values that are appropriate for translation contexts.
++        """
++        for name, expr in variables.items():
++            if not isinstance(name, str) or not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r} in translation block: "
++                    "variable names must be valid Python identifiers",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            if name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Invalid variable name {name!r} in translation block: "
++                    f"'{name}' conflicts with translation function names",
++                    lineno,
++                    exc=TemplateSyntaxError,
++                )
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self,
++        name: str,
++        expr: nodes.Expr,
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate a single expression bound to a translation variable.
++
++        Only expressions that can be serialized for translation contexts
++        are allowed: literals, variable references, simple function
++        calls, attribute access, filters and tests.
++        """
++        if isinstance(expr, self._allowed_trans_expressions):
++            return
++        if isinstance(expr, nodes.Call) and isinstance(expr.node, nodes.Name):
++            return
++        if isinstance(expr, (nodes.TemplateData, nodes.Output)):
++            description = "template data cannot be serialized for translation"
++        else:
++            description = (
++                f"{type(expr).__name__} expressions cannot be serialized "
++                "for translation"
++            )
++        parser.fail(
++            f"Invalid expression for translation variable {name!r}: {description}, "
++            "only simple values are accepted as template data in "
++            "translation contexts",
++            lineno,
++            exc=TemplateSyntaxError,
++        )
++
+     def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
+         return _ws_re.sub(" ", string.strip())
+ 
