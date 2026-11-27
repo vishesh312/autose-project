@@ -1,0 +1,83 @@
+diff --git a/src/jinja2/ext.py b/src/jinja2/ext.py
+index d21b83a..b847a15 100644
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -247,6 +247,16 @@ class InternationalizationExtension(Extension):
+ 
+     tags = {"trans"}
+ 
++    #: expression node types that are allowed as values for translatable
++    #: variables in translation blocks
++    _allowed_trans_expr_types: t.Tuple[t.Type[nodes.Expr], ...] = (
++        nodes.Const,
++        nodes.Name,
++        nodes.Getattr,
++        nodes.Filter,
++        nodes.Test,
++    )
++
+     # TODO: the i18n extension is currently reevaluating values in a few
+     # situations.  Take this example:
+     #   {% trans count=something() %}{{ count }} foo{% pluralize
+@@ -445,6 +455,8 @@ class InternationalizationExtension(Extension):
+         elif plural_expr is None:
+             parser.fail("pluralize without variables", lineno)
+ 
++        self._validate_trans_variables(variables, parser, lineno)
++
+         if trimmed is None:
+             trimmed = self.environment.policies["ext.i18n.trimmed"]
+         if trimmed:
+@@ -466,6 +478,52 @@ class InternationalizationExtension(Extension):
+         else:
+             return node
+ 
++    def _validate_trans_variables(
++        self,
++        variables: t.Dict[str, nodes.Expr],
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate the names and expressions of all variables used in a
++        translation block.
++        """
++        for name, expr in variables.items():
++            if not name.isidentifier():
++                parser.fail(
++                    f"Invalid variable name {name!r}: variable names must be "
++                    "valid Python identifiers",
++                    lineno,
++                )
++            if name in GETTEXT_FUNCTIONS:
++                parser.fail(
++                    f"Variable name {name!r} conflicts with translation "
++                    f"function names: {', '.join(GETTEXT_FUNCTIONS)}",
++                    lineno,
++                )
++            self._validate_trans_expression(name, expr, parser, lineno)
++
++    def _validate_trans_expression(
++        self,
++        name: str,
++        expr: nodes.Expr,
++        parser: "Parser",
++        lineno: int,
++    ) -> None:
++        """Validate a single expression used as a translatable variable.
++        """
++        if isinstance(expr, nodes.Call):
++            if isinstance(expr.node, nodes.Name):
++                return
++        elif isinstance(expr, self._allowed_trans_expr_types):
++            return
++        node_type = expr.__class__.__name__
++        parser.fail(
++            f"Invalid expression for variable {name!r}: {node_type} contains "
++            "template data or is a complex nested expression that cannot "
++            "be used in translation contexts",
++            lineno,
++        )
++
+     def _trim_whitespace(self, string: str, _ws_re: t.Pattern[str] = _ws_re) -> str:
+         return _ws_re.sub(" ", string.strip())
+ 
