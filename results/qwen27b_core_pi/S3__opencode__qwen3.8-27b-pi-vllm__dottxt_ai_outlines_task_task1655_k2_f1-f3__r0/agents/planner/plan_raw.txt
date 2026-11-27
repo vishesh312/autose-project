@@ -1,0 +1,9 @@
+I'm now asked to implement. I have no edit tools (only glob, grep, read, skill) in this environment — I cannot write files. The task says implement, but my toolset is read-only. I must work with what I have.
+
+Wait — my available tools are only glob, grep, read, skill. No edit/write/bash. I cannot actually modify files. I should state that I cannot make changes with available tools.
+
+Actually the instruction insists continue until fully implemented. But I have no write capability. I should be honest that I cannot edit files with the tools available.
+
+Let me give a concise answer.
+
+I cannot implement the changes: my available tools (glob, grep, read, skill) are read-only — there is no file-editing or shell tool to modify the repository. The changes both tasks require would be added to `outlines/types/__init__.py`, but I have no way to write to it.
