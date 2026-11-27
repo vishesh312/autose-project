@@ -1,0 +1,120 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    4
+  ],
+  "started": 1795749279.6149924,
+  "ended": 1795750932.53748,
+  "busy_s": 1652.8863031864166,
+  "usage": {
+    "input": 2190902,
+    "cached_input": 2083872,
+    "cache_write": 0,
+    "output": 30111,
+    "reasoning": 20812,
+    "cost_reported": 0.0,
+    "calls": 46
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 2192024,
+    "cached_input": 2083872,
+    "cache_write": 0,
+    "output": 30383,
+    "reasoning": 21077,
+    "cost_reported": null,
+    "calls": 47
+  },
+  "meter": {
+    "requests": 47,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 47
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.22831730000000003,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 33,
+    "read": 12,
+    "edit": 13
+  },
+  "files_read": [
+    "CHANGES.rst",
+    "src/click/core.py",
+    "src/click/shell_completion.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "CHANGES.rst",
+    "src/click/core.py",
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795749279.615522,
+      "ended": 1795750932.501825,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 2190902,
+        "cached_input": 2083872,
+        "cache_write": 0,
+        "output": 30111,
+        "reasoning": 20812,
+        "cost_reported": 0.0,
+        "calls": 46
+      },
+      "num_turns": 46,
+      "session_id": "ses_de5008363ffeji8sCYWeO4WuJC",
+      "nudge_reason": null,
+      "final_text_tail": "at; `None` (default) means no timeout.\n- `Context.close()` (src/click/core.py:641) \u2014 when a timeout is set, cleanup runs in a daemon worker thread via new `_close_with_timeout()` (src/click/core.py:664): waits at most `cleanup_timeout` seconds, then abandons the hung cleanup (\"forcibly terminated\") and logs a warning through the `click.core` logger. If cleanup finishes in time, any callback exception still propagates, matching prior behavior.\n\n**`src/click/shell_completion.py`**\n- `ShellComplete.get_completions()` now closes the resolved context chain in a `finally` via new `_close_context()` helper, so completion cleanup respects each context's `cleanup_timeout` (the value flows through `ctx_args` \u2192 `make_context` \u2192 `Context`).\n\n**`CHANGES.rst`** \u2014 changelog entry added.\n\nVerification: full suite passes (614 passed, 21 skipped, 1 xfailed \u2014 the only pre-existing failure is a pytest-9.2 collection incompatibility in `test_basic.py`, present on the pristine tree; run with `-W ignore::pytest.PytestRemovedIn10Warning`). Manually verified: default `None`, value storage, `ValueError` for `0`/`-1`/`-5`/`\"abc\"`, a 3s-hanging close callback returns in ~0.3s with `cleanup_timeout=0.3` and logs the warning, fast cleanups and exception propagation work with the timeout, no-timeout behavior is unchanged, and completion/`main()`/context-manager/`with_resource` flows all respect the timeout. The `logging` import is deferred into the method to keep the `test_light_imports` allow-list intact.",
+      "error": null,
+      "proxy_usage": {
+        "input": 2192024,
+        "cached_input": 2083872,
+        "cache_write": 0,
+        "output": 30383,
+        "reasoning": 21077,
+        "cost_reported": null,
+        "calls": 47
+      }
+    }
+  ],
+  "error": null
+}
