@@ -1,0 +1,367 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_pi",
+    "bundle": "dottxt_ai_outlines_task/task1655/k2/f1-f3",
+    "pool": "dottxt_ai_outlines_task/task1655",
+    "k": 2,
+    "features": [
+      1,
+      3
+    ],
+    "strategy": "S0",
+    "strategy_id": "S0",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-pi-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795784615.6079056,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8002"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "isolated",
+    "by_final": {
+      "isolated": {
+        "task_pass_rate": 1.0,
+        "bundle_success": true,
+        "passed": [
+          1,
+          3
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": true,
+      "3": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 62682,
+      "cached_input": 36064,
+      "cache_write": 0,
+      "output": 1327,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 9
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 59996,
+      "cached_input": 36064,
+      "cache_write": 0,
+      "output": 1305,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 7
+    },
+    "usage_proxy": {
+      "input": 62682,
+      "cached_input": 36064,
+      "cache_write": 0,
+      "output": 1327,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 9
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.006666300000000001,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.006666300000000001,
+    "cost_per_solved_task": 0.0033331500000000004,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "outlines/types/__init__.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 96.65960884094238,
+    "agents_wall_s": 96.65960884094238,
+    "merge_s": 0.0,
+    "strategy_span_s": 99.51097822189331,
+    "agent_busy_s": 96.523845911026,
+    "effective_parallelism": 0.9985954533486703,
+    "container_setup_s": 1.7771949768066406,
+    "grading_s": 7.70724892616272,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": null,
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1795784617.2299044,
+      "ended": 1795784683.4713185,
+      "busy_s": 66.17172741889954,
+      "usage": {
+        "input": 34968,
+        "cached_input": 21952,
+        "cache_write": 0,
+        "output": 885,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 4
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 36320,
+        "cached_input": 21952,
+        "cache_write": 0,
+        "output": 899,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 5
+      },
+      "meter": {
+        "requests": 5,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 5
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0039017,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "shell": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 21,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795784617.2309682,
+          "ended": 1795784683.4026957,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 34968,
+            "cached_input": 21952,
+            "cache_write": 0,
+            "output": 885,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 4
+          },
+          "num_turns": 4,
+          "session_id": "ses_de2e54dd7ffeyk2LUnPTQCyUbz",
+          "nudge_reason": null,
+          "final_text_tail": "All patterns work correctly. Done: added `hex_str`, `uuid4`, `ipv4` to `outlines/types/__init__.py:51-69` after the basic types.",
+          "error": null,
+          "proxy_usage": {
+            "input": 36320,
+            "cached_input": 21952,
+            "cache_write": 0,
+            "output": 899,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 5
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f3",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        3
+      ],
+      "started": 1795784684.4281833,
+      "ended": 1795784714.846378,
+      "busy_s": 30.352118492126465,
+      "usage": {
+        "input": 25028,
+        "cached_input": 14112,
+        "cache_write": 0,
+        "output": 420,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 3
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 26362,
+        "cached_input": 14112,
+        "cache_write": 0,
+        "output": 428,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 4
+      },
+      "meter": {
+        "requests": 4,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 4
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0027646,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 2,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795784684.4285011,
+          "ended": 1795784714.7806196,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 25028,
+            "cached_input": 14112,
+            "cache_write": 0,
+            "output": 420,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "ses_de2e4478dffeNDq94ECsyK68yI",
+          "nudge_reason": null,
+          "final_text_tail": "Added `octal_str` after `paragraph`, before email, with the \"# System-specific types\" header. Pattern `0o[0-7]+` requires the `0o` prefix, matching full string via the `Regex` class, no whitespace handling.",
+          "error": null,
+          "proxy_usage": {
+            "input": 26362,
+            "cached_input": 14112,
+            "cache_write": 0,
+            "output": 428,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 4
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.36566162109375,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S0__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f3": {
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.780193567276001,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S0__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f3.f3.log"
+      }
+    }
+  }
+}
