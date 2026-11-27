@@ -1,0 +1,280 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_fp8",
+    "bundle": "pallets_click_task/task2800/k2/f1-f4",
+    "pool": "pallets_click_task/task2800",
+    "k": 2,
+    "features": [
+      1,
+      4
+    ],
+    "strategy": "S1",
+    "strategy_id": "S1",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-fp8-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795747120.1853738,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8001"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          1
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": true,
+      "4": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 3840725,
+      "cached_input": 3702048,
+      "cache_write": 0,
+      "output": 42116,
+      "reasoning": 28702,
+      "cost_reported": null,
+      "calls": 63
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 3839154,
+      "cached_input": 3702048,
+      "cache_write": 0,
+      "output": 41709,
+      "reasoning": 28304,
+      "cost_reported": 0.0,
+      "calls": 62
+    },
+    "usage_proxy": {
+      "input": 3840725,
+      "cached_input": 3702048,
+      "cache_write": 0,
+      "output": 42116,
+      "reasoning": 28702,
+      "cost_reported": null,
+      "calls": 63
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.39670730000000004,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.39670730000000004,
+    "cost_per_solved_task": 0.39670730000000004,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 2155.7073011398315,
+    "agents_wall_s": 2155.7073011398315,
+    "merge_s": 0.0,
+    "strategy_span_s": 2155.754405975342,
+    "agent_busy_s": 2155.6388387680054,
+    "effective_parallelism": 0.9999682413415819,
+    "container_setup_s": 0.4609370231628418,
+    "grading_s": 2.1868350505828857,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": null,
+  "agents": [
+    {
+      "agent_id": "solo",
+      "role": "solo",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        1,
+        4
+      ],
+      "started": 1795747120.6479337,
+      "ended": 1795749276.3552349,
+      "busy_s": 2155.6388387680054,
+      "usage": {
+        "input": 3839154,
+        "cached_input": 3702048,
+        "cache_write": 0,
+        "output": 41709,
+        "reasoning": 28304,
+        "cost_reported": 0.0,
+        "calls": 62
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 3840725,
+        "cached_input": 3702048,
+        "cache_write": 0,
+        "output": 42116,
+        "reasoning": 28702,
+        "cost_reported": null,
+        "calls": 63
+      },
+      "meter": {
+        "requests": 63,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 63
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.39670730000000004,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 32,
+        "read": 23,
+        "edit": 16
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-1sqkjkw2/repo",
+        "src/click/core.py",
+        "src/click/shell_completion.py",
+        "src/click/types.py",
+        "tests",
+        "tests/test_context.py",
+        "tests/test_imports.py",
+        "tests/test_shell_completion.py"
+      ],
+      "files_edited": [
+        ".repro_leak.py",
+        "/scratch/manas_ase/tmp/parbench-host-1sqkjkw2/tmp/opencode/repro_leak.py",
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 139,
+      "patch_files": [
+        "src/click/core.py",
+        "src/click/shell_completion.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795747120.6487806,
+          "ended": 1795749276.2876194,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 3839154,
+            "cached_input": 3702048,
+            "cache_write": 0,
+            "output": 41709,
+            "reasoning": 28304,
+            "cost_reported": 0.0,
+            "calls": 62
+          },
+          "num_turns": 62,
+          "session_id": "ses_de52174ebffe8p0JdZ5eU0aJUL",
+          "nudge_reason": null,
+          "final_text_tail": "ake_context(...) as ctx:`, `with cmd.make_context(...) as sub_ctx:`, and `with cmd.make_context(...) as sub_sub_ctx:` for chained groups \u2014 so every context's `__exit__` \u2192 `close()` runs, closing file handles registered via `File()`/`call_on_close`. Verified: files are closed after completion (plain, group, and chained cases), no `ResourceWarning`.\n\n**Task 2 \u2014 `cleanup_timeout`** (`src/click/core.py`):\n- `Context.__init__` accepts `cleanup_timeout: float | None = None`; validates it's a positive number (zero/negative/non-numeric raise `ValueError`), and inherits it from the parent context when `None` (consistent with other context params), so sub-contexts during completion respect it too.\n- `Context.close()` (core.py:645-681): with a timeout set, cleanup runs in a daemon worker thread and `close()` waits at most `cleanup_timeout` seconds; a hanging cleanup is abandoned in the background with a warning logged (graceful degradation); worker errors are logged instead of lost. `logging` is imported lazily to keep `test_light_imports` passing.\n- Shell completion respects the timeout: `cleanup_timeout` flows through `ctx_args` (from `main(**extra)` / `ShellComplete`) into context creation, and Task 1's closing is what triggers the timeout-bounded `close()`.\n\nVerification: full suite 614 passed / 21 skipped / 1 xfailed (same as baseline); hanging cleanup (30s sleep) with `cleanup_timeout=0.3` returns in ~0.3s with the warning logged, both directly and end-to-end via shell completion.",
+          "error": null,
+          "proxy_usage": {
+            "input": 3840725,
+            "cached_input": 3702048,
+            "cache_write": 0,
+            "output": 42116,
+            "reasoning": 28702,
+            "cost_reported": null,
+            "calls": 63
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_solo": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 68,
+        "tests_failed": 0,
+        "duration_s": 0.689030647277832,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 75,
+        "tests_failed": 2,
+        "duration_s": 2.1051394939422607,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 68,
+        "tests_failed": 0,
+        "duration_s": 0.689030647277832,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f1.log"
+      },
+      "4": {
+        "fid": 4,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 75,
+        "tests_failed": 2,
+        "duration_s": 2.1051394939422607,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S1__opencode__qwen3.8-27b-fp8-vllm__pallets_click_task_task2800_k2_f1-f4__r0/grading/own_solo.f4.log"
+      }
+    }
+  }
+}
