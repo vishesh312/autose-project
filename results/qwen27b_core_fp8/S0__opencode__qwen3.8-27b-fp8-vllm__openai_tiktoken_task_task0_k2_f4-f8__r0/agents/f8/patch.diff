@@ -1,0 +1,60 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..c9cf7d1 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import functools
++from collections import Counter
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import TYPE_CHECKING, AbstractSet, Collection, Literal, NoReturn, Sequence
+ 
+@@ -82,7 +83,8 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        return_repeated_pattern: bool = False,
++    ) -> list[int] | tuple[list[int], dict[tuple[int, int], int]]:
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,6 +99,12 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        If `return_repeated_pattern` is True, the function additionally analyses the token
++        sequence produced during encoding, counts all adjacent token pairs, and returns a
++        tuple of the encoded tokens together with a dictionary mapping the top 3 most
++        frequent token pairs to their occurrence counts. When False (the default), only the
++        encoded tokens are returned, as before.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
+@@ -121,7 +129,7 @@ class Encoding:
+                 raise_disallowed_special_token(match.group())
+ 
+         try:
+-            return self._core_bpe.encode(text, allowed_special)
++            tokens = self._core_bpe.encode(text, allowed_special)
+         except UnicodeEncodeError:
+             # BPE operates on bytes, but the regex operates on unicode. If we pass a str that is
+             # invalid UTF-8 to Rust, it will rightfully complain. Here we do a quick and dirty
+@@ -130,7 +138,14 @@ class Encoding:
+             # string, but given that this is input we want to support, maybe that's okay.
+             # Also we use errors="replace" to handle weird things like lone surrogates.
+             text = text.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
+-            return self._core_bpe.encode(text, allowed_special)
++            tokens = self._core_bpe.encode(text, allowed_special)
++
++        if not return_repeated_pattern:
++            return tokens
++
++        pair_counts = Counter(zip(tokens, tokens[1:]))
++        repeated_pattern = dict(pair_counts.most_common(3))
++        return tokens, repeated_pattern
+ 
+     def encode_to_numpy(
+         self,

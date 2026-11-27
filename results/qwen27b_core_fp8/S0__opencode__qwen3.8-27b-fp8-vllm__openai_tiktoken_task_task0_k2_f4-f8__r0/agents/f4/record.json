@@ -1,0 +1,143 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    4
+  ],
+  "started": 1795743687.357843,
+  "ended": 1795744066.4570863,
+  "busy_s": 379.0615005493164,
+  "usage": {
+    "input": 96060,
+    "cached_input": 67424,
+    "cache_write": 0,
+    "output": 8130,
+    "reasoning": 7646,
+    "cost_reported": 0.0,
+    "calls": 6
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 97137,
+    "cached_input": 67424,
+    "cache_write": 0,
+    "output": 8533,
+    "reasoning": 8041,
+    "cost_reported": null,
+    "calls": 7
+  },
+  "meter": {
+    "requests": 7,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 7
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.0122736,
+  "nudges": 1,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 4,
+    "shell": 4
+  },
+  "files_read": [
+    "/scratch/manas_ase/tmp/parbench-host-7omxy85u/repo",
+    "tests/test_encoding.py",
+    "tests/test_misc.py",
+    "tiktoken/core.py"
+  ],
+  "files_edited": [],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795743687.3580985,
+      "ended": 1795743961.8418982,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 71873,
+        "cached_input": 48608,
+        "cache_write": 0,
+        "output": 6075,
+        "reasoning": 5592,
+        "cost_reported": 0.0,
+        "calls": 5
+      },
+      "num_turns": 5,
+      "session_id": "ses_de555d904ffeABU6u3jDJhhSty",
+      "nudge_reason": "no_changes",
+      "final_text_tail": "",
+      "error": null,
+      "proxy_usage": {
+        "input": 72950,
+        "cached_input": 48608,
+        "cache_write": 0,
+        "output": 6478,
+        "reasoning": 5987,
+        "cost_reported": null,
+        "calls": 6
+      }
+    },
+    {
+      "index": 1,
+      "started": 1795743961.8791225,
+      "ended": 1795744066.4568233,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 24187,
+        "cached_input": 18816,
+        "cache_write": 0,
+        "output": 2055,
+        "reasoning": 2054,
+        "cost_reported": 0.0,
+        "calls": 1
+      },
+      "num_turns": 1,
+      "session_id": "ses_de555d904ffeABU6u3jDJhhSty",
+      "nudge_reason": null,
+      "final_text_tail": "",
+      "error": null,
+      "proxy_usage": {
+        "input": 24187,
+        "cached_input": 18816,
+        "cache_write": 0,
+        "output": 2055,
+        "reasoning": 2054,
+        "cost_reported": null,
+        "calls": 1
+      }
+    }
+  ],
+  "error": null
+}
