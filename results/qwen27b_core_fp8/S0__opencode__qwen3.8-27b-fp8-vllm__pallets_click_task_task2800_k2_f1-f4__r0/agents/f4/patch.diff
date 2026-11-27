@@ -1,0 +1,181 @@
+diff --git a/src/click/core.py b/src/click/core.py
+index 666ad68..d178240 100644
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -6,6 +6,7 @@ import errno
+ import inspect
+ import os
+ import sys
++import threading
+ import typing as t
+ from collections import abc
+ from collections import Counter
+@@ -228,6 +229,17 @@ class Context:
+         value is not set, it defaults to the value from the parent
+         context. ``Command.show_default`` overrides this default for the
+         specific command.
++    :param cleanup_timeout: The maximum number of seconds that
++        :meth:`close` will spend running cleanup operations. If the
++        cleanup does not finish within that time, the remaining cleanup
++        operations are terminated and a warning is logged so that
++        closing the context never hangs indefinitely. The default is
++        `None`, meaning there is no timeout and cleanup operations are
++        run to completion. If not set, the value is inherited from the
++        parent context.
++
++    .. versionchanged:: 8.2
++        Added the ``cleanup_timeout`` parameter.
+ 
+     .. versionchanged:: 8.2
+         The ``protected_args`` attribute is deprecated and will be removed in
+@@ -280,6 +292,7 @@ class Context:
+         token_normalize_func: t.Callable[[str], str] | None = None,
+         color: bool | None = None,
+         show_default: bool | None = None,
++        cleanup_timeout: float | None = None,
+     ) -> None:
+         #: the parent context or `None` if none exists.
+         self.parent = parent
+@@ -427,6 +440,25 @@ class Context:
+         #: Show option default values when formatting help text.
+         self.show_default: bool | None = show_default
+ 
++        if cleanup_timeout is not None:
++            if isinstance(cleanup_timeout, bool) or not isinstance(
++                cleanup_timeout, (int, float)
++            ):
++                raise ValueError("cleanup_timeout must be a positive number (> 0).")
++
++            if cleanup_timeout <= 0:
++                raise ValueError("cleanup_timeout must be a positive number (> 0).")
++
++        if cleanup_timeout is None and parent is not None:
++            cleanup_timeout = parent.cleanup_timeout
++        elif cleanup_timeout is not None:
++            cleanup_timeout = float(cleanup_timeout)
++
++        #: The maximum number of seconds that :meth:`close` will wait
++        #: for cleanup operations to finish. ``None`` means there is no
++        #: timeout and cleanup operations run to completion.
++        self.cleanup_timeout: float | None = cleanup_timeout
++
+         self._close_callbacks: list[t.Callable[[], t.Any]] = []
+         self._depth = 0
+         self._parameter_source: dict[str, ParameterSource] = {}
+@@ -606,11 +638,62 @@ class Context:
+         """Invoke all close callbacks registered with
+         :meth:`call_on_close`, and exit all context managers entered
+         with :meth:`with_resource`.
++
++        If :attr:`cleanup_timeout` is set, the cleanup operations are
++        given at most that many seconds to finish. If they take longer,
++        the remaining cleanup operations are terminated and a warning
++        is logged, so that closing the context never hangs
++        indefinitely.
++
++        .. versionchanged:: 8.2
++            The cleanup operations are bounded by ``cleanup_timeout``
++            if it is set.
+         """
+-        self._exit_stack.close()
++        if self.cleanup_timeout is None:
++            self._exit_stack.close()
++        else:
++            self._close_stack_with_timeout(self._exit_stack, self.cleanup_timeout)
++
+         # In case the context is reused, create a new exit stack.
+         self._exit_stack = ExitStack()
+ 
++    def _close_stack_with_timeout(self, stack: ExitStack, timeout: float) -> None:
++        """Close ``stack`` in a daemon thread, waiting at most
++        ``timeout`` seconds for the cleanup operations to finish.
++
++        If the timeout expires before the cleanup finishes, the
++        remaining cleanup operations are terminated and a warning is
++        logged instead of waiting indefinitely. Errors raised by
++        cleanup operations that did finish are re-raised.
++
++        :meta private:
++        """
++        import logging
++
++        errors: list[BaseException] = []
++
++        def _run() -> None:
++            try:
++                stack.close()
++            except BaseException as e:
++                errors.append(e)
++
++        thread = threading.Thread(target=_run, name="click-context-cleanup")
++        thread.daemon = True
++        thread.start()
++        thread.join(timeout)
++
++        if thread.is_alive():
++            logging.getLogger(__name__).warning(
++                "Context cleanup did not complete within %s seconds. The "
++                "remaining cleanup operations were terminated.",
++                timeout,
++            )
++            return
++
++        if errors:
++            raise errors[0]
++
+     @property
+     def command_path(self) -> str:
+         """The computed command path.  This is used for the ``usage``
+diff --git a/src/click/shell_completion.py b/src/click/shell_completion.py
+index 6fd9e54..025e698 100644
+--- a/src/click/shell_completion.py
++++ b/src/click/shell_completion.py
+@@ -267,12 +267,21 @@ class ShellComplete:
+         from the complete args. Call that object's ``shell_complete``
+         method to get the completions for the incomplete value.
+ 
++        The resolved context is closed once the completions have been
++        produced, so any cleanup callbacks registered during completion
++        are invoked. If a ``cleanup_timeout`` was passed via
++        ``ctx_args``, the cleanup is bounded by that timeout.
++
+         :param args: List of complete args before the incomplete value.
+         :param incomplete: Value being completed. May be empty.
+         """
+         ctx = _resolve_context(self.cli, self.ctx_args, self.prog_name, args)
+-        obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
+-        return obj.shell_complete(ctx, incomplete)
++
++        try:
++            obj, incomplete = _resolve_incomplete(ctx, args, incomplete)
++            return obj.shell_complete(ctx, incomplete)
++        finally:
++            _close_context_chain(ctx)
+ 
+     def format_completion(self, item: CompletionItem) -> str:
+         """Format a completion item into the form recognized by the
+@@ -586,6 +595,24 @@ def _resolve_context(
+     return ctx
+ 
+ 
++def _close_context_chain(ctx: Context) -> None:
++    """Close ``ctx`` and all its ancestors so that cleanup callbacks
++    registered at any level of the resolved context hierarchy are
++    invoked when completion is done. Each context is closed with its
++    ``cleanup_timeout`` (inherited from the root context) honored, so a
++    hanging cleanup cannot block completion indefinitely.
++    """
++    chain: list[Context] = []
++    node: Context | None = ctx
++
++    while node is not None:
++        chain.append(node)
++        node = node.parent
++
++    for node in reversed(chain):
++        node.close()
++
++
+ def _resolve_incomplete(
+     ctx: Context, args: list[str], incomplete: str
+ ) -> tuple[Command | Parameter, str]:

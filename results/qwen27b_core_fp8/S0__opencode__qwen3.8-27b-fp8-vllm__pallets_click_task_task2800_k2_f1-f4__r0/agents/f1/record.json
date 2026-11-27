@@ -1,0 +1,122 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795747060.1480181,
+  "ended": 1795750617.1186464,
+  "busy_s": 3556.9199771881104,
+  "usage": {
+    "input": 3422185,
+    "cached_input": 3159520,
+    "cache_write": 0,
+    "output": 68712,
+    "reasoning": 56458,
+    "cost_reported": 0.0,
+    "calls": 60
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 3423343,
+    "cached_input": 3159520,
+    "cache_write": 0,
+    "output": 69133,
+    "reasoning": 56871,
+    "cost_reported": null,
+    "calls": 61
+  },
+  "meter": {
+    "requests": 61,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 61
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.3630742,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 29,
+    "read": 40,
+    "edit": 4
+  },
+  "files_read": [
+    "CHANGES.rst",
+    "src/click",
+    "src/click/core.py",
+    "src/click/parser.py",
+    "src/click/shell_completion.py",
+    "src/click/types.py",
+    "src/click/utils.py",
+    "tests/test_context.py",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "src/click/core.py",
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795747060.1483018,
+      "ended": 1795750617.068279,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 3422185,
+        "cached_input": 3159520,
+        "cache_write": 0,
+        "output": 68712,
+        "reasoning": 56458,
+        "cost_reported": 0.0,
+        "calls": 60
+      },
+      "num_turns": 60,
+      "session_id": "ses_de5226208ffeBZasP6vZnPrJXL",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nDone. The task is complete.\n\n**Changes** (working tree, not committed):\n- `src/click/shell_completion.py` \u2014 `_resolve_context` now wraps all three `make_context` calls in `with` blocks (`ctx`, `sub_ctx`, `sub_sub_ctx`), so each context's `__exit__` runs `Context.close()`, firing `call_on_close`/`with_resource` teardown that closes `click.File` handles. This is the functional fix.\n- `src/click/core.py` \u2014 `Context.__exit__` now guarantees `pop_context()` in a `finally` even if `close()` raises, keeping the thread-local context stack consistent.\n\n**Verification:**\n- Full suite: `558 passed, 21 skipped, 1 xfailed` (excluding `test_basic.py`, which has a pre-existing pytest-9 collection error); `test_basic.py` alone: `56 passed` with the `PytestRemovedIn10Warning` filter.\n- Repro scripts (original `ResourceWarning` + 8 completion scenarios + edge cases + nested-in-live-context): no `ResourceWarning`, no unclosed files, completions and the enclosing context all behave correctly.\n- Syntax check passed; mypy/ruff aren't installed in this venv so I relied on the test suite.\n\nOne note: I couldn't determine the exact `core.py` diff from the original PR \u2014 the described Solution covers only the `shell_completion.py` `with`-statement fix (which is verified complete), so the `core.py` edit is a minimal, safe, thematically-aligned robustness change rather than a confirmed match to the upstream patch.",
+      "error": null,
+      "proxy_usage": {
+        "input": 3423343,
+        "cached_input": 3159520,
+        "cache_write": 0,
+        "output": 69133,
+        "reasoning": 56871,
+        "cost_reported": null,
+        "calls": 61
+      }
+    }
+  ],
+  "error": null
+}
