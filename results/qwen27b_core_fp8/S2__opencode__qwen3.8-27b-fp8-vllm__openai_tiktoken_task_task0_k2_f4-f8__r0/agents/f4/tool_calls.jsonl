@@ -1,0 +1,8 @@
+{"name": "bash", "kind": "shell", "args": {"command": "find /scratch/manas_ase/tmp/parbench-host-qclqep4d/repo -type f -name \"*.py\" | head -50 && echo \"---\" && ls /scratch/manas_ase/tmp/parbench-host-qclqep4d/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-qclqep4d/repo/tiktoken/core.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-qclqep4d/repo/CHANGELOG.md"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "git log --oneline -10 && git status", "workdir": "/scratch/manas_ase/tmp/parbench-host-qclqep4d/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "grep -rn \"chunk\" --include=\"*.py\" . | grep -v target | grep -v \".git\"", "workdir": "/scratch/manas_ase/tmp/parbench-host-qclqep4d/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "grep -rn \"dict\" tiktoken/*.py | head -30", "workdir": "/scratch/manas_ase/tmp/parbench-host-qclqep4d/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "grep -n \"def test\" tests/test_encoding.py | head -40", "workdir": "/scratch/manas_ase/tmp/parbench-host-qclqep4d/repo"}, "ok": true, "ts": null}
+{"name": "bash", "kind": "shell", "args": {"command": "python -c \"import tiktoken; print(tiktoken.__file__); e = tiktoken.get_encoding('cl100k_base'); print(e.encode('hello world'))\"", "workdir": "/scratch/manas_ase/tmp/parbench-host-qclqep4d/repo"}, "ok": true, "ts": null}
