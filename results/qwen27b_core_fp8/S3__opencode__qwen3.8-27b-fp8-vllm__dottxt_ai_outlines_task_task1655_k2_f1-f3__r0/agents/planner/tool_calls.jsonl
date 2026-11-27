@@ -1,0 +1,11 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "outlines/types/**"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "octal_str|hex_str|uuid4|ipv4", "path": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def matches|self\\.pattern", "path": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines/types/dsl.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines/types/dsl.py", "offset": 100, "limit": 140}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "tests/**/*.py", "path": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines/types/dsl.py", "limit": 99}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def to_regex|elif isinstance\\(term, Regex\\)|isinstance\\(term, Regex\\)", "path": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines/types/dsl.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines/types/dsl.py", "limit": 48, "offset": 892}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "types", "path": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines/__init__.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "whitespace|sentence|paragraph", "path": "/scratch/manas_ase/tmp/parbench-host-t1dlzqg_/repo/outlines", "include": "*.py"}, "ok": true, "ts": null}
