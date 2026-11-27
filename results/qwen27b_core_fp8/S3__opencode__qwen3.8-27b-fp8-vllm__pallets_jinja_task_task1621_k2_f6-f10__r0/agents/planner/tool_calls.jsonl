@@ -1,0 +1,20 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "src/jinja2/*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/src/jinja2/loaders.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/src/jinja2/loaders.py", "limit": 120}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def get_template|def _load_template|def _load_template_silent|loader\\.load|loader\\.get_source", "path": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/src/jinja2"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "class TemplateNotFound", "path": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/src/jinja2"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/src/jinja2/environment.py", "offset": 840, "limit": 150}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/src/jinja2/exceptions.py", "offset": 1, "limit": 60}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "tests/*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/tests/test_loader.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/tests/conftest.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "BaseLoader", "path": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/setup.cfg"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/.pre-commit-config.yaml"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/tox.ini"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/requirements"}, "ok": true, "ts": null}
+{"name": "skill", "kind": "other", "args": {"name": "customize-opencode"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/requirements/tests.txt"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/tests/test_pickle.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "Loader\\(", "path": "/scratch/manas_ase/tmp/parbench-host-ra7u2l_u/repo/src"}, "ok": true, "ts": null}
