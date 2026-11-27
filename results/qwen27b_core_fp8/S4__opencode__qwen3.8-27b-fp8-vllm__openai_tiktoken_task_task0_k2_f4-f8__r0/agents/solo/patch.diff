@@ -1,0 +1,48 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..ca9cb81 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import functools
++from collections import Counter
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import TYPE_CHECKING, AbstractSet, Collection, Literal, NoReturn, Sequence
+ 
+@@ -82,7 +83,14 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++        return_repeated_pattern: bool = False,
++    ) -> (
++        list[int]
++        | list[list[int]]
++        | tuple[list[int], dict[tuple[int, int], int]]
++        | tuple[list[list[int]], list[dict[tuple[int, int], int]]]
++    ):
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,6 +105,19 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        Two additional optional features are available:
++
++        - `chunk_size`: if set, the text is first split into consecutive chunks of
++          `chunk_size` characters, and each chunk is encoded independently. The function
++          then returns a list of token lists, one per chunk. All other options (including
++          `return_repeated_pattern`) operate independently on each chunk.
++        - `return_repeated_pattern`: if set, the function additionally analyses the encoded
++          tokens and returns, alongside the tokens, a dictionary mapping the top 3 most
++          frequent adjacent token pairs to their occurrence counts.
++
++        When both options are set, the function returns a tuple of a list of token lists and a
++        list of token pair dictionaries, one per chunk.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
