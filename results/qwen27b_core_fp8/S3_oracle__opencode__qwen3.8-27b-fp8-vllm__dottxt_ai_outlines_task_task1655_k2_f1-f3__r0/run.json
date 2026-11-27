@@ -1,0 +1,426 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_fp8",
+    "bundle": "dottxt_ai_outlines_task/task1655/k2/f1-f3",
+    "pool": "dottxt_ai_outlines_task/task1655",
+    "k": 2,
+    "features": [
+      1,
+      3
+    ],
+    "strategy": "S3@oracle",
+    "strategy_id": "S3",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-fp8-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795782743.364974,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8001"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 1.0,
+        "bundle_success": true,
+        "passed": [
+          1,
+          3
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": true,
+      "3": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 533883,
+      "cached_input": 453152,
+      "cache_write": 0,
+      "output": 19783,
+      "reasoning": 13885,
+      "cost_reported": null,
+      "calls": 24
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 531129,
+      "cached_input": 453152,
+      "cache_write": 0,
+      "output": 19304,
+      "reasoning": 13430,
+      "cost_reported": 0.0,
+      "calls": 22
+    },
+    "usage_proxy": {
+      "input": 533883,
+      "cached_input": 453152,
+      "cache_write": 0,
+      "output": 19783,
+      "reasoning": 13885,
+      "cost_reported": null,
+      "calls": 24
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.059323200000000006,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.059323200000000006,
+    "cost_per_solved_task": 0.029661600000000003,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "/scratch/manas_ase/tmp/parbench-host-siw36ghx/repo",
+      "outlines/types/__init__.py",
+      "outlines/types/dsl.py",
+      "tests",
+      "tests/types/test_custom_types.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 923.5024313926697,
+    "agents_wall_s": 923.5024313926697,
+    "merge_s": 0.0,
+    "strategy_span_s": 924.4943156242371,
+    "agent_busy_s": 923.4073655605316,
+    "effective_parallelism": 0.9998970594674075,
+    "container_setup_s": 0.6462612152099609,
+    "grading_s": 12.720103979110718,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": {
+    "oracle": true,
+    "fallback": false,
+    "plan_s": 3.814697265625e-06,
+    "plan": {
+      "f1": [
+        "outlines/types/__init__.py"
+      ],
+      "f3": [
+        "outlines/types/__init__.py"
+      ]
+    },
+    "gold_files": {
+      "f1": [
+        "outlines/types/__init__.py"
+      ],
+      "f3": [
+        "outlines/types/__init__.py"
+      ]
+    },
+    "groups": [
+      [
+        "f1",
+        "f3"
+      ]
+    ]
+  },
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1795782744.0187159,
+      "ended": 1795783516.7424154,
+      "busy_s": 772.6778030395508,
+      "usage": {
+        "input": 354144,
+        "cached_input": 302624,
+        "cache_write": 0,
+        "output": 16332,
+        "reasoning": 11786,
+        "cost_reported": 0.0,
+        "calls": 13
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 355530,
+        "cached_input": 302624,
+        "cache_write": 0,
+        "output": 16682,
+        "reasoning": 12120,
+        "cost_reported": null,
+        "calls": 14
+      },
+      "meter": {
+        "requests": 14,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 14
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0405576,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 7,
+        "shell": 4,
+        "edit": 2
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-siw36ghx/repo",
+        "outlines/types/__init__.py",
+        "outlines/types/dsl.py",
+        "tests",
+        "tests/types/test_custom_types.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 16,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795782744.0190406,
+          "ended": 1795783516.6968436,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 354144,
+            "cached_input": 302624,
+            "cache_write": 0,
+            "output": 16332,
+            "reasoning": 11786,
+            "cost_reported": 0.0,
+            "calls": 13
+          },
+          "num_turns": 13,
+          "session_id": "ses_de301e326ffeqw5TousAQXk5VY",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nDone. Added three new types to `outlines/types/__init__.py:52-65`, between the basic types and document-specific types:\n\n- **`hex_str`** = `(0x)?[0-9a-fA-F]+` \u2014 upper/lowercase hex, optional `0x` prefix, requires \u22651 hex digit\n- **`uuid4`** \u2014 8-4-4-4-12 structure with version digit `4` (third group) and variant `[89abAB]` (fourth group), mixed-case hex\n- **`ipv4`** \u2014 exactly 4 dot-separated octets, each validated 0-255 (no leading zeros, matching the file's existing email-regex style)\n\nVerified: 40+ spec cases all pass, exhaustive octet sweep (0\u2013299) matches 0\u2013255 exactly, pydantic JSON-schema/`validate()` integration works, and all 119 existing `tests/types/` tests still pass.",
+          "error": null,
+          "proxy_usage": {
+            "input": 355530,
+            "cached_input": 302624,
+            "cache_write": 0,
+            "output": 16682,
+            "reasoning": 12120,
+            "cost_reported": null,
+            "calls": 14
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f3",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        3
+      ],
+      "started": 1795783516.8102825,
+      "ended": 1795783667.5890143,
+      "busy_s": 150.72956252098083,
+      "usage": {
+        "input": 176985,
+        "cached_input": 150528,
+        "cache_write": 0,
+        "output": 2972,
+        "reasoning": 1644,
+        "cost_reported": 0.0,
+        "calls": 9
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 178353,
+        "cached_input": 150528,
+        "cache_write": 0,
+        "output": 3101,
+        "reasoning": 1765,
+        "cost_reported": null,
+        "calls": 10
+      },
+      "meter": {
+        "requests": 10,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 10
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.018765600000000004,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 7,
+        "edit": 1,
+        "shell": 2
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-siw36ghx/repo",
+        "outlines/types/__init__.py",
+        "outlines/types/dsl.py",
+        "tests",
+        "tests/types/test_custom_types.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 19,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795783516.8111699,
+          "ended": 1795783667.5407324,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 176985,
+            "cached_input": 150528,
+            "cache_write": 0,
+            "output": 2972,
+            "reasoning": 1644,
+            "cost_reported": 0.0,
+            "calls": 9
+          },
+          "num_turns": 9,
+          "session_id": "ses_de2f618c2ffeyM6qPo4DudDZMK",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nDone. Added `octal_str = Regex(r\"0o[0-7]+\")` at `outlines/types/__init__.py:72` under a new `# System-specific types` header, placed after `paragraph` and before the email definition, per the spec.\n\nVerified:\n- Full-string matching: `0o755`/`0o644` match; `755`, `0o8`, `0o`, empty, and whitespace-padded inputs don't\n- `validate()` returns input or raises `ValueError`\n- Standard `Term` ops work (`to_regex`, sequencing) and Pydantic integration produces `{\"type\": \"string\", \"pattern\": \"(0o[0-7]+)\"}` with valid/invalid model instantiation behaving as in the usage examples\n- All 119 existing tests in `tests/types/` pass",
+          "error": null,
+          "proxy_usage": {
+            "input": 178353,
+            "cached_input": 150528,
+            "cache_write": 0,
+            "output": 3101,
+            "reasoning": 1765,
+            "cost_reported": null,
+            "calls": 10
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.7977285385131836,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3_oracle__opencode__qwen3.8-27b-fp8-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f3": {
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.9011902809143066,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3_oracle__opencode__qwen3.8-27b-fp8-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f3.f3.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 4.067882537841797,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3_oracle__opencode__qwen3.8-27b-fp8-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/final.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.761245012283325,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3_oracle__opencode__qwen3.8-27b-fp8-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/final.f3.log"
+      }
+    }
+  }
+}

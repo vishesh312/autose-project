@@ -1,0 +1,117 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795782744.0187159,
+  "ended": 1795783516.7424154,
+  "busy_s": 772.6778030395508,
+  "usage": {
+    "input": 354144,
+    "cached_input": 302624,
+    "cache_write": 0,
+    "output": 16332,
+    "reasoning": 11786,
+    "cost_reported": 0.0,
+    "calls": 13
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 355530,
+    "cached_input": 302624,
+    "cache_write": 0,
+    "output": 16682,
+    "reasoning": 12120,
+    "cost_reported": null,
+    "calls": 14
+  },
+  "meter": {
+    "requests": 14,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 14
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.0405576,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 7,
+    "shell": 4,
+    "edit": 2
+  },
+  "files_read": [
+    "/scratch/manas_ase/tmp/parbench-host-siw36ghx/repo",
+    "outlines/types/__init__.py",
+    "outlines/types/dsl.py",
+    "tests",
+    "tests/types/test_custom_types.py"
+  ],
+  "files_edited": [
+    "outlines/types/__init__.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795782744.0190406,
+      "ended": 1795783516.6968436,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 354144,
+        "cached_input": 302624,
+        "cache_write": 0,
+        "output": 16332,
+        "reasoning": 11786,
+        "cost_reported": 0.0,
+        "calls": 13
+      },
+      "num_turns": 13,
+      "session_id": "ses_de301e326ffeqw5TousAQXk5VY",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nDone. Added three new types to `outlines/types/__init__.py:52-65`, between the basic types and document-specific types:\n\n- **`hex_str`** = `(0x)?[0-9a-fA-F]+` \u2014 upper/lowercase hex, optional `0x` prefix, requires \u22651 hex digit\n- **`uuid4`** \u2014 8-4-4-4-12 structure with version digit `4` (third group) and variant `[89abAB]` (fourth group), mixed-case hex\n- **`ipv4`** \u2014 exactly 4 dot-separated octets, each validated 0-255 (no leading zeros, matching the file's existing email-regex style)\n\nVerified: 40+ spec cases all pass, exhaustive octet sweep (0\u2013299) matches 0\u2013255 exactly, pydantic JSON-schema/`validate()` integration works, and all 119 existing `tests/types/` tests still pass.",
+      "error": null,
+      "proxy_usage": {
+        "input": 355530,
+        "cached_input": 302624,
+        "cache_write": 0,
+        "output": 16682,
+        "reasoning": 12120,
+        "cost_reported": null,
+        "calls": 14
+      }
+    }
+  ],
+  "error": null
+}
