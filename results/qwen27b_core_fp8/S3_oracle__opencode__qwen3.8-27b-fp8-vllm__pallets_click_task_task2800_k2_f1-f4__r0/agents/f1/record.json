@@ -1,0 +1,122 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795752592.2365806,
+  "ended": 1795755450.0724928,
+  "busy_s": 2857.7978286743164,
+  "usage": {
+    "input": 2731630,
+    "cached_input": 2488416,
+    "cache_write": 0,
+    "output": 57539,
+    "reasoning": 49086,
+    "cost_reported": 0.0,
+    "calls": 61
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 2732789,
+    "cached_input": 2488416,
+    "cache_write": 0,
+    "output": 57849,
+    "reasoning": 49388,
+    "cost_reported": null,
+    "calls": 62
+  },
+  "meter": {
+    "requests": 62,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 62
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.29063360000000005,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 30,
+    "read": 30,
+    "edit": 2
+  },
+  "files_read": [
+    "CHANGES.rst",
+    "src/click",
+    "src/click/core.py",
+    "src/click/parser.py",
+    "src/click/shell_completion.py",
+    "src/click/types.py",
+    "src/click/utils.py",
+    "tests",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "src/click/core.py",
+    "src/click/shell_completion.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795752592.236871,
+      "ended": 1795755450.0346997,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 2731630,
+        "cached_input": 2488416,
+        "cache_write": 0,
+        "output": 57539,
+        "reasoning": 49086,
+        "cost_reported": 0.0,
+        "calls": 61
+      },
+      "num_turns": 61,
+      "session_id": "ses_de4cdf844ffeW25kkqc911beSL",
+      "nudge_reason": null,
+      "final_text_tail": "\n\nDone. Final state:\n\n**`src/click/shell_completion.py`** \u2014 `_resolve_context` now wraps all context creation in `with` statements (main ctx, non-chained sub-ctx, chained sub-ctx), so contexts close via the context-manager protocol and any `File` handles opened during resilient parsing are released.\n\n**`src/click/core.py`** \u2014 `Command.make_context` docstring now documents that the returned context is not auto-closed and must be closed (via `with` or `Context.close`) to release resources.\n\n**Verification:**\n- All 3 leak repros (plain command, group, chained group) \u2192 0 ResourceWarnings, completions unchanged\n- Full suite: `614 passed, 21 skipped, 1 xfailed` (the only pre-existing failure is an unrelated pytest-collection warning in `test_basic.py`, present before the change)\n\nChanges left uncommitted in the working tree, as instructed.",
+      "error": null,
+      "proxy_usage": {
+        "input": 2732789,
+        "cached_input": 2488416,
+        "cache_write": 0,
+        "output": 57849,
+        "reasoning": 49388,
+        "cost_reported": null,
+        "calls": 62
+      }
+    }
+  ],
+  "error": null
+}
