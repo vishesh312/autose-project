@@ -1,0 +1,639 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_fp8",
+    "bundle": "openai_tiktoken_task/task0/k2/f4-f8",
+    "pool": "openai_tiktoken_task/task0",
+    "k": 2,
+    "features": [
+      4,
+      8
+    ],
+    "strategy": "S3",
+    "strategy_id": "S3",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-fp8-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795744598.2694283,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8001"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 0.5,
+        "bundle_success": false,
+        "passed": [
+          4
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "4": true,
+      "8": false
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 1285285,
+      "cached_input": 1146208,
+      "cache_write": 0,
+      "output": 40058,
+      "reasoning": 29651,
+      "cost_reported": null,
+      "calls": 47
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 1281414,
+      "cached_input": 1146208,
+      "cache_write": 0,
+      "output": 37665,
+      "reasoning": 27292,
+      "cost_reported": 0.0,
+      "calls": 44
+    },
+    "usage_proxy": {
+      "input": 1285285,
+      "cached_input": 1146208,
+      "cache_write": 0,
+      "output": 40058,
+      "reasoning": 29651,
+      "cost_reported": null,
+      "calls": 47
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.1405459,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.1405459,
+    "cost_per_solved_task": 0.1405459,
+    "coordination_tokens": 67827,
+    "coordination_overhead": 0.05117694061084564,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "pyproject.toml",
+      "tests/test_encoding.py",
+      "tiktoken/__init__.py",
+      "tiktoken/core.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 1806.0918691158295,
+    "agents_wall_s": 1806.0918691158295,
+    "merge_s": 0.0,
+    "strategy_span_s": 1807.160276889801,
+    "agent_busy_s": 1805.977674484253,
+    "effective_parallelism": 0.9999367725232978,
+    "container_setup_s": 0.2596726417541504,
+    "grading_s": 2.3942019939422607,
+    "nudges": 2,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": {
+    "oracle": false,
+    "fallback": false,
+    "planner_read_only": true,
+    "planner_edited": false,
+    "plan_s": 157.830913066864,
+    "plan": {
+      "f4": [
+        "tiktoken/core.py"
+      ],
+      "f8": [
+        "tiktoken/core.py"
+      ]
+    },
+    "gold_files": {
+      "f4": [
+        "tiktoken/core.py"
+      ],
+      "f8": [
+        "tiktoken/core.py"
+      ]
+    },
+    "groups": [
+      [
+        "f4",
+        "f8"
+      ]
+    ],
+    "planning": {
+      "file_recall": 1.0,
+      "file_precision": 1.0,
+      "clash_vs_git_conflict": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "true": [
+          [
+            4,
+            8
+          ]
+        ],
+        "predicted": [
+          [
+            4,
+            8
+          ]
+        ]
+      },
+      "clash_vs_shared_gold_file": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "true": [
+          [
+            4,
+            8
+          ]
+        ],
+        "predicted": [
+          [
+            4,
+            8
+          ]
+        ]
+      }
+    }
+  },
+  "agents": [
+    {
+      "agent_id": "planner",
+      "role": "planner",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        4,
+        8
+      ],
+      "started": 1795744598.7024927,
+      "ended": 1795744755.9390023,
+      "busy_s": 157.1984670162201,
+      "usage": {
+        "input": 61979,
+        "cached_input": 43904,
+        "cache_write": 0,
+        "output": 3211,
+        "reasoning": 2632,
+        "cost_reported": 0.0,
+        "calls": 6
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 63709,
+        "cached_input": 43904,
+        "cache_write": 0,
+        "output": 4118,
+        "reasoning": 3525,
+        "cost_reported": null,
+        "calls": 7
+      },
+      "meter": {
+        "requests": 7,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 7
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0076063,
+      "nudges": 1,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 6
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-izefhgq9/repo",
+        "tiktoken",
+        "tiktoken/__init__.py",
+        "tiktoken/core.py"
+      ],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795744598.70333,
+          "ended": 1795744681.4654367,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 47551,
+            "cached_input": 31360,
+            "cache_write": 0,
+            "output": 1599,
+            "reasoning": 1122,
+            "cost_reported": 0.0,
+            "calls": 5
+          },
+          "num_turns": 5,
+          "session_id": "ses_de547eff7ffeDNYGWZ7n4TaibY",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "\n\nBoth tasks target tiktoken's `Encoding.encode` in `tiktoken/core.py` (verified: `encode` at core.py:79, and the public API in `tiktoken/__init__.py` only exports classes/factories \u2014 no new exports needed for keyword-arg additions).\n\n```json\n{\n  \"tasks\": [\n    {\"id\": \"f4\", \"files\": [\n      {\"path\": \"tiktoken/core.py\", \"functions\": [\"Encoding.encode\"], \"confidence\": \"high\"}\n    ]},\n    {\"id\": \"f8\", \"files\": [\n      {\"path\": \"tiktoken/core.py\", \"functions\": [\"Encoding.encode\"], \"confidence\": \"high\"}\n    ]}\n  ]\n}\n```",
+          "error": null,
+          "proxy_usage": {
+            "input": 49281,
+            "cached_input": 31360,
+            "cache_write": 0,
+            "output": 2506,
+            "reasoning": 2015,
+            "cost_reported": null,
+            "calls": 6
+          }
+        },
+        {
+          "index": 1,
+          "started": 1795744681.502349,
+          "ended": 1795744755.9387093,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 14428,
+            "cached_input": 12544,
+            "cache_write": 0,
+            "output": 1612,
+            "reasoning": 1510,
+            "cost_reported": 0.0,
+            "calls": 1
+          },
+          "num_turns": 1,
+          "session_id": "ses_de547eff7ffeDNYGWZ7n4TaibY",
+          "nudge_reason": null,
+          "final_text_tail": "\n\n```json\n{\n  \"tasks\": [\n    {\"id\": \"f4\", \"files\": [\n      {\"path\": \"tiktoken/core.py\", \"functions\": [\"Encoding.encode\"], \"confidence\": \"high\"}\n    ]},\n    {\"id\": \"f8\", \"files\": [\n      {\"path\": \"tiktoken/core.py\", \"functions\": [\"Encoding.encode\"], \"confidence\": \"high\"}\n    ]}\n  ]\n}\n```",
+          "error": null,
+          "proxy_usage": {
+            "input": 14428,
+            "cached_input": 12544,
+            "cache_write": 0,
+            "output": 1612,
+            "reasoning": 1510,
+            "cost_reported": null,
+            "calls": 1
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f4",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        4
+      ],
+      "started": 1795744756.3673975,
+      "ended": 1795746049.846239,
+      "busy_s": 1293.4383590221405,
+      "usage": {
+        "input": 1027939,
+        "cached_input": 948640,
+        "cache_write": 0,
+        "output": 27276,
+        "reasoning": 18704,
+        "cost_reported": 0.0,
+        "calls": 28
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 1029015,
+        "cached_input": 948640,
+        "cache_write": 0,
+        "output": 27816,
+        "reasoning": 19234,
+        "cost_reported": null,
+        "calls": 29
+      },
+      "meter": {
+        "requests": 29,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 29
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.1112463,
+      "nudges": 1,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 11,
+        "read": 11,
+        "edit": 10,
+        "other": 2
+      },
+      "files_read": [
+        "CHANGELOG.md",
+        "pyproject.toml",
+        "tests/test_encoding.py",
+        "tests/test_helpers.py",
+        "tiktoken/__init__.py",
+        "tiktoken/core.py",
+        "tiktoken/model.py"
+      ],
+      "files_edited": [
+        "tiktoken/core.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 38,
+      "patch_files": [
+        "tiktoken/core.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795744756.3676648,
+          "ended": 1795745222.872125,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 222125,
+            "cached_input": 180320,
+            "cache_write": 0,
+            "output": 9683,
+            "reasoning": 8906,
+            "cost_reported": 0.0,
+            "calls": 11
+          },
+          "num_turns": 11,
+          "session_id": "ses_de54589b9ffe3Yt5tf6d586jDe",
+          "nudge_reason": "no_changes",
+          "final_text_tail": "",
+          "error": null,
+          "proxy_usage": {
+            "input": 223201,
+            "cached_input": 180320,
+            "cache_write": 0,
+            "output": 10223,
+            "reasoning": 9436,
+            "cost_reported": null,
+            "calls": 12
+          }
+        },
+        {
+          "index": 1,
+          "started": 1795745222.9095747,
+          "ended": 1795746049.8434737,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 805814,
+            "cached_input": 768320,
+            "cache_write": 0,
+            "output": 17593,
+            "reasoning": 9798,
+            "cost_reported": 0.0,
+            "calls": 17
+          },
+          "num_turns": 17,
+          "session_id": "ses_de54589b9ffe3Yt5tf6d586jDe",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nLet me write the test script to a file to avoid shell escaping issues:\n\n",
+          "error": null,
+          "proxy_usage": {
+            "input": 805814,
+            "cached_input": 768320,
+            "cache_write": 0,
+            "output": 17593,
+            "reasoning": 9798,
+            "cost_reported": null,
+            "calls": 17
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f8",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-fp8-vllm",
+      "feature_ids": [
+        8
+      ],
+      "started": 1795746049.8908632,
+      "ended": 1795746405.2673812,
+      "busy_s": 355.34084844589233,
+      "usage": {
+        "input": 191496,
+        "cached_input": 153664,
+        "cache_write": 0,
+        "output": 7178,
+        "reasoning": 5956,
+        "cost_reported": 0.0,
+        "calls": 10
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 192561,
+        "cached_input": 153664,
+        "cache_write": 0,
+        "output": 8124,
+        "reasoning": 6892,
+        "cost_reported": null,
+        "calls": 11
+      },
+      "meter": {
+        "requests": 11,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 11
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.021693300000000002,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "shell": 4,
+        "read": 6,
+        "edit": 1,
+        "other": 1
+      },
+      "files_read": [
+        "/scratch/manas_ase/tmp/parbench-host-iu7_eypf/repo",
+        "pyproject.toml",
+        "tests/test_encoding.py",
+        "tiktoken/__init__.py",
+        "tiktoken/core.py"
+      ],
+      "files_edited": [
+        "tiktoken/core.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 39,
+      "patch_files": [
+        "tiktoken/core.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795746049.8917499,
+          "ended": 1795746405.2325983,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 191496,
+            "cached_input": 153664,
+            "cache_write": 0,
+            "output": 7178,
+            "reasoning": 5956,
+            "cost_reported": 0.0,
+            "calls": 10
+          },
+          "num_turns": 10,
+          "session_id": "ses_de531cce9ffeHkRGcwL7MvZfRq",
+          "nudge_reason": null,
+          "final_text_tail": "\n\nDoctests aren't run, and the package is the working tree itself. Now I'll implement the feature in `tiktoken/core.py`.\n\n",
+          "error": null,
+          "proxy_usage": {
+            "input": 192561,
+            "cached_input": 153664,
+            "cache_write": 0,
+            "output": 8124,
+            "reasoning": 6892,
+            "cost_reported": null,
+            "calls": 11
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f4": {
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 1,
+        "tests_failed": 0,
+        "duration_s": 0.5604479312896729,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3__opencode__qwen3.8-27b-fp8-vllm__openai_tiktoken_task_task0_k2_f4-f8__r0/grading/own_f4.f4.log"
+      }
+    },
+    "own_f8": {
+      "8": {
+        "fid": 8,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 0.5698549747467041,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3__opencode__qwen3.8-27b-fp8-vllm__openai_tiktoken_task_task0_k2_f4-f8__r0/grading/own_f8.f8.log"
+      }
+    },
+    "final": {
+      "4": {
+        "fid": 4,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 1,
+        "tests_failed": 0,
+        "duration_s": 0.5585987567901611,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3__opencode__qwen3.8-27b-fp8-vllm__openai_tiktoken_task_task0_k2_f4-f8__r0/grading/final.f4.log"
+      },
+      "8": {
+        "fid": 8,
+        "passed": false,
+        "exit_code": 1,
+        "tests_passed": 0,
+        "tests_failed": 1,
+        "duration_s": 0.5778906345367432,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_fp8/S3__opencode__qwen3.8-27b-fp8-vllm__openai_tiktoken_task_task0_k2_f4-f8__r0/grading/final.f8.log"
+      }
+    }
+  }
+}

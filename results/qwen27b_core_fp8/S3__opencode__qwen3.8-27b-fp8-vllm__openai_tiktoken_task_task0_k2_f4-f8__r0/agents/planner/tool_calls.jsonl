@@ -1,0 +1,6 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-izefhgq9/repo"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "tiktoken/**/*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-izefhgq9/repo/tiktoken/core.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-izefhgq9/repo/tiktoken/__init__.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "chunk_size|return_repeated_pattern", "path": "/scratch/manas_ase/tmp/parbench-host-izefhgq9/repo"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "^def |^    def ", "path": "/scratch/manas_ase/tmp/parbench-host-izefhgq9/repo/tiktoken", "include": "*.py"}, "ok": true, "ts": null}

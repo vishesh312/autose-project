@@ -1,0 +1,88 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..edfd5d4 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import functools
++from collections import Counter
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import TYPE_CHECKING, AbstractSet, Collection, Literal, NoReturn, Sequence
+ 
+@@ -60,15 +61,28 @@ class Encoding:
+     # Encoding
+     # ====================
+ 
+-    def encode_ordinary(self, text: str) -> list[int]:
++    def encode_ordinary(
++        self, text: str, *, chunk_size: int | None = None
++    ) -> list[int] | list[list[int]]:
+         """Encodes a string into tokens, ignoring special tokens.
+ 
+         This is equivalent to `encode(text, disallowed_special=())` (but slightly faster).
+ 
++        If `chunk_size` is set, the text is first split into chunks of at most `chunk_size`
++        characters and each chunk is encoded independently. In this case, the return value is a
++        list of token lists, with one list of tokens per chunk.
++
+         ```
+         >>> enc.encode_ordinary("hello world")
+         [31373, 995]
++        >>> enc.encode_ordinary("hello world", chunk_size=6)
++        [[31373, 220], [995]]
+         """
++        if chunk_size is not None:
++            if not isinstance(chunk_size, int) or isinstance(chunk_size, bool) or chunk_size <= 0:
++                raise ValueError("chunk_size must be a positive integer")
++            chunks = [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
++            return [self.encode_ordinary(chunk) for chunk in chunks]
+         try:
+             return self._core_bpe.encode_ordinary(text)
+         except UnicodeEncodeError:
+@@ -82,7 +96,8 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++    ) -> list[int] | list[list[int]]:
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,6 +112,12 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        If `chunk_size` is set, the text is first split into chunks of at most `chunk_size`
++        characters and each chunk is encoded independently. In this case, the return value is a
++        list of token lists, with one list of tokens per chunk. All other features of this
++        function (e.g. special token handling) operate independently on each chunk. This is
++        useful for processing long documents that would otherwise exceed context limits.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
+@@ -108,8 +129,22 @@ class Encoding:
+         # Raises ValueError
+         >>> enc.encode("<|endoftext|>", disallowed_special=())
+         [27, 91, 437, 1659, 5239, 91, 29]
++        >>> enc.encode("hello world", chunk_size=6)
++        [[31373, 220], [995]]
+         ```
+         """
++        if chunk_size is not None:
++            if not isinstance(chunk_size, int) or isinstance(chunk_size, bool) or chunk_size <= 0:
++                raise ValueError("chunk_size must be a positive integer")
++            chunks = [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
++            return [
++                self.encode(
++                    chunk,
++                    allowed_special=allowed_special,
++                    disallowed_special=disallowed_special,
++                )
++                for chunk in chunks
++            ]
+         if allowed_special == "all":
+             allowed_special = self.special_tokens_set
+         if disallowed_special == "all":
