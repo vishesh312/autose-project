@@ -1,0 +1,532 @@
+{
+  "run": {
+    "experiment": "qwen27b_core_pi",
+    "bundle": "dottxt_ai_outlines_task/task1655/k2/f1-f3",
+    "pool": "dottxt_ai_outlines_task/task1655",
+    "k": 2,
+    "features": [
+      1,
+      3
+    ],
+    "strategy": "S2",
+    "strategy_id": "S2",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-pi-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795784669.640028,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8002"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "llm",
+    "by_final": {
+      "naive": {
+        "task_pass_rate": 1.0,
+        "bundle_success": true,
+        "passed": [
+          1,
+          3
+        ],
+        "lost_in_merge": []
+      },
+      "union": {
+        "task_pass_rate": 1.0,
+        "bundle_success": true,
+        "passed": [
+          1,
+          3
+        ],
+        "lost_in_merge": []
+      },
+      "llm": {
+        "task_pass_rate": 1.0,
+        "bundle_success": true,
+        "passed": [
+          1,
+          3
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": true,
+      "3": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 92699,
+      "cached_input": 62720,
+      "cache_write": 0,
+      "output": 1734,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 12
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 90018,
+      "cached_input": 62720,
+      "cache_write": 0,
+      "output": 1712,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 10
+    },
+    "usage_proxy": {
+      "input": 92699,
+      "cached_input": 62720,
+      "cache_write": 0,
+      "output": 1734,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 12
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.0097901,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.0097901,
+    "cost_per_solved_task": 0.00489505,
+    "coordination_tokens": 0,
+    "coordination_overhead": 0.0,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "outlines/types/__init__.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 75.6411919593811,
+    "agents_wall_s": 74.19308161735535,
+    "merge_s": 1.4481103420257568,
+    "strategy_span_s": 76.75123834609985,
+    "agent_busy_s": 136.35179805755615,
+    "effective_parallelism": 1.8026130277108312,
+    "container_setup_s": 1.521315097808838,
+    "grading_s": 12.15781307220459,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": {
+    "pairwise": [
+      {
+        "a": "f1",
+        "b": "f3",
+        "conflict": false,
+        "files": []
+      }
+    ],
+    "conflict_rate": 0.0,
+    "overlap_lines": 0,
+    "modes": {
+      "naive": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "union": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      },
+      "llm": {
+        "lost_features": [],
+        "steps": [
+          {
+            "branch": "f1",
+            "feature_ids": [
+              1
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          },
+          {
+            "branch": "f3",
+            "feature_ids": [
+              3
+            ],
+            "conflicted": false,
+            "conflict_files": [],
+            "outcome": "merged"
+          }
+        ],
+        "resolver_agents": []
+      }
+    }
+  },
+  "s3": null,
+  "agents": [
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1795784670.4812422,
+      "ended": 1795784744.6743238,
+      "busy_s": 74.12694048881531,
+      "usage": {
+        "input": 34678,
+        "cached_input": 21952,
+        "cache_write": 0,
+        "output": 959,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 4
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 36028,
+        "cached_input": 21952,
+        "cache_write": 0,
+        "output": 973,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 5
+      },
+      "meter": {
+        "requests": 5,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 5
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0038947,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "shell": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 18,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795784670.4826467,
+          "ended": 1795784744.6095872,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 34678,
+            "cached_input": 21952,
+            "cache_write": 0,
+            "output": 959,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 4
+          },
+          "num_turns": 4,
+          "session_id": "ses_de2e47dfdffeEAFA6dvr7jSpvS",
+          "nudge_reason": null,
+          "final_text_tail": "Done. Added the three types to `outlines/types/__init__.py:51-68` and verified all validation requirements pass (hex prefix optionality, UUID4 version/variant enforcement, IPv4 0-255 octet range).",
+          "error": null,
+          "proxy_usage": {
+            "input": 36028,
+            "cached_input": 21952,
+            "cache_write": 0,
+            "output": 973,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 5
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f3",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        3
+      ],
+      "started": 1795784670.4817514,
+      "ended": 1795784732.7725506,
+      "busy_s": 62.224857568740845,
+      "usage": {
+        "input": 55340,
+        "cached_input": 40768,
+        "cache_write": 0,
+        "output": 753,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 6
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 56671,
+        "cached_input": 40768,
+        "cache_write": 0,
+        "output": 761,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 7
+      },
+      "meter": {
+        "requests": 7,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 7
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0058954,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 3,
+        "edit": 1,
+        "shell": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py",
+        "outlines/types/dsl.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 3,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795784670.482943,
+          "ended": 1795784732.7078006,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 55340,
+            "cached_input": 40768,
+            "cache_write": 0,
+            "output": 753,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 6
+          },
+          "num_turns": 6,
+          "session_id": "ses_de2e47da4ffelb4wj58JN2qVh5",
+          "nudge_reason": null,
+          "final_text_tail": "Done. Added `octal_str = Regex(r\"0o[0-7]+\")` under a `# System-specific types` header after `paragraph` in outlines/types/__init__.py:55-56. All usage examples verified.",
+          "error": null,
+          "proxy_usage": {
+            "input": 56671,
+            "cached_input": 40768,
+            "cache_write": 0,
+            "output": 761,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 7
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.4807403087615967,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f3": {
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.765019178390503,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f3.f3.log"
+      }
+    },
+    "naive": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.9362595081329346,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.8904078006744385,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f3.log"
+      }
+    },
+    "union": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.9362595081329346,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.8904078006744385,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f3.log"
+      }
+    },
+    "llm": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.9362595081329346,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.8904078006744385,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_core_pi/S2__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/naive.f3.log"
+      }
+    }
+  }
+}
