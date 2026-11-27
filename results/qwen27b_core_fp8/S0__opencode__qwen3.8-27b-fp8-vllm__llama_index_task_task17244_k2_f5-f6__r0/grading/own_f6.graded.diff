@@ -1,0 +1,43 @@
+diff --git a/llama-index-core/llama_index/core/base/llms/types.py b/llama-index-core/llama_index/core/base/llms/types.py
+index 00e30cf..86a9ac0 100644
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -55,6 +55,7 @@ class ImageBlock(BaseModel):
+     url: AnyUrl | str | None = None
+     image_mimetype: str | None = None
+     detail: str | None = None
++    encoding: Literal["base64", "raw"] = "base64"
+ 
+     @field_validator("url", mode="after")
+     @classmethod
+@@ -71,6 +72,9 @@ class ImageBlock(BaseModel):
+         In case the model was built passing image data but without a mimetype,
+         we try to guess it using the filetype library. To avoid resource-intense
+         operations, we won't load the path or the URL to guess the mimetype.
++
++        If `encoding` is set to "raw", the image bytes are kept as-is and
++        base64 encoding is skipped.
+         """
+         if not self.image:
+             return self
+@@ -79,7 +83,8 @@ class ImageBlock(BaseModel):
+             guess = filetype.guess(self.image)
+             self.image_mimetype = guess.mime if guess else None
+ 
+-        self.image = base64.b64encode(self.image)
++        if self.encoding == "base64":
++            self.image = base64.b64encode(self.image)
+ 
+         return self
+ 
+@@ -90,6 +95,10 @@ class ImageBlock(BaseModel):
+             as_base64 (bool): whether the resolved image should be returned as base64-encoded bytes
+         """
+         if self.image is not None:
++            if self.encoding == "raw":
++                if as_base64:
++                    return BytesIO(base64.b64encode(self.image))
++                return BytesIO(self.image)
+             if as_base64:
+                 return BytesIO(self.image)
+             return BytesIO(base64.b64decode(self.image))
