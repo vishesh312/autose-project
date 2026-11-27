@@ -1,0 +1,18 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "src/click/*.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "class Context|def close|def __init__|def __enter__|def __exit__|def make_context", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py", "offset": 161, "limit": 120}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py", "offset": 440, "limit": 200}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py", "limit": 160, "offset": 280}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py", "limit": 120, "offset": 1121}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/CHANGES.rst", "limit": 80}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "cleanup_timeout|ResourceWarning|resource", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click", "include": "*.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "shell_complete|_complete_var|complete_var", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click", "include": "core.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def main|_main_shell_complete|def invoke|def group|def command", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py", "limit": 180, "offset": 1242}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "class FileParamType|def convert|def open_file|call_on_close|with_resource", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click", "include": "types.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def open_file", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click", "include": "utils.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "cleanup_timeout|ResourceWarning|unclosed", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "tests/*.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "Context\\(", "path": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click", "include": "*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-5uspeuj_/repo/src/click/core.py", "limit": 60, "offset": 1762}, "ok": true, "ts": null}

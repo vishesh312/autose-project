@@ -1,0 +1,120 @@
+{
+  "agent_id": "f4",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-fp8-vllm",
+  "feature_ids": [
+    4
+  ],
+  "started": 1795756923.9210865,
+  "ended": 1795758741.988637,
+  "busy_s": 1818.0200717449188,
+  "usage": {
+    "input": 2784504,
+    "cached_input": 2664032,
+    "cache_write": 0,
+    "output": 36347,
+    "reasoning": 25950,
+    "cost_reported": 0.0,
+    "calls": 48
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 2785627,
+    "cached_input": 2664032,
+    "cache_write": 0,
+    "output": 36477,
+    "reasoning": 26072,
+    "cost_reported": null,
+    "calls": 49
+  },
+  "meter": {
+    "requests": 49,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 49
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.2895058,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "shell": 24,
+    "read": 24,
+    "edit": 13
+  },
+  "files_read": [
+    "/scratch/manas_ase/tmp/parbench-host-74_ep9i5/repo",
+    "src/click",
+    "src/click/core.py",
+    "src/click/shell_completion.py",
+    "tests/test_context.py",
+    "tests/test_imports.py",
+    "tests/test_shell_completion.py"
+  ],
+  "files_edited": [
+    "CHANGES.rst",
+    "src/click/core.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795756923.9220161,
+      "ended": 1795758741.942088,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 2784504,
+        "cached_input": 2664032,
+        "cache_write": 0,
+        "output": 36347,
+        "reasoning": 25950,
+        "cost_reported": 0.0,
+        "calls": 48
+      },
+      "num_turns": 48,
+      "session_id": "ses_de48bdf90ffePsw8URN2zTCUtw",
+      "nudge_reason": null,
+      "final_text_tail": "thin the limit, a warning is logged and cleanup is abandoned (graceful degradation, exit stack reset so the context stays reusable). If cleanup finishes in time, any callback exception still propagates as before; the no-timeout path is byte-for-byte the old behavior. `logging` is imported lazily inside the method so `import click` stays light (satisfies `tests/test_imports.py`); `threading` is already on the light-import allowlist.\n  - Docstrings updated (`:param cleanup_timeout:`, `versionadded:: 8.2`, `close()` note).\n\n- `src/click/shell_completion.py`: the in-tree change closes contexts created while resolving completion args (`with` blocks in `_resolve_context`), so their `close()` cleanup now runs \u2014 and is bounded by `cleanup_timeout`, which flows through `ctx_args` \u2192 `make_context` \u2192 `Context`, and via parent inheritance to nested contexts.\n\n- `CHANGES.rst`: entry added under 8.2.0 Unreleased.\n\nVerified: default `None`/stored value, `ValueError` for `0`/`-1`/`\"x\"`, hanging callback + `cleanup_timeout=0.5` returns in ~0.5s with a logged warning, fast callbacks still run, exceptions still propagate, `context_settings={\"cleanup_timeout\": \u2026}`, `main(..., cleanup_timeout=\u2026)`/`runner.invoke(..., cleanup_timeout=\u2026)` completion returns in ~1s instead of hanging while still producing correct completions. (Note: running the suite needs `-W \"ignore::pytest.PytestRemovedIn10Warning\"` due to a pre-existing pytest-version incompatibility in `test_basic.py`, unrelated to this change.)",
+      "error": null,
+      "proxy_usage": {
+        "input": 2785627,
+        "cached_input": 2664032,
+        "cache_write": 0,
+        "output": 36477,
+        "reasoning": 26072,
+        "cost_reported": null,
+        "calls": 49
+      }
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,40 @@
+
+
+The planning task is complete: the deliverable for this role is the file-prediction JSON (per the task rules, the planner must not edit the repository — implementation happens later by other agents). Both PR descriptions' ground-truth file lists were verified against the code (`_resolve_context` at src/click/shell_completion.py:532 creates contexts without closing them; `Context.__init__`/`close` at src/click/core.py:265/605 are the targets for the `cleanup_timeout` feature). My final answer:
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f1",
+      "files": [
+        {
+          "path": "src/click/shell_completion.py",
+          "functions": ["_resolve_context"],
+          "confidence": "high"
+        },
+        {
+          "path": "src/click/core.py",
+          "functions": ["Context.close", "Context.__exit__", "Command.make_context"],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f4",
+      "files": [
+        {
+          "path": "src/click/core.py",
+          "functions": ["Context.__init__", "Context.close"],
+          "confidence": "high"
+        },
+        {
+          "path": "src/click/shell_completion.py",
+          "functions": ["_resolve_context", "ShellComplete.get_completions"],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```
