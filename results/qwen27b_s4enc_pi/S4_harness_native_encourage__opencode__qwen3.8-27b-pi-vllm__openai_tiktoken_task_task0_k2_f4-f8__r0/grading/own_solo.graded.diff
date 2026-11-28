@@ -1,0 +1,52 @@
+diff --git a/tiktoken/core.py b/tiktoken/core.py
+index 6bc9736..2f87c2e 100644
+--- a/tiktoken/core.py
++++ b/tiktoken/core.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import functools
++from collections import Counter
+ from concurrent.futures import ThreadPoolExecutor
+ from typing import TYPE_CHECKING, AbstractSet, Collection, Literal, NoReturn, Sequence
+ 
+@@ -82,7 +83,14 @@ class Encoding:
+         *,
+         allowed_special: Literal["all"] | AbstractSet[str] = set(),  # noqa: B006
+         disallowed_special: Literal["all"] | Collection[str] = "all",
+-    ) -> list[int]:
++        chunk_size: int | None = None,
++        return_repeated_pattern: bool = False,
++    ) -> (
++        list[int]
++        | list[list[int]]
++        | tuple[list[int], dict[tuple[int, int], int]]
++        | list[tuple[list[int], dict[tuple[int, int], int]]]
++    ):
+         """Encodes a string into tokens.
+ 
+         Special tokens are artificial tokens used to unlock capabilities from a model,
+@@ -97,9 +105,23 @@ class Encoding:
+         - Setting `allowed_special` to "all" will cause this function to treat all text
+           corresponding to special tokens to be encoded as special tokens.
+ 
++        When `chunk_size` is set, the input text is first split into segments of at most
++        `chunk_size` characters, each segment is encoded independently, and the result is a
++        list of token lists, one per chunk. This is useful for processing long documents
++        within context limits. Any other per-input feature (e.g. `return_repeated_pattern`)
++        operates independently on each chunk.
++
++        When `return_repeated_pattern` is True, the top 3 most frequent adjacent token pairs
++        (with their occurrence counts) are tracked during encoding, and a dictionary mapping
++        each pair to its count is returned alongside the tokens.
++
+         ```
+         >>> enc.encode("hello world")
+         [31373, 995]
++        >>> enc.encode("hello world", chunk_size=5)
++        [[31373], [995]]
++        >>> enc.encode("hello world", return_repeated_pattern=True)
++        ([31373, 995], {(31373, 995): 1})
+         >>> enc.encode("<|endoftext|>", allowed_special={"<|endoftext|>"})
+         [50256]
+         >>> enc.encode("<|endoftext|>", allowed_special="all")
