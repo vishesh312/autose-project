@@ -1,0 +1,60 @@
+Both tasks modify only `src/jinja2/loaders.py`. For f6 (path_transform), each loader's `__init__` and `get_source` need changes. For f10 (aliases), `BaseLoader` gains `add_alias`/`remove_alias`/alias resolution, and subclasses resolve aliases in `get_source` before loading.
+
+The `__init__.py` already exports all loader classes, so no new exports are needed for either task.
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f6",
+      "files": [
+        {
+          "path": "src/jinja2/loaders.py",
+          "functions": [
+            "BaseLoader",
+            "FileSystemLoader.__init__",
+            "FileSystemLoader.get_source",
+            "PackageLoader.__init__",
+            "PackageLoader.get_source",
+            "DictLoader.__init__",
+            "DictLoader.get_source",
+            "FunctionLoader.__init__",
+            "FunctionLoader.get_source",
+            "PrefixLoader.__init__",
+            "PrefixLoader.get_source",
+            "PrefixLoader.get_loader",
+            "ChoiceLoader.__init__",
+            "ChoiceLoader.get_source",
+            "ChoiceLoader.load"
+          ],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f10",
+      "files": [
+        {
+          "path": "src/jinja2/loaders.py",
+          "functions": [
+            "BaseLoader",
+            "BaseLoader.__init__",
+            "BaseLoader.add_alias",
+            "BaseLoader.remove_alias",
+            "BaseLoader.get_source",
+            "FileSystemLoader.get_source",
+            "PackageLoader.get_source",
+            "DictLoader.get_source",
+            "FunctionLoader.get_source",
+            "PrefixLoader.get_source",
+            "PrefixLoader.get_loader",
+            "ChoiceLoader.get_source",
+            "ChoiceLoader.load"
+          ],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```

@@ -1,0 +1,278 @@
+{
+  "run": {
+    "experiment": "qwen27b_s3plan_pi",
+    "bundle": "pallets_jinja_task/task1621/k2/f6-f10",
+    "pool": "pallets_jinja_task/task1621",
+    "k": 2,
+    "features": [
+      6,
+      10
+    ],
+    "strategy": "S3@planonly",
+    "strategy_id": "S3",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-pi-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795892735.5772972,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8002"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "llm",
+    "by_final": {},
+    "own_pass": {}
+  },
+  "cost": {
+    "usage": {
+      "input": 36924,
+      "cached_input": 20384,
+      "cache_write": 0,
+      "output": 667,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 4
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 34287,
+      "cached_input": 20384,
+      "cache_write": 0,
+      "output": 657,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 3
+    },
+    "usage_proxy": {
+      "input": 36924,
+      "cached_input": 20384,
+      "cache_write": 0,
+      "output": 667,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 4
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.0038925,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.0038925,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 37591,
+    "coordination_overhead": 1.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 62.81436800956726,
+    "agents_wall_s": 62.81436800956726,
+    "merge_s": 0.0,
+    "strategy_span_s": 63.41628074645996,
+    "agent_busy_s": 62.81246018409729,
+    "effective_parallelism": 0.9999696275624443,
+    "container_setup_s": 0.0,
+    "grading_s": 0.00026679039001464844,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": {
+    "oracle": false,
+    "fallback": false,
+    "planner_read_only": true,
+    "planner_version": 2,
+    "planner_nudges": 0,
+    "planner_edited": false,
+    "plan_s": 63.41624307632446,
+    "plan": {
+      "f6": [
+        "src/jinja2/loaders.py"
+      ],
+      "f10": [
+        "src/jinja2/loaders.py"
+      ]
+    },
+    "gold_files": {
+      "f6": [
+        "src/jinja2/loaders.py"
+      ],
+      "f10": [
+        "src/jinja2/loaders.py"
+      ]
+    },
+    "groups": [
+      [
+        "f6",
+        "f10"
+      ]
+    ],
+    "planning": {
+      "file_recall": 1.0,
+      "file_precision": 1.0,
+      "clash_vs_git_conflict": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "true": [
+          [
+            6,
+            10
+          ]
+        ],
+        "predicted": [
+          [
+            6,
+            10
+          ]
+        ]
+      },
+      "clash_vs_shared_gold_file": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "true": [
+          [
+            6,
+            10
+          ]
+        ],
+        "predicted": [
+          [
+            6,
+            10
+          ]
+        ]
+      }
+    },
+    "executed": false
+  },
+  "agents": [
+    {
+      "agent_id": "planner",
+      "role": "planner",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        6,
+        10
+      ],
+      "started": 1795892735.966503,
+      "ended": 1795892798.780871,
+      "busy_s": 62.81246018409729,
+      "usage": {
+        "input": 34287,
+        "cached_input": 20384,
+        "cache_write": 0,
+        "output": 657,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 3
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 36924,
+        "cached_input": 20384,
+        "cache_write": 0,
+        "output": 667,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 4
+      },
+      "meter": {
+        "requests": 4,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 4
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0038925,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 2
+      },
+      "files_read": [
+        "src/jinja2/__init__.py",
+        "src/jinja2/loaders.py"
+      ],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795892735.9670146,
+          "ended": 1795892798.7794747,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 34287,
+            "cached_input": 20384,
+            "cache_write": 0,
+            "output": 657,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "ses_ddc738becffey3iYLsoQKFfvDV",
+          "nudge_reason": null,
+          "final_text_tail": "o no new exports are needed for either task.\n\n```json\n{\n  \"tasks\": [\n    {\n      \"id\": \"f6\",\n      \"files\": [\n        {\n          \"path\": \"src/jinja2/loaders.py\",\n          \"functions\": [\n            \"BaseLoader\",\n            \"FileSystemLoader.__init__\",\n            \"FileSystemLoader.get_source\",\n            \"PackageLoader.__init__\",\n            \"PackageLoader.get_source\",\n            \"DictLoader.__init__\",\n            \"DictLoader.get_source\",\n            \"FunctionLoader.__init__\",\n            \"FunctionLoader.get_source\",\n            \"PrefixLoader.__init__\",\n            \"PrefixLoader.get_source\",\n            \"PrefixLoader.get_loader\",\n            \"ChoiceLoader.__init__\",\n            \"ChoiceLoader.get_source\",\n            \"ChoiceLoader.load\"\n          ],\n          \"confidence\": \"high\"\n        }\n      ]\n    },\n    {\n      \"id\": \"f10\",\n      \"files\": [\n        {\n          \"path\": \"src/jinja2/loaders.py\",\n          \"functions\": [\n            \"BaseLoader\",\n            \"BaseLoader.__init__\",\n            \"BaseLoader.add_alias\",\n            \"BaseLoader.remove_alias\",\n            \"BaseLoader.get_source\",\n            \"FileSystemLoader.get_source\",\n            \"PackageLoader.get_source\",\n            \"DictLoader.get_source\",\n            \"FunctionLoader.get_source\",\n            \"PrefixLoader.get_source\",\n            \"PrefixLoader.get_loader\",\n            \"ChoiceLoader.get_source\",\n            \"ChoiceLoader.load\"\n          ],\n          \"confidence\": \"high\"\n        }\n      ]\n    }\n  ]\n}\n```",
+          "error": null,
+          "proxy_usage": {
+            "input": 36924,
+            "cached_input": 20384,
+            "cache_write": 0,
+            "output": 667,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 4
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {}
+}
