@@ -1,0 +1,28 @@
+Both tasks only modify `dspy/adapters/types/tool.py`. f1 needs a `validate_input` classmethod on `ToolCalls`; f4 adds fingerprint/id fields and a canonicalization helper, computed in `ToolCall.__init__`/`from_dict_list`.
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f1",
+      "files": [
+        {
+          "path": "dspy/adapters/types/tool.py",
+          "functions": ["ToolCalls.validate_input", "ToolCalls.ToolCall"],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f4",
+      "files": [
+        {
+          "path": "dspy/adapters/types/tool.py",
+          "functions": ["ToolCalls.ToolCall", "ToolCalls.ToolCall.__init__", "ToolCalls.from_dict_list"],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```
