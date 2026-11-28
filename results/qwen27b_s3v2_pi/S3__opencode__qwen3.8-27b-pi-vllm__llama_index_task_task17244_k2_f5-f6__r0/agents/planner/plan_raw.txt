@@ -1,0 +1,30 @@
+Both tasks modify the same single file `llama-index-core/llama_index/core/base/llms/types.py` in the `ImageBlock` class. I have confirmed the code:
+- f5: adds `get_image_mimetype()` method, refactors MIME logic out of `image_to_base64`
+- f6: adds `encoding` field, branches `image_to_base64` on it
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f5",
+      "files": [
+        {
+          "path": "llama-index-core/llama_index/core/base/llms/types.py",
+          "functions": ["ImageBlock.get_image_mimetype", "ImageBlock.image_to_base64"],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f6",
+      "files": [
+        {
+          "path": "llama-index-core/llama_index/core/base/llms/types.py",
+          "functions": ["ImageBlock", "ImageBlock.image_to_base64"],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```
