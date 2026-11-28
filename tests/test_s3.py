@@ -159,3 +159,29 @@ def test_s3_bad_plan_falls_back_to_s1(fake_run, monkeypatch):
     assert calls["s1"] == ("S1", "multi_task", False)
     assert res.s3["fallback"] and "tasks" in res.s3["fallback_reason"]
     assert [r.agent_id for r in res.agents] == ["planner", "solo"]  # planner tokens still count
+
+
+def test_plan_problem_and_planner_nudge_settings(fake_run, monkeypatch):
+    ids = [f.fid for f in FEATS]
+    assert st._plan_problem('{"tasks": [{"id": "f%d", "files": ["a.py"]}]}' % ids[0], ids) is None
+    assert "plan JSON" in st._plan_problem("Here is the implementation: ...", ids)
+    ctx, calls = fake_run
+    seen = {}
+
+    def fake_run_agent(*a, **k):
+        seen.update(k)
+        return AgentRecord(agent_id="planner", role="planner", harness="h", model="m", feature_ids=[])
+
+    monkeypatch.setattr(st, "run_agent", fake_run_agent)
+    monkeypatch.setattr(st, "_plan_text", lambda ctx_, rec: '{"tasks": [{"id": "f%d", "files": ["a.py"]}]}' % ids[0])
+    res = st.run_s3(ctx, st.StrategySpec("S3", None, []))
+    assert seen["base_sha"] is None  # no "no_changes" nudge for a read-only planner
+    assert seen["nudge_template"] == "nudge_planner" and seen["check_final"]("no json") is not None
+    assert seen["max_nudges"] == ctx.cfg.max_nudges + 1
+    assert res.s3["planner_version"] == 2 and not res.s3["fallback"]
+
+
+def test_nudge_planner_prompt_renders():
+    from parbench.prompts import render
+    p = render("nudge_planner", reason="x", repo="/r")
+    assert "${" not in p and "only the plan JSON" in p and "implemented" not in p

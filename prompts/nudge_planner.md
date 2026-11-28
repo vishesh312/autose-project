@@ -1,0 +1,1 @@
+No human is available to respond (stopped because: ${reason}). You are only the planner: do not implement anything and do not edit files. Reply now with only the plan JSON, in the format given in your instructions, with the task ids exactly as given: no other text, no questions.

@@ -351,6 +351,15 @@ def _plan_text(ctx: RunContext, rec: AgentRecord) -> str:
     return text
 
 
+def _plan_problem(text: str, fids: list[int]) -> str | None:
+    """Nudge reason if the planner's final message has no usable plan, else None."""
+    try:
+        parse_plan(text, fids)
+        return None
+    except ValueError as e:
+        return f"your last message did not contain the plan JSON ({e})"
+
+
 def run_s3(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
     from .dataset import load_gold_conflicts
 
@@ -369,11 +378,15 @@ def run_s3(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
         try:
             opts = RunOptions(subagents=False, max_turns=ctx.cfg.max_turns, timeout_s=ctx.cfg.agent_timeout_s,
                               read_only=True)
+            # base_sha=None: the planner must not edit, so no "no_changes" nudge (that nudge says "keep implementing",
+            # which made v1 planners write code instead of a plan). One extra nudge asks for the JSON if it is missing.
             rec = run_agent(c, ctx.harness, ctx.model, prompts.planner(ctx.bundle.features, repo=c.repo), opts,
                             ctx.run_dir / "agents" / "planner", agent_id="planner", role="planner",
-                            feature_ids=order, max_nudges=ctx.cfg.max_nudges, base_sha=base)
+                            feature_ids=order, max_nudges=ctx.cfg.max_nudges + 1, base_sha=None,
+                            check_final=lambda text: _plan_problem(text, order), nudge_template="nudge_planner")
             planner_recs.append(rec)
             info["planner_read_only"] = ctx.harness.supports_read_only
+            info["planner_version"], info["planner_nudges"] = 2, rec.nudges
             info["planner_edited"] = bool(c.diff_against(base, exclude=ctx.harness.repo_artifacts).strip())
         finally:
             if not _keep():

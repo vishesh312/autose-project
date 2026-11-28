@@ -8,6 +8,7 @@ import time
 import uuid
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
+from typing import Callable
 
 from .config import ModelSpec, Usage
 from . import meter
@@ -130,7 +131,12 @@ def run_agent(
     max_nudges: int = 2,
     base_sha: str | None = None,
     env: dict[str, str] | None = None,
+    check_final: Callable[[str], str | None] | None = None,
+    nudge_template: str = "nudge",
 ) -> AgentRecord:
+    """`check_final(final_text)` may return a reason to nudge (e.g. the S3 planner's answer has no plan JSON);
+    nudges then use `nudge_template` instead of the generic "keep implementing" one. Pass base_sha=None for agents
+    that are not meant to change the repo (no "no_changes" nudge)."""
     log_dir.mkdir(parents=True, exist_ok=True)
     rec = AgentRecord(agent_id, role, harness.name, model.id, feature_ids)
     (log_dir / "meter.jsonl").unlink(missing_ok=True)
@@ -238,6 +244,8 @@ def run_agent(
         reason = None
         if not r.timed_out and nudges_used < max_nudges and time.time() < deadline - 60:
             reason = _nudge_reason(c, parsed, base_sha)
+            if not reason and check_final:
+                reason = check_final(parsed.final_text)
             if reason and not session:
                 reason = f"{reason} (no session id; cannot resume)"
         rec.attempts.append(
@@ -252,7 +260,7 @@ def run_agent(
             break
         nudges_used += 1
         rec.nudges += 1
-        current_prompt = render("nudge", reason=reason, repo=c.repo)
+        current_prompt = render(nudge_template, reason=reason, repo=c.repo)
         i += 1
 
     rec.ended = time.time()
