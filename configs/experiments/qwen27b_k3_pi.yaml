@@ -1,0 +1,39 @@
+# k=3 on the pi model: each bundle is the k=2 pair of qwen27b_core_pi plus one more task from the pool.
+# S3/S3@oracle/S4 left out (all task pairs share a file; S4 made no subagent calls at k=2).
+name: qwen27b_k3_pi
+dataset: external/CooperBench/dataset
+subset: core
+k:
+- 3
+bundles_per_pool: 1
+seed: 0
+strategies:
+- S0
+- S1
+- S2
+- S3@planonly
+harnesses:
+- opencode
+host_harnesses:
+- opencode
+models:
+- qwen3.8-27b-pi-vllm
+repeats: 1
+agent_timeout_s: 4800
+max_turns: 100
+max_nudges: 1
+max_parallel_runs: 2
+grade_parallel: 2
+merge:
+  modes:
+  - naive
+  - union
+  - llm
+pools:
+- pallets_click_task/task2800
+- pallets_jinja_task/task1559
+- pallets_jinja_task/task1621
+- dspy_task/task8563
+- openai_tiktoken_task/task0
+- llama_index_task/task17244
+- dottxt_ai_outlines_task/task1655
