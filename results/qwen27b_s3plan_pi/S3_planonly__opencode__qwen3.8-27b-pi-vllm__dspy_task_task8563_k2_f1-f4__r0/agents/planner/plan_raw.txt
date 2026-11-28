@@ -1,0 +1,28 @@
+Both tasks modify the same single file: `dspy/adapters/types/tool.py`. Task f1 adds `validate_input` (not yet present, per f4's note); task f4 adds fingerprint fields.
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f1",
+      "files": [
+        {
+          "path": "dspy/adapters/types/tool.py",
+          "functions": ["ToolCalls.validate_input", "ToolCalls.from_dict_list"],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f4",
+      "files": [
+        {
+          "path": "dspy/adapters/types/tool.py",
+          "functions": ["ToolCalls.ToolCall.__init__", "ToolCalls.from_dict_list", "_canonicalize_args"],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```
