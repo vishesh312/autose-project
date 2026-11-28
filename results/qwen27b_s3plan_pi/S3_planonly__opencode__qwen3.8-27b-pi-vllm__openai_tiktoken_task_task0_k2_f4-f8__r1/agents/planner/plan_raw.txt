@@ -1,0 +1,14 @@
+Both tasks only modify `tiktoken/core.py`, specifically the `encode` method (and possibly related encode helpers) in the `Encoding` class.
+
+```json
+{
+  "tasks": [
+    {"id": "f4", "files": [
+      {"path": "tiktoken/core.py", "functions": ["Encoding.encode"], "confidence": "high"}
+    ]},
+    {"id": "f8", "files": [
+      {"path": "tiktoken/core.py", "functions": ["Encoding.encode"], "confidence": "high"}
+    ]}
+  ]
+}
+```
