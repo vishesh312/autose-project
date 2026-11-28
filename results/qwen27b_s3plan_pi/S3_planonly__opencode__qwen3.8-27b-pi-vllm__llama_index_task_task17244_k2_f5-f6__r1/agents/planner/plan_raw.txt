@@ -1,0 +1,26 @@
+```json
+{
+  "tasks": [
+    {
+      "id": "f5",
+      "files": [
+        {
+          "path": "llama-index-core/llama_index/core/base/llms/types.py",
+          "functions": ["ImageBlock.get_image_mimetype", "ImageBlock.image_to_base64"],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f6",
+      "files": [
+        {
+          "path": "llama-index-core/llama_index/core/base/llms/types.py",
+          "functions": ["ImageBlock", "ImageBlock.image_to_base64"],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```
