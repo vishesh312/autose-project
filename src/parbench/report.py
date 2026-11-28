@@ -33,7 +33,9 @@ def flatten(rec: dict) -> dict:
     if s3:
         pq = s3.get("planning") or {}
         row.update(s3_fallback=int(bool(s3.get("fallback"))), s3_groups=len(s3.get("groups") or []),
-                   plan_file_recall=pq.get("file_recall"), plan_file_precision=pq.get("file_precision"))
+                   plan_file_recall=pq.get("file_recall"), plan_file_precision=pq.get("file_precision"),
+                   s3_executed=int(s3.get("executed", True)), planner_nudges=s3.get("planner_nudges"),
+                   plan_clash_found=(pq.get("clash_vs_shared_gold_file") or {}).get("recall"))
     m = rec.get("merge")
     if m:
         row["conflict_rate"] = m["conflict_rate"]
@@ -77,6 +79,8 @@ def report(exp_dir: Path) -> str:
 
     groups = defaultdict(list)
     for r in rows:
+        if r["task_pass_rate"] is None:  # S3@planonly with nothing executed: only in the planning table below
+            continue
         groups[(r["strategy"], r["harness"], r["model"], r["k"])].append(r)
     lines = [
         "| strategy | harness | model | k | n | task pass (95% CI) | bundle succ | retention | conflict | $/solved | tokens (med) | wall s (med) | parallelism | nudges |",
@@ -101,6 +105,22 @@ def report(exp_dir: Path) -> str:
             f"{statistics.median(r['parallelism'] for r in rs):.2f} | {sum(r['nudges'] for r in rs)} |"
         )
     md = "\n".join(lines)
+    plans = defaultdict(list)
+    for r in rows:
+        if "s3_fallback" in r and not r["strategy"].startswith("S3@oracle"):
+            plans[(r["strategy"], r["model"])].append(r)
+    if plans:
+        md += ("\n\nS3 planning (planner runs; recall/precision of predicted vs gold files; clash found = the planner"
+               " saw that tasks share a file):\n\n| strategy | model | n | valid plan | JSON nudge needed | file recall |"
+               " file precision | clash found | split plans (>1 group) | executed |\n|---|---|---|---|---|---|---|---|---|---|")
+        avg = lambda xs: f"{statistics.mean(xs):.2f}" if xs else ""
+        for (s, m), rs in sorted(plans.items()):
+            ok = [r for r in rs if not r["s3_fallback"]]
+            md += (f"\n| {s} | {m} | {len(rs)} | {len(ok)}/{len(rs)} | {sum(1 for r in rs if r.get('planner_nudges'))} | "
+                   f"{avg([r['plan_file_recall'] for r in ok if r.get('plan_file_recall') is not None])} | "
+                   f"{avg([r['plan_file_precision'] for r in ok if r.get('plan_file_precision') is not None])} | "
+                   f"{avg([r['plan_clash_found'] for r in ok if r.get('plan_clash_found') is not None])} | "
+                   f"{sum(1 for r in ok if r['s3_groups'] > 1)} | {sum(r.get('s3_executed', 1) for r in rs)} |")
     src = defaultdict(int)
     for r in rows:
         src[r["token_source"]] += 1

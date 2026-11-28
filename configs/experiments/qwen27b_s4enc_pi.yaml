@@ -1,0 +1,36 @@
+# S4 with the prompt that asks for one subagent per task (default S4 prompt: 0 subagent calls in 14 runs).
+# Same pools/bundles as qwen27b_core_pi.
+name: qwen27b_s4enc_pi
+dataset: external/CooperBench/dataset
+subset: core
+k:
+- 2
+bundles_per_pool: 1
+seed: 0
+strategies:
+- S4@harness_native_encourage
+harnesses:
+- opencode
+host_harnesses:
+- opencode
+models:
+- qwen3.8-27b-pi-vllm
+repeats: 1
+agent_timeout_s: 4800
+max_turns: 100
+max_nudges: 1
+max_parallel_runs: 2
+grade_parallel: 2
+merge:
+  modes:
+  - naive
+  - union
+  - llm
+pools:
+- pallets_click_task/task2800
+- pallets_jinja_task/task1559
+- pallets_jinja_task/task1621
+- dspy_task/task8563
+- openai_tiktoken_task/task0
+- llama_index_task/task17244
+- dottxt_ai_outlines_task/task1655

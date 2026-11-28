@@ -9,6 +9,7 @@
   S4   all tasks in one prompt, harness-native subagents enabled; the harness splits & integrates itself
 
   @template  overrides the prompt template, e.g. S4@harness_native_worktrees, S4@harness_native_encourage
+             (S3@oracle: gold files as the plan; S3@planonly: run the planner, execute only plans with >1 group)
   +extra     appends a prompt snippet, e.g. S2+plan_first
 """
 
@@ -401,6 +402,14 @@ def run_s3(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
             files = None
     info["plan_s"] = time.time() - t_plan
 
+    planonly = spec.template == "planonly"
+    if planonly and files is None:  # no usable plan: nothing to execute, recorded as a fallback
+        info["executed"] = False
+        res = StrategyResult(s3=info)
+        res.agents += planner_recs
+        res.t_start, res.t_end = t_plan, time.time()
+        return res
+
     if files is None:  # rule 5: fall back to S1 (everything sequential), reported separately via s3.fallback
         res = run_single_session(ctx, StrategySpec("S1", None, spec.extras), subagents=False, default_tmpl="multi_task")
         res.agents[:0] = planner_recs
@@ -413,6 +422,15 @@ def run_s3(ctx: RunContext, spec: StrategySpec) -> StrategyResult:
                 groups=[[f"f{f}" for f in g] for g in groups])
     if not info["oracle"]:
         info["planning"] = planning_quality(files, gold, gc)
+    if planonly:
+        # S3@planonly: on CooperBench every task pair shares a gold file, so a one-group plan runs exactly like
+        # S3@oracle (already measured). Only plans that split the tasks are executed.
+        info["executed"] = len(groups) > 1
+        if not info["executed"]:
+            res = StrategyResult(s3=info)
+            res.agents += planner_recs
+            res.t_start, res.t_end = t_plan, time.time()
+            return res
 
     res = StrategyResult(s3=info)
     res.agents += planner_recs

@@ -185,3 +185,48 @@ def test_nudge_planner_prompt_renders():
     from parbench.prompts import render
     p = render("nudge_planner", reason="x", repo="/r")
     assert "${" not in p and "only the plan JSON" in p and "implemented" not in p
+
+
+def _planonly(fake_run, monkeypatch, plan_text):
+    ctx, calls = fake_run
+    monkeypatch.setattr(st, "run_agent", lambda *a, **k: AgentRecord(
+        agent_id="planner", role="planner", harness="h", model="m", feature_ids=[]))
+    monkeypatch.setattr(st, "_plan_text", lambda ctx_, rec: plan_text)
+    return st.run_s3(ctx, st.StrategySpec.parse("S3@planonly")), calls
+
+
+def test_planonly_one_group_is_not_executed(fake_run, monkeypatch):
+    a, b, c = (f.fid for f in FEATS)
+    res, calls = _planonly(fake_run, monkeypatch, json.dumps({"tasks": [{"id": f"f{x}", "files": ["same.py"]}
+                                                                         for x in (a, b, c)]}))
+    assert res.s3["executed"] is False and res.s3["groups"] == [[f"f{a}", f"f{b}", f"f{c}"]]
+    assert "planning" in res.s3 and not res.finals and not res.worker_patches
+    assert [r.agent_id for r in res.agents] == ["planner"] and not calls["agents"] and res.t_end >= res.t_start
+
+
+def test_planonly_split_plan_is_executed(fake_run, monkeypatch):
+    a, b, c = (f.fid for f in FEATS)
+    res, calls = _planonly(fake_run, monkeypatch, json.dumps({"tasks": [
+        {"id": f"f{a}", "files": ["x.py"]}, {"id": f"f{b}", "files": ["y.py"]}, {"id": f"f{c}", "files": ["x.py"]}]}))
+    assert res.s3["executed"] is True and len(res.s3["groups"]) == 2
+    assert sorted(calls["agents"]) == sorted([f"f{a}", f"f{b}", f"f{c}"]) and calls["merged"]
+
+
+def test_planonly_no_plan_is_not_executed_and_no_s1(fake_run, monkeypatch):
+    monkeypatch.setattr(st, "run_single_session", lambda *a, **k: pytest.fail("planonly must not fall back to S1"))
+    res, calls = _planonly(fake_run, monkeypatch, "no plan here")
+    assert res.s3["fallback"] and res.s3["executed"] is False and not calls["agents"]
+
+
+def test_report_row_for_unexecuted_planonly():
+    from parbench.report import flatten
+    u = {"input": 10, "cached_input": 0, "output": 5, "reasoning": 0}
+    rec = {"run": {"strategy": "S3@planonly", "harness": "h", "model": "m", "k": 2, "bundle": "b", "repeat": 0},
+           "correctness": {"primary": "llm", "by_final": {}, "own_pass": {}},
+           "cost": {"usage": u, "cost_usd": 0, "cost_per_solved_task": None, "coordination_overhead": 1.0,
+                    "wasted_tokens": 0, "repeated_reads": []},
+           "time": {"wall_clock_s": 1, "agent_busy_s": 1, "effective_parallelism": 1, "nudges": 0, "timeouts": 0},
+           "s3": {"fallback": False, "executed": False, "groups": [["f1", "f2"]], "planner_nudges": 0,
+                  "planning": {"file_recall": 1.0, "file_precision": 0.5, "clash_vs_shared_gold_file": {"recall": 1.0}}}}
+    row = flatten(rec)
+    assert row["s3_executed"] == 0 and row["task_pass_rate"] is None and row["plan_clash_found"] == 1.0

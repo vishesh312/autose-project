@@ -1,0 +1,36 @@
+# S3 planner only (fixed planner), 3 planner runs per bundle; a plan is executed only if it splits the tasks (>1 group).
+# Same pools/bundles as qwen27b_core_pi.
+name: qwen27b_s3plan_pi
+dataset: external/CooperBench/dataset
+subset: core
+k:
+- 2
+bundles_per_pool: 1
+seed: 0
+strategies:
+- S3@planonly
+harnesses:
+- opencode
+host_harnesses:
+- opencode
+models:
+- qwen3.8-27b-pi-vllm
+repeats: 3
+agent_timeout_s: 4800
+max_turns: 100
+max_nudges: 1
+max_parallel_runs: 3
+grade_parallel: 2
+merge:
+  modes:
+  - naive
+  - union
+  - llm
+pools:
+- pallets_click_task/task2800
+- pallets_jinja_task/task1559
+- pallets_jinja_task/task1621
+- dspy_task/task8563
+- openai_tiktoken_task/task0
+- llama_index_task/task17244
+- dottxt_ai_outlines_task/task1655
