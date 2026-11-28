@@ -1,0 +1,277 @@
+{
+  "run": {
+    "experiment": "qwen27b_s3plan_pi",
+    "bundle": "pallets_jinja_task/task1621/k2/f6-f10",
+    "pool": "pallets_jinja_task/task1621",
+    "k": 2,
+    "features": [
+      6,
+      10
+    ],
+    "strategy": "S3@planonly",
+    "strategy_id": "S3",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-pi-vllm",
+    "repeat": 1,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795892744.6239972,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8002"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "llm",
+    "by_final": {},
+    "own_pass": {}
+  },
+  "cost": {
+    "usage": {
+      "input": 23092,
+      "cached_input": 7840,
+      "cache_write": 0,
+      "output": 623,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 3
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 20453,
+      "cached_input": 7840,
+      "cache_write": 0,
+      "output": 304,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 2
+    },
+    "usage_proxy": {
+      "input": 23092,
+      "cached_input": 7840,
+      "cache_write": 0,
+      "output": 623,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 3
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.0024961,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.0024961,
+    "cost_per_solved_task": null,
+    "coordination_tokens": 23715,
+    "coordination_overhead": 1.0,
+    "wasted_tokens": 0,
+    "repeated_reads": []
+  },
+  "time": {
+    "wall_clock_s": 32.8746018409729,
+    "agents_wall_s": 32.8746018409729,
+    "merge_s": 0.0,
+    "strategy_span_s": 33.488430976867676,
+    "agent_busy_s": 32.8725745677948,
+    "effective_parallelism": 0.9999383331488574,
+    "container_setup_s": 0.0,
+    "grading_s": 0.00046372413635253906,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": {
+    "oracle": false,
+    "fallback": false,
+    "planner_read_only": true,
+    "planner_version": 2,
+    "planner_nudges": 0,
+    "planner_edited": false,
+    "plan_s": 33.48838257789612,
+    "plan": {
+      "f6": [
+        "src/jinja2/loaders.py"
+      ],
+      "f10": [
+        "src/jinja2/loaders.py"
+      ]
+    },
+    "gold_files": {
+      "f6": [
+        "src/jinja2/loaders.py"
+      ],
+      "f10": [
+        "src/jinja2/loaders.py"
+      ]
+    },
+    "groups": [
+      [
+        "f6",
+        "f10"
+      ]
+    ],
+    "planning": {
+      "file_recall": 1.0,
+      "file_precision": 1.0,
+      "clash_vs_git_conflict": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "true": [
+          [
+            6,
+            10
+          ]
+        ],
+        "predicted": [
+          [
+            6,
+            10
+          ]
+        ]
+      },
+      "clash_vs_shared_gold_file": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "true": [
+          [
+            6,
+            10
+          ]
+        ],
+        "predicted": [
+          [
+            6,
+            10
+          ]
+        ]
+      }
+    },
+    "executed": false
+  },
+  "agents": [
+    {
+      "agent_id": "planner",
+      "role": "planner",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        6,
+        10
+      ],
+      "started": 1795892745.0328553,
+      "ended": 1795892777.907457,
+      "busy_s": 32.8725745677948,
+      "usage": {
+        "input": 20453,
+        "cached_input": 7840,
+        "cache_write": 0,
+        "output": 304,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 2
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 23092,
+        "cached_input": 7840,
+        "cache_write": 0,
+        "output": 623,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 3
+      },
+      "meter": {
+        "requests": 3,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 3
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0024961,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 2
+      },
+      "files_read": [
+        "src/jinja2/loaders.py"
+      ],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795892745.0334814,
+          "ended": 1795892777.906056,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 20453,
+            "cached_input": 7840,
+            "cache_write": 0,
+            "output": 304,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 2
+          },
+          "num_turns": 2,
+          "session_id": "ses_ddc7367e8ffeiAz99FUrEjuzTy",
+          "nudge_reason": null,
+          "final_text_tail": "Both tasks modify only `src/jinja2/loaders.py`.\n\n```json\n{\n  \"tasks\": [\n    {\"id\": \"f6\", \"files\": [\n      {\"path\": \"src/jinja2/loaders.py\", \"functions\": [\"BaseLoader\", \"FileSystemLoader.__init__\", \"FileSystemLoader.get_source\", \"PackageLoader.__init__\", \"PackageLoader.get_source\", \"DictLoader.__init__\", \"DictLoader.get_source\", \"FunctionLoader.__init__\", \"FunctionLoader.get_source\", \"PrefixLoader.__init__\", \"PrefixLoader.get_source\", \"PrefixLoader.load\", \"ChoiceLoader.__init__\", \"ChoiceLoader.get_source\", \"ChoiceLoader.load\"], \"confidence\": \"high\"}\n    ]},\n    {\"id\": \"f10\", \"files\": [\n      {\"path\": \"src/jinja2/loaders.py\", \"functions\": [\"BaseLoader.get_source\", \"BaseLoader.add_alias\", \"BaseLoader.remove_alias\"], \"confidence\": \"high\"}\n    ]}\n  ]\n}\n```",
+          "error": null,
+          "proxy_usage": {
+            "input": 23092,
+            "cached_input": 7840,
+            "cache_write": 0,
+            "output": 623,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 3
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {}
+}
