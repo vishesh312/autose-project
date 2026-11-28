@@ -1,0 +1,10 @@
+{"name": "grep", "kind": "read", "args": {"pattern": "_resolve_context", "path": "scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click"}, "ok": false, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def close|def make_context|class Context", "path": "scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click"}, "ok": false, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "src/click/*.py", "path": "scratch/manas_ase/tmp/parbench-host-3ii235t0/repo"}, "ok": false, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-3ii235t0/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def close|def __enter__|def __exit__|def make_context|class Context", "path": "/scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click/core.py", "offset": 161, "limit": 340}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click/core.py", "offset": 600, "limit": 50}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-3ii235t0/repo/src/click/core.py", "offset": 1100, "limit": 120}, "ok": true, "ts": null}
