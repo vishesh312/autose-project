@@ -1,0 +1,19 @@
+Both tasks clearly modify `src/click/core.py` and `src/click/shell_completion.py`, as stated in their "Files Modified" sections. Verified the relevant code exists:
+
+- `_resolve_context` at `src/click/shell_completion.py:532` creates contexts via `cli.make_context`/`cmd.make_context` without context-manager cleanup (f1 fix target)
+- `Context.__init__` (`src/click/core.py:265`), `Context.close()` (`src/click/core.py:605`), and `Context.__exit__` (`src/click/core.py:473`) are where `cleanup_timeout` logic would land (f4)
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "src/click/shell_completion.py", "functions": ["_resolve_context"], "confidence": "high"},
+      {"path": "src/click/core.py", "functions": ["Context.__exit__", "Context.close"], "confidence": "high"}
+    ]},
+    {"id": "f4", "files": [
+      {"path": "src/click/core.py", "functions": ["Context.__init__", "Context.close"], "confidence": "high"},
+      {"path": "src/click/shell_completion.py", "functions": ["_resolve_context"], "confidence": "high"}
+    ]}
+  ]
+}
+```
