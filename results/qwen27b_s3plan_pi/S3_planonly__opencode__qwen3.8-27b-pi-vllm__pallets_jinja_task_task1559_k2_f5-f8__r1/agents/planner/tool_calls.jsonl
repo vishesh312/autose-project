@@ -1,0 +1,2 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-j0rebfum/repo/src/jinja2/ext.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "src/jinja2/**/*.py"}, "ok": true, "ts": null}

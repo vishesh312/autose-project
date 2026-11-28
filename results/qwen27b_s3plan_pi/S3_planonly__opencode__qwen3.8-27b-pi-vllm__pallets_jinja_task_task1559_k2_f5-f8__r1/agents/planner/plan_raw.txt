@@ -1,0 +1,18 @@
+Both tasks clearly target only `src/jinja2/ext.py`.
+
+Task f5: modify `InternationalizationExtension` — add `_validate_trans_variables`, `_validate_trans_expression`, and integrate into `parse()`.
+
+Task f8: add `ConditionalI18nExtension` class + module-level alias `conditional_i18n` in `src/jinja2/ext.py`.
+
+```json
+{
+  "tasks": [
+    {"id": "f5", "files": [
+      {"path": "src/jinja2/ext.py", "functions": ["InternationalizationExtension.parse", "InternationalizationExtension._validate_trans_variables", "InternationalizationExtension._validate_trans_expression"], "confidence": "high"}
+    ]},
+    {"id": "f8", "files": [
+      {"path": "src/jinja2/ext.py", "functions": ["ConditionalI18nExtension", "ConditionalI18nExtension.parse", "ConditionalI18nExtension._parse_block", "ConditionalI18nExtension._trim_whitespace", "ConditionalI18nExtension._make_conditional_node"], "confidence": "high"}
+    ]}
+  ]
+}
+```
