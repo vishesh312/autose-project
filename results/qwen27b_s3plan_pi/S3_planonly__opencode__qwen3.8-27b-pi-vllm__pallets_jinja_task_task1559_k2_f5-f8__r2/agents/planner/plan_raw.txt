@@ -1,0 +1,14 @@
+Both tasks only touch `src/jinja2/ext.py`, which contains the `InternationalizationExtension` class (f5 modifies its `parse()` and adds validation methods; f8 adds a new `ConditionalI18nExtension` class and module-level alias alongside existing classes).
+
+```json
+{
+  "tasks": [
+    {"id": "f5", "files": [
+      {"path": "src/jinja2/ext.py", "functions": ["InternationalizationExtension.parse", "InternationalizationExtension._validate_trans_variables", "InternationalizationExtension._validate_trans_expression"], "confidence": "high"}
+    ]},
+    {"id": "f8", "files": [
+      {"path": "src/jinja2/ext.py", "functions": ["ConditionalI18nExtension", "ConditionalI18nExtension.parse", "ConditionalI18nExtension._parse_block", "ConditionalI18nExtension._trim_whitespace", "ConditionalI18nExtension._make_conditional_node", "conditional_i18n"], "confidence": "high"}
+    ]}
+  ]
+}
+```
