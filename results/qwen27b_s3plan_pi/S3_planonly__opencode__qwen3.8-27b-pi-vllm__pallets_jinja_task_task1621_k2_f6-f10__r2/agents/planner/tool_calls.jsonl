@@ -1,0 +1,3 @@
+{"name": "glob", "kind": "read", "args": {"pattern": "src/jinja2/**/*.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "class (BaseLoader|FileSystemLoader|DictLoader|FunctionLoader|PackageLoader|PrefixLoader|ChoiceLoader)", "path": "src/jinja2/loaders.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-h56817nx/repo/src/jinja2/loaders.py"}, "ok": true, "ts": null}

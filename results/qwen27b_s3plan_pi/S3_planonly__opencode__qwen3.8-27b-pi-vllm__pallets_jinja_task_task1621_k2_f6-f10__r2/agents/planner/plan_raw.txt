@@ -1,0 +1,55 @@
+Both tasks modify `src/jinja2/loaders.py` — confirmed by reading the loader classes (BaseLoader, FileSystemLoader, PackageLoader, DictLoader, FunctionLoader, PrefixLoader, ChoiceLoader, ModuleLoader). No other source files are needed since the loaders module is self-contained for both features.
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f6",
+      "files": [
+        {
+          "path": "src/jinja2/loaders.py",
+          "functions": [
+            "BaseLoader.__init__",
+            "BaseLoader.get_source",
+            "FileSystemLoader.__init__",
+            "FileSystemLoader.get_source",
+            "PackageLoader.__init__",
+            "PackageLoader.get_source",
+            "DictLoader.__init__",
+            "DictLoader.get_source",
+            "FunctionLoader.__init__",
+            "FunctionLoader.get_source",
+            "PrefixLoader.__init__",
+            "PrefixLoader.get_source",
+            "ChoiceLoader.__init__",
+            "ChoiceLoader.get_source"
+          ],
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "f10",
+      "files": [
+        {
+          "path": "src/jinja2/loaders.py",
+          "functions": [
+            "BaseLoader.__init__",
+            "BaseLoader.get_source",
+            "BaseLoader.add_alias",
+            "BaseLoader.remove_alias",
+            "BaseLoader._resolve_alias",
+            "FileSystemLoader.get_source",
+            "PackageLoader.get_source",
+            "DictLoader.get_source",
+            "FunctionLoader.get_source",
+            "PrefixLoader.get_source",
+            "ChoiceLoader.get_source"
+          ],
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}
+```
