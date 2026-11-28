@@ -1,0 +1,113 @@
+{
+  "agent_id": "f1",
+  "role": "worker",
+  "harness": "opencode",
+  "model": "qwen3.8-27b-pi-vllm",
+  "feature_ids": [
+    1
+  ],
+  "started": 1795891040.2598803,
+  "ended": 1795891203.411142,
+  "busy_s": 163.0950858592987,
+  "usage": {
+    "input": 69184,
+    "cached_input": 51744,
+    "cache_write": 0,
+    "output": 2707,
+    "reasoning": 0,
+    "cost_reported": 0.0,
+    "calls": 7
+  },
+  "usage_subagents": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_failed_attempts": {
+    "input": 0,
+    "cached_input": 0,
+    "cache_write": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 0
+  },
+  "usage_proxy": {
+    "input": 70534,
+    "cached_input": 51744,
+    "cache_write": 0,
+    "output": 2721,
+    "reasoning": 0,
+    "cost_reported": null,
+    "calls": 8
+  },
+  "meter": {
+    "requests": 8,
+    "requests_failed": 0,
+    "requests_usage_missing": 0,
+    "by_kind": {
+      "chat": 8
+    }
+  },
+  "token_source": "proxy",
+  "cost_list": 0.0078697,
+  "nudges": 0,
+  "infra_retries": 0,
+  "infra_wait_s": 0.0,
+  "infra_failed": false,
+  "context_exceeded": false,
+  "accounts": [],
+  "timed_out": false,
+  "returncode": 0,
+  "tool_calls": {
+    "read": 2,
+    "edit": 2,
+    "shell": 2
+  },
+  "files_read": [
+    "outlines/types/__init__.py"
+  ],
+  "files_edited": [
+    "outlines/types/__init__.py"
+  ],
+  "subagent_calls": 0,
+  "patch_lines": 0,
+  "patch_files": [],
+  "attempts": [
+    {
+      "index": 0,
+      "started": 1795891040.2602205,
+      "ended": 1795891203.3553064,
+      "returncode": 0,
+      "timed_out": false,
+      "usage": {
+        "input": 69184,
+        "cached_input": 51744,
+        "cache_write": 0,
+        "output": 2707,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 7
+      },
+      "num_turns": 7,
+      "session_id": "ses_ddc8d6ba6ffeEzz3wCjNidCgRm",
+      "nudge_reason": null,
+      "final_text_tail": "Done. Added `hex_str`, `uuid4`, and `ipv4` regex types to `outlines/types/__init__.py:50-61`, after `whitespace` and before the document-specific types. All patterns validated: `hex_str` matches optional `0x` prefix + hex digits (at least one); `uuid4` enforces version digit `4` and variant `[89abAB]`; `ipv4` validates exactly 4 octets, each 0\u2013255.",
+      "error": null,
+      "proxy_usage": {
+        "input": 70534,
+        "cached_input": 51744,
+        "cache_write": 0,
+        "output": 2721,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 8
+      }
+    }
+  ],
+  "error": null
+}
