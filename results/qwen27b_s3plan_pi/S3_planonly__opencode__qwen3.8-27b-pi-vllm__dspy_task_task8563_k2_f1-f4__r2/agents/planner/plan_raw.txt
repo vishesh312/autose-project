@@ -1,0 +1,14 @@
+Both tasks modify `dspy/adapters/types/tool.py`. Task f1 adds `validate_input` normalization to `ToolCalls`; task f4 adds fingerprint/id fields to `ToolCall` and a canonicalization helper.
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "dspy/adapters/types/tool.py", "functions": ["ToolCalls.validate_input", "ToolCalls"], "confidence": "high"}
+    ]},
+    {"id": "f4", "files": [
+      {"path": "dspy/adapters/types/tool.py", "functions": ["ToolCalls.ToolCall", "ToolCalls.from_dict_list", "_canonicalize_args"], "confidence": "high"}
+    ]}
+  ]
+}
+```
