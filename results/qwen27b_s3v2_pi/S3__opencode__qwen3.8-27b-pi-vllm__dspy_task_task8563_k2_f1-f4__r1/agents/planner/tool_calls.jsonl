@@ -1,0 +1,9 @@
+{"name": "glob", "kind": "read", "args": {"pattern": "**/*.py", "path": "scratch/manas_ase/tmp/parbench-host-dbx34svy/repo"}, "ok": false, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "dspy/adapters/types/*.py", "path": "scratch/manas_ase/tmp/parbench-host-dbx34svy/repo"}, "ok": false, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dbx34svy/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dbx34svy/repo/dspy/adapters/types/tool.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dbx34svy/repo/dspy/adapters/types"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dbx34svy/repo/dspy/adapters/types/base_type.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "ToolCalls|tool_calls|validate_input|from_dict_list", "path": "/scratch/manas_ase/tmp/parbench-host-dbx34svy/repo", "include": "*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dbx34svy/repo/dspy/adapters/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dbx34svy/repo/dspy/adapters/types/code.py", "offset": 80, "limit": 20}, "ok": true, "ts": null}

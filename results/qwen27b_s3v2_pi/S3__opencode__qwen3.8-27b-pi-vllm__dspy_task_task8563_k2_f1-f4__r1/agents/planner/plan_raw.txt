@@ -1,0 +1,19 @@
+I have all the information needed. `ToolCalls` is already exported from `__init__.py` — no glue changes needed for either task since both target only `dspy/adapters/types/tool.py`.
+
+- **f1**: Add `ToolCalls.validate_input(data)` (normalizing single-object, bare-list, and existing `tool_calls` formats). New method on the `ToolCalls` class in `tool.py`. No new imports strictly required, though it will use `json` — `json` is NOT currently imported in `tool.py`, so adding the import may be needed.
+- **f4**: Add `fingerprint`/`id` fields and `__init__` to `ToolCalls.ToolCall`, a canonicalization helper, and SHA-256 hashing — needs `import json` (already present? No) and `import hashlib`. `json` and `hashlib` are NOT currently imported in `tool.py`, so those imports must be added to `tool.py`.
+
+Both tasks explicitly list only `dspy/adapters/types/tool.py`. All changes are confined to that file.
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "dspy/adapters/types/tool.py", "functions": ["ToolCalls.validate_input", "ToolCalls"], "confidence": "high"}
+    ]},
+    {"id": "f4", "files": [
+      {"path": "dspy/adapters/types/tool.py", "functions": ["ToolCalls.ToolCall.__init__", "ToolCalls.ToolCall", "ToolCalls.from_dict_list", "canonicalize_args"], "confidence": "high"}
+    ]}
+  ]
+}
+```

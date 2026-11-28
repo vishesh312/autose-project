@@ -1,0 +1,60 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..eaacbdac 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,7 +1,9 @@
+ import asyncio
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
++import pydantic
+ from jsonschema import ValidationError, validate
+ from pydantic import BaseModel, TypeAdapter, create_model
+ 
+@@ -261,6 +263,45 @@ class ToolCalls(Type):
+ 
+     tool_calls: list[ToolCall]
+ 
++    @pydantic.model_validator(mode="before")
++    @classmethod
++    def validate_input(cls, data: Any):
++        """Normalize the various LM output formats into the canonical `{"tool_calls": [...]}` structure.
++
++        Handles the following input variations, all of which represent one or more tool calls:
++        1. Canonical: `{"tool_calls": [{"name": ..., "args": ...}, ...]}` - processed as before.
++        2. Single object without the outer `tool_calls` key: `{"name": ..., "args": ...}`
++           - wrapped into `{"tool_calls": [<obj>]}`.
++        3. Bare list of tool-call objects: `[{"name": ..., "args": ...}, ...]`
++           - wrapped into `{"tool_calls": <list>}`.
++        4. JSON strings of the above - parsed first, then normalized. Non-JSON strings are
++           returned unchanged so that downstream handling can decide what to do with them.
++        """
++        if isinstance(data, str):
++            data = data.strip()
++            if not (data.startswith("{") or data.startswith("[")):
++                # Not JSON, return the original string unchanged.
++                return data
++            try:
++                data = json.loads(data)
++            except json.JSONDecodeError:
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                # Canonical format, process as before.
++                return data
++            if "name" in data and "args" in data:
++                # Single object without the outer `tool_calls` key.
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            # Bare list of tool-call objects.
++            return {"tool_calls": data}
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.
