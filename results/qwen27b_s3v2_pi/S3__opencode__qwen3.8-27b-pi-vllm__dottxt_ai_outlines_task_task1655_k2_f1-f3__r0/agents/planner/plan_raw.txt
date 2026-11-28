@@ -1,0 +1,14 @@
+Both tasks explicitly state `outlines/types/__init__.py` is the only file modified. The DSL (`outlines/types/dsl.py`) is fully verified to already support what's needed (Regex dataclass, Term.matches, fullmatch validation). No glue/export changes needed since types are module-level in `__init__.py` and automatically importable.
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "outlines/types/__init__.py", "functions": ["hex_str", "uuid4", "ipv4"], "confidence": "high"}
+    ]},
+    {"id": "f3", "files": [
+      {"path": "outlines/types/__init__.py", "functions": ["octal_str"], "confidence": "high"}
+    ]}
+  ]
+}
+```

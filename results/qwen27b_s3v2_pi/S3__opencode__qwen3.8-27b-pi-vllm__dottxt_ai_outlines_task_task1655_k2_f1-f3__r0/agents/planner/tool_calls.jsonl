@@ -1,0 +1,2 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dhff07_8/repo/outlines/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-dhff07_8/repo/outlines/types/dsl.py"}, "ok": true, "ts": null}

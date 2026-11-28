@@ -1,0 +1,560 @@
+{
+  "run": {
+    "experiment": "qwen27b_s3v2_pi",
+    "bundle": "dottxt_ai_outlines_task/task1655/k2/f1-f3",
+    "pool": "dottxt_ai_outlines_task/task1655",
+    "k": 2,
+    "features": [
+      1,
+      3
+    ],
+    "strategy": "S3",
+    "strategy_id": "S3",
+    "harness": "opencode",
+    "model": "qwen3.8-27b-pi-vllm",
+    "repeat": 0,
+    "host": "pkgpu2",
+    "arch": "x86_64",
+    "started": 1795891014.2959569,
+    "sandbox": {
+      "mode": "host-none",
+      "network": "open",
+      "files": "open",
+      "level": "off",
+      "allow": [
+        "localhost:8002"
+      ],
+      "gold": "hidden (landlock): dataset, parbench checkout, other workspaces"
+    }
+  },
+  "valid": true,
+  "correctness": {
+    "primary": "final",
+    "by_final": {
+      "final": {
+        "task_pass_rate": 1.0,
+        "bundle_success": true,
+        "passed": [
+          1,
+          3
+        ],
+        "lost_in_merge": []
+      }
+    },
+    "own_pass": {
+      "1": true,
+      "3": true
+    }
+  },
+  "cost": {
+    "usage": {
+      "input": 104724,
+      "cached_input": 64288,
+      "cache_write": 0,
+      "output": 1590,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 14
+    },
+    "token_source": "proxy",
+    "usage_harness": {
+      "input": 99733,
+      "cached_input": 64288,
+      "cache_write": 0,
+      "output": 1562,
+      "reasoning": 0,
+      "cost_reported": 0.0,
+      "calls": 11
+    },
+    "usage_proxy": {
+      "input": 104724,
+      "cached_input": 64288,
+      "cache_write": 0,
+      "output": 1590,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 14
+    },
+    "usage_failed_attempts": {
+      "input": 0,
+      "cached_input": 0,
+      "cache_write": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cost_reported": null,
+      "calls": 0
+    },
+    "cost_usd": 0.010949400000000001,
+    "cost_reported_usd": null,
+    "cost_list_usd": 0.010949400000000001,
+    "cost_per_solved_task": 0.005474700000000001,
+    "coordination_tokens": 32984,
+    "coordination_overhead": 0.3102507665970615,
+    "wasted_tokens": 0,
+    "repeated_reads": [
+      "outlines/types/__init__.py"
+    ]
+  },
+  "time": {
+    "wall_clock_s": 111.57444047927856,
+    "agents_wall_s": 111.57444047927856,
+    "merge_s": 0.0,
+    "strategy_span_s": 113.694904088974,
+    "agent_busy_s": 111.47881317138672,
+    "effective_parallelism": 0.9991429281878442,
+    "container_setup_s": 0.544579267501831,
+    "grading_s": 10.570321083068848,
+    "nudges": 0,
+    "timeouts": 0
+  },
+  "merge": null,
+  "s3": {
+    "oracle": false,
+    "fallback": false,
+    "planner_read_only": true,
+    "planner_version": 2,
+    "planner_nudges": 0,
+    "planner_edited": false,
+    "plan_s": 32.44194746017456,
+    "plan": {
+      "f1": [
+        "outlines/types/__init__.py"
+      ],
+      "f3": [
+        "outlines/types/__init__.py"
+      ]
+    },
+    "gold_files": {
+      "f1": [
+        "outlines/types/__init__.py"
+      ],
+      "f3": [
+        "outlines/types/__init__.py"
+      ]
+    },
+    "groups": [
+      [
+        "f1",
+        "f3"
+      ]
+    ],
+    "planning": {
+      "file_recall": 1.0,
+      "file_precision": 1.0,
+      "clash_vs_git_conflict": {
+        "precision": 0.0,
+        "recall": null,
+        "true": [],
+        "predicted": [
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "clash_vs_shared_gold_file": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "true": [
+          [
+            1,
+            3
+          ]
+        ],
+        "predicted": [
+          [
+            1,
+            3
+          ]
+        ]
+      }
+    }
+  },
+  "agents": [
+    {
+      "agent_id": "planner",
+      "role": "planner",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        1,
+        3
+      ],
+      "started": 1795891015.396236,
+      "ended": 1795891046.4993627,
+      "busy_s": 31.100342273712158,
+      "usage": {
+        "input": 30379,
+        "cached_input": 14112,
+        "cache_write": 0,
+        "output": 289,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 3
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 32688,
+        "cached_input": 14112,
+        "cache_write": 0,
+        "output": 296,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 4
+      },
+      "meter": {
+        "requests": 4,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 4
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0033576000000000005,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 2
+      },
+      "files_read": [
+        "outlines/types/__init__.py",
+        "outlines/types/dsl.py"
+      ],
+      "files_edited": [],
+      "subagent_calls": 0,
+      "patch_lines": 0,
+      "patch_files": [],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795891015.3971334,
+          "ended": 1795891046.4974756,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 30379,
+            "cached_input": 14112,
+            "cache_write": 0,
+            "output": 289,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 3
+          },
+          "num_turns": 3,
+          "session_id": "ses_ddc8dccf0ffeWR8lsSEzu9Js2b",
+          "nudge_reason": null,
+          "final_text_tail": "Both tasks explicitly state `outlines/types/__init__.py` is the only file modified. The DSL (`outlines/types/dsl.py`) is fully verified to already support what's needed (Regex dataclass, Term.matches, fullmatch validation). No glue/export changes needed since types are module-level in `__init__.py` and automatically importable.\n\n```json\n{\n  \"tasks\": [\n    {\"id\": \"f1\", \"files\": [\n      {\"path\": \"outlines/types/__init__.py\", \"functions\": [\"hex_str\", \"uuid4\", \"ipv4\"], \"confidence\": \"high\"}\n    ]},\n    {\"id\": \"f3\", \"files\": [\n      {\"path\": \"outlines/types/__init__.py\", \"functions\": [\"octal_str\"], \"confidence\": \"high\"}\n    ]}\n  ]\n}\n```",
+          "error": null,
+          "proxy_usage": {
+            "input": 32688,
+            "cached_input": 14112,
+            "cache_write": 0,
+            "output": 296,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 4
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f1",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        1
+      ],
+      "started": 1795891047.2882655,
+      "ended": 1795891096.336124,
+      "busy_s": 48.9916615486145,
+      "usage": {
+        "input": 34632,
+        "cached_input": 21952,
+        "cache_write": 0,
+        "output": 788,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 4
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 35982,
+        "cached_input": 21952,
+        "cache_write": 0,
+        "output": 803,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 5
+      },
+      "meter": {
+        "requests": 5,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 5
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0038391000000000002,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "shell": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 12,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795891047.2889411,
+          "ended": 1795891096.2806027,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 34632,
+            "cached_input": 21952,
+            "cache_write": 0,
+            "output": 788,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 4
+          },
+          "num_turns": 4,
+          "session_id": "ses_ddc8d5027ffeYYsTRrMbjjwuae",
+          "nudge_reason": null,
+          "final_text_tail": "Done. Added `hex_str`, `uuid4`, and `ipv4` regex types to `outlines/types/__init__.py` between `whitespace` and the document-specific types section. All patterns pass sanity checks.",
+          "error": null,
+          "proxy_usage": {
+            "input": 35982,
+            "cached_input": 21952,
+            "cache_write": 0,
+            "output": 803,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 5
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "agent_id": "f3",
+      "role": "worker",
+      "harness": "opencode",
+      "model": "qwen3.8-27b-pi-vllm",
+      "feature_ids": [
+        3
+      ],
+      "started": 1795891096.3895342,
+      "ended": 1795891127.8129895,
+      "busy_s": 31.38680934906006,
+      "usage": {
+        "input": 34722,
+        "cached_input": 28224,
+        "cache_write": 0,
+        "output": 485,
+        "reasoning": 0,
+        "cost_reported": 0.0,
+        "calls": 4
+      },
+      "usage_subagents": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_failed_attempts": {
+        "input": 0,
+        "cached_input": 0,
+        "cache_write": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 0
+      },
+      "usage_proxy": {
+        "input": 36054,
+        "cached_input": 28224,
+        "cache_write": 0,
+        "output": 491,
+        "reasoning": 0,
+        "cost_reported": null,
+        "calls": 5
+      },
+      "meter": {
+        "requests": 5,
+        "requests_failed": 0,
+        "requests_usage_missing": 0,
+        "by_kind": {
+          "chat": 5
+        }
+      },
+      "token_source": "proxy",
+      "cost_list": 0.0037527000000000003,
+      "nudges": 0,
+      "infra_retries": 0,
+      "infra_wait_s": 0.0,
+      "infra_failed": false,
+      "context_exceeded": false,
+      "accounts": [],
+      "timed_out": false,
+      "returncode": 0,
+      "tool_calls": {
+        "read": 1,
+        "edit": 1,
+        "shell": 1
+      },
+      "files_read": [
+        "outlines/types/__init__.py"
+      ],
+      "files_edited": [
+        "outlines/types/__init__.py"
+      ],
+      "subagent_calls": 0,
+      "patch_lines": 15,
+      "patch_files": [
+        "outlines/types/__init__.py"
+      ],
+      "attempts": [
+        {
+          "index": 0,
+          "started": 1795891096.3900194,
+          "ended": 1795891127.7768288,
+          "returncode": 0,
+          "timed_out": false,
+          "usage": {
+            "input": 34722,
+            "cached_input": 28224,
+            "cache_write": 0,
+            "output": 485,
+            "reasoning": 0,
+            "cost_reported": 0.0,
+            "calls": 4
+          },
+          "num_turns": 4,
+          "session_id": "ses_ddc8c9104ffeVkx1XEnTh5eEZ5",
+          "nudge_reason": null,
+          "final_text_tail": "Works. `octal_str` added at outlines/types/__init__.py:68 with pattern `0o[0-7]+` (full-string match, no whitespace handling), under the \"# System-specific types\" header, between `paragraph` and the email regex.",
+          "error": null,
+          "proxy_usage": {
+            "input": 36054,
+            "cached_input": 28224,
+            "cache_write": 0,
+            "output": 491,
+            "reasoning": 0,
+            "cost_reported": null,
+            "calls": 5
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "grades": {
+    "own_f1": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.0456044673919678,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_s3v2_pi/S3__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f1.f1.log"
+      }
+    },
+    "own_f3": {
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.244311571121216,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_s3v2_pi/S3__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/own_f3.f3.log"
+      }
+    },
+    "final": {
+      "1": {
+        "fid": 1,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 95,
+        "tests_failed": 0,
+        "duration_s": 3.1819708347320557,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_s3v2_pi/S3__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/final.f1.log"
+      },
+      "3": {
+        "fid": 3,
+        "passed": true,
+        "exit_code": 0,
+        "tests_passed": 87,
+        "tests_failed": 0,
+        "duration_s": 3.5569798946380615,
+        "log": "/scratch/manas_ase/autose-project/results/qwen27b_s3v2_pi/S3__opencode__qwen3.8-27b-pi-vllm__dottxt_ai_outlines_task_task1655_k2_f1-f3__r0/grading/final.f3.log"
+      }
+    }
+  }
+}
