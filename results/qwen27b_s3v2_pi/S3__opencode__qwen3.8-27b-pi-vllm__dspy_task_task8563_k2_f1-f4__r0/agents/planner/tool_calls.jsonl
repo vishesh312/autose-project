@@ -1,0 +1,12 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/types/tool.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "dspy/adapters/types/*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/types/base_type.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/types/__init__.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def validate_input", "path": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/types/code.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "ToolCalls|validate_input|from_dict_list", "path": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy", "include": "*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/json_adapter.py", "offset": 200, "limit": 120}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/json_adapter.py", "limit": 200, "offset": 1}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/utils.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/base.py", "offset": 90, "limit": 40}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-f80y81m_/repo/dspy/adapters/base.py", "limit": 30, "offset": 375}, "ok": true, "ts": null}

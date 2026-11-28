@@ -1,0 +1,108 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..980b5572 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,5 +1,7 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+@@ -16,6 +18,37 @@ if TYPE_CHECKING:
+ _TYPE_MAPPING = {"string": str, "integer": int, "number": float, "boolean": bool, "array": list, "object": dict}
+ 
+ 
++def _canonicalize_args(args: Any) -> Any:
++    """Recursively canonicalize tool call arguments.
++
++    - Sorts dictionary keys.
++    - Converts tuples to lists.
++    - Strips leading/trailing whitespace from string values.
++
++    Numeric and boolean values are preserved as-is (no type coercion beyond
++    trimming strings).
++    """
++    if isinstance(args, dict):
++        return {key: _canonicalize_args(value) for key, value in sorted(args.items())}
++    if isinstance(args, (list, tuple)):
++        return [_canonicalize_args(item) for item in args]
++    if isinstance(args, str):
++        return args.strip()
++    return args
++
++
++def _compute_tool_call_fingerprint(name: str, args: dict[str, Any]) -> str:
++    """Compute a stable SHA-256 fingerprint for a tool call.
++
++    The fingerprint is derived from the tool ``name`` and its canonicalized
++    ``args`` (sorted keys, tuples converted to lists, string whitespace
++    trimmed), serialized to a compact JSON string.
++    """
++    canonical = {"name": name, "args": _canonicalize_args(args)}
++    payload = json.dumps(canonical, sort_keys=True, separators=(",", ":"))
++    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
++
++
+ class Tool(Type):
+     """Tool class.
+ 
+@@ -258,6 +291,13 @@ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str = ""
++        id: str = ""
++
++        def model_post_init(self, __context: Any) -> None:
++            fingerprint = _compute_tool_call_fingerprint(self.name, self.args)
++            self.fingerprint = fingerprint
++            self.id = fingerprint[:8]
+ 
+     tool_calls: list[ToolCall]
+ 
+@@ -284,6 +324,43 @@ class ToolCalls(Type):
+         tool_calls = [cls.ToolCall(**item) for item in tool_calls_dicts]
+         return cls(tool_calls=tool_calls)
+ 
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Normalize varied LM output formats into the expected ``tool_calls`` structure.
++
++        Handles the following input shapes and returns plain Python structures
++        (dict / list / str) suitable for constructing a ``ToolCalls`` model:
++
++        * ``{"tool_calls": [...]}``           – returned unchanged
++        * ``{"name": ..., "args": ...}``      – wrapped as ``{"tool_calls": [item]}``
++        * ``[{"name": ..., "args": ...}, ...]`` – wrapped as ``{"tool_calls": list}``
++        * JSON string encoding any of the above – parsed, then normalised
++        * non-JSON string                      – returned unchanged
++        """
++        if isinstance(data, cls):
++            return {"tool_calls": [tc.model_dump() for tc in data.tool_calls]}
++
++        if isinstance(data, str):
++            stripped = data.strip()
++            if not (stripped.startswith("{") or stripped.startswith("[")):
++                return data
++            try:
++                data = json.loads(stripped)
++            except (json.JSONDecodeError, ValueError):
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            return {"tool_calls": data}
++
++        return data
++
+     @classmethod
+     def description(cls) -> str:
+         return (

@@ -1,0 +1,37 @@
+I have enough understanding. Both tasks are self-contained in `dspy/adapters/types/tool.py`. Let me verify there's no separate validation entrypoint that `validate_input` must hook into, and confirm `ToolCall` structure once more (already read: `name`, `args` on a pydantic `BaseModel` subclass).
+
+Both tasks modify only `dspy/adapters/types/tool.py`. The `__init__.py` exports already exist (`ToolCalls` is already exported), so no glue change needed.
+
+Task f1: Add `ToolCalls.validate_input` (a `@pydantic.model_validator(mode="before")`), handling dict-with-`tool_calls`, single `{name,args}` dict, list of dicts, and plain JSON strings (parse to dict/list, return original string on failure).
+
+Task f4: Add `fingerprint` and `id` fields to `ToolCalls.ToolCall`, compute in `ToolCall.__init__`, add a canonicalization helper, integrate in `from_dict_list`.
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "dspy/adapters/types/tool.py", "functions": ["ToolCalls.validate_input", "ToolCalls"], "confidence": "high"}
+    ]}
+  ],
+}
+```
+
+Wait — I need to output only the JSON with both tasks. Let me produce the final answer.
+
+Both tasks are scoped entirely to `dspy/adapters/types/tool.py`. The `__init__.py` files already export `ToolCalls`, so no glue/registration changes are needed.
+
+- **f1** adds a `validate_input` classmethod (a `@pydantic.model_validator(mode="before")`) on `ToolCalls` to normalize single-object, bare-list, and JSON-string inputs (mirroring `Code.validate_input`).
+- **f4** adds `fingerprint`/`id` fields to `ToolCalls.ToolCall`, an `__init__` computing the SHA-256 fingerprint, a canonicalization helper, and integration in `from_dict_list`.
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "dspy/adapters/types/tool.py", "functions": ["ToolCalls.validate_input", "ToolCalls"], "confidence": "high"}
+    ]},
+    {"id": "f4", "files": [
+      {"path": "dspy/adapters/types/tool.py", "functions": ["ToolCalls.ToolCall.__init__", "ToolCalls.ToolCall", "ToolCalls.from_dict_list", "_canonicalize_args"], "confidence": "high"}
+    ]}
+  ]
+}
+```
