@@ -1,0 +1,39 @@
+# Second harness: pi (pi-coding-agent 0.84.4, default tools read/bash/edit/write) with the pi-adapted model it was trained for.
+# Same 7 bundles as qwen27b_core_pi (OpenCode). No S4 (pi has no subagents). pi has no step limit: 80-min time limit only.
+name: qwen27b_piharness_pi
+dataset: external/CooperBench/dataset
+subset: core
+k:
+- 2
+bundles_per_pool: 1
+seed: 0
+strategies:
+- S0
+- S1
+- S2
+- S3@planonly
+harnesses:
+- pi
+host_harnesses:
+- pi
+models:
+- qwen3.8-27b-pi-vllm
+repeats: 1
+agent_timeout_s: 4800
+max_turns: 100
+max_nudges: 1
+max_parallel_runs: 2
+grade_parallel: 2
+merge:
+  modes:
+  - naive
+  - union
+  - llm
+pools:
+- pallets_click_task/task2800
+- pallets_jinja_task/task1559
+- pallets_jinja_task/task1621
+- dspy_task/task8563
+- openai_tiktoken_task/task0
+- llama_index_task/task17244
+- dottxt_ai_outlines_task/task1655

@@ -332,30 +332,42 @@ class OpenCodeHarness(Harness):
 # =============================================================== Pi
 class PiHarness(Harness):
     name = "pi"
+    host_capable = True
     supports_subagents = False
+    supports_read_only = True
     providers = ("openai_compat", "anthropic", "openai", "google", "openrouter")
     repo_artifacts = [".pi"]
     auth_files = [("~/.pi/agent/auth.json", "/parbench/pi/auth.json")]
+    # pi's own default tools (what the pi-adapted model was trained with); grep/find/ls need rg and fd on PATH.
+    TOOLS = "read,bash,edit,write"
+    READ_ONLY_TOOLS = "read,grep,find,ls"  # S3 planner (pi's documented read-only set)
+    # pi has no step limit: agents are bounded by the time limit only (OpenCode: max_turns steps).
 
     def setup(self, c, model, opts):
-        env = {"PI_OFFLINE": "1", "PI_CODING_AGENT_DIR": f"{WORK}/pi"}
+        work = c.work  # WORK in a container, the temp dir in host mode; config and sessions stay out of $HOME
+        env = {"PI_OFFLINE": "1", "PI_CODING_AGENT_DIR": f"{work}/pi"}
         models = {"providers": {}}
         if model.provider == "openai_compat":
+            url = model.base_url
+            if isinstance(c, HostWorkspace):
+                url = url.replace("host.docker.internal", "localhost")
             models["providers"]["local"] = {
-                "baseUrl": model.base_url, "api": "openai-completions", "apiKey": "local",
+                "baseUrl": url, "api": "openai-completions", "apiKey": "local",
                 "compat": {"supportsDeveloperRole": False, "supportsReasoningEffort": False},
                 "models": [{"id": model.model, "contextWindow": model.context, "maxTokens": model.max_output or model.context}]}
-        c.put_file(f"{WORK}/pi/models.json", json.dumps(models, indent=2))
-        self._sid = uuid.uuid4().hex
+        c.put_file(f"{work}/pi/models.json", json.dumps(models, indent=2))
+        # Per agent, via its env: one harness object serves all agents of a run (S2 runs them in parallel).
+        env["PARBENCH_PI_SID"] = uuid.uuid4().hex
+        env["PARBENCH_PI_TOOLS"] = self.READ_ONLY_TOOLS if opts.read_only else self.TOOLS
         return env
 
     def command(self, prompt_file, model, opts, resume_session):
         prov = "local" if model.provider == "openai_compat" else model.provider
-        sid = resume_session or getattr(self, "_sid", uuid.uuid4().hex)
+        sid = self.q(resume_session) if resume_session else '"$PARBENCH_PI_SID"'
         think = f" --thinking {model.reasoning_effort}" if model.reasoning_effort else ""
         return (f"pi --mode json --session-id {sid} --model {self.q(prov + '/' + model.model)}{think} "
                 f"--no-context-files --no-skills --no-extensions -na "
-                f"--tools read,bash,edit,write,grep,find,ls {self.prompt_arg(prompt_file)}")
+                f'--tools "${{PARBENCH_PI_TOOLS:-{self.TOOLS}}}" {self.prompt_arg(prompt_file)} </dev/null')
 
     def parse(self, stdout, stderr):
         run, u = ParsedRun(), Usage()
