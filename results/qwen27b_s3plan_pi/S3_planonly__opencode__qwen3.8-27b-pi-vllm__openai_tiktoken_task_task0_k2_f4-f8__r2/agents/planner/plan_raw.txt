@@ -1,0 +1,20 @@
+Both tasks modify `Encoding.encode` in `tiktoken/core.py`. Task f4 adds a `chunk_size` parameter returning a list of token lists; task f8 adds `return_repeated_pattern` tracking top 3 frequent token pairs. Both changes are self-contained in the `encode` method. `__init__.py` needs no changes since `encode` is a method, not a module-level function, and the task PR details only list `tiktoken/core.py`.
+
+```json
+{
+  "tasks": [
+    {
+      "id": "f4",
+      "files": [
+        {"path": "tiktoken/core.py", "functions": ["Encoding.encode"], "confidence": "high"}
+      ]
+    },
+    {
+      "id": "f8",
+      "files": [
+        {"path": "tiktoken/core.py", "functions": ["Encoding.encode"], "confidence": "high"}
+      ]
+    }
+  ]
+}
+```

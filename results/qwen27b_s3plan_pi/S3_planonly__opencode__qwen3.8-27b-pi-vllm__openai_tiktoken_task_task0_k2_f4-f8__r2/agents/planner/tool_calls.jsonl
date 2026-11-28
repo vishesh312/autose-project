@@ -1,0 +1,3 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ujz9qjei/repo/tiktoken/core.py"}, "ok": true, "ts": null}
+{"name": "glob", "kind": "read", "args": {"pattern": "tiktoken/**/*.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-ujz9qjei/repo/tiktoken/__init__.py"}, "ok": true, "ts": null}
