@@ -1,0 +1,16 @@
+Both tasks only need two source files; verified the relevant symbols in `src/click/core.py` (Context `__init__`/`close`/`__exit__`) and `src/click/shell_completion.py` (`_resolve_context`, `ShellComplete.get_completions`).
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "src/click/core.py", "functions": ["Context.__init__", "Context.close", "Context.__exit__", "Command.make_context"], "confidence": "high"},
+      {"path": "src/click/shell_completion.py", "functions": ["_resolve_context", "ShellComplete.get_completions"], "confidence": "high"}
+    ]},
+    {"id": "f4", "files": [
+      {"path": "src/click/core.py", "functions": ["Context.__init__", "Context.close", "Context.__exit__", "Context.scope"], "confidence": "high"},
+      {"path": "src/click/shell_completion.py", "functions": ["_resolve_context", "ShellComplete.get_completions"], "confidence": "high"}
+    ]}
+  ]
+}
+```

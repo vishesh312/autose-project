@@ -1,0 +1,5 @@
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-yjh27g7j/repo/src/click/shell_completion.py"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "def close|def __exit__|def __init__|_close_all|_deep_iter", "path": "/scratch/manas_ase/tmp/parbench-host-yjh27g7j/repo/src/click/core.py"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-yjh27g7j/repo/src/click/core.py", "offset": 140, "limit": 400}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-yjh27g7j/repo/src/click/core.py", "offset": 540, "limit": 200}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-yjh27g7j/repo/src/click/core.py", "offset": 740, "limit": 200}, "ok": true, "ts": null}
