@@ -1,0 +1,4 @@
+{"name": "grep", "kind": "read", "args": {"pattern": "class InternationalizationExtension", "path": "src/jinja2"}, "ok": true, "ts": null}
+{"name": "grep", "kind": "read", "args": {"pattern": "ConditionalI18nExtension|ctrans|conditional_i18n", "path": "src/jinja2"}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-b8t53n6k/repo/src/jinja2/ext.py", "offset": 245, "limit": 120}, "ok": true, "ts": null}
+{"name": "read", "kind": "read", "args": {"filePath": "/scratch/manas_ase/tmp/parbench-host-b8t53n6k/repo/src/jinja2/__init__.py"}, "ok": true, "ts": null}
