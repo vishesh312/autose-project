@@ -1,0 +1,89 @@
+diff --git a/dspy/adapters/types/tool.py b/dspy/adapters/types/tool.py
+index 843eceed..0378c1a4 100644
+--- a/dspy/adapters/types/tool.py
++++ b/dspy/adapters/types/tool.py
+@@ -1,5 +1,7 @@
+ import asyncio
++import hashlib
+ import inspect
++import json
+ from typing import TYPE_CHECKING, Any, Callable, Type, get_origin, get_type_hints
+ 
+ from jsonschema import ValidationError, validate
+@@ -254,13 +256,76 @@ class Tool(Type):
+         return f"{self.name}{desc} {arg_desc}"
+ 
+ 
++def _canonicalize_for_fingerprint(value: Any) -> Any:
++    """Recursively canonicalize a value for stable fingerprinting.
++
++    - Sorts dict keys recursively.
++    - Converts tuples to lists.
++    - Strips leading/trailing whitespace from string values.
++    - Leaves numeric and boolean values unchanged (no type coercion).
++    """
++    if isinstance(value, dict):
++        return {k: _canonicalize_for_fingerprint(v) for k, v in sorted(value.items(), key=lambda kv: str(kv[0]))}
++    if isinstance(value, (list, tuple)):
++        return [_canonicalize_for_fingerprint(item) for item in value]
++    if isinstance(value, str):
++        return value.strip()
++    return value
++
++
+ class ToolCalls(Type):
+     class ToolCall(BaseModel):
+         name: str
+         args: dict[str, Any]
++        fingerprint: str
++        id: str
++
++        def __init__(self, name: str, args: dict[str, Any], **data):
++            canonical_args = _canonicalize_for_fingerprint(args)
++            canonical_repr = json.dumps(
++                {"name": name, "args": canonical_args},
++                sort_keys=True,
++                separators=(",", ":"),
++            )
++            digest = hashlib.sha256(canonical_repr.encode("utf-8")).hexdigest()
++            super().__init__(name=name, args=args, fingerprint=digest, id=digest[:8])
+ 
+     tool_calls: list[ToolCall]
+ 
++    @classmethod
++    def validate_input(cls, data: Any) -> Any:
++        """Normalize varied LM output formats into the expected internal structure.
++
++        Handles the canonical ``{"tool_calls": [...]}`` format as well as common
++        variations produced by different LMs:
++          - a single ``{"name": ..., "args": ...}`` object (no ``tool_calls`` key)
++          - a bare list of ``{"name": ..., "args": ...}`` objects
++          - plain JSON strings of the above
++
++        Returns the normalized Python structure (dict / list / str); the original
++        string is returned unchanged if it is not valid JSON.
++        """
++        if isinstance(data, ToolCalls):
++            return data
++
++        if isinstance(data, str):
++            try:
++                data = json.loads(data)
++            except (ValueError, TypeError):
++                return data
++
++        if isinstance(data, dict):
++            if "tool_calls" in data:
++                return data
++            if "name" in data and "args" in data:
++                return {"tool_calls": [data]}
++            return data
++
++        if isinstance(data, list):
++            return {"tool_calls": data}
++
++        return data
++
+     @classmethod
+     def from_dict_list(cls, tool_calls_dicts: list[dict[str, Any]]) -> "ToolCalls":
+         """Convert a list of dictionaries to a ToolCalls instance.
