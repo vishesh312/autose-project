@@ -1,0 +1,14 @@
+Both tasks only modify `outlines/types/__init__.py` by adding new module-level `Regex` type definitions, following existing patterns.
+
+```json
+{
+  "tasks": [
+    {"id": "f1", "files": [
+      {"path": "outlines/types/__init__.py", "functions": ["hex_str", "uuid4", "ipv4"], "confidence": "high"}
+    ]},
+    {"id": "f3", "files": [
+      {"path": "outlines/types/__init__.py", "functions": ["octal_str"], "confidence": "high"}
+    ]}
+  ]
+}
+```
